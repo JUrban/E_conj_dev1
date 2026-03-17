@@ -93,12 +93,12 @@ def train(args):
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, shuffle=True,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=use_cuda, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=(nw > 0),
     )
     val_loader = DataLoader(
         val_ds, batch_size=args.batch_size, shuffle=False,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=use_cuda, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=(nw > 0),
     )
 
     model, loss_fn = get_model_and_loss(args.variant, args)
