@@ -224,35 +224,57 @@ class ConjectureDataset(Dataset):
         torch.save(lemma_dict, cache_path)
         return lemma_dict.get(cut_id)
 
+    def precompute(self):
+        """Precompute all samples and cache them for fast loading.
+
+        Call this once before training to eliminate per-item CPU work.
+        """
+        precomp_dir = os.path.join(self.cache_dir, 'precomputed')
+        os.makedirs(precomp_dir, exist_ok=True)
+
+        # Check if already done
+        marker = os.path.join(precomp_dir, f'done_{len(self.samples)}.marker')
+        if os.path.exists(marker):
+            self._precomputed_dir = precomp_dir
+            return
+
+        print(f"Precomputing {len(self.samples)} samples...")
+        for idx in range(len(self.samples)):
+            out_path = os.path.join(precomp_dir, f'sample_{idx}.pt')
+            if not os.path.exists(out_path):
+                item = self._build_item(idx)
+                torch.save(item, out_path)
+            if (idx + 1) % 2000 == 0:
+                print(f"  precomputed {idx+1}/{len(self.samples)}...")
+
+        with open(marker, 'w') as f:
+            f.write('done')
+        self._precomputed_dir = precomp_dir
+        print(f"  Done. Cached in {precomp_dir}")
+
     def __len__(self):
         return len(self.samples)
 
-    def __getitem__(self, idx):
+    def _build_item(self, idx):
+        """Build a single sample (used by both __getitem__ and precompute)."""
         sample = self.samples[idx]
         problem_name = sample['problem']
         cut_id = sample['cut_id']
         ratio = sample['ratio']
 
-        # Load problem graph
         graph = self._get_problem_graph(problem_name)
 
-        # Load and encode target conjecture
         clause = self._get_lemma_clause(problem_name, cut_id)
         if clause is None:
-            # Fallback: return a dummy target
-            target_seq = [(6, 0)]  # just END_CLAUSE
+            target_seq = [(6, 0)]
         else:
             target_seq = encode_conjecture(clause, graph.symbol_names)
 
-        # Quality weight: higher weight for better cuts
-        # w = 1/(1+ratio) gives smooth weighting; ratio=0 -> w=1, ratio=1 -> w=0.5
         weight = 1.0 / (1.0 + ratio)
 
-        # Convert target to tensors
         actions = torch.tensor([a for a, _ in target_seq], dtype=torch.long)
         arguments = torch.tensor([arg for _, arg in target_seq], dtype=torch.long)
 
-        # Attach target info to graph
         graph = graph.clone()
         graph.target_actions = actions
         graph.target_arguments = arguments
@@ -260,8 +282,15 @@ class ConjectureDataset(Dataset):
         graph.quality_weight = torch.tensor(weight, dtype=torch.float)
         graph.ratio = torch.tensor(ratio, dtype=torch.float)
         graph.num_symbols = torch.tensor(len(graph.symbol_names), dtype=torch.long)
-
         return graph
+
+    def __getitem__(self, idx):
+        # Use precomputed if available
+        if hasattr(self, '_precomputed_dir') and self._precomputed_dir:
+            path = os.path.join(self._precomputed_dir, f'sample_{idx}.pt')
+            if os.path.exists(path):
+                return torch.load(path, weights_only=False)
+        return self._build_item(idx)
 
 
 if __name__ == '__main__':

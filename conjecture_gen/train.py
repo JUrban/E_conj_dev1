@@ -213,14 +213,22 @@ def train(args):
         max_samples=args.max_samples // 4 if args.max_samples > 0 else 0,
     )
 
+    # Precompute samples for faster data loading on GPU
+    if device.type == 'cuda':
+        train_ds.precompute()
+        val_ds.precompute()
+
+    use_cuda = device.type == 'cuda'
+    nw = args.num_workers
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, shuffle=True,
-        collate_fn=collate_fn, num_workers=args.num_workers,
-        pin_memory=False,
+        collate_fn=collate_fn, num_workers=nw,
+        pin_memory=use_cuda, persistent_workers=(nw > 0),
     )
     val_loader = DataLoader(
         val_ds, batch_size=args.batch_size, shuffle=False,
-        collate_fn=collate_fn, num_workers=0,
+        collate_fn=collate_fn, num_workers=nw,
+        pin_memory=use_cuda, persistent_workers=(nw > 0),
     )
 
     # Model

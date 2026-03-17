@@ -30,10 +30,18 @@ def train_one_variant(variant, train_ds, val_ds, args, device):
     n_params = sum(p.numel() for p in model.parameters())
     print(f"  Parameters: {n_params:,}")
 
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                              collate_fn=collate_fn, num_workers=0)
-    val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False,
-                            collate_fn=collate_fn, num_workers=0)
+    use_cuda = device.type == 'cuda'
+    nw = args.num_workers
+    train_loader = DataLoader(
+        train_ds, batch_size=args.batch_size, shuffle=True,
+        collate_fn=collate_fn, num_workers=nw,
+        pin_memory=use_cuda, persistent_workers=(nw > 0),
+    )
+    val_loader = DataLoader(
+        val_ds, batch_size=args.batch_size, shuffle=False,
+        collate_fn=collate_fn, num_workers=nw,
+        pin_memory=use_cuda, persistent_workers=(nw > 0),
+    )
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-5)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=args.lr * 0.01)
@@ -112,7 +120,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=3)
     parser.add_argument('--max_samples', type=int, default=200)
-    parser.add_argument('--batch_size', type=int, default=8)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--num_workers', type=int, default=4)
     parser.add_argument('--hidden_dim', type=int, default=64)
     parser.add_argument('--num_gnn_layers', type=int, default=4)
     parser.add_argument('--max_vars', type=int, default=20)

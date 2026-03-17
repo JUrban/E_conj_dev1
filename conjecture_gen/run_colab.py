@@ -87,7 +87,7 @@ def main():
             'max_nodes': 1500,  # safe for T4 16GB
             'log_every': 50,
             'sample_every': 5,
-            'num_workers': 2,
+            'num_workers': 4,
             'save_dir': 'checkpoints_medium',
         },
         'full': {
@@ -104,7 +104,7 @@ def main():
             'max_nodes': 1500,  # safe for T4 16GB
             'log_every': 100,
             'sample_every': 5,
-            'num_workers': 2,
+            'num_workers': 4,
             'save_dir': 'checkpoints_full',
         },
     }
