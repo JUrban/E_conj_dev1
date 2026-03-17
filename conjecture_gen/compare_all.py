@@ -147,6 +147,11 @@ def main():
         max_nodes=args.max_nodes,
     )
 
+    # Precompute into RAM on GPU for zero-overhead data loading
+    if device.type == 'cuda':
+        train_ds.precompute()
+        val_ds.precompute()
+
     variants = [v.strip() for v in args.variants.split(',')]
     results = []
 

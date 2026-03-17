@@ -225,32 +225,37 @@ class ConjectureDataset(Dataset):
         return lemma_dict.get(cut_id)
 
     def precompute(self):
-        """Precompute all samples and cache them for fast loading.
+        """Precompute all samples and load into RAM for zero-overhead __getitem__.
 
-        Call this once before training to eliminate per-item CPU work.
+        First call builds disk cache, then loads everything into memory.
+        Subsequent calls just load from disk cache into memory.
         """
         precomp_dir = os.path.join(self.cache_dir, 'precomputed')
         os.makedirs(precomp_dir, exist_ok=True)
 
-        # Check if already done
+        # Build disk cache if needed
         marker = os.path.join(precomp_dir, f'done_{len(self.samples)}.marker')
-        if os.path.exists(marker):
-            self._precomputed_dir = precomp_dir
-            return
+        if not os.path.exists(marker):
+            print(f"Precomputing {len(self.samples)} samples to disk...")
+            for idx in range(len(self.samples)):
+                out_path = os.path.join(precomp_dir, f'sample_{idx}.pt')
+                if not os.path.exists(out_path):
+                    item = self._build_item(idx)
+                    torch.save(item, out_path)
+                if (idx + 1) % 2000 == 0:
+                    print(f"  precomputed {idx+1}/{len(self.samples)}...")
+            with open(marker, 'w') as f:
+                f.write('done')
 
-        print(f"Precomputing {len(self.samples)} samples...")
+        # Load everything into RAM
+        print(f"Loading {len(self.samples)} precomputed samples into RAM...")
+        self._inmemory = []
         for idx in range(len(self.samples)):
-            out_path = os.path.join(precomp_dir, f'sample_{idx}.pt')
-            if not os.path.exists(out_path):
-                item = self._build_item(idx)
-                torch.save(item, out_path)
+            path = os.path.join(precomp_dir, f'sample_{idx}.pt')
+            self._inmemory.append(torch.load(path, weights_only=False))
             if (idx + 1) % 2000 == 0:
-                print(f"  precomputed {idx+1}/{len(self.samples)}...")
-
-        with open(marker, 'w') as f:
-            f.write('done')
-        self._precomputed_dir = precomp_dir
-        print(f"  Done. Cached in {precomp_dir}")
+                print(f"  loaded {idx+1}/{len(self.samples)}...")
+        print(f"  All {len(self._inmemory)} samples in RAM.")
 
     def __len__(self):
         return len(self.samples)
@@ -285,11 +290,9 @@ class ConjectureDataset(Dataset):
         return graph
 
     def __getitem__(self, idx):
-        # Use precomputed if available
-        if hasattr(self, '_precomputed_dir') and self._precomputed_dir:
-            path = os.path.join(self._precomputed_dir, f'sample_{idx}.pt')
-            if os.path.exists(path):
-                return torch.load(path, weights_only=False)
+        # Use in-memory cache if available (fastest)
+        if hasattr(self, '_inmemory') and self._inmemory:
+            return self._inmemory[idx]
         return self._build_item(idx)
 
 
