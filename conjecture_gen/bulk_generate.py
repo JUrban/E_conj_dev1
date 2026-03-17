@@ -95,8 +95,15 @@ def score_sequence(model, data, sequence, variant='a'):
 
 
 def generate_for_problem(model, problem_path, n=20, temperature=1.0,
-                         top_k=10, top_p=0.9, device=None):
-    """Generate n conjectures for a single problem, deduplicate, rank."""
+                         top_k=10, top_p=0.9, device=None,
+                         batch_gen=8):
+    """Generate n conjectures for a single problem, deduplicate, rank.
+
+    Uses batched generation: replicates the graph batch_gen times and
+    generates in parallel for GPU efficiency.
+    """
+    from torch_geometric.data import Batch
+
     clauses = parse_problem_file(problem_path)
     if not clauses:
         return []
@@ -105,42 +112,49 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
     if device:
         graph = graph.to(device)
 
-    # Generate with varying temperatures for diversity
     all_conjectures = []
     seen = set()
 
-    for i in range(n):
-        temp = temperature * (0.7 + 0.3 * (i / max(n - 1, 1)))  # 0.7 to 1.0
+    # Generate in batches of batch_gen
+    remaining = n
+    temp_idx = 0
+    while remaining > 0:
+        bs = min(remaining, batch_gen)
+        temp = temperature * (0.7 + 0.3 * (temp_idx / max(n - 1, 1)))
+        temp_idx += bs
+
         try:
-            seqs = model.generate(graph, max_steps=80, temperature=temp,
+            # Replicate graph bs times into a batch
+            batched = Batch.from_data_list([graph.clone() for _ in range(bs)])
+            seqs = model.generate(batched, max_steps=80, temperature=temp,
                                   top_k=top_k, top_p=top_p)
         except Exception:
+            remaining -= bs
             continue
 
-        if not seqs:
-            continue
+        for seq in seqs:
+            decoded = decode_sequence(seq, graph.symbol_names)
 
-        seq = seqs[0]
-        decoded = decode_sequence(seq, graph.symbol_names)
+            if not decoded or decoded == '<empty>' or decoded in seen:
+                continue
+            seen.add(decoded)
 
-        if not decoded or decoded == '<empty>' or decoded in seen:
-            continue
-        seen.add(decoded)
+            # Validate: try to parse as TPTP
+            test_str = f"cnf(test, axiom, ({decoded}))."
+            parsed = parse_clause(test_str)
+            is_valid = parsed is not None and '...' not in decoded
 
-        # Validate: try to parse as TPTP
-        test_str = f"cnf(test, axiom, ({decoded}))."
-        parsed = parse_clause(test_str)
-        is_valid = parsed is not None and '...' not in decoded
+            score = score_sequence(model, graph, seq)
 
-        score = score_sequence(model, graph, seq)
+            all_conjectures.append({
+                'text': decoded,
+                'score': score,
+                'valid': is_valid,
+                'n_tokens': len(seq),
+                'sequence': seq,
+            })
 
-        all_conjectures.append({
-            'text': decoded,
-            'score': score,
-            'valid': is_valid,
-            'n_tokens': len(seq),
-            'sequence': seq,
-        })
+        remaining -= bs
 
     # Sort by score (highest first), valid ones first
     all_conjectures.sort(key=lambda x: (x['valid'], x['score']), reverse=True)
@@ -158,6 +172,8 @@ def main():
     parser.add_argument('--temperature', type=float, default=1.0)
     parser.add_argument('--max_nodes', type=int, default=1500)
     parser.add_argument('--max_problems', type=int, default=0, help='0=all')
+    parser.add_argument('--batch_gen', type=int, default=16,
+                        help='Batch size for generation (replicate same problem N times)')
 
     args = parser.parse_args()
 
@@ -204,7 +220,7 @@ def main():
                 model, problem_path, n=args.n,
                 temperature=args.temperature,
                 top_k=args.top_k, top_p=args.top_p,
-                device=device,
+                device=device, batch_gen=args.batch_gen,
             )
 
             # Save per-problem
