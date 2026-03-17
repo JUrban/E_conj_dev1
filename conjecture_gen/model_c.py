@@ -246,7 +246,7 @@ class VAETransformerDecoder(nn.Module):
     @torch.no_grad()
     def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0,
                  top_k=0, top_p=0.0):
-        from conjecture_gen.sampling import sample_from_logits
+        from conjecture_gen.sampling import sample_from_logits, ArityConstraint
         device = next(self.parameters()).device
 
         if batch_data is None:
@@ -284,7 +284,13 @@ class VAETransformerDecoder(nn.Module):
         z_mask = torch.ones(batch_size, 1, dtype=torch.bool, device=device)
         mem_mask = torch.cat([z_mask, mem_mask], dim=1)
 
-        # Autoregressive decode
+        # Autoregressive decode with arity constraints
+        sym_arities = getattr(batch_data, 'symbol_arities',
+                              getattr(batch_data, 'symbol_arities', [0] * symbol_embeds.shape[1]))
+        if not isinstance(sym_arities, list):
+            sym_arities = [0] * symbol_embeds.shape[1]
+        arity_con = ArityConstraint(sym_arities, batch_size)
+
         sequences = [[] for _ in range(batch_size)]
         done = [False] * batch_size
         lit_counts = [0] * batch_size
@@ -308,10 +314,14 @@ class VAETransformerDecoder(nn.Module):
             action_logits = self.action_head(h_last)
 
             for i in range(batch_size):
-                if not done[i] and lit_counts[i] >= self.max_literals:
+                if done[i]:
+                    continue
+                if lit_counts[i] >= self.max_literals:
                     action_logits[i, NEW_LIT_POS] = float('-inf')
                     action_logits[i, NEW_LIT_NEG] = float('-inf')
-                    action_logits[i, END_CLAUSE] += 5.0
+                    if not arity_con.stacks[i]:
+                        action_logits[i, END_CLAUSE] += 5.0
+                arity_con.constrain_actions(i, action_logits[i])
 
             actions = sample_from_logits(action_logits, temperature, top_k, top_p)
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
@@ -334,6 +344,7 @@ class VAETransformerDecoder(nn.Module):
                     arg_val = 0
                 new_args[i] = arg_val
                 sequences[i].append((act, arg_val))
+                arity_con.notify_action(i, act, arg_val)
                 if act == END_CLAUSE:
                     done[i] = True
 

@@ -106,6 +106,8 @@ class GraphBuilder:
 
         # For reconstructing clause text from graph
         self.symbol_names = []  # index -> name
+        self.symbol_arities = []  # index -> arity (int)
+        self.symbol_is_pred = []  # index -> bool
 
     def _add_edge(self, edge_type: tuple, src: int, dst: int, attr: float = None):
         if edge_type not in self.edges:
@@ -123,6 +125,8 @@ class GraphBuilder:
         idx = self.n_symbols
         self.symbol_map[name] = idx
         self.symbol_names.append(name)
+        self.symbol_arities.append(arity)
+        self.symbol_is_pred.append(is_pred)
         is_const = (not is_pred) and (arity == 0)
         arity_norm = min(arity, 10) / 10.0
         self.symbol_feats.append([
@@ -269,6 +273,8 @@ class GraphBuilder:
 
         # Store symbol names for decoding
         data.symbol_names = self.symbol_names
+        data.symbol_arities = self.symbol_arities
+        data.symbol_is_pred = self.symbol_is_pred
 
         return data
 

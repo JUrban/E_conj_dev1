@@ -345,8 +345,8 @@ class PointerTreeDecoder(nn.Module):
                  temperature: float = 1.0,
                  top_k: int = 0,
                  top_p: float = 0.0) -> list[list[tuple[int, int]]]:
-        """Autoregressive generation with top-k/nucleus sampling."""
-        from conjecture_gen.sampling import sample_from_logits
+        """Autoregressive generation with top-k/nucleus sampling and arity constraints."""
+        from conjecture_gen.sampling import sample_from_logits, ArityConstraint
         device = next(self.parameters()).device
 
         # Handle single sample (no batch dimension)
@@ -386,26 +386,27 @@ class PointerTreeDecoder(nn.Module):
         )
         memory_key_padding_mask = ~memory_mask
 
-        # Generate autoregressively
+        # Generate autoregressively with arity constraints
+        sym_arities = getattr(batch_data, 'symbol_arities',
+                              getattr(batch_data, 'symbol_arities', [0] * symbol_embeds.shape[1]))
+        if not isinstance(sym_arities, list):
+            sym_arities = [0] * symbol_embeds.shape[1]
+        arity_con = ArityConstraint(sym_arities, batch_size)
+
         sequences = [[] for _ in range(batch_size)]
         done = [False] * batch_size
         lit_counts = [0] * batch_size
 
-        # Build sequence incrementally
-        gen_actions = [END_CLAUSE]  # BOS
-        gen_args = [0]
         all_actions = torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)
         all_args = torch.zeros((batch_size, 1), dtype=torch.long, device=device)
 
         for step in range(max_steps):
             seq_len = all_actions.shape[1]
 
-            # Build input embeddings for full sequence so far
             tok_embeds = self._build_input_embeds(all_actions, all_args, symbol_embeds)
             positions = torch.arange(seq_len, device=device).unsqueeze(0).clamp(max=self.max_seq_len - 1)
             tok_embeds = tok_embeds + self.pos_embed(positions)
 
-            # Run transformer (causal self-attention over full generated sequence)
             causal_mask = self._get_causal_mask(seq_len, device)
             hidden = self.transformer_decoder(
                 tgt=tok_embeds,
@@ -414,29 +415,27 @@ class PointerTreeDecoder(nn.Module):
                 memory_key_padding_mask=memory_key_padding_mask,
             )
 
-            # Only use the last position's output
-            h_last = hidden[:, -1, :]  # (batch, hidden)
+            h_last = hidden[:, -1, :]
 
-            # Predict action
+            # Predict action with arity constraints
             action_logits = self.action_head(h_last)
 
-            # Force END_CLAUSE if max literals reached
             for i in range(batch_size):
-                if not done[i] and lit_counts[i] >= self.max_literals:
+                if done[i]:
+                    continue
+                if lit_counts[i] >= self.max_literals:
                     action_logits[i, NEW_LIT_POS] = float('-inf')
                     action_logits[i, NEW_LIT_NEG] = float('-inf')
-                    action_logits[i, END_CLAUSE] += 5.0
+                    if not arity_con.stacks[i]:
+                        action_logits[i, END_CLAUSE] += 5.0
+                arity_con.constrain_actions(i, action_logits[i])
 
             actions = sample_from_logits(action_logits, temperature, top_k, top_p)
 
-            # Predict pointer and variable
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
             var_logits = self.var_head(h_last)
 
-            # Record outputs and build next input
             new_args = torch.zeros(batch_size, dtype=torch.long, device=device)
-
-            # Sample pointers and variables (batched)
             ptr_sampled = sample_from_logits(ptr_logits, temperature, top_k, top_p)
             var_sampled = sample_from_logits(var_logits, temperature, top_k, top_p)
 
@@ -457,6 +456,7 @@ class PointerTreeDecoder(nn.Module):
 
                 new_args[i] = arg_val
                 sequences[i].append((act, arg_val))
+                arity_con.notify_action(i, act, arg_val)
                 if act == END_CLAUSE:
                     done[i] = True
 
