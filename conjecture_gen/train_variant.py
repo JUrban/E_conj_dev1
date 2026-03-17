@@ -176,7 +176,7 @@ def train(args):
             model.eval()
             for idx in range(min(3, len(val_ds))):
                 data = val_ds[idx].to(device)
-                seqs = model.generate(data)
+                seqs = model.generate(data, top_k=10, top_p=0.9)
                 if seqs:
                     decoded = decode_sequence(seqs[0], data.symbol_names)
                     print(f"  [{val_ds.samples[idx]['problem']}] {decoded[:150]}")

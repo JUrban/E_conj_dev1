@@ -259,7 +259,9 @@ class SSMDecoder(nn.Module):
         }
 
     @torch.no_grad()
-    def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0):
+    def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0,
+                 top_k=0, top_p=0.0):
+        from conjecture_gen.sampling import sample_from_logits
         device = next(self.parameters()).device
 
         if batch_data is None:
@@ -302,7 +304,7 @@ class SSMDecoder(nn.Module):
                 h = cn(h + gate * mem_ctx)
 
             h_last = h[:, -1, :]
-            action_logits = self.action_head(h_last) / temperature
+            action_logits = self.action_head(h_last)
 
             for i in range(batch_size):
                 if not done[i] and lit_counts[i] >= self.max_literals:
@@ -310,9 +312,11 @@ class SSMDecoder(nn.Module):
                     action_logits[i, NEW_LIT_NEG] = float('-inf')
                     action_logits[i, END_CLAUSE] += 5.0
 
-            actions = torch.argmax(action_logits, dim=-1)
+            actions = sample_from_logits(action_logits, temperature, top_k, top_p)
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
             var_logits = self.var_head(h_last)
+            ptr_sampled = sample_from_logits(ptr_logits, temperature, top_k, top_p)
+            var_sampled = sample_from_logits(var_logits, temperature, top_k, top_p)
 
             new_args = torch.zeros(batch_size, dtype=torch.long, device=device)
             for i in range(batch_size):
@@ -322,9 +326,9 @@ class SSMDecoder(nn.Module):
                 if act in (NEW_LIT_POS, NEW_LIT_NEG):
                     lit_counts[i] += 1
                 if act in (PRED, ARG_FUNC):
-                    arg_val = ptr_logits[i].argmax().item()
+                    arg_val = ptr_sampled[i].item()
                 elif act == ARG_VAR:
-                    arg_val = min(var_logits[i].argmax().item(), self.max_vars - 1)
+                    arg_val = min(var_sampled[i].item(), self.max_vars - 1)
                 else:
                     arg_val = 0
                 new_args[i] = arg_val
@@ -358,11 +362,12 @@ class ConjectureModelD(nn.Module):
         )
 
     @torch.no_grad()
-    def generate(self, data, max_steps=80, temperature=1.0):
+    def generate(self, data, max_steps=80, temperature=1.0, top_k=0, top_p=0.0):
         self.eval()
         x_dict = self.encoder(data)
         return self.decoder.generate(x_dict, batch_data=data,
-                                     max_steps=max_steps, temperature=temperature)
+                                     max_steps=max_steps, temperature=temperature,
+                                     top_k=top_k, top_p=top_p)
 
 
 if __name__ == '__main__':

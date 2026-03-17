@@ -102,7 +102,8 @@ def _term_has_vars(term):
     return any(_term_has_vars(a) for a in term.args)
 
 
-def evaluate_generation(model, dataset, device, n_per_problem=5, max_problems=200):
+def evaluate_generation(model, dataset, device, n_per_problem=5, max_problems=200,
+                        top_k=10, top_p=0.9):
     """Generate conjectures and compute quality metrics."""
     model.eval()
 
@@ -139,7 +140,8 @@ def evaluate_generation(model, dataset, device, n_per_problem=5, max_problems=20
         t0 = time.time()
         for i in range(n_per_problem):
             temp = 0.8 + 0.1 * i  # 0.8, 0.9, 1.0, 1.1, ...
-            seqs = model.generate(data, max_steps=80, temperature=temp)
+            seqs = model.generate(data, max_steps=80, temperature=temp,
+                                  top_k=top_k, top_p=top_p)
             if seqs:
                 decoded = decode_sequence(seqs[0], data.symbol_names)
                 conjectures.append(decoded)
@@ -252,6 +254,8 @@ def main():
     parser.add_argument('--max_nodes', type=int, default=1500)
     parser.add_argument('--n', type=int, default=5, help='Conjectures per problem')
     parser.add_argument('--max_problems', type=int, default=200)
+    parser.add_argument('--top_k', type=int, default=10, help='Top-k sampling (0=greedy)')
+    parser.add_argument('--top_p', type=float, default=0.9, help='Nucleus sampling (0=disabled)')
     parser.add_argument('--output', default=None, help='Save results to JSON file')
 
     args = parser.parse_args()
@@ -287,6 +291,8 @@ def main():
         model, dataset, device,
         n_per_problem=args.n,
         max_problems=args.max_problems,
+        top_k=args.top_k,
+        top_p=args.top_p,
     )
     metrics = gen_results['metrics']
     for k, v in metrics.items():

@@ -342,8 +342,11 @@ class PointerTreeDecoder(nn.Module):
     def generate(self, x_dict: dict[str, torch.Tensor],
                  batch_data=None,
                  max_steps: int = 80,
-                 temperature: float = 1.0) -> list[list[tuple[int, int]]]:
-        """Autoregressive generation with KV-cache-style incremental decoding."""
+                 temperature: float = 1.0,
+                 top_k: int = 0,
+                 top_p: float = 0.0) -> list[list[tuple[int, int]]]:
+        """Autoregressive generation with top-k/nucleus sampling."""
+        from conjecture_gen.sampling import sample_from_logits
         device = next(self.parameters()).device
 
         # Handle single sample (no batch dimension)
@@ -415,7 +418,7 @@ class PointerTreeDecoder(nn.Module):
             h_last = hidden[:, -1, :]  # (batch, hidden)
 
             # Predict action
-            action_logits = self.action_head(h_last) / temperature
+            action_logits = self.action_head(h_last)
 
             # Force END_CLAUSE if max literals reached
             for i in range(batch_size):
@@ -424,7 +427,7 @@ class PointerTreeDecoder(nn.Module):
                     action_logits[i, NEW_LIT_NEG] = float('-inf')
                     action_logits[i, END_CLAUSE] += 5.0
 
-            actions = torch.argmax(action_logits, dim=-1)  # (batch,)
+            actions = sample_from_logits(action_logits, temperature, top_k, top_p)
 
             # Predict pointer and variable
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
@@ -432,6 +435,10 @@ class PointerTreeDecoder(nn.Module):
 
             # Record outputs and build next input
             new_args = torch.zeros(batch_size, dtype=torch.long, device=device)
+
+            # Sample pointers and variables (batched)
+            ptr_sampled = sample_from_logits(ptr_logits, temperature, top_k, top_p)
+            var_sampled = sample_from_logits(var_logits, temperature, top_k, top_p)
 
             for i in range(batch_size):
                 if done[i]:
@@ -442,10 +449,9 @@ class PointerTreeDecoder(nn.Module):
                     lit_counts[i] += 1
 
                 if act in (PRED, ARG_FUNC):
-                    arg_val = torch.argmax(ptr_logits[i]).item()
+                    arg_val = ptr_sampled[i].item()
                 elif act == ARG_VAR:
-                    arg_val = torch.argmax(var_logits[i]).item()
-                    arg_val = min(arg_val, self.max_vars - 1)
+                    arg_val = min(var_sampled[i].item(), self.max_vars - 1)
                 else:
                     arg_val = 0
 
@@ -495,13 +501,15 @@ class ConjectureModel(nn.Module):
 
     @torch.no_grad()
     def generate(self, data: HeteroData, max_steps: int = 80,
-                 temperature: float = 1.0) -> list[list[tuple[int, int]]]:
+                 temperature: float = 1.0,
+                 top_k: int = 0, top_p: float = 0.0) -> list[list[tuple[int, int]]]:
         """Generate conjectures for given problem(s)."""
         self.eval()
         x_dict = self.encoder(data)
         return self.decoder.generate(
             x_dict, batch_data=data,
             max_steps=max_steps, temperature=temperature,
+            top_k=top_k, top_p=top_p,
         )
 
 

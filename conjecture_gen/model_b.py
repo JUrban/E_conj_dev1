@@ -322,7 +322,8 @@ class GraphGrowingDecoder(nn.Module):
         }
 
     @torch.no_grad()
-    def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0):
+    def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0,
+                 top_k=0, top_p=0.0):
         device = next(self.parameters()).device
 
         if batch_data is None:
@@ -492,11 +493,12 @@ class ConjectureModelB(nn.Module):
         )
 
     @torch.no_grad()
-    def generate(self, data, max_steps=80, temperature=1.0):
+    def generate(self, data, max_steps=80, temperature=1.0, top_k=0, top_p=0.0):
         self.eval()
         x_dict = self.encoder(data)
         return self.decoder.generate(x_dict, batch_data=data,
-                                     max_steps=max_steps, temperature=temperature)
+                                     max_steps=max_steps, temperature=temperature,
+                                     top_k=top_k, top_p=top_p)
 
 
 if __name__ == '__main__':

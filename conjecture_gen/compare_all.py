@@ -101,7 +101,7 @@ def train_one_variant(variant, train_ds, val_ds, args, device):
     samples = []
     for idx in range(min(3, len(val_ds))):
         data = val_ds[idx].to(device)
-        seqs = model.generate(data)
+        seqs = model.generate(data, top_k=10, top_p=0.9)
         if seqs:
             decoded = decode_sequence(seqs[0], data.symbol_names)
             samples.append(decoded[:150])
