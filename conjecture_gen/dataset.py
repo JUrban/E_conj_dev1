@@ -291,8 +291,9 @@ class ConjectureDataset(Dataset):
 
     def __getitem__(self, idx):
         # Use in-memory cache if available (fastest)
+        # Must clone to prevent .to(device) from mutating the cache
         if hasattr(self, '_inmemory') and self._inmemory:
-            return self._inmemory[idx]
+            return self._inmemory[idx].clone()
         return self._build_item(idx)
 
 

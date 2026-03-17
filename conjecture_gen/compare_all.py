@@ -164,6 +164,9 @@ def main():
             import traceback
             traceback.print_exc()
             results.append({'variant': variant, 'error': str(e)})
+        # Free GPU memory between variants
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
 
     # Print comparison table
     print(f"\n{'='*80}")
