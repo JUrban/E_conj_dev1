@@ -95,6 +95,7 @@ def collate_fn(batch_list):
 
     We handle target tensors manually (stack into 2D) because PyG's
     Batch.from_data_list concatenates 1D tensors instead of stacking.
+    Clones items to avoid mutating the in-memory dataset cache.
     """
     from torch_geometric.data import Batch
 
@@ -110,7 +111,10 @@ def collate_fn(batch_list):
     all_ratios = []
     all_num_symbols = []
 
-    for item in batch_list:
+    # Clone items so we don't mutate the dataset's in-memory cache
+    cloned = [item.clone() for item in batch_list]
+
+    for item in cloned:
         cur_len = item.target_actions.shape[0]
         pad_len = max_len - cur_len
         all_actions.append(F.pad(item.target_actions, (0, pad_len), value=END_CLAUSE))
@@ -120,7 +124,7 @@ def collate_fn(batch_list):
         all_ratios.append(item.ratio)
         all_num_symbols.append(item.num_symbols)
 
-        # Remove these from the item so PyG doesn't try to batch them
+        # Remove these from the clone so PyG doesn't try to batch them
         del item.target_actions
         del item.target_arguments
         del item.target_length
@@ -128,8 +132,8 @@ def collate_fn(batch_list):
         del item.ratio
         del item.num_symbols
 
-    # Batch the graphs
-    batch = Batch.from_data_list(batch_list)
+    # Batch the graphs (using clones, not originals)
+    batch = Batch.from_data_list(cloned)
 
     # Re-attach properly stacked targets
     batch.target_actions = torch.stack(all_actions)         # (B, T)
