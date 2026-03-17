@@ -35,12 +35,12 @@ def train_one_variant(variant, train_ds, val_ds, args, device):
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, shuffle=True,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=False,
     )
     val_loader = DataLoader(
         val_ds, batch_size=args.batch_size, shuffle=False,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=False,
     )
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-5)
@@ -121,7 +121,7 @@ def main():
     parser.add_argument('--epochs', type=int, default=3)
     parser.add_argument('--max_samples', type=int, default=200)
     parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--num_workers', type=int, default=4)
+    parser.add_argument('--num_workers', type=int, default=0)
     parser.add_argument('--hidden_dim', type=int, default=64)
     parser.add_argument('--num_gnn_layers', type=int, default=4)
     parser.add_argument('--max_vars', type=int, default=20)

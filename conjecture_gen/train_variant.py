@@ -93,12 +93,12 @@ def train(args):
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, shuffle=True,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=False,
     )
     val_loader = DataLoader(
         val_ds, batch_size=args.batch_size, shuffle=False,
         collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=(nw > 0),
+        pin_memory=False, persistent_workers=False,
     )
 
     model, loss_fn = get_model_and_loss(args.variant, args)
@@ -200,7 +200,7 @@ def main():
     p.add_argument('--num_gnn_layers', type=int, default=4)
     p.add_argument('--max_vars', type=int, default=20)
     p.add_argument('--batch_size', type=int, default=32)
-    p.add_argument('--num_workers', type=int, default=4)
+    p.add_argument('--num_workers', type=int, default=0)
     p.add_argument('--lr', type=float, default=3e-4)
     p.add_argument('--weight_decay', type=float, default=1e-5)
     p.add_argument('--grad_clip', type=float, default=1.0)
