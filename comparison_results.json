@@ -1,0 +1,62 @@
+[
+  {
+    "variant": "a",
+    "params": 762907,
+    "best_val_loss": 5.888814091682434,
+    "final_train_loss": 5.521534039424016,
+    "train_time": 145.2390010356903,
+    "samples": [
+      "esk3_0(),esk3_0()) | esk3_0()) | esk3_0())",
+      "k3_algstr_3(),k2_zfmisc_1()) | k2_zfmisc_1()) | k3_algstr_3())",
+      "k3_algstr_3(),k2_zfmisc_1()) | k2_zfmisc_1()) | k3_algstr_3())"
+    ]
+  },
+  {
+    "variant": "b",
+    "params": 617438,
+    "best_val_loss": 4.413023114204407,
+    "final_train_loss": 4.641601048983061,
+    "train_time": 39.38045954704285,
+    "samples": [
+      "r1_struct_0(X5) | r1_struct_0(X14,X14,X14,X14) | ~r1_struct_0(X10,X10) | ~r1_struct_0(X10,X10) | ~r1_struct_0(X10,X10)",
+      "$eq(X5) | v1_funct_2(X14,X14,X14,X14) | ~v1_funct_2(X10,X10) | ~v1_funct_2(X10,X10) | ~v1_funct_2(X10,X10)",
+      "$eq(X5) | v1_funct_2(X14,X14,X14,X14) | ~v1_funct_2(X10,X10) | ~v1_funct_2(X10,X10) | ~v1_funct_2(X10,X10)"
+    ]
+  },
+  {
+    "variant": "c",
+    "params": 801883,
+    "best_val_loss": 6.120915770530701,
+    "final_train_loss": 5.74283845608051,
+    "train_time": 25.517338752746582,
+    "samples": [
+      "<empty>",
+      "<empty>",
+      "<empty>"
+    ]
+  },
+  {
+    "variant": "d",
+    "params": 666363,
+    "best_val_loss": 5.341224312782288,
+    "final_train_loss": 5.1481769268329325,
+    "train_time": 35.96985936164856,
+    "samples": [
+      "<empty>",
+      "<empty>",
+      "<empty>"
+    ]
+  },
+  {
+    "variant": "e",
+    "params": 685721,
+    "best_val_loss": 9.729919672012329,
+    "final_train_loss": 9.160687886751615,
+    "train_time": 19.718315601348877,
+    "samples": [
+      "~r1_struct_0() | ~r1_struct_0() | ~r1_struct_0() | ~r1_struct_0() | ~r1_struct_0() | ~r1_struct_0()",
+      "~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2()",
+      "~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2() | ~v1_funct_2()"
+    ]
+  }
+]
