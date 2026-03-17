@@ -123,85 +123,116 @@ class HeteroGNNEncoder(nn.Module):
 
 
 class PointerTreeDecoder(nn.Module):
-    """Autoregressive tree decoder with pointer mechanism.
+    """Transformer-based autoregressive tree decoder with pointer mechanism.
 
-    At each step, predicts:
-    1. Action type (NEW_LIT_POS/NEG, PRED, ARG_VAR, ARG_FUNC, END_ARGS, END_CLAUSE)
-    2. Argument (pointer to symbol, or variable slot index)
-
-    Uses GRU hidden state + attention over encoder outputs.
+    Uses causal self-attention over the generated sequence so the decoder
+    can see its full history (preventing repetition), plus cross-attention
+    over GNN encoder outputs for context and pointer-based symbol selection.
     """
 
     def __init__(self, hidden_dim: int = 128, max_vars: int = 20,
-                 max_literals: int = 8):
+                 max_literals: int = 8, num_layers: int = 3,
+                 nhead: int = 4, max_seq_len: int = 100):
         super().__init__()
         self.hidden_dim = hidden_dim
         self.max_vars = max_vars
         self.max_literals = max_literals
+        self.max_seq_len = max_seq_len
 
-        # Embedding for action tokens (fed back as input at each step)
+        # Input embeddings: action + argument combined into one token embedding
         self.action_embed = nn.Embedding(NUM_ACTION_TYPES, hidden_dim)
+        self.arg_sym_proj = nn.Linear(hidden_dim, hidden_dim)
+        self.var_slot_embed = nn.Embedding(max_vars, hidden_dim)
+        self.input_combine = nn.Linear(hidden_dim * 2, hidden_dim)
 
-        # GRU cell
-        # Input: action_embedding + context_vector + argument_embedding
-        self.gru = nn.GRUCell(hidden_dim * 3, hidden_dim)
+        # Positional encoding (learned)
+        self.pos_embed = nn.Embedding(max_seq_len, hidden_dim)
 
-        # Attention over all encoder nodes (for context vector)
-        self.attn_query = nn.Linear(hidden_dim, hidden_dim)
-        self.attn_key = nn.Linear(hidden_dim, hidden_dim)
+        # Transformer decoder layers (self-attn + cross-attn + FFN)
+        decoder_layer = nn.TransformerDecoderLayer(
+            d_model=hidden_dim, nhead=nhead,
+            dim_feedforward=hidden_dim * 4,
+            dropout=0.1, batch_first=True,
+        )
+        self.transformer_decoder = nn.TransformerDecoder(
+            decoder_layer, num_layers=num_layers,
+        )
 
-        # Action type prediction — takes hidden state + literal count feature
-        self.action_head = nn.Linear(hidden_dim + 1, NUM_ACTION_TYPES)
+        # Output heads
+        self.action_head = nn.Linear(hidden_dim, NUM_ACTION_TYPES)
 
         # Pointer head: attention over symbol embeddings
         self.pointer_query = nn.Linear(hidden_dim, hidden_dim)
         self.pointer_key = nn.Linear(hidden_dim, hidden_dim)
 
-        # Coverage: learnable penalty weight for repeated pointer attention
-        self.coverage_weight = nn.Parameter(torch.tensor(-1.0))
-
         # Variable slot prediction
         self.var_head = nn.Linear(hidden_dim, max_vars)
 
-        # Argument embedding: project symbol embedding or variable slot
-        self.arg_sym_proj = nn.Linear(hidden_dim, hidden_dim)
-        self.var_slot_embed = nn.Embedding(max_vars, hidden_dim)
-
-        # Initial hidden state projection from global graph embedding
-        self.init_hidden = nn.Linear(hidden_dim, hidden_dim)
-
-    def _compute_context(self, h: torch.Tensor,
-                         all_node_embeds: torch.Tensor) -> torch.Tensor:
-        """Attention over all encoder node embeddings."""
-        # h: (batch, hidden)  all_node_embeds: (batch, N, hidden)
-        query = self.attn_query(h).unsqueeze(1)  # (batch, 1, hidden)
-        keys = self.attn_key(all_node_embeds)     # (batch, N, hidden)
-        scores = torch.bmm(query, keys.transpose(1, 2))  # (batch, 1, N)
-        scores = scores / (self.hidden_dim ** 0.5)
-        attn = F.softmax(scores, dim=-1)
-        context = torch.bmm(attn, all_node_embeds).squeeze(1)  # (batch, hidden)
-        return context
-
     def _pointer_scores(self, h: torch.Tensor,
                         symbol_embeds: torch.Tensor,
-                        symbol_mask: torch.Tensor = None,
-                        coverage: torch.Tensor = None) -> torch.Tensor:
+                        symbol_mask: torch.Tensor = None) -> torch.Tensor:
         """Compute pointer attention scores over symbol embeddings.
 
-        Args:
-            coverage: (batch, S) cumulative attention over symbols.
-                      Used to penalize re-attending to the same symbols.
+        h: (batch, hidden) or (batch, seq, hidden)
+        symbol_embeds: (batch, S, hidden)
         """
-        query = self.pointer_query(h).unsqueeze(1)  # (batch, 1, hidden)
-        keys = self.pointer_key(symbol_embeds)       # (batch, S, hidden)
-        scores = torch.bmm(query, keys.transpose(1, 2)).squeeze(1)  # (batch, S)
+        if h.dim() == 2:
+            h = h.unsqueeze(1)  # (batch, 1, hidden)
+        query = self.pointer_query(h)             # (batch, seq, hidden)
+        keys = self.pointer_key(symbol_embeds)    # (batch, S, hidden)
+        scores = torch.bmm(query, keys.transpose(1, 2))  # (batch, seq, S)
         scores = scores / (self.hidden_dim ** 0.5)
-        if coverage is not None:
-            # Learned penalty for repeated attention (coverage_weight is negative)
-            scores = scores + self.coverage_weight * torch.log1p(coverage)
         if symbol_mask is not None:
-            scores = scores.masked_fill(~symbol_mask, float('-inf'))
+            scores = scores.masked_fill(~symbol_mask.unsqueeze(1), float('-inf'))
+        if h.shape[1] == 1:
+            scores = scores.squeeze(1)  # back to (batch, S)
         return scores
+
+    def _build_input_embeds(self, actions: torch.Tensor,
+                            arguments: torch.Tensor,
+                            symbol_embeds: torch.Tensor) -> torch.Tensor:
+        """Build input token embeddings from (action, argument) pairs.
+
+        actions: (batch, seq) action types
+        arguments: (batch, seq) argument values
+        symbol_embeds: (batch, S, hidden) for looking up symbol embeddings
+
+        Returns: (batch, seq, hidden)
+        """
+        B, T = actions.shape
+        device = actions.device
+
+        # Action embeddings
+        act_emb = self.action_embed(actions)  # (B, T, hidden)
+
+        # Argument embeddings (depends on action type)
+        arg_emb = torch.zeros(B, T, self.hidden_dim, device=device)
+
+        # Symbol pointer args (PRED or ARG_FUNC)
+        ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
+        if ptr_mask.any():
+            ptr_idx = arguments[ptr_mask].clamp(0, symbol_embeds.shape[1] - 1)
+            # Gather per-sample symbol embeddings
+            batch_indices = torch.arange(B, device=device).unsqueeze(1).expand_as(actions)[ptr_mask]
+            sym_vecs = symbol_embeds[batch_indices, ptr_idx]
+            arg_emb[ptr_mask] = self.arg_sym_proj(sym_vecs)
+
+        # Variable args
+        var_mask = actions == ARG_VAR
+        if var_mask.any():
+            var_slots = arguments[var_mask].clamp(0, self.max_vars - 1)
+            arg_emb[var_mask] = self.var_slot_embed(var_slots)
+
+        # Combine action + argument
+        combined = self.input_combine(torch.cat([act_emb, arg_emb], dim=-1))
+        return combined
+
+    def _get_causal_mask(self, seq_len: int, device: torch.device) -> torch.Tensor:
+        """Create causal attention mask for self-attention."""
+        return torch.triu(
+            torch.ones(seq_len, seq_len, device=device, dtype=torch.bool),
+            diagonal=1,
+        )
 
     def forward(self, x_dict: dict[str, torch.Tensor],
                 target_actions: torch.Tensor,
@@ -209,32 +240,20 @@ class PointerTreeDecoder(nn.Module):
                 target_lengths: torch.Tensor,
                 num_symbols: torch.Tensor,
                 batch_data=None) -> dict[str, torch.Tensor]:
-        """Teacher-forced forward pass for training.
-
-        Args:
-            x_dict: encoder outputs, dict of node_type -> (N_total, hidden)
-            target_actions: (batch, max_seq_len) action types
-            target_arguments: (batch, max_seq_len) arguments
-            target_lengths: (batch,) sequence lengths
-            num_symbols: (batch,) number of symbols per problem
-            batch_data: the batched HeteroData (for batch assignments)
-
-        Returns:
-            dict with 'action_logits', 'pointer_logits', 'var_logits'
-        """
+        """Teacher-forced forward pass. Processes all timesteps in parallel."""
         batch_size = target_actions.shape[0]
         max_len = target_actions.shape[1]
         device = target_actions.device
 
-        # --- Prepare padded per-sample symbol and node embeddings ---
-        # We need per-sample embeddings for pointer attention
+        # --- Prepare encoder outputs ---
         symbol_embeds, symbol_mask = self._pad_per_sample(
             x_dict['symbol'], batch_data['symbol'].batch
-            if 'symbol' in batch_data and hasattr(batch_data['symbol'], 'batch')
+            if hasattr(batch_data['symbol'], 'batch')
             else torch.zeros(x_dict['symbol'].shape[0], dtype=torch.long, device=device),
             batch_size,
         )
-        # Concatenate all node embeddings for context attention
+
+        # All node embeddings for cross-attention memory
         all_embeds_list = []
         all_batch_list = []
         for ntype in ['clause', 'literal', 'symbol', 'term', 'variable']:
@@ -246,97 +265,47 @@ class PointerTreeDecoder(nn.Module):
                     all_batch_list.append(
                         torch.zeros(x_dict[ntype].shape[0], dtype=torch.long, device=device)
                     )
-
         all_embeds_cat = torch.cat(all_embeds_list, dim=0)
         all_batch_cat = torch.cat(all_batch_list, dim=0)
-        all_node_embeds, _ = self._pad_per_sample(
+        memory, memory_mask = self._pad_per_sample(
             all_embeds_cat, all_batch_cat, batch_size,
         )
+        # memory: (batch, N_max, hidden), memory_mask: (batch, N_max) bool
 
-        # --- Initial hidden state from global graph embedding ---
-        # Global pooling: scatter mean of all node embeddings per sample
-        global_embed = torch.zeros(batch_size, self.hidden_dim, device=device)
-        global_embed.scatter_add_(0, all_batch_cat.unsqueeze(1).expand_as(all_embeds_cat), all_embeds_cat)
-        counts = torch.bincount(all_batch_cat, minlength=batch_size).float().clamp(min=1).unsqueeze(1)
-        global_embed = global_embed / counts
-        h = torch.tanh(self.init_hidden(global_embed))  # (batch, hidden)
+        # --- Build decoder input sequence ---
+        # Shift right: prepend BOS token, drop last target token
+        bos_action = torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)
+        bos_arg = torch.zeros((batch_size, 1), dtype=torch.long, device=device)
+        dec_actions = torch.cat([bos_action, target_actions[:, :-1]], dim=1)
+        dec_args = torch.cat([bos_arg, target_arguments[:, :-1]], dim=1)
 
-        # --- Autoregressive decoding with teacher forcing ---
-        all_action_logits = []
-        all_pointer_logits = []
-        all_var_logits = []
+        # Token embeddings + positional encoding
+        tok_embeds = self._build_input_embeds(dec_actions, dec_args, symbol_embeds)
+        positions = torch.arange(max_len, device=device).unsqueeze(0).clamp(max=self.max_seq_len - 1)
+        tok_embeds = tok_embeds + self.pos_embed(positions)
 
-        # Coverage: cumulative pointer attention for anti-repetition
-        n_symbols = symbol_embeds.shape[1]
-        coverage = torch.zeros(batch_size, n_symbols, device=device)
-        # Literal counter per sample
-        lit_count = torch.zeros(batch_size, 1, device=device)
+        # --- Transformer decoder ---
+        causal_mask = self._get_causal_mask(max_len, device)
+        # Padding mask for decoder: positions beyond target length
+        tgt_key_padding_mask = torch.arange(max_len, device=device).unsqueeze(0) >= target_lengths.unsqueeze(1)
+        # Padding mask for memory
+        memory_key_padding_mask = ~memory_mask
 
-        # First input: start token (use END_CLAUSE embedding as BOS)
-        action_input = self.action_embed(
-            torch.full((batch_size,), END_CLAUSE, dtype=torch.long, device=device)
-        )
-        arg_input = torch.zeros(batch_size, self.hidden_dim, device=device)
+        hidden = self.transformer_decoder(
+            tgt=tok_embeds,
+            memory=memory,
+            tgt_mask=causal_mask,
+            tgt_key_padding_mask=tgt_key_padding_mask,
+            memory_key_padding_mask=memory_key_padding_mask,
+        )  # (batch, seq, hidden)
 
-        for t in range(max_len):
-            # Context via attention
-            context = self._compute_context(h, all_node_embeds)
+        # --- Output heads ---
+        action_logits = self.action_head(hidden)  # (batch, seq, 7)
 
-            # GRU step
-            gru_input = torch.cat([action_input, context, arg_input], dim=-1)
-            h = self.gru(gru_input, h)
+        # Pointer logits: each position attends to symbols
+        pointer_logits = self._pointer_scores(hidden, symbol_embeds, symbol_mask)  # (batch, seq, S)
 
-            # Predict action type — include normalized literal count
-            lit_feat = lit_count / self.max_literals
-            action_logits = self.action_head(
-                torch.cat([h, lit_feat], dim=-1)
-            )  # (batch, NUM_ACTION_TYPES)
-            all_action_logits.append(action_logits)
-
-            # Predict pointer with coverage penalty
-            ptr_logits = self._pointer_scores(
-                h, symbol_embeds, symbol_mask=None, coverage=coverage,
-            )
-            all_pointer_logits.append(ptr_logits)
-
-            # Update coverage with soft attention from this step
-            ptr_attn = F.softmax(ptr_logits, dim=-1)
-            coverage = coverage + ptr_attn
-
-            # Predict variable slot
-            var_logits = self.var_head(h)  # (batch, max_vars)
-            all_var_logits.append(var_logits)
-
-            # Teacher forcing: use ground truth for next input
-            if t < max_len - 1:
-                next_action = target_actions[:, t]
-                next_arg = target_arguments[:, t]
-                action_input = self.action_embed(next_action)
-
-                # Track literal count
-                is_new_lit = (next_action == NEW_LIT_POS) | (next_action == NEW_LIT_NEG)
-                lit_count = lit_count + is_new_lit.float().unsqueeze(1)
-
-                # Build argument embedding based on action type (vectorized)
-                arg_input = torch.zeros(batch_size, self.hidden_dim, device=device)
-
-                # Symbol pointer args (PRED or ARG_FUNC)
-                ptr_mask = (next_action == PRED) | (next_action == ARG_FUNC)
-                if ptr_mask.any():
-                    ptr_idx = next_arg[ptr_mask].clamp(0, symbol_embeds.shape[1] - 1)
-                    batch_idx = torch.arange(batch_size, device=device)[ptr_mask]
-                    sym_vecs = symbol_embeds[batch_idx, ptr_idx]  # (n_ptr, hidden)
-                    arg_input[ptr_mask] = self.arg_sym_proj(sym_vecs)
-
-                # Variable args
-                var_mask = next_action == ARG_VAR
-                if var_mask.any():
-                    var_slots = next_arg[var_mask].clamp(0, self.max_vars - 1)
-                    arg_input[var_mask] = self.var_slot_embed(var_slots)
-
-        action_logits = torch.stack(all_action_logits, dim=1)   # (batch, seq, 7)
-        pointer_logits = torch.stack(all_pointer_logits, dim=1)  # (batch, seq, max_sym)
-        var_logits = torch.stack(all_var_logits, dim=1)          # (batch, seq, max_vars)
+        var_logits = self.var_head(hidden)  # (batch, seq, max_vars)
 
         return {
             'action_logits': action_logits,
@@ -346,10 +315,7 @@ class PointerTreeDecoder(nn.Module):
 
     def _pad_per_sample(self, embeds: torch.Tensor, batch_assign: torch.Tensor,
                         batch_size: int):
-        """Pad variable-length per-sample embeddings to (batch, max_N, hidden).
-
-        Returns (padded_embeds, mask).
-        """
+        """Pad variable-length per-sample embeddings to (batch, max_N, hidden)."""
         device = embeds.device
         counts = torch.bincount(batch_assign, minlength=batch_size)
         max_n = counts.max().item() if counts.numel() > 0 else 0
@@ -359,19 +325,14 @@ class PointerTreeDecoder(nn.Module):
         padded = torch.zeros(batch_size, max_n, self.hidden_dim, device=device)
         mask = torch.zeros(batch_size, max_n, dtype=torch.bool, device=device)
 
-        # Compute per-sample offsets for scatter
         sorted_idx = torch.argsort(batch_assign, stable=True)
         sorted_batch = batch_assign[sorted_idx]
         sorted_embeds = embeds[sorted_idx]
 
-        # Position within each sample
-        offsets = torch.zeros_like(batch_assign)
         for i in range(batch_size):
             sample_mask = sorted_batch == i
             n = sample_mask.sum().item()
             if n > 0:
-                positions = torch.arange(n, device=device)
-                offsets[sample_mask] = positions
                 padded[i, :n] = sorted_embeds[sample_mask]
                 mask[i, :n] = True
 
@@ -382,16 +343,12 @@ class PointerTreeDecoder(nn.Module):
                  batch_data=None,
                  max_steps: int = 80,
                  temperature: float = 1.0) -> list[list[tuple[int, int]]]:
-        """Autoregressive generation (greedy or with temperature).
-
-        Returns list of sequences, one per sample in the batch.
-        """
+        """Autoregressive generation with KV-cache-style incremental decoding."""
         device = next(self.parameters()).device
 
         # Handle single sample (no batch dimension)
         if batch_data is None:
             batch_size = 1
-            # Assume all nodes belong to sample 0
             symbol_batch = torch.zeros(
                 x_dict['symbol'].shape[0], dtype=torch.long, device=device
             )
@@ -407,7 +364,7 @@ class PointerTreeDecoder(nn.Module):
             x_dict['symbol'], symbol_batch, batch_size,
         )
 
-        # All node embeddings for context
+        # Build memory (all encoder node embeddings)
         all_embeds_list = []
         all_batch_list = []
         for ntype in ['clause', 'literal', 'symbol', 'term', 'variable']:
@@ -421,46 +378,44 @@ class PointerTreeDecoder(nn.Module):
                     )
         all_embeds_cat = torch.cat(all_embeds_list, dim=0)
         all_batch_cat = torch.cat(all_batch_list, dim=0)
-        all_node_embeds, _ = self._pad_per_sample(
+        memory, memory_mask = self._pad_per_sample(
             all_embeds_cat, all_batch_cat, batch_size,
         )
+        memory_key_padding_mask = ~memory_mask
 
-        # Initial hidden state
-        global_embed = torch.zeros(batch_size, self.hidden_dim, device=device)
-        for i in range(batch_size):
-            mask = all_batch_cat == i
-            if mask.any():
-                global_embed[i] = all_embeds_cat[mask].mean(dim=0)
-        h = torch.tanh(self.init_hidden(global_embed))
-
-        # Generate
+        # Generate autoregressively
         sequences = [[] for _ in range(batch_size)]
         done = [False] * batch_size
         lit_counts = [0] * batch_size
 
-        # Coverage and literal tracking
-        n_symbols = symbol_embeds.shape[1]
-        coverage = torch.zeros(batch_size, n_symbols, device=device)
-        lit_count_t = torch.zeros(batch_size, 1, device=device)
-
-        # Track recently generated (action, arg) pairs for repetition penalty
-        recent_preds = [[] for _ in range(batch_size)]  # list of recent predicate indices
-
-        action_input = self.action_embed(
-            torch.full((batch_size,), END_CLAUSE, dtype=torch.long, device=device)
-        )
-        arg_input = torch.zeros(batch_size, self.hidden_dim, device=device)
+        # Build sequence incrementally
+        gen_actions = [END_CLAUSE]  # BOS
+        gen_args = [0]
+        all_actions = torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)
+        all_args = torch.zeros((batch_size, 1), dtype=torch.long, device=device)
 
         for step in range(max_steps):
-            context = self._compute_context(h, all_node_embeds)
-            gru_input = torch.cat([action_input, context, arg_input], dim=-1)
-            h = self.gru(gru_input, h)
+            seq_len = all_actions.shape[1]
 
-            # Predict action with literal count feature
-            lit_feat = lit_count_t / self.max_literals
-            action_logits = self.action_head(
-                torch.cat([h, lit_feat], dim=-1)
-            ) / temperature
+            # Build input embeddings for full sequence so far
+            tok_embeds = self._build_input_embeds(all_actions, all_args, symbol_embeds)
+            positions = torch.arange(seq_len, device=device).unsqueeze(0).clamp(max=self.max_seq_len - 1)
+            tok_embeds = tok_embeds + self.pos_embed(positions)
+
+            # Run transformer (causal self-attention over full generated sequence)
+            causal_mask = self._get_causal_mask(seq_len, device)
+            hidden = self.transformer_decoder(
+                tgt=tok_embeds,
+                memory=memory,
+                tgt_mask=causal_mask,
+                memory_key_padding_mask=memory_key_padding_mask,
+            )
+
+            # Only use the last position's output
+            h_last = hidden[:, -1, :]  # (batch, hidden)
+
+            # Predict action
+            action_logits = self.action_head(h_last) / temperature
 
             # Force END_CLAUSE if max literals reached
             for i in range(batch_size):
@@ -469,63 +424,42 @@ class PointerTreeDecoder(nn.Module):
                     action_logits[i, NEW_LIT_NEG] = float('-inf')
                     action_logits[i, END_CLAUSE] += 5.0
 
-            actions = torch.argmax(action_logits, dim=-1)
+            actions = torch.argmax(action_logits, dim=-1)  # (batch,)
 
-            # Predict pointer with coverage
-            ptr_logits = self._pointer_scores(
-                h, symbol_embeds, symbol_mask, coverage=coverage,
-            )
+            # Predict pointer and variable
+            ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
+            var_logits = self.var_head(h_last)
 
-            # Repetition penalty: reduce score for predicates used in recent literals
-            for i in range(batch_size):
-                if not done[i] and recent_preds[i]:
-                    for pred_idx in recent_preds[i][-3:]:  # penalize last 3
-                        if pred_idx < ptr_logits.shape[1]:
-                            ptr_logits[i, pred_idx] -= 2.0
-
-            var_logits = self.var_head(h)
-
-            # Update coverage
-            ptr_attn = F.softmax(ptr_logits, dim=-1)
-            coverage = coverage + ptr_attn
-
-            # Record and prepare next input
-            arg_input = torch.zeros(batch_size, self.hidden_dim, device=device)
+            # Record outputs and build next input
+            new_args = torch.zeros(batch_size, dtype=torch.long, device=device)
 
             for i in range(batch_size):
                 if done[i]:
                     continue
                 act = actions[i].item()
 
-                # Track literal count
                 if act in (NEW_LIT_POS, NEW_LIT_NEG):
                     lit_counts[i] += 1
-                    lit_count_t[i, 0] = lit_counts[i]
 
                 if act in (PRED, ARG_FUNC):
                     arg_val = torch.argmax(ptr_logits[i]).item()
-                    if arg_val < symbol_embeds.shape[1] and symbol_mask[i, arg_val]:
-                        arg_input[i] = self.arg_sym_proj(symbol_embeds[i, arg_val])
-                    # Track predicate for repetition penalty
-                    if act == PRED:
-                        recent_preds[i].append(arg_val)
                 elif act == ARG_VAR:
                     arg_val = torch.argmax(var_logits[i]).item()
                     arg_val = min(arg_val, self.max_vars - 1)
-                    arg_input[i] = self.var_slot_embed(
-                        torch.tensor(arg_val, device=device)
-                    )
                 else:
                     arg_val = 0
 
+                new_args[i] = arg_val
                 sequences[i].append((act, arg_val))
                 if act == END_CLAUSE:
                     done[i] = True
 
-            action_input = self.action_embed(actions)
-
             if all(done):
                 break
+
+            # Append to sequence for next step
+            all_actions = torch.cat([all_actions, actions.unsqueeze(1)], dim=1)
+            all_args = torch.cat([all_args, new_args.unsqueeze(1)], dim=1)
 
         return sequences
 
@@ -534,10 +468,14 @@ class ConjectureModel(nn.Module):
     """Full model: GNN encoder + pointer tree decoder."""
 
     def __init__(self, hidden_dim: int = 128, num_gnn_layers: int = 6,
-                 max_vars: int = 20, max_literals: int = 8):
+                 max_vars: int = 20, max_literals: int = 8,
+                 dec_layers: int = 3, dec_nhead: int = 4):
         super().__init__()
         self.encoder = HeteroGNNEncoder(hidden_dim, num_gnn_layers)
-        self.decoder = PointerTreeDecoder(hidden_dim, max_vars, max_literals)
+        self.decoder = PointerTreeDecoder(
+            hidden_dim, max_vars, max_literals,
+            num_layers=dec_layers, nhead=dec_nhead,
+        )
         self.hidden_dim = hidden_dim
 
     def forward(self, batch_data: HeteroData) -> dict[str, torch.Tensor]:
