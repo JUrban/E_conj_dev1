@@ -134,6 +134,60 @@ def main():
     from conjecture_gen.train import train
     train(train_args)
 
+    # Run evaluation on test set
+    print("\n=== Evaluation on test set ===")
+    import torch
+    from conjecture_gen.evaluate import load_model, evaluate_loss, evaluate_generation
+    from conjecture_gen.dataset import ConjectureDataset
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model_path = os.path.join(config['save_dir'], 'best_model.pt')
+    model, model_args, checkpoint = load_model(model_path, device)
+
+    test_ds = ConjectureDataset(
+        problems_dir=config['problems_dir'],
+        lemmas_file=config['lemmas_file'],
+        statistics_file=config['statistics_file'],
+        cache_dir=config['cache_dir'],
+        max_ratio=config['max_ratio'],
+        max_nodes=config.get('max_nodes', 0),
+        split='test',
+    )
+
+    loss_metrics = evaluate_loss(model, test_ds, device)
+    print("Loss metrics:")
+    for k, v in loss_metrics.items():
+        print(f"  {k}: {v:.4f}")
+
+    gen_results = evaluate_generation(model, test_ds, device, n_per_problem=5, max_problems=100)
+    print("Generation metrics:")
+    for k, v in gen_results['metrics'].items():
+        if isinstance(v, float):
+            print(f"  {k}: {v:.4f}")
+        else:
+            print(f"  {k}: {v}")
+
+    print("\nSample conjectures:")
+    shown = 0
+    for pr in gen_results['per_problem']:
+        if pr['conjectures'] and shown < 5:
+            print(f"  {pr['problem']} ({pr['n_unique']} unique):")
+            for c in pr['conjectures'][:2]:
+                tag = "OK" if c['valid'] else "BAD"
+                print(f"    [{tag}] {c['text']}")
+            shown += 1
+
+    # Save
+    import json
+    eval_path = os.path.join(config['save_dir'], f'eval_test.json')
+    with open(eval_path, 'w') as f:
+        json.dump({
+            'loss_metrics': loss_metrics,
+            'generation_metrics': gen_results['metrics'],
+            'samples': gen_results['per_problem'][:50],
+        }, f, indent=2)
+    print(f"\nEvaluation saved to {eval_path}")
+
 
 if __name__ == '__main__':
     main()
