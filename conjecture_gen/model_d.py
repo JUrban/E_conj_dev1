@@ -275,9 +275,13 @@ class SSMDecoder(nn.Module):
         symbol_embeds, symbol_mask = self._pad_per_sample(x_dict['symbol'], sb, batch_size)
 
         # Get symbol arities for constrained decoding
-        sym_arities = getattr(batch_data, 'symbol_arities',
-                              getattr(batch_data, 'symbol_arities', [0] * symbol_embeds.shape[1]))
-        if not isinstance(sym_arities, list):
+        # Get symbol arities — handle both single graph and batched graphs
+        sym_arities = getattr(batch_data, 'symbol_arities', None)
+        if sym_arities is None:
+            sym_arities = [0] * symbol_embeds.shape[1]
+        elif isinstance(sym_arities, list) and sym_arities and isinstance(sym_arities[0], list):
+            sym_arities = sym_arities[0]  # batched: use first (all same problem)
+        elif not isinstance(sym_arities, list):
             sym_arities = [0] * symbol_embeds.shape[1]
         arity_con = ArityConstraint(sym_arities, batch_size)
 

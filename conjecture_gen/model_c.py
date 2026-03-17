@@ -285,9 +285,12 @@ class VAETransformerDecoder(nn.Module):
         mem_mask = torch.cat([z_mask, mem_mask], dim=1)
 
         # Autoregressive decode with arity constraints
-        sym_arities = getattr(batch_data, 'symbol_arities',
-                              getattr(batch_data, 'symbol_arities', [0] * symbol_embeds.shape[1]))
-        if not isinstance(sym_arities, list):
+        sym_arities = getattr(batch_data, 'symbol_arities', None)
+        if sym_arities is None:
+            sym_arities = [0] * symbol_embeds.shape[1]
+        elif isinstance(sym_arities, list) and sym_arities and isinstance(sym_arities[0], list):
+            sym_arities = sym_arities[0]
+        elif not isinstance(sym_arities, list):
             sym_arities = [0] * symbol_embeds.shape[1]
         arity_con = ArityConstraint(sym_arities, batch_size)
 
