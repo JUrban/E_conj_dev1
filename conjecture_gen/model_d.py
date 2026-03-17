@@ -135,10 +135,14 @@ class SSMDecoder(nn.Module):
             SSMBlock(hidden_dim, state_dim) for _ in range(num_layers)
         ])
 
-        # Cross-attention to encoder (interleaved with SSM)
-        self.cross_attns = nn.ModuleList([
-            nn.MultiheadAttention(hidden_dim, num_heads=4, batch_first=True)
-            for _ in range(num_layers)
+        # Linear cross-attention to encoder (memory-efficient)
+        # Instead of full (seq×mem) attention, pre-computes a memory summary
+        # then gates the decoder hidden state with it.
+        self.mem_projs = nn.ModuleList([
+            nn.Linear(hidden_dim, hidden_dim) for _ in range(num_layers)
+        ])
+        self.gate_projs = nn.ModuleList([
+            nn.Linear(hidden_dim * 2, hidden_dim) for _ in range(num_layers)
         ])
         self.cross_norms = nn.ModuleList([
             nn.LayerNorm(hidden_dim) for _ in range(num_layers)
@@ -232,13 +236,17 @@ class SSMDecoder(nn.Module):
 
         tok_embeds = self._build_input_embeds(dec_actions, dec_args, symbol_embeds)
 
-        # SSM layers with cross-attention
+        # SSM layers with gated linear cross-attention
+        # Pre-compute memory summaries (one per layer, no seq_len dimension)
         h = tok_embeds
-        for ssm, ca, cn in zip(self.ssm_layers, self.cross_attns, self.cross_norms):
+        for ssm, mp, gp, cn in zip(self.ssm_layers, self.mem_projs, self.gate_projs, self.cross_norms):
             h = ssm(h)
-            residual = h
-            h2, _ = ca(h, memory, memory, key_padding_mask=~mem_mask)
-            h = cn(residual + h2)
+            # Memory summary: mean-pool encoder memory (B, H), project, broadcast
+            mem_summary = memory.mean(dim=1)  # (B, H)
+            mem_ctx = mp(mem_summary).unsqueeze(1).expand_as(h)  # (B, L, H)
+            # Gated fusion
+            gate = torch.sigmoid(gp(torch.cat([h, mem_ctx], dim=-1)))
+            h = cn(h + gate * mem_ctx)
 
         action_logits = self.action_head(h)
         pointer_logits = self._pointer_scores(h, symbol_embeds, symbol_mask)
@@ -286,11 +294,12 @@ class SSMDecoder(nn.Module):
         for step in range(max_steps):
             tok = self._build_input_embeds(all_actions, all_args, symbol_embeds)
             h = tok
-            for ssm, ca, cn in zip(self.ssm_layers, self.cross_attns, self.cross_norms):
+            for ssm, mp, gp, cn in zip(self.ssm_layers, self.mem_projs, self.gate_projs, self.cross_norms):
                 h = ssm(h)
-                res = h
-                h2, _ = ca(h, memory, memory, key_padding_mask=~mem_mask)
-                h = cn(res + h2)
+                mem_summary = memory.mean(dim=1)
+                mem_ctx = mp(mem_summary).unsqueeze(1).expand_as(h)
+                gate = torch.sigmoid(gp(torch.cat([h, mem_ctx], dim=-1)))
+                h = cn(h + gate * mem_ctx)
 
             h_last = h[:, -1, :]
             action_logits = self.action_head(h_last) / temperature
