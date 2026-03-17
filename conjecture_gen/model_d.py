@@ -89,28 +89,24 @@ class SSMBlock(nn.Module):
         return self.norm(y + residual)
 
     def _selective_scan(self, x, dt, A, B, C):
-        """Sequential selective scan.
-        x: (batch, seq, D)
-        dt: (batch, seq, D)
-        A: (D, N)
-        B: (batch, seq, N)
-        C: (batch, seq, N)
+        """Memory-efficient sequential selective scan.
+        Computes discretization per-step to avoid materializing full (B,L,D,N) tensors.
         """
         batch, seq_len, D = x.shape
         N = A.shape[1]
         device = x.device
 
-        # Discretize: dA = exp(A * dt), dB = dt * B
-        # A is (D, N), dt is (B, L, D) -> dA is (B, L, D, N)
-        dA = torch.exp(A.unsqueeze(0).unsqueeze(0) * dt.unsqueeze(-1))  # (B, L, D, N)
-        dB = dt.unsqueeze(-1) * B.unsqueeze(2)  # (B, L, D, N)
-
-        # State: h is (B, D, N)
+        # A is (D, N) — shared, small
         h = torch.zeros(batch, D, N, device=device)
         ys = []
 
         for t in range(seq_len):
-            h = dA[:, t] * h + dB[:, t] * x[:, t].unsqueeze(-1)  # (B, D, N)
+            # Discretize per-step: only (B, D, N) not (B, L, D, N)
+            dt_t = dt[:, t]           # (B, D)
+            dA_t = torch.exp(A.unsqueeze(0) * dt_t.unsqueeze(-1))  # (B, D, N)
+            dB_t = dt_t.unsqueeze(-1) * B[:, t].unsqueeze(1)       # (B, D, N)
+
+            h = dA_t * h + dB_t * x[:, t].unsqueeze(-1)  # (B, D, N)
             y_t = (h * C[:, t].unsqueeze(1)).sum(-1)  # (B, D)
             ys.append(y_t)
 
