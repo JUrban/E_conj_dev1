@@ -204,32 +204,92 @@ def main():
               f"(max_nodes={args.max_nodes})")
         problems = filtered
 
-    # Generate
+    # Pre-build all graphs
+    print("Loading problem graphs...")
+    from torch_geometric.data import Batch
+    problem_graphs = {}
+    for p in problems:
+        clauses = parse_problem_file(os.path.join(args.problems_dir, p))
+        if clauses:
+            problem_graphs[p] = clauses_to_graph(clauses)
+    print(f"Loaded {len(problem_graphs)} graphs")
+
+    # Generate: batch different problems together
     rankings_path = os.path.join(args.output, 'rankings.tsv')
     total_valid = 0
     total_generated = 0
     t0 = time.time()
 
+    # Collect all conjectures per problem
+    all_results = {p: [] for p in problems}  # problem -> list of (decoded, seq)
+    batch_size = args.batch_gen
+
+    for attempt in range(args.n):
+        temp = args.temperature * (0.7 + 0.3 * (attempt / max(args.n - 1, 1)))
+
+        # Process problems in batches of batch_size
+        for batch_start in range(0, len(problems), batch_size):
+            batch_problems = problems[batch_start:batch_start + batch_size]
+            batch_graphs = []
+            batch_names = []
+            for p in batch_problems:
+                if p in problem_graphs:
+                    g = problem_graphs[p].clone()
+                    if device.type == 'cuda':
+                        g = g.to(device)
+                    batch_graphs.append(g)
+                    batch_names.append(p)
+
+            if not batch_graphs:
+                continue
+
+            try:
+                batched = Batch.from_data_list(batch_graphs)
+                seqs = model.generate(batched, max_steps=80, temperature=temp,
+                                      top_k=args.top_k, top_p=args.top_p)
+            except Exception:
+                continue
+
+            for idx, (p, seq) in enumerate(zip(batch_names, seqs)):
+                sym_names = problem_graphs[p].symbol_names
+                decoded = decode_sequence(seq, sym_names)
+                if decoded and decoded != '<empty>':
+                    all_results[p].append((decoded, seq))
+
+        if (attempt + 1) % 5 == 0:
+            n_total = sum(len(v) for v in all_results.values())
+            elapsed = time.time() - t0
+            print(f"  Attempt {attempt+1}/{args.n}: {n_total} total conjectures ({elapsed:.0f}s)")
+
+    # Deduplicate, validate, rank, save
     with open(rankings_path, 'w') as rankings_f:
         rankings_f.write("problem\trank\tscore\tvalid\tn_tokens\tclause\n")
 
         for pi, problem_name in enumerate(problems):
-            problem_path = os.path.join(args.problems_dir, problem_name)
+            results = all_results.get(problem_name, [])
 
-            conjectures = generate_for_problem(
-                model, problem_path, n=args.n,
-                temperature=args.temperature,
-                top_k=args.top_k, top_p=args.top_p,
-                device=device, batch_gen=args.batch_gen,
-            )
+            # Deduplicate
+            seen = set()
+            conjectures = []
+            for decoded, seq in results:
+                if decoded not in seen:
+                    seen.add(decoded)
+                    test_str = f"cnf(test, axiom, ({decoded}))."
+                    parsed = parse_clause(test_str)
+                    is_valid = parsed is not None and '...' not in decoded
+                    score = score_sequence(model, None, seq)
+                    conjectures.append({
+                        'text': decoded, 'score': score,
+                        'valid': is_valid, 'n_tokens': len(seq),
+                    })
 
-            # Save per-problem
+            conjectures.sort(key=lambda x: (x['valid'], x['score']), reverse=True)
+
             if conjectures:
                 prob_dir = os.path.join(args.output, problem_name)
                 os.makedirs(prob_dir, exist_ok=True)
 
                 for ci, conj in enumerate(conjectures):
-                    # Save as TPTP file
                     tptp_path = os.path.join(prob_dir, f'conjecture_{ci+1:03d}.p')
                     with open(tptp_path, 'w') as f:
                         f.write(f"% Generated conjecture for {problem_name}\n")
@@ -238,7 +298,6 @@ def main():
                                 f"Tokens: {conj['n_tokens']}\n")
                         f.write(f"cnf(gen_{ci+1:03d}, axiom, ({conj['text']})).\n")
 
-                    # Write to rankings
                     rankings_f.write(
                         f"{problem_name}\t{ci+1}\t{conj['score']:.4f}\t"
                         f"{conj['valid']}\t{conj['n_tokens']}\t{conj['text']}\n"
@@ -247,13 +306,6 @@ def main():
                     if conj['valid']:
                         total_valid += 1
                     total_generated += 1
-
-            if (pi + 1) % 100 == 0:
-                elapsed = time.time() - t0
-                rate = (pi + 1) / elapsed
-                print(f"  {pi+1}/{len(problems)} problems "
-                      f"({total_valid}/{total_generated} valid) "
-                      f"{rate:.1f} problems/s")
 
     elapsed = time.time() - t0
     print(f"\nDone: {len(problems)} problems, "
