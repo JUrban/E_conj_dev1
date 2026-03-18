@@ -185,15 +185,16 @@ class PointerTreeDecoder(nn.Module):
         # Positional encoding (learned)
         self.pos_embed = nn.Embedding(max_seq_len, hidden_dim)
 
-        # Transformer decoder layers (self-attn + cross-attn + FFN)
-        decoder_layer = nn.TransformerDecoderLayer(
-            d_model=hidden_dim, nhead=nhead,
-            dim_feedforward=hidden_dim * 4,
-            dropout=0.1, batch_first=True,
-        )
-        self.transformer_decoder = nn.TransformerDecoder(
-            decoder_layer, num_layers=num_layers,
-        )
+        # Transformer decoder layers — stored individually for KV caching
+        self.num_dec_layers = num_layers
+        self.dec_layers = nn.ModuleList([
+            nn.TransformerDecoderLayer(
+                d_model=hidden_dim, nhead=nhead,
+                dim_feedforward=hidden_dim * 4,
+                dropout=0.1, batch_first=True,
+            )
+            for _ in range(num_layers)
+        ])
 
         # Output heads
         self.action_head = nn.Linear(hidden_dim, NUM_ACTION_TYPES)
@@ -328,13 +329,14 @@ class PointerTreeDecoder(nn.Module):
         # Padding mask for memory
         memory_key_padding_mask = ~memory_mask
 
-        hidden = self.transformer_decoder(
-            tgt=tok_embeds,
-            memory=memory,
-            tgt_mask=causal_mask,
-            tgt_key_padding_mask=tgt_key_padding_mask,
-            memory_key_padding_mask=memory_key_padding_mask,
-        )  # (batch, seq, hidden)
+        hidden = tok_embeds
+        for layer in self.dec_layers:
+            hidden = layer(
+                hidden, memory,
+                tgt_mask=causal_mask,
+                tgt_key_padding_mask=tgt_key_padding_mask,
+                memory_key_padding_mask=memory_key_padding_mask,
+            )  # (batch, seq, hidden)
 
         # --- Output heads ---
         action_logits = self.action_head(hidden)  # (batch, seq, 7)
@@ -437,25 +439,65 @@ class PointerTreeDecoder(nn.Module):
         done = [False] * batch_size
         lit_counts = [0] * batch_size
 
-        all_actions = torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)
-        all_args = torch.zeros((batch_size, 1), dtype=torch.long, device=device)
+        # KV cache: per layer, accumulated key/value for self-attention
+        # Each entry: {'self_k': (B, seq, H), 'self_v': (B, seq, H),
+        #              'cross_k': (B, mem, H), 'cross_v': (B, mem, H)}
+        kv_cache = [None] * self.num_dec_layers
+
+        # Pre-compute cross-attention KV (memory doesn't change)
+        for li, layer in enumerate(self.dec_layers):
+            cross_attn = layer.multihead_attn
+            # Project memory K, V once
+            ck = cv = memory  # will be projected inside MHA
+            kv_cache[li] = {'cross_k': ck, 'cross_v': cv,
+                            'self_k': None, 'self_v': None}
+
+        cur_action = torch.full((batch_size,), END_CLAUSE, dtype=torch.long, device=device)
+        cur_arg = torch.zeros(batch_size, dtype=torch.long, device=device)
 
         for step in range(max_steps):
-            seq_len = all_actions.shape[1]
+            # Build embedding for just the new token
+            tok = self._build_input_embeds(
+                cur_action.unsqueeze(1), cur_arg.unsqueeze(1), symbol_embeds,
+            )  # (B, 1, H)
+            pos_idx = min(step, self.max_seq_len - 1)
+            tok = tok + self.pos_embed.weight[pos_idx].unsqueeze(0).unsqueeze(0)
 
-            tok_embeds = self._build_input_embeds(all_actions, all_args, symbol_embeds)
-            positions = torch.arange(seq_len, device=device).unsqueeze(0).clamp(max=self.max_seq_len - 1)
-            tok_embeds = tok_embeds + self.pos_embed(positions)
+            # Run through decoder layers with cached KV
+            h = tok  # (B, 1, H)
+            for li, layer in enumerate(self.dec_layers):
+                # === Self-attention with KV cache ===
+                sa = layer.self_attn
+                # Append current token to cached K/V
+                if kv_cache[li]['self_k'] is None:
+                    cached_k = h
+                    cached_v = h
+                else:
+                    cached_k = torch.cat([kv_cache[li]['self_k'], h], dim=1)
+                    cached_v = torch.cat([kv_cache[li]['self_v'], h], dim=1)
+                kv_cache[li]['self_k'] = cached_k
+                kv_cache[li]['self_v'] = cached_v
 
-            causal_mask = self._get_causal_mask(seq_len, device)
-            hidden = self.transformer_decoder(
-                tgt=tok_embeds,
-                memory=memory,
-                tgt_mask=causal_mask,
-                memory_key_padding_mask=memory_key_padding_mask,
-            )
+                # Self-attn: query=current token, key/value=all tokens so far
+                h_res = h
+                h2 = sa(h, cached_k, cached_v, need_weights=False)[0]
+                h = layer.norm1(h_res + layer.dropout1(h2))
 
-            h_last = hidden[:, -1, :]
+                # === Cross-attention (memory is cached) ===
+                h_res = h
+                h2 = layer.multihead_attn(
+                    h, memory, memory,
+                    key_padding_mask=memory_key_padding_mask,
+                    need_weights=False,
+                )[0]
+                h = layer.norm2(h_res + layer.dropout2(h2))
+
+                # === FFN ===
+                h_res = h
+                h2 = layer.linear2(layer.dropout(layer.activation(layer.linear1(h))))
+                h = layer.norm3(h_res + layer.dropout3(h2))
+
+            h_last = h.squeeze(1)  # (B, H)
 
             # Predict action with arity constraints
             action_logits = self.action_head(h_last)
@@ -503,9 +545,9 @@ class PointerTreeDecoder(nn.Module):
             if all(done):
                 break
 
-            # Append to sequence for next step
-            all_actions = torch.cat([all_actions, actions.unsqueeze(1)], dim=1)
-            all_args = torch.cat([all_args, new_args.unsqueeze(1)], dim=1)
+            # Next step input: just the new token
+            cur_action = actions
+            cur_arg = new_args
 
         return sequences
 
