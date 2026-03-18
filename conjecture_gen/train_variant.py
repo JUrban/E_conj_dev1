@@ -21,11 +21,15 @@ from conjecture_gen.target_encoder import decode_sequence, END_CLAUSE
 
 def get_model_and_loss(variant, args):
     """Return (model, loss_fn) for the given variant."""
+    named = getattr(args, 'named_embeddings', False)
+    vocab_size = getattr(args, 'vocab_size', 0)
+
     if variant == 'a':
         from conjecture_gen.model import ConjectureModel
         model = ConjectureModel(
             hidden_dim=args.hidden_dim, num_gnn_layers=args.num_gnn_layers,
             max_vars=args.max_vars,
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
         return model, compute_loss
 
@@ -42,6 +46,7 @@ def get_model_and_loss(variant, args):
         model = ConjectureModelD(
             hidden_dim=args.hidden_dim, num_gnn_layers=args.num_gnn_layers,
             max_vars=args.max_vars,
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
         return model, compute_loss
 
@@ -69,12 +74,22 @@ def train(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using {device}")
 
+    # Build symbol vocab if using named embeddings
+    symbol_vocab = None
+    if getattr(args, 'named_embeddings', False):
+        from conjecture_gen.symbol_vocab import build_vocab
+        vocab_cache = os.path.join(args.cache_dir, 'symbol_vocab.pt')
+        symbol_vocab = build_vocab(args.problems_dir, cache_path=vocab_cache)
+        args.vocab_size = len(symbol_vocab)
+        print(f"Named embeddings: vocab_size={args.vocab_size}")
+
     # Dataset
     train_ds = ConjectureDataset(
         problems_dir=args.problems_dir, lemmas_file=args.lemmas_file,
         statistics_file=args.statistics_file, cache_dir=args.cache_dir,
         max_ratio=args.max_ratio, split='train',
         max_samples=args.max_samples, max_nodes=args.max_nodes,
+        symbol_vocab=symbol_vocab,
     )
     val_ds = ConjectureDataset(
         problems_dir=args.problems_dir, lemmas_file=args.lemmas_file,
@@ -82,6 +97,7 @@ def train(args):
         max_ratio=args.max_ratio, split='val',
         max_samples=args.max_samples // 4 if args.max_samples > 0 else 0,
         max_nodes=args.max_nodes,
+        symbol_vocab=symbol_vocab,
     )
 
     if device.type == 'cuda':
@@ -217,6 +233,8 @@ def main():
     p.add_argument('--save_dir', default=None)
     p.add_argument('--resume', default=None,
                    help='Resume from checkpoint dir (e.g., checkpoints_d)')
+    p.add_argument('--named_embeddings', action='store_true',
+                   help='Use learnable name embeddings for Mizar symbols')
     p.add_argument('--hidden_dim', type=int, default=64)
     p.add_argument('--num_gnn_layers', type=int, default=4)
     p.add_argument('--max_vars', type=int, default=20)

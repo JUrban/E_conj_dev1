@@ -365,9 +365,14 @@ class SSMDecoder(nn.Module):
 class ConjectureModelD(nn.Module):
     """Plan D: GNN encoder + SSM decoder."""
 
-    def __init__(self, hidden_dim=128, num_gnn_layers=6, max_vars=20, **kwargs):
+    def __init__(self, hidden_dim=128, num_gnn_layers=6, max_vars=20,
+                 use_named_embeddings=False, vocab_size=0, **kwargs):
         super().__init__()
-        self.encoder = HeteroGNNEncoder(hidden_dim, num_gnn_layers)
+        self.encoder = HeteroGNNEncoder(
+            hidden_dim, num_gnn_layers,
+            use_named_embeddings=use_named_embeddings,
+            vocab_size=vocab_size,
+        )
         self.decoder = SSMDecoder(hidden_dim, max_vars)
         self.hidden_dim = hidden_dim
 

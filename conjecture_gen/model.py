@@ -29,19 +29,33 @@ class HeteroGNNEncoder(nn.Module):
     then runs multiple rounds of heterogeneous message passing.
     """
 
-    def __init__(self, hidden_dim: int = 128, num_layers: int = 6):
+    def __init__(self, hidden_dim: int = 128, num_layers: int = 6,
+                 use_named_embeddings: bool = False, vocab_size: int = 0):
         super().__init__()
         self.hidden_dim = hidden_dim
+        self.use_named_embeddings = use_named_embeddings
 
         # Input projections for each node type
         # Features: clause=3, literal=2, symbol=4, term=2, variable=1
-        self.input_projs = nn.ModuleDict({
-            'clause': nn.Linear(3, hidden_dim),
-            'literal': nn.Linear(2, hidden_dim),
-            'symbol': nn.Linear(4, hidden_dim),
-            'term': nn.Linear(2, hidden_dim),
-            'variable': nn.Linear(1, hidden_dim),
-        })
+        if use_named_embeddings and vocab_size > 0:
+            # Symbol input: structural features (4) + name embedding (hidden_dim)
+            self.name_embed = nn.Embedding(vocab_size, hidden_dim, padding_idx=0)
+            self.input_projs = nn.ModuleDict({
+                'clause': nn.Linear(3, hidden_dim),
+                'literal': nn.Linear(2, hidden_dim),
+                'symbol': nn.Linear(4 + hidden_dim, hidden_dim),
+                'term': nn.Linear(2, hidden_dim),
+                'variable': nn.Linear(1, hidden_dim),
+            })
+        else:
+            self.name_embed = None
+            self.input_projs = nn.ModuleDict({
+                'clause': nn.Linear(3, hidden_dim),
+                'literal': nn.Linear(2, hidden_dim),
+                'symbol': nn.Linear(4, hidden_dim),
+                'term': nn.Linear(2, hidden_dim),
+                'variable': nn.Linear(1, hidden_dim),
+            })
 
         # Heterogeneous message passing layers
         self.convs = nn.ModuleList()
@@ -92,14 +106,37 @@ class HeteroGNNEncoder(nn.Module):
         dev = next(self.parameters()).device
         for ntype in ['clause', 'literal', 'symbol', 'term', 'variable']:
             store = data.get(ntype, None) if hasattr(data, 'get') else None
-            # Also try direct attribute access for HeteroData
             if store is None:
                 try:
                     store = data[ntype]
                 except (KeyError, AttributeError):
                     store = None
             if store is not None and hasattr(store, 'x') and store.x is not None and store.x.shape[0] > 0:
-                x_dict[ntype] = self.input_projs[ntype](store.x)
+                if ntype == 'symbol' and self.name_embed is not None:
+                    # Concat structural features with name embeddings
+                    name_ids = getattr(data, 'symbol_name_ids', None)
+                    if name_ids is not None:
+                        if isinstance(name_ids, list):
+                            # Handle batched (list of lists) or flat list
+                            if name_ids and isinstance(name_ids[0], list):
+                                # Batched: flatten all sublists
+                                flat_ids = []
+                                for sublist in name_ids:
+                                    flat_ids.extend(sublist)
+                                name_ids = flat_ids
+                            name_ids = torch.tensor(name_ids, dtype=torch.long, device=dev)
+                        name_emb = self.name_embed(name_ids)  # (n_symbols, hidden)
+                        sym_input = torch.cat([store.x, name_emb], dim=-1)
+                    else:
+                        # No name IDs available: pad with zeros
+                        n = store.x.shape[0]
+                        sym_input = torch.cat([
+                            store.x,
+                            torch.zeros(n, self.hidden_dim, device=dev),
+                        ], dim=-1)
+                    x_dict[ntype] = self.input_projs[ntype](sym_input)
+                else:
+                    x_dict[ntype] = self.input_projs[ntype](store.x)
             else:
                 x_dict[ntype] = torch.zeros(0, self.hidden_dim, device=dev)
 
@@ -478,9 +515,14 @@ class ConjectureModel(nn.Module):
 
     def __init__(self, hidden_dim: int = 128, num_gnn_layers: int = 6,
                  max_vars: int = 20, max_literals: int = 8,
-                 dec_layers: int = 3, dec_nhead: int = 4):
+                 dec_layers: int = 3, dec_nhead: int = 4,
+                 use_named_embeddings: bool = False, vocab_size: int = 0):
         super().__init__()
-        self.encoder = HeteroGNNEncoder(hidden_dim, num_gnn_layers)
+        self.encoder = HeteroGNNEncoder(
+            hidden_dim, num_gnn_layers,
+            use_named_embeddings=use_named_embeddings,
+            vocab_size=vocab_size,
+        )
         self.decoder = PointerTreeDecoder(
             hidden_dim, max_vars, max_literals,
             num_layers=dec_layers, nhead=dec_nhead,

@@ -279,10 +279,19 @@ class GraphBuilder:
         return data
 
 
-def clauses_to_graph(clauses: list[Clause]) -> HeteroData:
-    """Convenience function: parse clauses into a graph."""
+def clauses_to_graph(clauses: list[Clause], vocab: dict = None) -> HeteroData:
+    """Convenience function: parse clauses into a graph.
+
+    If vocab is provided, adds symbol_name_ids for named embeddings.
+    """
     builder = GraphBuilder()
-    return builder.build(clauses)
+    graph = builder.build(clauses)
+
+    if vocab is not None:
+        from conjecture_gen.symbol_vocab import names_to_indices
+        graph.symbol_name_ids = names_to_indices(graph.symbol_names, vocab)
+
+    return graph
 
 
 if __name__ == '__main__':

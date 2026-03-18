@@ -36,10 +36,12 @@ class ConjectureDataset(Dataset):
         seed: int = 42,
         max_samples: int = 0,  # 0 = no limit
         max_nodes: int = 0,  # 0 = no limit; max total graph nodes per problem
+        symbol_vocab: dict = None,  # if set, adds named embeddings to graphs
     ):
         self.problems_dir = problems_dir
         self.max_ratio = max_ratio
         self.min_ratio = min_ratio
+        self.symbol_vocab = symbol_vocab
 
         if cache_dir is None:
             cache_dir = os.path.join(os.path.dirname(problems_dir), 'cache')
@@ -182,14 +184,15 @@ class ConjectureDataset(Dataset):
 
     def _get_problem_graph(self, problem_name: str) -> HeteroData:
         """Load or build the problem graph."""
-        cache_path = os.path.join(self.cache_dir, f'graph_{problem_name}.pt')
+        suffix = '_named' if self.symbol_vocab else ''
+        cache_path = os.path.join(self.cache_dir, f'graph_{problem_name}{suffix}.pt')
         if os.path.exists(cache_path):
             return torch.load(cache_path, weights_only=False)
 
         # Parse and build
         problem_path = os.path.join(self.problems_dir, problem_name)
         clauses = parse_problem_file(problem_path)
-        graph = clauses_to_graph(clauses)
+        graph = clauses_to_graph(clauses, vocab=self.symbol_vocab)
 
         torch.save(graph, cache_path)
         return graph
