@@ -113,8 +113,27 @@ def train(args):
     os.makedirs(save_dir, exist_ok=True)
     best_val_loss = float('inf')
     history = []
+    start_epoch = 1
 
-    for epoch in range(1, args.epochs + 1):
+    # Resume from checkpoint if requested
+    if args.resume:
+        ckpt_path = os.path.join(args.resume, 'best_model.pt')
+        if os.path.exists(ckpt_path):
+            ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
+            model.load_state_dict(ckpt['model_state_dict'])
+            best_val_loss = ckpt.get('val_loss', float('inf'))
+            start_epoch = ckpt.get('epoch', 0) + 1
+            print(f"Resumed from {ckpt_path}: epoch {start_epoch-1}, "
+                  f"val_loss={best_val_loss:.4f}")
+            # Load history if available
+            hist_path = os.path.join(args.resume, 'history.json')
+            if os.path.exists(hist_path):
+                with open(hist_path) as f:
+                    history = json.load(f)
+        else:
+            print(f"WARNING: --resume {args.resume} but no best_model.pt found, starting fresh")
+
+    for epoch in range(start_epoch, start_epoch + args.epochs):
         model.train()
         epoch_losses = {'total': 0, 'action': 0, 'pointer': 0, 'variable': 0}
         n_batches = 0
@@ -196,6 +215,8 @@ def main():
     p.add_argument('--statistics_file', default='statistics')
     p.add_argument('--cache_dir', default='cache')
     p.add_argument('--save_dir', default=None)
+    p.add_argument('--resume', default=None,
+                   help='Resume from checkpoint dir (e.g., checkpoints_d)')
     p.add_argument('--hidden_dim', type=int, default=64)
     p.add_argument('--num_gnn_layers', type=int, default=4)
     p.add_argument('--max_vars', type=int, default=20)
