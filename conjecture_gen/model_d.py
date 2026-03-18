@@ -40,7 +40,7 @@ class SSMBlock(nn.Module):
     For inference: simple recurrence.
     """
 
-    def __init__(self, hidden_dim: int, state_dim: int = 16):
+    def __init__(self, hidden_dim: int, state_dim: int = 16, dropout: float = 0.1):
         super().__init__()
         self.hidden_dim = hidden_dim
         self.state_dim = state_dim
@@ -58,6 +58,7 @@ class SSMBlock(nn.Module):
         # Output projection
         self.out_proj = nn.Linear(hidden_dim, hidden_dim)
         self.norm = nn.LayerNorm(hidden_dim)
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Process sequence.
@@ -85,7 +86,7 @@ class SSMBlock(nn.Module):
         y = y * z  # gating
 
         # Output
-        y = self.out_proj(y)
+        y = self.dropout(self.out_proj(y))
         return self.norm(y + residual)
 
     def _selective_scan(self, x, dt, A, B, C):
@@ -147,6 +148,7 @@ class SSMDecoder(nn.Module):
         self.cross_norms = nn.ModuleList([
             nn.LayerNorm(hidden_dim) for _ in range(num_layers)
         ])
+        self.cross_dropout = nn.Dropout(0.1)
 
         # Output heads
         self.action_head = nn.Linear(hidden_dim, NUM_ACTION_TYPES)
@@ -246,7 +248,7 @@ class SSMDecoder(nn.Module):
             mem_ctx = mp(mem_summary).unsqueeze(1).expand_as(h)  # (B, L, H)
             # Gated fusion
             gate = torch.sigmoid(gp(torch.cat([h, mem_ctx], dim=-1)))
-            h = cn(h + gate * mem_ctx)
+            h = cn(h + self.cross_dropout(gate * mem_ctx))
 
         action_logits = self.action_head(h)
         pointer_logits = self._pointer_scores(h, symbol_embeds, symbol_mask)
@@ -312,7 +314,7 @@ class SSMDecoder(nn.Module):
                 mem_summary = memory.mean(dim=1)
                 mem_ctx = mp(mem_summary).unsqueeze(1).expand_as(h)
                 gate = torch.sigmoid(gp(torch.cat([h, mem_ctx], dim=-1)))
-                h = cn(h + gate * mem_ctx)
+                h = cn(h + self.cross_dropout(gate * mem_ctx))
 
             h_last = h[:, -1, :]
             action_logits = self.action_head(h_last)
