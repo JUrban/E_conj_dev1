@@ -157,7 +157,12 @@ def decode_sequence(sequence: list[tuple[int, int]],
             elif action == END_ARGS:
                 if not stack:
                     continue
-                closed = stack.pop() + ')'
+                top = stack.pop()
+                # If top ends with '(' it's a 0-arity constant — drop the '('
+                if top.endswith('('):
+                    closed = top[:-1]  # e.g. "esk3_0(" -> "esk3_0"
+                else:
+                    closed = top + ')'
                 if stack:
                     stack[-1] += closed
                 else:
