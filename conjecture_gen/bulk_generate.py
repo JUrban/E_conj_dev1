@@ -60,7 +60,13 @@ def load_model(checkpoint_path, device):
             max_vars=model_args.get('max_vars', 20),
         )
 
-    model.load_state_dict(checkpoint['model_state_dict'])
+    # Remap old checkpoint keys if needed (transformer_decoder -> dec_layers)
+    state_dict = checkpoint['model_state_dict']
+    remapped = {}
+    for k, v in state_dict.items():
+        new_k = k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.')
+        remapped[new_k] = v
+    model.load_state_dict(remapped, strict=False)
     model = model.to(device)
     model.eval()
     return model, variant, checkpoint

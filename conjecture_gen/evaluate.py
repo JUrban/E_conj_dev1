@@ -43,7 +43,10 @@ def load_model(checkpoint_path, device):
         num_gnn_layers=args['num_gnn_layers'],
         max_vars=args.get('max_vars', 20),
     ).to(device)
-    model.load_state_dict(checkpoint['model_state_dict'])
+    state_dict = checkpoint['model_state_dict']
+    remapped = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
+                for k, v in state_dict.items()}
+    model.load_state_dict(remapped, strict=False)
     model.eval()
     return model, args, checkpoint
 

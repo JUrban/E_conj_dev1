@@ -136,7 +136,10 @@ def train(args):
         ckpt_path = os.path.join(args.resume, 'best_model.pt')
         if os.path.exists(ckpt_path):
             ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
-            model.load_state_dict(ckpt['model_state_dict'])
+            sd = ckpt['model_state_dict']
+            sd = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
+                  for k, v in sd.items()}
+            model.load_state_dict(sd, strict=False)
             best_val_loss = ckpt.get('val_loss', float('inf'))
             start_epoch = ckpt.get('epoch', 0) + 1
             print(f"Resumed from {ckpt_path}: epoch {start_epoch-1}, "
