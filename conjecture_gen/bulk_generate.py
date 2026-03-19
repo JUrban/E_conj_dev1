@@ -146,7 +146,7 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
         try:
             # Replicate graph bs times into a batch
             batched = Batch.from_data_list([graph.clone() for _ in range(bs)])
-            seqs = model.generate(batched, max_steps=80, temperature=temp,
+            seqs = model.generate(batched, max_steps=args.max_steps, temperature=temp,
                                   top_k=top_k, top_p=top_p)
         except Exception:
             remaining -= bs
@@ -191,6 +191,8 @@ def main():
     parser.add_argument('--top_p', type=float, default=0.9)
     parser.add_argument('--temperature', type=float, default=1.0)
     parser.add_argument('--max_nodes', type=int, default=1500)
+    parser.add_argument('--max_steps', type=int, default=120,
+                        help='Max generation steps per conjecture (80 was too short)')
     parser.add_argument('--max_problems', type=int, default=0, help='0=all')
     parser.add_argument('--batch_gen', type=int, default=16,
                         help='Batch size for generation')
@@ -284,7 +286,7 @@ def main():
 
                 try:
                     batched = Batch.from_data_list(batch_graphs)
-                    seqs = model.generate(batched, max_steps=80, temperature=temp,
+                    seqs = model.generate(batched, max_steps=args.max_steps, temperature=temp,
                                           top_k=args.top_k, top_p=args.top_p)
                 except Exception:
                     continue
