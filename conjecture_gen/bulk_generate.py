@@ -117,7 +117,7 @@ def score_sequence(model, data, sequence, variant='a'):
 
 def generate_for_problem(model, problem_path, n=20, temperature=1.0,
                          top_k=10, top_p=0.9, device=None,
-                         batch_gen=8, symbol_vocab=None):
+                         batch_gen=8, symbol_vocab=None, max_steps=80):
     """Generate n conjectures for a single problem, deduplicate, rank.
 
     Uses batched generation: replicates the graph batch_gen times and
@@ -147,7 +147,7 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
         try:
             # Replicate graph bs times into a batch
             batched = Batch.from_data_list([graph.clone() for _ in range(bs)])
-            seqs = model.generate(batched, max_steps=args.max_steps, temperature=temp,
+            seqs = model.generate(batched, max_steps=max_steps, temperature=temp,
                                   top_k=top_k, top_p=top_p)
         except Exception as e:
             if remaining == n:  # first attempt — print the error
@@ -250,7 +250,7 @@ def main():
                 temperature=args.temperature,
                 top_k=args.top_k, top_p=args.top_p,
                 device=device, batch_gen=args.batch_gen,
-                symbol_vocab=symbol_vocab,
+                symbol_vocab=symbol_vocab, max_steps=args.max_steps,
             )
             for c in conjectures:
                 all_results[problem_name].append((c['text'], c.get('sequence', [])))
