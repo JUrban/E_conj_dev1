@@ -198,7 +198,7 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
     Runs E on each problem without any conjectures to get the true
     baseline L for comparison. Results are cached to disk.
     """
-    from concurrent.futures import ProcessPoolExecutor, as_completed
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
     if cache_path and os.path.exists(cache_path):
         import json
@@ -219,7 +219,7 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
 
     baseline_tasks = [(p, problems_dir, eprover, timeout) for p in problem_names]
 
-    with ProcessPoolExecutor(max_workers=workers) as executor:
+    with ThreadPoolExecutor(max_workers=workers) as executor:
         futures = {executor.submit(_run_baseline_worker, t): t for t in baseline_tasks}
         for future in as_completed(futures):
             try:
@@ -329,7 +329,7 @@ def main():
     print(f"  Total tasks: {len(tasks)} (P1+P2 = {len(tasks)*2} prover calls)")
 
     # Run in parallel
-    from concurrent.futures import ProcessPoolExecutor, as_completed
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
     total_tested = 0
     total_p1_proved = 0
@@ -341,7 +341,7 @@ def main():
 
     t0 = time.time()
 
-    with ProcessPoolExecutor(max_workers=args.workers) as executor:
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = {executor.submit(_eval_one_worker, task): task for task in tasks}
 
         for future in as_completed(futures):
