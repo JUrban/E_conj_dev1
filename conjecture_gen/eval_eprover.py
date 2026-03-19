@@ -151,6 +151,45 @@ def load_original_stats(statistics_file: str) -> dict:
     return stats
 
 
+# Module-level worker functions (must be picklable for ProcessPoolExecutor)
+_worker_eprover = 'eprover'
+_worker_timeout = 10
+_worker_problems_dir = 'problems'
+
+
+def _run_baseline_worker(problem_name):
+    path = os.path.join(_worker_problems_dir, problem_name)
+    result = run_eprover(path, eprover=_worker_eprover, timeout=_worker_timeout)
+    return problem_name, result
+
+
+def _eval_one_worker(task):
+    problem_name, conj_file, conj_line, conj_text, L_orig = task
+    problem_path = os.path.join(_worker_problems_dir, problem_name)
+
+    p1 = run_eprover(problem_path, conj_line,
+                      eprover=_worker_eprover, timeout=_worker_timeout)
+    neg_clauses = negate_clause(conj_text)
+    p2 = run_eprover(problem_path, neg_clauses,
+                      eprover=_worker_eprover, timeout=_worker_timeout)
+
+    both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
+    ratio = -1.0
+    speedup = False
+    if both_proved and L_orig > 0:
+        L1 = p1['processed_clauses']
+        L2 = p2['processed_clauses']
+        if L1 >= 0 and L2 >= 0:
+            ratio = (L1 + L2) / L_orig
+            speedup = ratio < 1.0
+
+    return {
+        'problem': problem_name, 'conj_file': conj_file,
+        'p1': p1, 'p2': p2, 'L_orig': L_orig,
+        'ratio': ratio, 'speedup': speedup,
+    }
+
+
 def compute_baselines(problems_dir: str, problem_names: list[str],
                       eprover: str, timeout: int, workers: int,
                       cache_path: str = None) -> dict:
@@ -175,16 +214,17 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
     else:
         cached = {}
 
-    def run_baseline(problem_name):
-        path = os.path.join(problems_dir, problem_name)
-        result = run_eprover(path, eprover=eprover, timeout=timeout)
-        return problem_name, result
+    # Set module-level worker config
+    global _worker_eprover, _worker_timeout, _worker_problems_dir
+    _worker_eprover = eprover
+    _worker_timeout = timeout
+    _worker_problems_dir = problems_dir
 
     stats = dict(cached)
     done = 0
 
     with ProcessPoolExecutor(max_workers=workers) as executor:
-        futures = {executor.submit(run_baseline, p): p for p in problem_names}
+        futures = {executor.submit(_run_baseline_worker, p): p for p in problem_names}
         for future in as_completed(futures):
             try:
                 pname, result = future.result()
@@ -291,32 +331,11 @@ def main():
 
     print(f"  Total tasks: {len(tasks)} (P1+P2 = {len(tasks)*2} prover calls)")
 
-    # Worker function for a single (problem, conjecture) pair
-    def eval_one(task):
-        problem_name, conj_file, conj_line, conj_text, L_orig = task
-        problem_path = os.path.join(args.problems, problem_name)
-
-        p1 = run_eprover(problem_path, conj_line,
-                          eprover=args.eprover, timeout=args.timeout)
-        neg_clauses = negate_clause(conj_text)
-        p2 = run_eprover(problem_path, neg_clauses,
-                          eprover=args.eprover, timeout=args.timeout)
-
-        both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
-        ratio = -1.0
-        speedup = False
-        if both_proved and L_orig > 0:
-            L1 = p1['processed_clauses']
-            L2 = p2['processed_clauses']
-            if L1 >= 0 and L2 >= 0:
-                ratio = (L1 + L2) / L_orig
-                speedup = ratio < 1.0
-
-        return {
-            'problem': problem_name, 'conj_file': conj_file,
-            'p1': p1, 'p2': p2, 'L_orig': L_orig,
-            'ratio': ratio, 'speedup': speedup,
-        }
+    # Set module-level config for workers
+    global _worker_eprover, _worker_timeout, _worker_problems_dir
+    _worker_eprover = args.eprover
+    _worker_timeout = args.timeout
+    _worker_problems_dir = args.problems
 
     # Run in parallel
     from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -332,7 +351,7 @@ def main():
     t0 = time.time()
 
     with ProcessPoolExecutor(max_workers=args.workers) as executor:
-        futures = {executor.submit(eval_one, task): task for task in tasks}
+        futures = {executor.submit(_eval_one_worker, task): task for task in tasks}
 
         for future in as_completed(futures):
             try:
