@@ -159,6 +159,9 @@ def main():
                         help='Max conjectures to test per problem')
     parser.add_argument('--output', default=None)
 
+    parser.add_argument('--workers', type=int, default=8,
+                        help='Parallel E prover processes')
+
     args = parser.parse_args()
 
     # Load baseline stats
@@ -181,101 +184,126 @@ def main():
     if args.max_problems > 0:
         problems = problems[:args.max_problems]
     print(f"  {len(problems)} problems with conjectures")
+    print(f"  Workers: {args.workers}")
 
     # Output file
     output_path = args.output or os.path.join(conj_dir, 'eprover_results.tsv')
+
+    # Build all tasks first
+    tasks = []  # (problem_name, conj_file, conj_line, conj_text, L_orig)
+    for problem_name in problems:
+        problem_path = os.path.join(args.problems, problem_name)
+        if not os.path.exists(problem_path):
+            continue
+
+        L_orig = orig_stats.get(problem_name, -1)
+        conj_path = os.path.join(conj_dir, problem_name)
+        try:
+            conj_files = sorted([f for f in os.listdir(conj_path) if f.endswith('.p')])
+        except FileNotFoundError:
+            continue
+        conj_files = conj_files[:args.max_conjectures_per_problem]
+
+        for conj_file in conj_files:
+            with open(os.path.join(conj_path, conj_file)) as f:
+                lines = f.readlines()
+            conj_line = None
+            conj_text = None
+            for line in lines:
+                line = line.strip()
+                if line.startswith('cnf('):
+                    conj_line = line
+                    m = re.match(r'cnf\([^,]+,\s*[^,]+,\s*\((.+)\)\)\.\s*$', line)
+                    if m:
+                        conj_text = m.group(1)
+                    break
+            if conj_line and conj_text:
+                tasks.append((problem_name, conj_file, conj_line, conj_text, L_orig))
+
+    print(f"  Total tasks: {len(tasks)} (P1+P2 = {len(tasks)*2} prover calls)")
+
+    # Worker function for a single (problem, conjecture) pair
+    def eval_one(task):
+        problem_name, conj_file, conj_line, conj_text, L_orig = task
+        problem_path = os.path.join(args.problems, problem_name)
+
+        p1 = run_eprover(problem_path, conj_line,
+                          eprover=args.eprover, timeout=args.timeout)
+        neg_clauses = negate_clause(conj_text)
+        p2 = run_eprover(problem_path, neg_clauses,
+                          eprover=args.eprover, timeout=args.timeout)
+
+        both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
+        ratio = -1.0
+        speedup = False
+        if both_proved and L_orig > 0:
+            L1 = p1['processed_clauses']
+            L2 = p2['processed_clauses']
+            if L1 >= 0 and L2 >= 0:
+                ratio = (L1 + L2) / L_orig
+                speedup = ratio < 1.0
+
+        return {
+            'problem': problem_name, 'conj_file': conj_file,
+            'p1': p1, 'p2': p2, 'L_orig': L_orig,
+            'ratio': ratio, 'speedup': speedup,
+        }
+
+    # Run in parallel
+    from concurrent.futures import ProcessPoolExecutor, as_completed
 
     total_tested = 0
     total_p1_proved = 0
     total_p2_proved = 0
     total_both = 0
-    total_useful = 0  # both proved AND speedup
+    total_useful = 0
     speedups = []
+    results = []
 
     t0 = time.time()
+
+    with ProcessPoolExecutor(max_workers=args.workers) as executor:
+        futures = {executor.submit(eval_one, task): task for task in tasks}
+
+        for future in as_completed(futures):
+            try:
+                r = future.result()
+            except Exception as e:
+                continue
+
+            results.append(r)
+            total_tested += 1
+
+            if r['p1']['status'] == 'proved':
+                total_p1_proved += 1
+            if r['p2']['status'] == 'proved':
+                total_p2_proved += 1
+            if r['p1']['status'] == 'proved' and r['p2']['status'] == 'proved':
+                total_both += 1
+            if r['speedup']:
+                total_useful += 1
+                speedups.append(r['ratio'])
+
+            if total_tested % 50 == 0:
+                elapsed = time.time() - t0
+                print(f"  {total_tested}/{len(tasks)}: "
+                      f"p1={total_p1_proved} p2={total_p2_proved} "
+                      f"both={total_both} useful={total_useful} "
+                      f"({elapsed:.0f}s)")
+
+    # Sort results by problem + conjecture for consistent output
+    results.sort(key=lambda r: (r['problem'], r['conj_file']))
 
     with open(output_path, 'w') as out_f:
         out_f.write("problem\tconjecture\tp1_status\tp1_clauses\t"
                     "p2_status\tp2_clauses\tL_original\tratio\tspeedup\n")
-
-        for pi, problem_name in enumerate(problems):
-            problem_path = os.path.join(args.problems, problem_name)
-            if not os.path.exists(problem_path):
-                continue
-
-            L_orig = orig_stats.get(problem_name, -1)
-
-            # Get conjecture files (sorted by rank)
-            conj_path = os.path.join(conj_dir, problem_name)
-            conj_files = sorted([f for f in os.listdir(conj_path) if f.endswith('.p')])
-            conj_files = conj_files[:args.max_conjectures_per_problem]
-
-            for conj_file in conj_files:
-                # Read conjecture
-                with open(os.path.join(conj_path, conj_file)) as f:
-                    lines = f.readlines()
-                # Find the cnf line
-                conj_line = None
-                conj_text = None
-                for line in lines:
-                    line = line.strip()
-                    if line.startswith('cnf('):
-                        conj_line = line
-                        # Extract the clause body
-                        m = re.match(r'cnf\([^,]+,\s*[^,]+,\s*\((.+)\)\)\.\s*$', line)
-                        if m:
-                            conj_text = m.group(1)
-                        break
-
-                if not conj_line or not conj_text:
-                    continue
-
-                total_tested += 1
-
-                # P1: prove P with C added as axiom
-                p1 = run_eprover(problem_path, conj_line,
-                                 eprover=args.eprover, timeout=args.timeout)
-
-                # P2: prove C from P (negate C, add to P)
-                neg_clauses = negate_clause(conj_text)
-                p2 = run_eprover(problem_path, neg_clauses,
-                                 eprover=args.eprover, timeout=args.timeout)
-
-                if p1['status'] == 'proved':
-                    total_p1_proved += 1
-                if p2['status'] == 'proved':
-                    total_p2_proved += 1
-
-                both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
-                if both_proved:
-                    total_both += 1
-
-                # Compute speedup ratio
-                ratio = -1.0
-                speedup = False
-                if both_proved and L_orig > 0:
-                    L1 = p1['processed_clauses']
-                    L2 = p2['processed_clauses']
-                    if L1 >= 0 and L2 >= 0:
-                        ratio = (L1 + L2) / L_orig
-                        if ratio < 1.0:
-                            speedup = True
-                            total_useful += 1
-                            speedups.append(ratio)
-
-                out_f.write(
-                    f"{problem_name}\t{conj_file}\t"
-                    f"{p1['status']}\t{p1['processed_clauses']}\t"
-                    f"{p2['status']}\t{p2['processed_clauses']}\t"
-                    f"{L_orig}\t{ratio:.4f}\t{speedup}\n"
-                )
-
-            if (pi + 1) % 20 == 0:
-                elapsed = time.time() - t0
-                print(f"  {pi+1}/{len(problems)}: tested={total_tested} "
-                      f"p1_proved={total_p1_proved} p2_proved={total_p2_proved} "
-                      f"both={total_both} useful={total_useful} "
-                      f"({elapsed:.0f}s)")
+        for r in results:
+            out_f.write(
+                f"{r['problem']}\t{r['conj_file']}\t"
+                f"{r['p1']['status']}\t{r['p1']['processed_clauses']}\t"
+                f"{r['p2']['status']}\t{r['p2']['processed_clauses']}\t"
+                f"{r['L_orig']}\t{r['ratio']:.4f}\t{r['speedup']}\n"
+            )
 
     elapsed = time.time() - t0
 
