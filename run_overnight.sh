@@ -5,21 +5,9 @@
 set -e
 echo "=== Starting overnight run at $(date) ==="
 
-# 1. Generate from D+dropout (40 min)
-echo ""
-echo "=== [1/7] Generating from D+dropout ==="
-python -m conjecture_gen.bulk_generate \
-  --model checkpoints_d3_dropout/best_model.pt \
-  --n 30 --per_problem --batch_gen 16 \
-  --output conjectures_d_arity_full/
-
-# 2. Train A with named embeddings (2-3 hours)
-echo ""
-echo "=== [2/7] Training A with named embeddings ==="
-rm -rf cache/precomputed cache/graph_*_named.pt
-python -m conjecture_gen.train_variant --variant a --named_embeddings \
-  --epochs 100 --max_samples 0 --hidden_dim 128 --max_nodes 1500 \
-  --batch_size 256 --lr 1.2e-3 --save_dir checkpoints_a_named
+# Steps 1-2 already completed:
+# 1. D generation -> conjectures_d_arity_full/ (done)
+# 2. A+named training -> checkpoints_a_named/ val=0.293 (done)
 
 # 3. Generate from named A (40 min)
 echo ""
