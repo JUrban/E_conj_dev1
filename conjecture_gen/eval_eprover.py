@@ -142,14 +142,70 @@ def load_original_stats(statistics_file: str) -> dict:
     return stats
 
 
+def compute_baselines(problems_dir: str, problem_names: list[str],
+                      eprover: str, timeout: int, workers: int,
+                      cache_path: str = None) -> dict:
+    """Compute baseline proof search lengths using our E prover setup.
+
+    Runs E on each problem without any conjectures to get the true
+    baseline L for comparison. Results are cached to disk.
+    """
+    from concurrent.futures import ProcessPoolExecutor, as_completed
+
+    if cache_path and os.path.exists(cache_path):
+        import json
+        with open(cache_path) as f:
+            cached = json.load(f)
+        print(f"  Loaded {len(cached)} cached baselines from {cache_path}")
+        # Only compute missing ones
+        missing = [p for p in problem_names if p not in cached]
+        if not missing:
+            return cached
+        print(f"  Computing {len(missing)} missing baselines...")
+        problem_names = missing
+    else:
+        cached = {}
+
+    def run_baseline(problem_name):
+        path = os.path.join(problems_dir, problem_name)
+        result = run_eprover(path, eprover=eprover, timeout=timeout)
+        return problem_name, result
+
+    stats = dict(cached)
+    done = 0
+
+    with ProcessPoolExecutor(max_workers=workers) as executor:
+        futures = {executor.submit(run_baseline, p): p for p in problem_names}
+        for future in as_completed(futures):
+            try:
+                pname, result = future.result()
+                if result['status'] == 'proved' and result['processed_clauses'] >= 0:
+                    stats[pname] = result['processed_clauses']
+                else:
+                    stats[pname] = -1  # not proved within timeout
+                done += 1
+                if done % 50 == 0:
+                    print(f"    baselines: {done}/{len(problem_names)} done")
+            except Exception:
+                pass
+
+    proved = sum(1 for v in stats.values() if v > 0)
+    print(f"  Baselines: {proved}/{len(stats)} proved within {timeout}s")
+
+    if cache_path:
+        import json
+        with open(cache_path, 'w') as f:
+            json.dump(stats, f)
+
+    return stats
+
+
 def main():
     parser = argparse.ArgumentParser(description='Evaluate conjectures with E prover')
     parser.add_argument('--conjectures', required=True,
                         help='Directory with generated conjectures')
     parser.add_argument('--problems', default='problems',
                         help='Directory with original CNF problems')
-    parser.add_argument('--statistics', default='statistics',
-                        help='Original statistics file for baseline comparison')
     parser.add_argument('--eprover', default='eprover',
                         help='Path to E prover binary')
     parser.add_argument('--timeout', type=int, default=10,
@@ -158,24 +214,20 @@ def main():
     parser.add_argument('--max_conjectures_per_problem', type=int, default=5,
                         help='Max conjectures to test per problem')
     parser.add_argument('--output', default=None)
-
     parser.add_argument('--workers', type=int, default=8,
                         help='Parallel E prover processes')
+    parser.add_argument('--baseline_cache', default='eprover_baselines.json',
+                        help='Cache file for baseline proof search lengths')
 
     args = parser.parse_args()
-
-    # Load baseline stats
-    print("Loading original statistics...")
-    orig_stats = load_original_stats(args.statistics)
-    print(f"  {len(orig_stats)} problems with baseline stats")
 
     # Check E prover
     try:
         proc = subprocess.run([args.eprover, '--version'],
                               capture_output=True, text=True, timeout=5)
-        print(f"  E prover: {proc.stdout.strip()}")
+        print(f"E prover: {proc.stdout.strip()}")
     except (FileNotFoundError, subprocess.TimeoutExpired):
-        print(f"  WARNING: E prover not found at '{args.eprover}'")
+        print(f"WARNING: E prover not found at '{args.eprover}'")
 
     # Find problems with generated conjectures
     conj_dir = args.conjectures
@@ -183,8 +235,14 @@ def main():
                 if os.path.isdir(os.path.join(conj_dir, d))]
     if args.max_problems > 0:
         problems = problems[:args.max_problems]
-    print(f"  {len(problems)} problems with conjectures")
-    print(f"  Workers: {args.workers}")
+    print(f"{len(problems)} problems with conjectures, {args.workers} workers")
+
+    # Compute baselines with OUR E prover (not relying on old stats)
+    print("Computing baselines (same E, same timeout)...")
+    orig_stats = compute_baselines(
+        args.problems, problems, args.eprover, args.timeout,
+        args.workers, cache_path=args.baseline_cache,
+    )
 
     # Output file
     output_path = args.output or os.path.join(conj_dir, 'eprover_results.tsv')
