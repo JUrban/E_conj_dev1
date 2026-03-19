@@ -38,12 +38,16 @@ def load_model(checkpoint_path, device):
     model_args = checkpoint['args']
     variant = checkpoint.get('variant', 'a')
 
+    named = model_args.get('named_embeddings', False)
+    vocab_size = model_args.get('vocab_size', 0)
+
     if variant == 'd':
         from conjecture_gen.model_d import ConjectureModelD
         model = ConjectureModelD(
             hidden_dim=model_args['hidden_dim'],
             num_gnn_layers=model_args['num_gnn_layers'],
             max_vars=model_args.get('max_vars', 20),
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
     elif variant == 'c':
         from conjecture_gen.model_c import ConjectureModelC
@@ -58,6 +62,7 @@ def load_model(checkpoint_path, device):
             hidden_dim=model_args['hidden_dim'],
             num_gnn_layers=model_args['num_gnn_layers'],
             max_vars=model_args.get('max_vars', 20),
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
 
     # Remap old checkpoint keys if needed (transformer_decoder -> dec_layers)
@@ -69,7 +74,16 @@ def load_model(checkpoint_path, device):
     model.load_state_dict(remapped, strict=False)
     model = model.to(device)
     model.eval()
-    return model, variant, checkpoint
+
+    # Load vocab if named embeddings were used
+    symbol_vocab = None
+    if named:
+        from conjecture_gen.symbol_vocab import build_vocab
+        symbol_vocab = build_vocab(
+            'problems', cache_path=os.path.join('cache', 'symbol_vocab.pt')
+        )
+
+    return model, variant, checkpoint, symbol_vocab
 
 
 def score_sequence(model, data, sequence, variant='a'):
@@ -102,7 +116,7 @@ def score_sequence(model, data, sequence, variant='a'):
 
 def generate_for_problem(model, problem_path, n=20, temperature=1.0,
                          top_k=10, top_p=0.9, device=None,
-                         batch_gen=8):
+                         batch_gen=8, symbol_vocab=None):
     """Generate n conjectures for a single problem, deduplicate, rank.
 
     Uses batched generation: replicates the graph batch_gen times and
@@ -114,7 +128,7 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
     if not clauses:
         return []
 
-    graph = clauses_to_graph(clauses)
+    graph = clauses_to_graph(clauses, vocab=symbol_vocab)
     if device:
         graph = graph.to(device)
 
@@ -188,7 +202,7 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 
-    model, variant, ckpt = load_model(args.model, device)
+    model, variant, ckpt, symbol_vocab = load_model(args.model, device)
     print(f"Model variant={variant}, epoch={ckpt['epoch']}, "
           f"val_loss={ckpt['val_loss']:.4f}")
 
@@ -229,6 +243,7 @@ def main():
                 temperature=args.temperature,
                 top_k=args.top_k, top_p=args.top_p,
                 device=device, batch_gen=args.batch_gen,
+                symbol_vocab=symbol_vocab,
             )
             for c in conjectures:
                 all_results[problem_name].append((c['text'], c.get('sequence', [])))
@@ -245,7 +260,7 @@ def main():
         for p in problems:
             clauses = parse_problem_file(os.path.join(args.problems_dir, p))
             if clauses:
-                problem_graphs[p] = clauses_to_graph(clauses)
+                problem_graphs[p] = clauses_to_graph(clauses, vocab=symbol_vocab)
         print(f"Loaded {len(problem_graphs)} graphs")
 
         batch_size = args.batch_gen
