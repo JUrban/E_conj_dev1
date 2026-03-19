@@ -80,7 +80,7 @@ def run_eprover(problem_file: str, extra_axioms: str = None,
 
         proc = subprocess.run(
             [eprover, '--auto', '--cpu-limit=' + str(timeout),
-             '--tstp-format', '-s', tmp_path],
+             '-s', '--print-statistics', tmp_path],
             capture_output=True, text=True,
             timeout=timeout + 5,
         )
