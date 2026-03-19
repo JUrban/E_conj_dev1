@@ -184,6 +184,7 @@ def _eval_one_worker(task):
 
     return {
         'problem': problem_name, 'conj_file': conj_file,
+        'conj_text': conj_text,
         'p1': p1, 'p2': p2, 'L_orig': L_orig,
         'ratio': ratio, 'speedup': speedup,
     }
@@ -374,13 +375,14 @@ def main():
 
     with open(output_path, 'w') as out_f:
         out_f.write("problem\tconjecture\tp1_status\tp1_clauses\t"
-                    "p2_status\tp2_clauses\tL_original\tratio\tspeedup\n")
+                    "p2_status\tp2_clauses\tL_original\tratio\tspeedup\tclause\n")
         for r in results:
             out_f.write(
                 f"{r['problem']}\t{r['conj_file']}\t"
                 f"{r['p1']['status']}\t{r['p1']['processed_clauses']}\t"
                 f"{r['p2']['status']}\t{r['p2']['processed_clauses']}\t"
-                f"{r['L_orig']}\t{r['ratio']:.4f}\t{r['speedup']}\n"
+                f"{r['L_orig']}\t{r['ratio']:.4f}\t{r['speedup']}\t"
+                f"{r['conj_text']}\n"
             )
 
     elapsed = time.time() - t0
