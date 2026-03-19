@@ -152,26 +152,25 @@ def load_original_stats(statistics_file: str) -> dict:
 
 
 # Module-level worker functions (must be picklable for ProcessPoolExecutor)
-_worker_eprover = 'eprover'
-_worker_timeout = 10
-_worker_problems_dir = 'problems'
+# Config is passed through the task tuple, not globals.
 
 
-def _run_baseline_worker(problem_name):
-    path = os.path.join(_worker_problems_dir, problem_name)
-    result = run_eprover(path, eprover=_worker_eprover, timeout=_worker_timeout)
+def _run_baseline_worker(args_tuple):
+    problem_name, problems_dir, eprover, timeout = args_tuple
+    path = os.path.join(problems_dir, problem_name)
+    result = run_eprover(path, eprover=eprover, timeout=timeout)
     return problem_name, result
 
 
 def _eval_one_worker(task):
-    problem_name, conj_file, conj_line, conj_text, L_orig = task
-    problem_path = os.path.join(_worker_problems_dir, problem_name)
+    problem_name, conj_file, conj_line, conj_text, L_orig, problems_dir, eprover, timeout = task
+    problem_path = os.path.join(problems_dir, problem_name)
 
     p1 = run_eprover(problem_path, conj_line,
-                      eprover=_worker_eprover, timeout=_worker_timeout)
+                      eprover=eprover, timeout=timeout)
     neg_clauses = negate_clause(conj_text)
     p2 = run_eprover(problem_path, neg_clauses,
-                      eprover=_worker_eprover, timeout=_worker_timeout)
+                      eprover=eprover, timeout=timeout)
 
     both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
     ratio = -1.0
@@ -214,17 +213,13 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
     else:
         cached = {}
 
-    # Set module-level worker config
-    global _worker_eprover, _worker_timeout, _worker_problems_dir
-    _worker_eprover = eprover
-    _worker_timeout = timeout
-    _worker_problems_dir = problems_dir
-
     stats = dict(cached)
     done = 0
 
+    baseline_tasks = [(p, problems_dir, eprover, timeout) for p in problem_names]
+
     with ProcessPoolExecutor(max_workers=workers) as executor:
-        futures = {executor.submit(_run_baseline_worker, p): p for p in problem_names}
+        futures = {executor.submit(_run_baseline_worker, t): t for t in baseline_tasks}
         for future in as_completed(futures):
             try:
                 pname, result = future.result()
@@ -327,15 +322,10 @@ def main():
                         conj_text = m.group(1)
                     break
             if conj_line and conj_text:
-                tasks.append((problem_name, conj_file, conj_line, conj_text, L_orig))
+                tasks.append((problem_name, conj_file, conj_line, conj_text, L_orig,
+                              args.problems, args.eprover, args.timeout))
 
     print(f"  Total tasks: {len(tasks)} (P1+P2 = {len(tasks)*2} prover calls)")
-
-    # Set module-level config for workers
-    global _worker_eprover, _worker_timeout, _worker_problems_dir
-    _worker_eprover = args.eprover
-    _worker_timeout = args.timeout
-    _worker_problems_dir = args.problems
 
     # Run in parallel
     from concurrent.futures import ProcessPoolExecutor, as_completed
