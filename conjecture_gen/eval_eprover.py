@@ -55,33 +55,42 @@ def run_eprover(problem_file: str, extra_axioms: str = None,
                 eprover: str = 'eprover', timeout: int = 10) -> dict:
     """Run E prover on a problem, optionally with extra axioms.
 
-    Args:
-        problem_file: path to the CNF problem file
-        extra_axioms: string of additional cnf() clauses to append
-        eprover: path to E prover binary
-        timeout: time limit in seconds
-
-    Returns: dict with 'status', 'processed_clauses'
+    Uses a temp file to combine problem + extra axioms, since E
+    works best with file input (not stdin). Strips # comments
+    which are not standard TPTP.
     """
-    # Build input: problem + extra axioms
+    import tempfile
+
     try:
         with open(problem_file) as f:
-            content = f.read()
+            lines = f.readlines()
     except FileNotFoundError:
         return {'status': 'file_not_found', 'processed_clauses': -1}
+
+    # Keep only cnf() lines (strip # comments and blank lines)
+    content = ''.join(line for line in lines if line.strip().startswith('cnf('))
 
     if extra_axioms:
         content = content + '\n' + extra_axioms + '\n'
 
     try:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False) as tmp:
+            tmp.write(content)
+            tmp_path = tmp.name
+
         proc = subprocess.run(
             [eprover, '--auto', '--cpu-limit=' + str(timeout),
-             '--tstp-format', '-s'],
-            input=content, capture_output=True, text=True,
+             '--tstp-format', '-s', tmp_path],
+            capture_output=True, text=True,
             timeout=timeout + 5,
         )
+        os.unlink(tmp_path)
         return parse_eprover_output(proc.stdout + proc.stderr)
-    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
+        try:
+            os.unlink(tmp_path)
+        except Exception:
+            pass
         return {'status': f'error:{type(e).__name__}', 'processed_clauses': -1}
 
 
@@ -182,12 +191,14 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
                 if result['status'] == 'proved' and result['processed_clauses'] >= 0:
                     stats[pname] = result['processed_clauses']
                 else:
-                    stats[pname] = -1  # not proved within timeout
+                    stats[pname] = -1
                 done += 1
-                if done % 50 == 0:
-                    print(f"    baselines: {done}/{len(problem_names)} done")
-            except Exception:
-                pass
+                if done % 50 == 0 or done <= 3:
+                    print(f"    baselines: {done}/{len(problem_names)} "
+                          f"({pname}: {result['status']}, L={result['processed_clauses']})")
+            except Exception as e:
+                done += 1
+                print(f"    baseline ERROR: {e}")
 
     proved = sum(1 for v in stats.values() if v > 0)
     print(f"  Baselines: {proved}/{len(stats)} proved within {timeout}s")
