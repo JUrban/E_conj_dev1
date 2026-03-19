@@ -11,7 +11,7 @@ MAXCONJ=10
 
 echo "=== Starting evals at $(date) ==="
 
-for CONJ_DIR in conjectures_a2_arity_full conjectures_a3_arity_full conjectures_a_named_full conjectures_c_arity_full conjectures_d_arity_full; do
+for CONJ_DIR in conjectures_a2 conjectures_a2_arity_full conjectures_a3_arity_full conjectures_a_named_full conjectures_c_arity_full conjectures_d_arity_full; do
   if [ -d "$CONJ_DIR" ]; then
     echo ""
     echo "=== $CONJ_DIR ==="
@@ -31,7 +31,7 @@ echo ""
 echo "=== ALL EVALS DONE at $(date) ==="
 echo ""
 echo "Summary of all results:"
-for d in conjectures_a2_arity_full conjectures_a3_arity_full conjectures_a_named_full conjectures_c_arity_full conjectures_d_arity_full; do
+for d in conjectures_a2 conjectures_a2_arity_full conjectures_a3_arity_full conjectures_a_named_full conjectures_c_arity_full conjectures_d_arity_full; do
   if [ -f "$d/eprover_results.tsv" ]; then
     TOTAL=$(tail -n +2 "$d/eprover_results.tsv" | wc -l)
     BOTH=$(awk -F'\t' '$3=="proved" && $5=="proved"' "$d/eprover_results.tsv" | wc -l)
