@@ -88,17 +88,33 @@ def run_eprover(problem_file: str, extra_axioms: str = None,
 def negate_clause(clause_text: str) -> str:
     """Negate a CNF clause for the P2 test.
 
-    A clause (L1 | L2 | ... | Ln) is negated as:
-    ~L1 & ~L2 & ... & ~Ln, which in CNF becomes n separate unit clauses.
+    A CNF clause ∀X. (L1(X) | L2(X) | ... | Ln(X)) negates to:
+    ∃X. (~L1(X) ∧ ~L2(X) ∧ ... ∧ ~Ln(X))
+
+    The existential is Skolemized: replace each variable Xi with a
+    fresh Skolem constant negsk_i. Then each negated literal becomes
+    a separate ground unit clause (implicitly conjoined in CNF).
     """
-    # Parse literals by splitting on ' | '
-    literals = clause_text.split(' | ')
+    # Collect all variables used in the clause
+    var_pattern = re.compile(r'\b(X\d+)\b')
+    all_vars = set(var_pattern.findall(clause_text))
+
+    # Create Skolem substitution: X1 -> negsk_1, X2 -> negsk_2, etc.
+    skolem_map = {v: f'negsk_{v[1:]}' for v in sorted(all_vars)}
+
+    # Apply substitution to the whole clause
+    skolemized = clause_text
+    for var, sk in sorted(skolem_map.items(), key=lambda x: -len(x[0])):
+        # Replace whole-word only (longer vars first to avoid X1 matching in X10)
+        skolemized = re.sub(r'\b' + var + r'\b', sk, skolemized)
+
+    # Split into literals and negate each
+    literals = skolemized.split(' | ')
     negated_clauses = []
     for i, lit in enumerate(literals):
         lit = lit.strip()
         if not lit:
             continue
-        # Negate: ~p becomes p, p becomes ~p
         if lit.startswith('~'):
             neg_lit = lit[1:]
         else:
