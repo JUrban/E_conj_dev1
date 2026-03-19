@@ -179,7 +179,9 @@ def main():
     parser.add_argument('--max_nodes', type=int, default=1500)
     parser.add_argument('--max_problems', type=int, default=0, help='0=all')
     parser.add_argument('--batch_gen', type=int, default=16,
-                        help='Batch size for generation (replicate same problem N times)')
+                        help='Batch size for generation')
+    parser.add_argument('--per_problem', action='store_true',
+                        help='Generate per-problem (slower but correct arity constraints)')
 
     args = parser.parse_args()
 
@@ -210,57 +212,73 @@ def main():
               f"(max_nodes={args.max_nodes})")
         problems = filtered
 
-    # Pre-build all graphs
-    print("Loading problem graphs...")
-    from torch_geometric.data import Batch
-    problem_graphs = {}
-    for p in problems:
-        clauses = parse_problem_file(os.path.join(args.problems_dir, p))
-        if clauses:
-            problem_graphs[p] = clauses_to_graph(clauses)
-    print(f"Loaded {len(problem_graphs)} graphs")
-
-    # Generate: batch different problems together
     rankings_path = os.path.join(args.output, 'rankings.tsv')
     total_valid = 0
     total_generated = 0
     t0 = time.time()
 
-    # Collect all conjectures per problem
-    all_results = {p: [] for p in problems}  # problem -> list of (decoded, seq)
-    batch_size = args.batch_gen
+    all_results = {p: [] for p in problems}
 
-    for attempt in range(args.n):
-        temp = args.temperature * (0.7 + 0.3 * (attempt / max(args.n - 1, 1)))
+    if args.per_problem:
+        # Per-problem generation: correct arity constraints, slower
+        print(f"Generating per-problem (n={args.n}, batch_gen={args.batch_gen})...")
+        for pi, problem_name in enumerate(problems):
+            problem_path = os.path.join(args.problems_dir, problem_name)
+            conjectures = generate_for_problem(
+                model, problem_path, n=args.n,
+                temperature=args.temperature,
+                top_k=args.top_k, top_p=args.top_p,
+                device=device, batch_gen=args.batch_gen,
+            )
+            for c in conjectures:
+                all_results[problem_name].append((c['text'], c.get('sequence', [])))
 
-        # Process problems in batches of batch_size
-        for batch_start in range(0, len(problems), batch_size):
-            batch_problems = problems[batch_start:batch_start + batch_size]
-            batch_graphs = []
-            batch_names = []
-            for p in batch_problems:
-                if p in problem_graphs:
-                    g = problem_graphs[p].clone()
-                    if device.type == 'cuda':
-                        g = g.to(device)
-                    batch_graphs.append(g)
-                    batch_names.append(p)
+            if (pi + 1) % 100 == 0:
+                n_total = sum(len(v) for v in all_results.values())
+                elapsed = time.time() - t0
+                print(f"  {pi+1}/{len(problems)}: {n_total} conjectures ({elapsed:.0f}s)")
+    else:
+        # Batched multi-problem generation: fast but no arity constraints
+        print(f"Loading problem graphs...")
+        from torch_geometric.data import Batch
+        problem_graphs = {}
+        for p in problems:
+            clauses = parse_problem_file(os.path.join(args.problems_dir, p))
+            if clauses:
+                problem_graphs[p] = clauses_to_graph(clauses)
+        print(f"Loaded {len(problem_graphs)} graphs")
 
-            if not batch_graphs:
-                continue
+        batch_size = args.batch_gen
+        for attempt in range(args.n):
+            temp = args.temperature * (0.7 + 0.3 * (attempt / max(args.n - 1, 1)))
 
-            try:
-                batched = Batch.from_data_list(batch_graphs)
-                seqs = model.generate(batched, max_steps=80, temperature=temp,
-                                      top_k=args.top_k, top_p=args.top_p)
-            except Exception:
-                continue
+            for batch_start in range(0, len(problems), batch_size):
+                batch_problems = problems[batch_start:batch_start + batch_size]
+                batch_graphs = []
+                batch_names = []
+                for p in batch_problems:
+                    if p in problem_graphs:
+                        g = problem_graphs[p].clone()
+                        if device.type == 'cuda':
+                            g = g.to(device)
+                        batch_graphs.append(g)
+                        batch_names.append(p)
 
-            for idx, (p, seq) in enumerate(zip(batch_names, seqs)):
-                sym_names = problem_graphs[p].symbol_names
-                decoded = decode_sequence(seq, sym_names)
-                if decoded and decoded != '<empty>':
-                    all_results[p].append((decoded, seq))
+                if not batch_graphs:
+                    continue
+
+                try:
+                    batched = Batch.from_data_list(batch_graphs)
+                    seqs = model.generate(batched, max_steps=80, temperature=temp,
+                                          top_k=args.top_k, top_p=args.top_p)
+                except Exception:
+                    continue
+
+                for idx, (p, seq) in enumerate(zip(batch_names, seqs)):
+                    sym_names = problem_graphs[p].symbol_names
+                    decoded = decode_sequence(seq, sym_names)
+                    if decoded and decoded != '<empty>':
+                        all_results[p].append((decoded, seq))
 
         if (attempt + 1) % 5 == 0:
             n_total = sum(len(v) for v in all_results.values())
