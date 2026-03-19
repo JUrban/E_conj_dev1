@@ -395,9 +395,14 @@ def compute_vae_loss(model_output, batch):
 class ConjectureModelC(nn.Module):
     """Plan C: GNN encoder + conditional VAE decoder."""
 
-    def __init__(self, hidden_dim=128, num_gnn_layers=6, max_vars=20, **kwargs):
+    def __init__(self, hidden_dim=128, num_gnn_layers=6, max_vars=20,
+                 use_named_embeddings=False, vocab_size=0, **kwargs):
         super().__init__()
-        self.encoder = HeteroGNNEncoder(hidden_dim, num_gnn_layers)
+        self.encoder = HeteroGNNEncoder(
+            hidden_dim, num_gnn_layers,
+            use_named_embeddings=use_named_embeddings,
+            vocab_size=vocab_size,
+        )
         self.decoder = VAETransformerDecoder(
             hidden_dim, max_vars, latent_dim=hidden_dim // 4,
         )

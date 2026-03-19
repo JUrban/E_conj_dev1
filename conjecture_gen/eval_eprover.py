@@ -348,6 +348,9 @@ def main():
             try:
                 r = future.result()
             except Exception as e:
+                print(f"  WORKER ERROR: {e}")
+                import traceback
+                traceback.print_exc()
                 continue
 
             results.append(r)

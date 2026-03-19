@@ -55,6 +55,7 @@ def load_model(checkpoint_path, device):
             hidden_dim=model_args['hidden_dim'],
             num_gnn_layers=model_args['num_gnn_layers'],
             max_vars=model_args.get('max_vars', 20),
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
     else:
         from conjecture_gen.model import ConjectureModel
@@ -148,7 +149,11 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
             batched = Batch.from_data_list([graph.clone() for _ in range(bs)])
             seqs = model.generate(batched, max_steps=args.max_steps, temperature=temp,
                                   top_k=top_k, top_p=top_p)
-        except Exception:
+        except Exception as e:
+            if remaining == n:  # first attempt — print the error
+                import traceback
+                print(f"  Generation error: {e}")
+                traceback.print_exc()
             remaining -= bs
             continue
 

@@ -55,6 +55,7 @@ def get_model_and_loss(variant, args):
         model = ConjectureModelC(
             hidden_dim=args.hidden_dim, num_gnn_layers=args.num_gnn_layers,
             max_vars=args.max_vars,
+            use_named_embeddings=named, vocab_size=vocab_size,
         )
         return model, compute_vae_loss
 
