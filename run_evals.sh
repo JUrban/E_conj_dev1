@@ -5,44 +5,27 @@
 
 set -e
 EPROVER=~/bin/eprover
-WORKERS=32
+WORKERS=64
 TIMEOUT=10
 MAXCONJ=10
 
 echo "=== Starting evals at $(date) ==="
 
-# 1. A3 (150 epochs, anonymous)
-echo ""
-echo "=== conjectures_a3_arity_full ==="
-python3 -m conjecture_gen.eval_eprover \
-  --conjectures conjectures_a3_arity_full/ \
-  --problems problems/ \
-  --eprover $EPROVER \
-  --timeout $TIMEOUT \
-  --max_conjectures_per_problem $MAXCONJ \
-  --workers $WORKERS
-
-# 2. A+named (100 epochs)
-echo ""
-echo "=== conjectures_a_named_full ==="
-python3 -m conjecture_gen.eval_eprover \
-  --conjectures conjectures_a_named_full/ \
-  --problems problems/ \
-  --eprover $EPROVER \
-  --timeout $TIMEOUT \
-  --max_conjectures_per_problem $MAXCONJ \
-  --workers $WORKERS
-
-# 3. C anonymous (100 epochs)
-echo ""
-echo "=== conjectures_c_arity_full ==="
-python3 -m conjecture_gen.eval_eprover \
-  --conjectures conjectures_c_arity_full/ \
-  --problems problems/ \
-  --eprover $EPROVER \
-  --timeout $TIMEOUT \
-  --max_conjectures_per_problem $MAXCONJ \
-  --workers $WORKERS
+for CONJ_DIR in conjectures_a2_arity_full conjectures_a3_arity_full conjectures_a_named_full conjectures_c_arity_full conjectures_d_arity_full; do
+  if [ -d "$CONJ_DIR" ]; then
+    echo ""
+    echo "=== $CONJ_DIR ==="
+    python3 -m conjecture_gen.eval_eprover \
+      --conjectures $CONJ_DIR/ \
+      --problems problems/ \
+      --eprover $EPROVER \
+      --timeout $TIMEOUT \
+      --max_conjectures_per_problem $MAXCONJ \
+      --workers $WORKERS
+  else
+    echo "=== SKIPPING $CONJ_DIR (not found) ==="
+  fi
+done
 
 echo ""
 echo "=== ALL EVALS DONE at $(date) ==="
