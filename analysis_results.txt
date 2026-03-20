@@ -1,0 +1,457 @@
+Loaded A2 (100ep): 29849 results
+Loaded A3 (150ep): 29840 results
+Loaded A+named: 29776 results
+Loaded C (VAE): 29834 results
+Loaded C+named: 29767 results
+Loaded D (SSM): 29819 results
+Loaded D+named: 29681 results
+Loaded A2 noarity: 29368 results
+
+================================================================================
+1. TOP 20 COOLEST CONJECTURES (biggest speedups)
+================================================================================
+
+Total useful conjectures across all methods: 10904
+Unique (by problem+clause): 8620
+
+  #1: 106.4x speedup (train)
+      Problem: t13_funct_2 (L=60393, L1+L2=567)
+      Method: C (VAE)
+      Clause: m1_subset_1(k3_relat_1(esk4_0,X1),k1_zfmisc_1(k9_xtuple_0(k3_relat_1(esk4_0,X1)))) | ~m1_subset_1(k3_relat_1(esk4_0,X1),
+
+  #2: 86.2x speedup (train)
+      Problem: t13_funct_2 (L=60393, L1+L2=701)
+      Method: C (VAE)
+      Clause: $eq(k1_xboole_0,esk2_0) | ~m1_subset_1(esk5_0,k1_zfmisc_1(k9_xtuple_0(k3_relat_1(esk4_0,esk5_0))))
+
+  #3: 80.6x speedup (train)
+      Problem: t26_tops_1 (L=14330, L1+L2=177)
+      Method: A3 (150ep)
+      Clause: r1_tarski(k2_pre_topc(X1,k1_tops_1(X1,X2)),k2_pre_topc(X1,X2)) | ~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))) | ~m1_sub
+
+  #4: 78.7x speedup (train)
+      Problem: t26_tops_1 (L=14330, L1+L2=182)
+      Method: C+named
+      Clause: r1_tarski(k2_pre_topc(esk1_0,k1_tops_1(esk1_0,X1)),k2_pre_topc(esk1_0,X1)) | ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(esk
+
+  #5: 73.0x speedup (train)
+      Problem: t26_tops_1 (L=14330, L1+L2=197)
+      Method: D (SSM)
+      Clause: r1_tarski(k2_pre_topc(esk1_0,k1_tops_1(esk1_0,esk2_0)),k2_pre_topc(esk1_0,k1_tops_1(esk1_0,esk2_0))) | ~r1_tarski(k1_top
+
+  #6: 67.1x speedup (train)
+      Problem: t42_series_3 (L=32791, L1+L2=488)
+      Method: C (VAE)
+      Clause: v1_funct_1(k1_seq_1(k3_series_1(esk2_0),X1)) | ~v1_xxreal_0(k18_complex1(k3_series_1(esk2_0))) | ~m1_subset_1(X1,k5_numb
+
+  #7: 65.4x speedup (train)
+      Problem: t13_partfun2 (L=14566, L1+L2=223)
+      Method: A2 (100ep)
+      Clause: r2_hidden(k7_partfun1(esk1_0,k2_partfun2(esk1_0,esk2_0,esk4_0),esk3_0),k1_relset_1(esk1_0,esk4_0))
+
+  #8: 65.4x speedup (train)
+      Problem: t13_partfun2 (L=14566, L1+L2=223)
+      Method: A+named
+      Clause: r2_hidden(k7_partfun1(esk1_0,k2_funct_1(esk4_0),esk3_0),k1_relset_1(esk1_0,esk4_0))
+
+  #9: 64.9x speedup (train)
+      Problem: t13_partfun2 (L=14566, L1+L2=224)
+      Method: A2 (100ep)
+      Clause: r2_hidden(k7_partfun1(esk1_0,k2_partfun2(esk1_0,esk2_0,esk4_0),esk3_0),k1_relset_1(esk1_0,esk4_0)) | v1_xboole_0(k1_rels
+
+  #10: 59.9x speedup (train)
+      Problem: t42_series_3 (L=32791, L1+L2=549)
+      Method: A3 (150ep)
+      Clause: r1_xxreal_0(k18_complex1(k1_seq_1(k3_series_1(esk2_0),X1)),k1_seq_1(k3_series_1(k54_valued_1(esk2_0)),X1)) | ~v1_xxreal_
+
+  #11: 57.5x speedup (unknown)
+      Problem: t87_funcop_1 (L=31269, L1+L2=543)
+      Method: A3 (150ep)
+      Clause: r2_hidden(X1,k3_xboole_0(k9_xtuple_0(X2),X3)) | ~r2_hidden(X1,k7_funcop_1(X2,X3))
+
+  #12: 57.5x speedup (train)
+      Problem: t42_series_3 (L=32791, L1+L2=570)
+      Method: D (SSM)
+      Clause: ~v1_xxreal_0(k1_seq_1(k3_series_1(esk2_0),esk1_0)) | ~v1_xxreal_0(k1_seq_1(k3_series_1(esk2_0),esk1_0))
+
+  #13: 56.2x speedup (train)
+      Problem: t42_series_3 (L=32791, L1+L2=583)
+      Method: D+named
+      Clause: r1_xxreal_0(k18_complex1(k1_seq_1(k3_series_1(esk2_0),esk1_0)),k1_seq_1(k3_series_1(k54_valued_1(esk2_0)),esk1_0)) | ~m1
+
+  #14: 52.4x speedup (train)
+      Problem: t31_partfun2 (L=12717, L1+L2=243)
+      Method: A2 (100ep)
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,esk5_0),X2),k3_relat_1(k2_funcop_1(X1,X3),X2)) | v1_xboole_0(X1) | ~v1_relat_1(esk4_0) | ~
+
+  #15: 51.8x speedup (train)
+      Problem: t20_ndiff_4 (L=38445, L1+L2=743)
+      Method: C+named
+      Clause: v2_struct_0(k4_real_ns1(esk2_0)) | ~l1_normsp_1(k4_real_ns1(esk2_0)) | ~m1_subset_1(k5_relat_1(esk3_0,esk1_0),k1_zfmisc_
+
+  #16: 51.0x speedup (train)
+      Problem: t31_partfun2 (L=12717, L1+L2=249)
+      Method: A2 (100ep)
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,esk5_0),X2),k3_relat_1(k2_funcop_1(esk1_0,k1_funct_1(esk6_0,esk5_0)),k1_funct_1(esk6_0,X2)
+
+  #17: 51.0x speedup (train)
+      Problem: t42_series_3 (L=32791, L1+L2=642)
+      Method: A3 (150ep)
+      Clause: v1_xxreal_0(k1_seq_1(k3_series_1(k54_valued_1(X1)),X2)) | ~v1_xxreal_0(k1_seq_1(k3_series_1(X1),X2)) | ~v1_xxreal_0(k18_
+
+  #18: 51.0x speedup (train)
+      Problem: t31_partfun2 (L=12717, L1+L2=249)
+      Method: D+named
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,k1_funct_1(X2,X3)),k4_partfun2(X4,X5,X6,X3)),k3_relat_1(X6,k4_partfun2(X2,X3,X4,X5))) | v1
+
+  #19: 50.8x speedup (train)
+      Problem: t31_partfun2 (L=12717, L1+L2=250)
+      Method: C+named
+      Clause: $eq(k3_relat_1(k2_funcop_1(k9_xtuple_0(esk6_0),X1),k1_funct_1(esk6_0,X1)),X1)
+
+  #20: 49.0x speedup (train)
+      Problem: t26_tops_1 (L=14330, L1+L2=293)
+      Method: A2 (100ep)
+      Clause: r1_tarski(k2_pre_topc(X1,k1_tops_1(X1,X2)),k2_pre_topc(X1,k1_tops_1(X1,X2))) | ~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X
+
+================================================================================
+2. BEST CONJECTURES TO INSPECT MANUALLY
+================================================================================
+(Scored by: speedup factor × log(L_original) × diversity bonus)
+
+  #1: score=2315.3 (80.6x, L=14330, train)
+      Problem: t26_tops_1
+      Method: A3 (150ep)
+      Clause: r1_tarski(k2_pre_topc(X1,k1_tops_1(X1,X2)),k2_pre_topc(X1,X2)) | ~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))) | ~m1_subset_1(X3,k1_zfmisc_1(u1_struct
+
+  #2: score=1867.9 (59.9x, L=32791, train)
+      Problem: t42_series_3
+      Method: A3 (150ep)
+      Clause: r1_xxreal_0(k18_complex1(k1_seq_1(k3_series_1(esk2_0),X1)),k1_seq_1(k3_series_1(k54_valued_1(esk2_0)),X1)) | ~v1_xxreal_0(k18_complex1(k1_seq_1(k3_ser
+
+  #3: score=1756.7 (106.4x, L=60393, train)
+      Problem: t13_funct_2
+      Method: C (VAE)
+      Clause: m1_subset_1(k3_relat_1(esk4_0,X1),k1_zfmisc_1(k9_xtuple_0(k3_relat_1(esk4_0,X1)))) | ~m1_subset_1(k3_relat_1(esk4_0,X1),k1_zfmisc_1(k2_zfmisc_1(esk1_0
+
+  #4: score=1591.5 (51.0x, L=32791, train)
+      Problem: t42_series_3
+      Method: A3 (150ep)
+      Clause: v1_xxreal_0(k1_seq_1(k3_series_1(k54_valued_1(X1)),X2)) | ~v1_xxreal_0(k1_seq_1(k3_series_1(X1),X2)) | ~v1_xxreal_0(k18_complex1(k1_seq_1(k3_series_1(
+
+  #5: score=1570.2 (67.1x, L=32791, train)
+      Problem: t42_series_3
+      Method: C (VAE)
+      Clause: v1_funct_1(k1_seq_1(k3_series_1(esk2_0),X1)) | ~v1_xxreal_0(k18_complex1(k3_series_1(esk2_0))) | ~m1_subset_1(X1,k5_numbers)
+
+  #6: score=1484.4 (52.4x, L=12717, train)
+      Problem: t31_partfun2
+      Method: A2 (100ep)
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,esk5_0),X2),k3_relat_1(k2_funcop_1(X1,X3),X2)) | v1_xboole_0(X1) | ~v1_relat_1(esk4_0) | ~m1_subset_1(X3,k1_zfmisc_1(k2_
+
+  #7: score=1446.5 (51.0x, L=12717, train)
+      Problem: t31_partfun2
+      Method: D+named
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,k1_funct_1(X2,X3)),k4_partfun2(X4,X5,X6,X3)),k3_relat_1(X6,k4_partfun2(X2,X3,X4,X5))) | v1_xboole_0(X4) | v1_xboole_0(X2
+
+  #8: score=1397.1 (73.0x, L=14330, train)
+      Problem: t26_tops_1
+      Method: D (SSM)
+      Clause: r1_tarski(k2_pre_topc(esk1_0,k1_tops_1(esk1_0,esk2_0)),k2_pre_topc(esk1_0,k1_tops_1(esk1_0,esk2_0))) | ~r1_tarski(k1_tops_1(esk1_0,k1_tops_1(esk1_0,es
+
+  #9: score=1321.3 (46.5x, L=12959, train)
+      Problem: t91_rinfsup1
+      Method: A2 (100ep)
+      Clause: r1_xxreal_0(k1_seq_1(k3_rinfsup1(X1),esk4_2(X1,X2)),k1_seq_1(k4_rinfsup1(X1),esk3_2(X1,X2))) | r1_xxreal_0(k1_seq_1(k3_rinfsup1(X1),k1_seq_1(k3_rinfsu
+
+  #10: score=1183.7 (41.7x, L=12959, train)
+      Problem: t91_rinfsup1
+      Method: D (SSM)
+      Clause: r1_xxreal_0(k1_seq_1(esk1_0,esk3_2(X1,X2)),k1_seq_1(k4_rinfsup1(esk1_0),esk3_2(k3_rinfsup1(X1),esk1_0))) | r1_xxreal_0(k1_seq_1(esk1_0,esk3_2(k4_rinfs
+
+  #11: score=1176.7 (41.0x, L=14330, train)
+      Problem: t26_tops_1
+      Method: C (VAE)
+      Clause: r1_tarski(k2_pre_topc(X1,k2_pre_topc(X1,k1_tops_1(X1,X2))),k1_tops_1(X1,X2)) | ~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))) | ~l1_pre_topc(X1) | ~l1_
+
+  #12: score=1130.3 (78.7x, L=14330, train)
+      Problem: t26_tops_1
+      Method: C+named
+      Clause: r1_tarski(k2_pre_topc(esk1_0,k1_tops_1(esk1_0,X1)),k2_pre_topc(esk1_0,X1)) | ~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(esk1_0)))
+
+  #13: score=1127.3 (39.7x, L=12959, train)
+      Problem: t91_rinfsup1
+      Method: A2 (100ep)
+      Clause: r1_xxreal_0(k1_seq_1(k3_rinfsup1(X1),esk3_2(X2,X1)),k1_seq_1(k4_rinfsup1(X2),esk4_2(X2,X1))) | r1_xxreal_0(k1_seq_1(k3_rinfsup1(X1),esk4_2(X2,X1)),k1_
+
+  #14: score=1094.0 (51.8x, L=38445, train)
+      Problem: t20_ndiff_4
+      Method: C+named
+      Clause: v2_struct_0(k4_real_ns1(esk2_0)) | ~l1_normsp_1(k4_real_ns1(esk2_0)) | ~m1_subset_1(k5_relat_1(esk3_0,esk1_0),k1_zfmisc_1(k2_zfmisc_1(k1_numbers,u1_st
+
+  #15: score=1058.4 (31.8x, L=64708, train)
+      Problem: t12_tops_3
+      Method: C (VAE)
+      Clause: $eq(k3_subset_1(X1,k3_subset_1(X2,k3_subset_1(X1,esk4_2(X2,esk2_0)))),k3_subset_1(X2,esk2_0)) | ~$eq(k1_struct_0(esk1_0),X1) | ~m1_subset_1(X2,k1_zfmi
+
+  #16: score=1056.6 (36.4x, L=16089, train)
+      Problem: t7_arytm_3
+      Method: A3 (150ep)
+      Clause: $eq(k10_ordinal2(k11_ordinal2(esk1_0,k6_ordinal3(X1,esk2_0)),esk1_0),esk1_0) | $eq(k1_xboole_0,k6_ordinal3(X1,esk1_0)) | ~r2_arytm_3(X1,esk1_0) | ~v7_
+
+  #17: score=1055.5 (49.0x, L=14330, train)
+      Problem: t26_tops_1
+      Method: A2 (100ep)
+      Clause: r1_tarski(k2_pre_topc(X1,k1_tops_1(X1,X2)),k2_pre_topc(X1,k1_tops_1(X1,X2))) | ~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))) | ~l1_pre_topc(X1)
+
+  #18: score=1053.8 (33.8x, L=32791, train)
+      Problem: t42_series_3
+      Method: C (VAE)
+      Clause: r1_xxreal_0(k1_seq_1(k1_seq_1(k3_series_1(esk2_0),X1),k18_complex1(k1_seq_1(k3_series_1(esk2_0),X1))),k1_seq_1(k1_seq_1(k3_series_1(esk2_0),X1),k3_ser
+
+  #19: score=1027.2 (36.2x, L=12717, train)
+      Problem: t31_partfun2
+      Method: D+named
+      Clause: $eq(k3_relat_1(k2_funcop_1(X1,X2),k4_partfun2(X3,k2_funcop_1(X1,X2),esk6_0,esk6_0)),k2_funcop_1(X1,k9_xtuple_0(esk6_0))) | v1_xboole_0(X2) | v1_xboole
+
+  #20: score=1026.1 (32.9x, L=32791, train)
+      Problem: t42_series_3
+      Method: D (SSM)
+      Clause: r1_xxreal_0(k54_valued_1(esk2_0),k1_seq_1(k3_series_1(esk2_0),X1)) | ~v1_xxreal_0(k1_seq_1(k3_series_1(esk2_0),X1)) | ~v1_xxreal_0(k1_seq_1(k3_series_
+
+================================================================================
+3. OVERALL PROOF-SHORTENING METRICS PER METHOD
+================================================================================
+
+--- ALL ---
+Method            Tested  BothPr  Useful   Rate AvgRatio  BestR   TotSaved ProblHelp
+-----------------------------------------------------------------------------------------------
+A+named            27896   17294    1499   5.4%    0.621  0.015  3,992,143       489
+A2 (100ep)         27969   17488    1348   4.8%    0.620  0.015  4,049,439       484
+A2 noarity         27539     379      21   0.1%    0.740  0.089     13,097        12
+A3 (150ep)         27962   17425    1485   5.3%    0.620  0.012  3,787,441       492
+C (VAE)            27954   17519    1405   5.0%    0.595  0.009  4,690,343       470
+C+named            27889   17284    1574   5.6%    0.609  0.013  4,391,650       494
+D (SSM)            27940   17165    1495   5.4%    0.652  0.014  4,084,547       527
+D+named            27801   17042    1575   5.7%    0.630  0.015  3,707,394       505
+
+--- train ---
+Method            Tested  BothPr  Useful   Rate AvgRatio  BestR   TotSaved ProblHelp
+-----------------------------------------------------------------------------------------------
+A+named            22333   13857    1192   5.3%    0.610  0.015  3,244,038       391
+A2 (100ep)         22389   13992    1105   4.9%    0.619  0.015  3,368,313       387
+A2 noarity         22015     321      19   0.1%    0.726  0.089      9,111        10
+A3 (150ep)         22385   13955    1197   5.3%    0.611  0.012  2,996,989       391
+C (VAE)            22379   14012    1124   5.0%    0.585  0.009  3,893,840       378
+C+named            22315   13832    1251   5.6%    0.589  0.013  3,515,220       392
+D (SSM)            22368   13663    1201   5.4%    0.651  0.014  3,317,969       409
+D+named            22253   13643    1240   5.6%    0.619  0.015  3,148,154       390
+
+--- val ---
+Method            Tested  BothPr  Useful   Rate AvgRatio  BestR   TotSaved ProblHelp
+-----------------------------------------------------------------------------------------------
+A+named             2786    1768     150   5.4%    0.627  0.041    306,634        46
+A2 (100ep)          2790    1762     104   3.7%    0.614  0.032    237,292        45
+A2 noarity          2766      10       0   0.0%    0.000 999.000          0         0
+A3 (150ep)          2787    1772     144   5.2%    0.618  0.032    372,587        52
+C (VAE)             2790    1775     138   4.9%    0.590  0.041    386,015        48
+C+named             2787    1755     174   6.2%    0.655  0.040    501,618        53
+D (SSM)             2790    1779     147   5.3%    0.657  0.094    345,591        66
+D+named             2781    1754     176   6.3%    0.658  0.026    206,517        61
+
+--- test ---
+Method            Tested  BothPr  Useful   Rate AvgRatio  BestR   TotSaved ProblHelp
+-----------------------------------------------------------------------------------------------
+A+named             2777    1669     157   5.7%    0.702  0.061    441,471        52
+A2 (100ep)          2790    1734     139   5.0%    0.631  0.038    443,834        52
+A2 noarity          2758      48       2   0.1%    0.876  0.790      3,986         2
+A3 (150ep)          2790    1698     144   5.2%    0.701  0.038    417,865        49
+C (VAE)             2785    1732     143   5.1%    0.677  0.076    410,488        44
+C+named             2787    1697     149   5.3%    0.716  0.061    374,812        49
+D (SSM)             2782    1723     147   5.3%    0.657  0.047    420,987        52
+D+named             2767    1645     159   5.7%    0.686  0.050    352,723        54
+
+================================================================================
+4. COMPLEMENTARITY ANALYSIS
+================================================================================
+
+--- Problems with at least one useful speedup (ALL) ---
+  A2 (100ep)      : 484 problems
+  A3 (150ep)      : 492 problems
+  A+named         : 489 problems
+  C (VAE)         : 470 problems
+  C+named         : 494 problems
+  D (SSM)         : 527 problems
+  D+named         : 505 problems
+
+--- Pairwise overlap (ALL) ---
+                 A2 (100e A3 (150e  A+named  C (VAE)  C+named  D (SSM)  D+named
+A2 (100ep)            484      377      329      339      347      333      322
+A3 (150ep)            377      492      345      350      357      334      326
+A+named               329      345      489      339      362      327      331
+C (VAE)               339      350      339      470      335      335      325
+C+named               347      357      362      335      494      329      326
+D (SSM)               333      334      327      335      329      527      328
+D+named               322      326      331      325      326      328      505
+
+  Union (any method): 913 problems
+
+--- Greedy incremental (ALL) ---
+  + D (SSM)         : +527 new problems = 527 total
+  + D+named         : +177 new problems = 704 total
+  + C+named         : +91 new problems = 795 total
+  + A+named         : +45 new problems = 840 total
+  + A2 (100ep)      : +34 new problems = 874 total
+  + A3 (150ep)      : +20 new problems = 894 total
+  + C (VAE)         : +19 new problems = 913 total
+
+--- Problems with at least one useful speedup (test) ---
+  A2 (100ep)      : 52 problems
+  A3 (150ep)      : 49 problems
+  A+named         : 52 problems
+  C (VAE)         : 44 problems
+  C+named         : 49 problems
+  D (SSM)         : 52 problems
+  D+named         : 54 problems
+
+--- Pairwise overlap (test) ---
+                 A2 (100e A3 (150e  A+named  C (VAE)  C+named  D (SSM)  D+named
+A2 (100ep)             52       43       38       32       40       33       35
+A3 (150ep)             43       49       35       31       37       33       34
+A+named                38       35       52       31       34       31       35
+C (VAE)                32       31       31       44       28       29       34
+C+named                40       37       34       28       49       31       33
+D (SSM)                33       33       31       29       31       52       30
+D+named                35       34       35       34       33       30       54
+
+  Union (any method): 95 problems
+
+--- Greedy incremental (test) ---
+  + D+named         : +54 new problems = 54 total
+  + D (SSM)         : +22 new problems = 76 total
+  + A2 (100ep)      : +9 new problems = 85 total
+  + C+named         : +4 new problems = 89 total
+  + A+named         : +3 new problems = 92 total
+  + C (VAE)         : +2 new problems = 94 total
+  + A3 (150ep)      : +1 new problems = 95 total
+
+================================================================================
+5. BEST ACHIEVABLE BY COMBINING METHODS (oracle selection)
+================================================================================
+
+--- Oracle: best ratio per problem across all methods (ALL) ---
+  Problems in split: 2797
+  Proved by E baseline: 1888
+  Problems with useful conjecture: 913 (48.4% of proved)
+  Average best ratio: 0.578
+  Total clauses saved: 2,574,582
+
+  Top 10 biggest savings:
+    l46_tops_1: saved 84,304 clauses (L=99509, ratio=0.153, 6.5x, C+named)
+      ~m1_subset_1(k2_tops_1(esk1_0,esk2_0),k1_zfmisc_1(u1_struct_0(esk1_0)))
+    t50_pboole: saved 82,444 clauses (L=88194, ratio=0.065, 15.3x, A2 (100ep))
+      ~v1_partfun1(k3_pboole(esk1_0,esk3_0,esk2_0),esk1_0) | ~v4_relat_1(k3_pboole(esk
+    t12_tops_3: saved 63,032 clauses (L=64708, ratio=0.026, 38.6x, D+named)
+      $eq(k3_subset_1(u1_struct_0(esk1_0),u1_struct_0(esk1_0)),u1_struct_0(esk1_0)) | 
+    t13_funct_2: saved 59,825 clauses (L=60393, ratio=0.009, 106.4x, C (VAE))
+      m1_subset_1(k3_relat_1(esk4_0,X1),k1_zfmisc_1(k9_xtuple_0(k3_relat_1(esk4_0,X1))
+    t177_xxreal_1: saved 57,026 clauses (L=60141, ratio=0.052, 19.3x, D (SSM))
+      $eq(k2_xboole_0(k3_xxreal_1(esk1_0,esk3_0),k3_xxreal_1(esk1_0,esk4_0)),k2_xboole
+    t86_pboole: saved 54,360 clauses (L=77879, ratio=0.302, 3.3x, C+named)
+      ~v1_partfun1(k2_pboole(X1,k4_pboole(X1,X2,X3),X2),X1) | ~v1_partfun1(X2,X1) | ~v
+    t72_glib_000: saved 53,634 clauses (L=125784, ratio=0.574, 1.7x, C+named)
+      r3_glib_000(esk2_0,esk9_0,esk10_0,esk11_0)
+    t19_random_1: saved 40,264 clauses (L=47264, ratio=0.148, 6.8x, D+named)
+      ~r1_mesfunc6(esk1_0,esk2_0,esk4_0,esk1_0) | ~r1_mesfunc6(esk1_0,esk2_0,esk1_0,es
+    t7_simplex2: saved 38,603 clauses (L=42038, ratio=0.082, 12.2x, C+named)
+      r1_xboole_0(X1,u1_pre_topc(esk2_0)) | r1_xxreal_0(k1_xboole_0,k3_tbsp_1(esk1_0,e
+    t20_ndiff_4: saved 37,703 clauses (L=38445, ratio=0.019, 51.8x, C+named)
+      v2_struct_0(k4_real_ns1(esk2_0)) | ~l1_normsp_1(k4_real_ns1(esk2_0)) | ~m1_subse
+
+--- Oracle: best ratio per problem across all methods (test) ---
+  Problems in split: 279
+  Proved by E baseline: 187
+  Problems with useful conjecture: 95 (50.8% of proved)
+  Average best ratio: 0.602
+  Total clauses saved: 234,316
+
+  Top 10 biggest savings:
+    t35_xboole_1: saved 37,272 clauses (L=39681, ratio=0.061, 16.5x, A3 (150ep))
+      r2_hidden(X1,X2) | r2_hidden(X1,X3) | ~r2_hidden(X1,k4_xboole_0(X2,X3))
+    l101_xreal_1: saved 20,307 clauses (L=23967, ratio=0.153, 6.5x, D (SSM))
+      v1_xcmplx_0(esk1_0) | ~v1_xcmplx_0(esk2_0)
+    t95_glib_000: saved 20,172 clauses (L=33982, ratio=0.406, 2.5x, C (VAE))
+      m1_subset_1(esk3_0,k1_zfmisc_1(k6_glib_000(esk2_0)))
+    t10_anproj_1: saved 15,350 clauses (L=27159, ratio=0.435, 2.3x, A2 (100ep))
+      m1_subset_1(esk4_0,u1_struct_0(esk1_0)) | ~m1_subset_1(k4_struct_0(esk1_0),u1_st
+    t13_ordinal1: saved 14,515 clauses (L=15084, ratio=0.038, 26.5x, A3 (150ep))
+      r1_tarski(esk2_0,X1) | r2_hidden(X2,esk1_0)
+    t18_lattice4: saved 11,279 clauses (L=18727, ratio=0.398, 2.5x, D+named)
+      ~m1_subset_1(k6_lattices(esk2_0),u1_struct_0(esk2_0))
+    t40_jgraph_7: saved 11,040 clauses (L=12846, ratio=0.141, 7.1x, D (SSM))
+      ~v1_xxreal_0(k18_euclid(esk2_0)) | ~v1_xreal_0(k18_euclid(esk3_0))
+    t49_mmlquery: saved 9,923 clauses (L=10417, ratio=0.047, 21.1x, D (SSM))
+      r2_relset_1(esk1_0,esk1_0,k19_mmlquery(esk1_0,esk2_0,k18_mmlquery(esk1_0,esk3_0)
+    t87_qc_lang2: saved 7,936 clauses (L=9262, ratio=0.143, 7.0x, D+named)
+      $eq(k12_qc_lang1(X1),k1_qc_lang2(X1)) | ~$eq(k15_qc_lang2(X1,k1_qc_lang2(X1)),X2
+    t3_lmod_7: saved 7,197 clauses (L=11855, ratio=0.393, 2.5x, D+named)
+      v1_funct_1(esk4_0) | v2_struct_0(k1_mod_3(esk1_0,esk2_0,esk4_0)) | ~l1_struct_0(
+
+================================================================================
+6. UNIQUE CONTRIBUTIONS PER METHOD
+================================================================================
+
+--- Unique problem speedups per method (test) ---
+(Problems where ONLY this method finds a useful conjecture)
+
+  A2 (100ep): 1 unique problems
+    t50_aofa_000 (L=11237, ratio=0.981, 1.0x)
+
+  A3 (150ep): 1 unique problems
+    t39_comseq_2 (L=283, ratio=0.961, 1.0x)
+
+  A+named: 2 unique problems
+    t1_waybel20 (L=954, ratio=0.931, 1.1x)
+    t44_seq_1 (L=178, ratio=0.972, 1.0x)
+
+  C (VAE): 2 unique problems
+    t16_trees_4 (L=192, ratio=0.984, 1.0x)
+    t22_yellow18 (L=10406, ratio=0.999, 1.0x)
+
+  C+named: 4 unique problems
+    t11_exchsort (L=372, ratio=0.922, 1.1x)
+    t15_partfun2 (L=4434, ratio=0.999, 1.0x)
+    t18_memstr_0 (L=134, ratio=0.985, 1.0x)
+    t25_grfunc_1 (L=5897, ratio=0.917, 1.1x)
+
+  D (SSM): 6 unique problems
+    t49_mmlquery (L=10417, ratio=0.047, 21.1x)
+    t59_tops_3 (L=726, ratio=0.767, 1.3x)
+    t5_lfuzzy_1 (L=2000, ratio=0.877, 1.1x)
+    t92_mesfunc6 (L=846, ratio=0.790, 1.3x)
+    t9_coh_sp (L=430, ratio=0.937, 1.1x)
+
+  D+named: 7 unique problems
+    l18_algstr_2 (L=794, ratio=0.931, 1.1x)
+    t11_extreal2 (L=386, ratio=0.974, 1.0x)
+    t12_nat_lat (L=908, ratio=0.873, 1.1x)
+    t1_bcialg_6 (L=2682, ratio=0.472, 2.1x)
+    t23_intpro_1 (L=807, ratio=0.953, 1.0x)
+
+================================================================================
+7. SUMMARY
+================================================================================
+
+--- Test Set Summary (279 problems) ---
+  Problems proved by E baseline: 187
+  Problems helped by ANY method: 95 (50.8% of proved)
+
+  Method            Solved  Unique  BestSpeedup
+  --------------------------------------------------
+  A2 (100ep)            52       1        26.3x
+  A3 (150ep)            49       1        26.5x
+  A+named               52       2        16.5x
+  C (VAE)               44       2        13.1x
+  C+named               49       4        16.5x
+  D (SSM)               52       6        21.1x
+  D+named               54       7        20.1x
