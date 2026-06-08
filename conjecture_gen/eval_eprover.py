@@ -200,16 +200,30 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
     """
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
+    import json
+    # Cache includes config fingerprint to detect stale baselines
+    config_key = f"{eprover}|{timeout}"
+
     if cache_path and os.path.exists(cache_path):
-        import json
         with open(cache_path) as f:
-            cached = json.load(f)
-        print(f"  Loaded {len(cached)} cached baselines from {cache_path}")
-        # Only compute missing ones
+            cache_data = json.load(f)
+        # Check if cache was created with same E config
+        if isinstance(cache_data, dict) and cache_data.get('_config') == config_key:
+            cached = cache_data.get('baselines', {})
+        elif isinstance(cache_data, dict) and '_config' not in cache_data:
+            # Legacy format (no config key) — use but warn
+            cached = cache_data
+            print(f"  WARNING: baseline cache has no config fingerprint, may be stale")
+        else:
+            print(f"  Baseline cache config mismatch, recomputing all")
+            cached = {}
+        if cached:
+            print(f"  Loaded {len(cached)} cached baselines from {cache_path}")
         missing = [p for p in problem_names if p not in cached]
         if not missing:
             return cached
-        print(f"  Computing {len(missing)} missing baselines...")
+        if missing:
+            print(f"  Computing {len(missing)} missing baselines...")
         problem_names = missing
     else:
         cached = {}
@@ -240,9 +254,8 @@ def compute_baselines(problems_dir: str, problem_names: list[str],
     print(f"  Baselines: {proved}/{len(stats)} proved within {timeout}s")
 
     if cache_path:
-        import json
         with open(cache_path, 'w') as f:
-            json.dump(stats, f)
+            json.dump({'_config': config_key, 'baselines': stats}, f)
 
     return stats
 

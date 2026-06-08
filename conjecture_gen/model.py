@@ -13,7 +13,7 @@ Decoder: GRU-based autoregressive decoder that generates the conjecture
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import HeteroConv, SAGEConv, global_mean_pool
+from torch_geometric.nn import HeteroConv, SAGEConv, GINEConv, global_mean_pool
 from torch_geometric.data import HeteroData
 
 from conjecture_gen.target_encoder import (
@@ -57,33 +57,57 @@ class HeteroGNNEncoder(nn.Module):
                 'variable': nn.Linear(1, hidden_dim),
             })
 
+        # Edge types that carry positional attributes (argument order)
+        self._edge_attr_types = {
+            ('term', 'has_var_arg', 'variable'),
+            ('variable', 'arg_of', 'term'),
+            ('literal', 'has_arg', 'term'),
+            ('term', 'arg_of_lit', 'literal'),
+            ('literal', 'has_var_arg', 'variable'),
+            ('variable', 'arg_of_lit', 'literal'),
+            ('term', 'has_subterm', 'term'),
+            ('term', 'subterm_of', 'term'),
+        }
+
+        # Project 1-dim edge position to hidden_dim for GINEConv
+        self.edge_attr_proj = nn.Linear(1, hidden_dim)
+
         # Heterogeneous message passing layers
         self.convs = nn.ModuleList()
         self.norms = nn.ModuleList()
 
+        all_edge_types = [
+            ('clause', 'has_literal', 'literal'),
+            ('literal', 'in_clause', 'clause'),
+            ('literal', 'has_predicate', 'symbol'),
+            ('symbol', 'predicate_of', 'literal'),
+            ('term', 'has_functor', 'symbol'),
+            ('symbol', 'functor_of', 'term'),
+            ('variable', 'in_clause', 'clause'),
+            ('clause', 'has_variable', 'variable'),
+            ('term', 'has_var_arg', 'variable'),
+            ('variable', 'arg_of', 'term'),
+            ('literal', 'has_arg', 'term'),
+            ('term', 'arg_of_lit', 'literal'),
+            ('literal', 'has_var_arg', 'variable'),
+            ('variable', 'arg_of_lit', 'literal'),
+            ('term', 'has_subterm', 'term'),
+            ('term', 'subterm_of', 'term'),
+        ]
+
         for _ in range(num_layers):
             conv_dict = {}
-            # Define convolutions for each edge type
-            edge_types = [
-                ('clause', 'has_literal', 'literal'),
-                ('literal', 'in_clause', 'clause'),
-                ('literal', 'has_predicate', 'symbol'),
-                ('symbol', 'predicate_of', 'literal'),
-                ('term', 'has_functor', 'symbol'),
-                ('symbol', 'functor_of', 'term'),
-                ('variable', 'in_clause', 'clause'),
-                ('clause', 'has_variable', 'variable'),
-                ('term', 'has_var_arg', 'variable'),
-                ('variable', 'arg_of', 'term'),
-                ('literal', 'has_arg', 'term'),
-                ('term', 'arg_of_lit', 'literal'),
-                ('literal', 'has_var_arg', 'variable'),
-                ('variable', 'arg_of_lit', 'literal'),
-                ('term', 'has_subterm', 'term'),
-                ('term', 'subterm_of', 'term'),
-            ]
-            for et in edge_types:
-                conv_dict[et] = SAGEConv(hidden_dim, hidden_dim)
+            for et in all_edge_types:
+                if et in self._edge_attr_types:
+                    # GINEConv: edge-aware, can distinguish f(X,Y) from f(Y,X)
+                    gine_nn = nn.Sequential(
+                        nn.Linear(hidden_dim, hidden_dim),
+                        nn.ReLU(),
+                        nn.Linear(hidden_dim, hidden_dim),
+                    )
+                    conv_dict[et] = GINEConv(gine_nn, edge_dim=hidden_dim)
+                else:
+                    conv_dict[et] = SAGEConv(hidden_dim, hidden_dim)
 
             self.convs.append(HeteroConv(conv_dict, aggr='sum'))
 
@@ -140,15 +164,23 @@ class HeteroGNNEncoder(nn.Module):
             else:
                 x_dict[ntype] = torch.zeros(0, self.hidden_dim, device=dev)
 
-        # Collect edge indices
+        # Collect edge indices and project edge attributes
         edge_index_dict = {}
+        edge_attr_dict = {}
         for edge_type in data.edge_types:
             if hasattr(data[edge_type], 'edge_index'):
                 edge_index_dict[edge_type] = data[edge_type].edge_index
+            # Project edge attributes for position-bearing edges
+            if edge_type in self._edge_attr_types:
+                if hasattr(data[edge_type], 'edge_attr') and data[edge_type].edge_attr is not None:
+                    edge_attr_dict[edge_type] = self.edge_attr_proj(
+                        data[edge_type].edge_attr
+                    )
 
         # Message passing with residual connections
         for conv, norm_dict in zip(self.convs, self.norms):
-            x_out = conv(x_dict, edge_index_dict)
+            # GINEConv needs edge_attr; HeteroConv passes kwargs per edge type
+            x_out = conv(x_dict, edge_index_dict, edge_attr_dict=edge_attr_dict)
             for ntype in x_dict:
                 if ntype in x_out and x_out[ntype].shape[0] > 0:
                     # Residual + norm + activation

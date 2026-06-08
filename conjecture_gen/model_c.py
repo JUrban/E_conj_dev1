@@ -26,22 +26,28 @@ from conjecture_gen.target_encoder import (
 
 
 class ClauseEncoder(nn.Module):
-    """Encodes a target clause sequence into a latent vector."""
+    """Encodes a target clause (actions + arguments) into a latent vector."""
 
-    def __init__(self, hidden_dim, latent_dim):
+    def __init__(self, hidden_dim, latent_dim, max_vars=20):
         super().__init__()
         self.action_embed = nn.Embedding(NUM_ACTION_TYPES, hidden_dim)
+        # Argument embedding: small projection for pointer indices
+        self.arg_embed = nn.Embedding(512, hidden_dim // 4)  # covers symbol + var indices
+        self.input_combine = nn.Linear(hidden_dim + hidden_dim // 4, hidden_dim)
         self.rnn = nn.GRU(hidden_dim, hidden_dim, batch_first=True)
         self.mu_proj = nn.Linear(hidden_dim, latent_dim)
         self.logvar_proj = nn.Linear(hidden_dim, latent_dim)
 
-    def forward(self, actions, lengths):
-        """Encode target actions into latent distribution.
+    def forward(self, actions, arguments, lengths):
+        """Encode target actions AND arguments into latent distribution.
         actions: (B, T) action type indices
+        arguments: (B, T) argument values (symbol pointers, variable slots)
         lengths: (B,) sequence lengths
         Returns: mu, logvar each (B, latent_dim)
         """
-        emb = self.action_embed(actions)  # (B, T, H)
+        act_emb = self.action_embed(actions)  # (B, T, H)
+        arg_emb = self.arg_embed(arguments.clamp(0, 511))  # (B, T, H//4)
+        emb = self.input_combine(torch.cat([act_emb, arg_emb], dim=-1))  # (B, T, H)
         # Pack and run RNN
         packed = nn.utils.rnn.pack_padded_sequence(
             emb, lengths.cpu().clamp(min=1), batch_first=True, enforce_sorted=False,
@@ -196,7 +202,7 @@ class VAETransformerDecoder(nn.Module):
         global_embed = global_embed / counts
 
         # Encode target clause -> posterior q(z|x, clause)
-        post_mu, post_logvar = self.clause_encoder(target_actions, target_lengths)
+        post_mu, post_logvar = self.clause_encoder(target_actions, target_arguments, target_lengths)
 
         # Prior p(z|x) from graph
         prior_mu, prior_logvar = self.prior(global_embed)

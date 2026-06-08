@@ -39,10 +39,11 @@ def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
     # Nucleus (top-p) filtering
     if top_p > 0.0:
         sorted_logits, sorted_indices = logits.sort(dim=-1, descending=True)
-        cum_probs = F.softmax(sorted_logits, dim=-1).cumsum(dim=-1)
+        probs = F.softmax(sorted_logits, dim=-1)
+        cum_probs = probs.cumsum(dim=-1)
         # Remove tokens with cumulative probability above the threshold
         # Shift right so that the first token above threshold is kept
-        remove_mask = cum_probs - F.softmax(sorted_logits, dim=-1) >= top_p
+        remove_mask = (cum_probs - probs) >= top_p
         sorted_logits[remove_mask] = float('-inf')
         # Scatter back to original order
         logits = sorted_logits.scatter(1, sorted_indices, sorted_logits)

@@ -176,7 +176,26 @@ def decode_sequence(sequence: list[tuple[int, int]],
     while stack:
         result_parts.append(stack.pop() + '...')
 
-    return ' | '.join(result_parts) if result_parts else '<empty>'
+    if not result_parts:
+        return '<empty>'
+
+    # Post-process: convert $eq(A,B) to A=B and ~$eq(A,B) to A!=B
+    import re
+    processed = []
+    for part in result_parts:
+        # ~$eq(A,B) -> A!=B
+        m = re.match(r'^~\$eq\((.+),(.+)\)$', part)
+        if m:
+            processed.append(f'{m.group(1)}!={m.group(2)}')
+            continue
+        # $eq(A,B) -> A=B
+        m = re.match(r'^\$eq\((.+),(.+)\)$', part)
+        if m:
+            processed.append(f'{m.group(1)}={m.group(2)}')
+            continue
+        processed.append(part)
+
+    return ' | '.join(processed)
 
 
 if __name__ == '__main__':

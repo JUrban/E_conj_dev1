@@ -55,12 +55,16 @@ def compute_loss(model_output, batch, pad_value=-1):
     # --- Pointer loss (for PRED and ARG_FUNC actions) ---
     pointer_mask = ((target_actions == PRED) | (target_actions == ARG_FUNC)) & mask.bool()
     if pointer_mask.any():
-        # Clamp target args to valid range
         max_sym = pointer_logits.shape[2]
-        ptr_targets = target_args.clamp(0, max_sym - 1)
+        # Mark out-of-range targets as -1 (ignore) instead of clamping
+        ptr_targets = target_args.clone()
+        ptr_targets[(ptr_targets >= max_sym) | (ptr_targets < 0)] = -1
+        # Mask non-pointer positions too
+        ptr_targets[~pointer_mask] = -1
         ptr_loss = F.cross_entropy(
             pointer_logits.reshape(-1, max_sym),
             ptr_targets.reshape(-1),
+            ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
         ptr_loss = (ptr_loss * pointer_mask.float() * weights.unsqueeze(1)).sum() / pointer_mask.sum().clamp(min=1)
@@ -71,10 +75,14 @@ def compute_loss(model_output, batch, pad_value=-1):
     var_mask = (target_actions == ARG_VAR) & mask.bool()
     if var_mask.any():
         max_vars = var_logits.shape[2]
-        var_targets = target_args.clamp(0, max_vars - 1)
+        # Mark out-of-range targets as -1 (ignore) instead of clamping
+        var_targets = target_args.clone()
+        var_targets[(var_targets >= max_vars) | (var_targets < 0)] = -1
+        var_targets[~var_mask] = -1
         var_loss = F.cross_entropy(
             var_logits.reshape(-1, max_vars),
             var_targets.reshape(-1),
+            ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
         var_loss = (var_loss * var_mask.float() * weights.unsqueeze(1)).sum() / var_mask.sum().clamp(min=1)

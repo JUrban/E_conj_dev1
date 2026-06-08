@@ -75,6 +75,16 @@ def train(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using {device}")
 
+    # Seed for reproducibility
+    seed = getattr(args, 'seed', 42)
+    import random
+    random.seed(seed)
+    import numpy as np
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
     # Build symbol vocab if using named embeddings
     symbol_vocab = None
     if getattr(args, 'named_embeddings', False):
@@ -253,6 +263,7 @@ def main():
     p.add_argument('--max_nodes', type=int, default=0)
     p.add_argument('--log_every', type=int, default=10)
     p.add_argument('--sample_every', type=int, default=1)
+    p.add_argument('--seed', type=int, default=42)
     args = p.parse_args()
 
     if args.save_dir is None:
