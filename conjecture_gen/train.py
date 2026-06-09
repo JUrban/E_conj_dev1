@@ -68,7 +68,11 @@ def compute_loss(model_output, batch, pad_value=-1):
             ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
-        weighted_ptr_mask = pointer_mask.float() * weights.unsqueeze(1)
+        # Only count positions where the target is actually valid (in range)
+        # in the denominator — out-of-range targets contribute 0 loss via
+        # ignore_index but should not inflate the denominator.
+        ptr_valid = pointer_mask & (target_args >= 0) & (target_args < max_sym)
+        weighted_ptr_mask = ptr_valid.float() * weights.unsqueeze(1)
         ptr_loss = (ptr_loss * weighted_ptr_mask).sum() / weighted_ptr_mask.sum().clamp(min=1e-8)
     else:
         ptr_loss = torch.tensor(0.0, device=device)
@@ -87,7 +91,9 @@ def compute_loss(model_output, batch, pad_value=-1):
             ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
-        weighted_var_mask = var_mask.float() * weights.unsqueeze(1)
+        # Only count positions where the target is actually valid (in range)
+        var_valid = var_mask & (target_args >= 0) & (target_args < max_vars)
+        weighted_var_mask = var_valid.float() * weights.unsqueeze(1)
         var_loss = (var_loss * weighted_var_mask).sum() / weighted_var_mask.sum().clamp(min=1e-8)
     else:
         var_loss = torch.tensor(0.0, device=device)

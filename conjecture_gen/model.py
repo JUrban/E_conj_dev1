@@ -214,6 +214,11 @@ class PointerTreeDecoder(nn.Module):
         self.var_slot_embed = nn.Embedding(max_vars, hidden_dim)
         self.input_combine = nn.Linear(hidden_dim * 2, hidden_dim)
 
+        # Learned UNK embeddings for out-of-range symbol/variable indices
+        # in teacher-forcing inputs (instead of clamping to a real symbol)
+        self.unk_sym_embed = nn.Parameter(torch.zeros(hidden_dim))
+        self.unk_var_embed = nn.Parameter(torch.zeros(hidden_dim))
+
         # Positional encoding (learned)
         self.pos_embed = nn.Embedding(max_seq_len, hidden_dim)
 
@@ -281,17 +286,27 @@ class PointerTreeDecoder(nn.Module):
         # Symbol pointer args (PRED or ARG_FUNC)
         ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
         if ptr_mask.any():
-            ptr_idx = arguments[ptr_mask].clamp(0, symbol_embeds.shape[1] - 1)
-            # Gather per-sample symbol embeddings
+            raw_idx = arguments[ptr_mask]
+            max_sym = symbol_embeds.shape[1]
+            in_range = (raw_idx >= 0) & (raw_idx < max_sym)
+            # For in-range indices, gather the real symbol embedding
+            safe_idx = raw_idx.clamp(0, max_sym - 1)
             batch_indices = torch.arange(B, device=device).unsqueeze(1).expand_as(actions)[ptr_mask]
-            sym_vecs = symbol_embeds[batch_indices, ptr_idx]
+            sym_vecs = symbol_embeds[batch_indices, safe_idx]
+            # For out-of-range indices, use learned UNK embedding
+            sym_vecs[~in_range] = self.unk_sym_embed
             arg_emb[ptr_mask] = self.arg_sym_proj(sym_vecs)
 
         # Variable args
         var_mask = actions == ARG_VAR
         if var_mask.any():
-            var_slots = arguments[var_mask].clamp(0, self.max_vars - 1)
-            arg_emb[var_mask] = self.var_slot_embed(var_slots)
+            raw_slots = arguments[var_mask]
+            in_range = (raw_slots >= 0) & (raw_slots < self.max_vars)
+            safe_slots = raw_slots.clamp(0, self.max_vars - 1)
+            var_vecs = self.var_slot_embed(safe_slots)
+            # For out-of-range variable slots, use learned UNK embedding
+            var_vecs[~in_range] = self.unk_var_embed
+            arg_emb[var_mask] = var_vecs
 
         # Combine action + argument
         combined = self.input_combine(torch.cat([act_emb, arg_emb], dim=-1))

@@ -106,6 +106,26 @@ def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int
     return sequence
 
 
+def _split_top_level_args(s: str) -> list[str]:
+    """Split a string by commas only at parenthesis depth 0.
+
+    Correctly handles nested terms like 'f(a,b),g(c,d)' -> ['f(a,b)', 'g(c,d)'].
+    """
+    args = []
+    depth = 0
+    start = 0
+    for i, c in enumerate(s):
+        if c == '(':
+            depth += 1
+        elif c == ')':
+            depth -= 1
+        elif c == ',' and depth == 0:
+            args.append(s[start:i])
+            start = i + 1
+    args.append(s[start:])
+    return args
+
+
 def decode_sequence(sequence: list[tuple[int, int]],
                     symbol_names: list[str]) -> str:
     """Decode a generation sequence back into a human-readable clause string.
@@ -180,19 +200,22 @@ def decode_sequence(sequence: list[tuple[int, int]],
         return '<empty>'
 
     # Post-process: convert $eq(A,B) to A=B and ~$eq(A,B) to A!=B
-    import re
     processed = []
     for part in result_parts:
         # ~$eq(A,B) -> A!=B
-        m = re.match(r'^~\$eq\((.+),(.+)\)$', part)
-        if m:
-            processed.append(f'{m.group(1)}!={m.group(2)}')
-            continue
+        if part.startswith('~$eq(') and part.endswith(')'):
+            inner = part[5:-1]  # strip '~$eq(' and ')'
+            args = _split_top_level_args(inner)
+            if len(args) == 2:
+                processed.append(f'{args[0]}!={args[1]}')
+                continue
         # $eq(A,B) -> A=B
-        m = re.match(r'^\$eq\((.+),(.+)\)$', part)
-        if m:
-            processed.append(f'{m.group(1)}={m.group(2)}')
-            continue
+        if part.startswith('$eq(') and part.endswith(')'):
+            inner = part[4:-1]  # strip '$eq(' and ')'
+            args = _split_top_level_args(inner)
+            if len(args) == 2:
+                processed.append(f'{args[0]}={args[1]}')
+                continue
         processed.append(part)
 
     return ' | '.join(processed)

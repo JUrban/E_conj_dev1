@@ -167,8 +167,9 @@ class ConjectureDataset(Dataset):
         self.problem_names = set()
 
         for (problem, cut_id), ratio in stats.items():
-            if ratio < self.min_ratio or ratio > self.max_ratio:
-                continue
+            # Store ALL samples regardless of ratio — ratio filtering is
+            # applied after loading the index so the cached index.pt is not
+            # permanently limited by the first run's ratio range.
             if (problem, cut_id) not in lemmas:
                 continue
 

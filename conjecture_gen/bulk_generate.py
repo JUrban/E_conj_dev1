@@ -43,14 +43,18 @@ def load_model(checkpoint_path, device):
 
 
 def score_sequence(model, data, sequence, variant='a'):
-    """Compute log-probability of a generated sequence under the model.
+    """Compute a heuristic ranking score for a generated sequence.
 
-    Higher score = model is more confident in this conjecture.
-    Returns average log-prob per token.
+    This is NOT a log-probability — proper scoring would require running the
+    model in teacher-forcing mode on the generated sequence. Instead, this
+    uses lightweight proxy features (length, action diversity, variable usage)
+    to rank candidates.
+
+    Higher heuristic_score = preferred conjecture.
+
+    Returns:
+        float: Heuristic ranking score (not a probability).
     """
-    # This is a simplified scoring — for proper scoring we'd need to
-    # run the model in teacher-forcing mode on the generated sequence.
-    # For now, use sequence length and action diversity as proxy.
     n_tokens = len(sequence)
     if n_tokens == 0:
         return -100.0
@@ -62,12 +66,13 @@ def score_sequence(model, data, sequence, variant='a'):
     n_unique_args = len(set(args))
 
     # Prefer: moderate length, diverse actions, diverse symbols
-    length_score = -abs(n_tokens - 15) * 0.05  # prefer ~15 tokens
-    diversity_score = (n_unique_actions + n_unique_args) * 0.1
+    length_penalty = -abs(n_tokens - 15) * 0.05  # prefer ~15 tokens
+    diversity_bonus = (n_unique_actions + n_unique_args) * 0.1
     has_vars = any(a == ARG_VAR for a in actions)
     var_bonus = 0.5 if has_vars else 0.0
 
-    return length_score + diversity_score + var_bonus
+    heuristic_score = length_penalty + diversity_bonus + var_bonus
+    return heuristic_score
 
 
 def generate_for_problem(model, problem_path, n=20, temperature=1.0,
@@ -124,11 +129,11 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
             parsed = parse_clause(test_str)
             is_valid = parsed is not None and '...' not in decoded
 
-            score = score_sequence(model, graph, seq)
+            heuristic_score = score_sequence(model, graph, seq)
 
             all_conjectures.append({
                 'text': decoded,
-                'score': score,
+                'heuristic_score': heuristic_score,
                 'valid': is_valid,
                 'n_tokens': len(seq),
                 'sequence': seq,
@@ -136,8 +141,8 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
 
         remaining -= bs
 
-    # Sort by score (highest first), valid ones first
-    all_conjectures.sort(key=lambda x: (x['valid'], x['score']), reverse=True)
+    # Sort by heuristic_score (highest first), valid ones first
+    all_conjectures.sort(key=lambda x: (x['valid'], x['heuristic_score']), reverse=True)
     return all_conjectures
 
 
@@ -264,7 +269,7 @@ def main():
 
     # Deduplicate, validate, rank, save
     with open(rankings_path, 'w') as rankings_f:
-        rankings_f.write("problem\trank\tscore\tvalid\tn_tokens\tclause\n")
+        rankings_f.write("problem\trank\theuristic_score\tvalid\tn_tokens\tclause\n")
 
         for pi, problem_name in enumerate(problems):
             results = all_results.get(problem_name, [])
@@ -278,13 +283,13 @@ def main():
                     test_str = f"cnf(test, axiom, ({decoded}))."
                     parsed = parse_clause(test_str)
                     is_valid = parsed is not None and '...' not in decoded
-                    score = score_sequence(model, None, seq)
+                    heuristic_score = score_sequence(model, None, seq)
                     conjectures.append({
-                        'text': decoded, 'score': score,
+                        'text': decoded, 'heuristic_score': heuristic_score,
                         'valid': is_valid, 'n_tokens': len(seq),
                     })
 
-            conjectures.sort(key=lambda x: (x['valid'], x['score']), reverse=True)
+            conjectures.sort(key=lambda x: (x['valid'], x['heuristic_score']), reverse=True)
 
             if conjectures:
                 prob_dir = os.path.join(args.output, problem_name)
@@ -294,13 +299,13 @@ def main():
                     tptp_path = os.path.join(prob_dir, f'conjecture_{ci+1:03d}.p')
                     with open(tptp_path, 'w') as f:
                         f.write(f"% Generated conjecture for {problem_name}\n")
-                        f.write(f"% Score: {conj['score']:.4f}, "
+                        f.write(f"% Heuristic score: {conj['heuristic_score']:.4f}, "
                                 f"Valid: {conj['valid']}, "
                                 f"Tokens: {conj['n_tokens']}\n")
                         f.write(f"cnf(gen_{ci+1:03d}, axiom, ({conj['text']})).\n")
 
                     rankings_f.write(
-                        f"{problem_name}\t{ci+1}\t{conj['score']:.4f}\t"
+                        f"{problem_name}\t{ci+1}\t{conj['heuristic_score']:.4f}\t"
                         f"{conj['valid']}\t{conj['n_tokens']}\t{conj['text']}\n"
                     )
 

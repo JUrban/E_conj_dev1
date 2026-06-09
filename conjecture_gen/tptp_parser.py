@@ -69,8 +69,15 @@ def _is_variable(name: str) -> bool:
     return len(name) > 0 and name[0].isupper()
 
 
-def _tokenize(s: str) -> list[str]:
-    """Tokenize a TPTP formula string into meaningful tokens."""
+def _tokenize(s: str, strict: bool = True) -> list[str]:
+    """Tokenize a TPTP formula string into meaningful tokens.
+
+    Args:
+        s: The formula string to tokenize.
+        strict: If True (default), raise TPTPParseError on unknown characters
+                or ambiguous operators like '=>'. If False, skip unknown chars
+                (backward-compatible permissive mode).
+    """
     tokens = []
     i = 0
     while i < len(s):
@@ -83,6 +90,15 @@ def _tokenize(s: str) -> list[str]:
         elif c == '!' and i + 1 < len(s) and s[i + 1] == '=':
             tokens.append('!=')
             i += 2
+        elif c == '=' and i + 1 < len(s) and s[i + 1] == '>':
+            if strict:
+                raise TPTPParseError(
+                    f"Unsupported operator '=>' at position {i} in: {s!r}. "
+                    f"TPTP CNF uses '|' for disjunction, not '=>' for implication."
+                )
+            # permissive: treat '=' only, skip '>'
+            tokens.append('=')
+            i += 1
         elif c == '=':
             tokens.append('=')
             i += 1
@@ -93,7 +109,11 @@ def _tokenize(s: str) -> list[str]:
             tokens.append(s[i:j])
             i = j
         else:
-            # skip unexpected chars
+            if strict:
+                raise TPTPParseError(
+                    f"Unknown character {c!r} at position {i} in: {s!r}"
+                )
+            # permissive: skip unexpected chars
             i += 1
     return tokens
 
@@ -182,10 +202,22 @@ class _Parser:
         return literals
 
 
-def parse_clause(line: str) -> Optional[Clause]:
+def parse_clause(line: str, strict: bool = True) -> Optional[Clause]:
     """Parse a single cnf(...) line into a Clause object.
 
-    Returns None if the line is not a cnf clause.
+    Args:
+        line: The cnf(...) line to parse.
+        strict: If True (default), raise TPTPParseError on tokenizer errors
+                and unconsumed trailing tokens. If False, use permissive mode
+                (backward-compatible: returns None on errors, ignores trailing tokens).
+
+    Returns:
+        Clause object, or None if the line is not a cnf clause (or parse fails
+        in permissive mode).
+
+    Raises:
+        TPTPParseError: In strict mode, if the clause contains unknown characters,
+                        ambiguous operators, or trailing unparsed tokens.
     """
     line = line.strip()
     if not line.startswith('cnf('):
@@ -220,7 +252,13 @@ def parse_clause(line: str) -> Optional[Clause]:
     formula_str = body[comma_positions[1] + 1:].strip()
 
     # Tokenize and parse the formula
-    tokens = _tokenize(formula_str)
+    try:
+        tokens = _tokenize(formula_str, strict=strict)
+    except TPTPParseError:
+        if strict:
+            raise
+        return None
+
     if not tokens:
         return None
 
@@ -228,22 +266,67 @@ def parse_clause(line: str) -> Optional[Clause]:
     try:
         literals = parser.parse_clause_body()
     except TPTPParseError:
+        if strict:
+            raise
         return None
+
+    # In strict mode, check that all tokens were consumed
+    if strict and parser.pos < len(parser.tokens):
+        trailing = parser.tokens[parser.pos:]
+        raise TPTPParseError(
+            f"Trailing unparsed tokens after clause body: {trailing!r} "
+            f"in clause: {line!r}"
+        )
 
     return Clause(name=name, role=role, literals=literals)
 
 
-def parse_problem_file(filepath: str) -> list[Clause]:
-    """Parse a TPTP CNF problem file, returning all clauses."""
+def parse_problem_file(filepath: str, strict: bool = True,
+                       collect_errors: bool = False) -> list[Clause]:
+    """Parse a TPTP CNF problem file, returning all clauses.
+
+    Args:
+        filepath: Path to the TPTP problem file.
+        strict: If True (default), use strict tokenization and parsing on
+                each cnf(...) clause line. Lines starting with '#' or '%'
+                are always skipped as comments before tokenization.
+        collect_errors: If True, collect parse errors and issue warnings
+                        instead of raising. If False (default) and strict=True,
+                        raise on first error.
+
+    Returns:
+        List of successfully parsed Clause objects.
+
+    Raises:
+        TPTPParseError: In strict mode with collect_errors=False, on first
+                        parse error.
+    """
+    import warnings
     clauses = []
+    errors = []
     with open(filepath, 'r') as f:
-        for line in f:
+        for line_no, line in enumerate(f, 1):
             line = line.strip()
             if not line or line.startswith('#') or line.startswith('%'):
                 continue
-            clause = parse_clause(line)
-            if clause is not None:
-                clauses.append(clause)
+            try:
+                clause = parse_clause(line, strict=strict)
+                if clause is not None:
+                    clauses.append(clause)
+            except TPTPParseError as e:
+                if collect_errors:
+                    errors.append((line_no, line, str(e)))
+                else:
+                    raise TPTPParseError(
+                        f"{filepath}:{line_no}: {e}"
+                    ) from e
+
+    if errors:
+        warnings.warn(
+            f"parse_problem_file({filepath!r}): {len(errors)} parse error(s):\n" +
+            "\n".join(f"  line {ln}: {msg}" for ln, _, msg in errors[:5])
+        )
+
     return clauses
 
 
