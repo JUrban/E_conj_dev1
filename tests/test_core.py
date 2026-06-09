@@ -500,3 +500,322 @@ class TestIntegration:
         assert result[1, 3].abs().sum() == 0
         # PRED/ARG_FUNC/ARG_VAR positions should be nonzero (in general)
         # (could be zero by chance but very unlikely with random init)
+
+
+# ---------------------------------------------------------------------------
+# (f) Action masking tests (R02)
+# ---------------------------------------------------------------------------
+
+class TestActionMasking:
+    """Tests for role-availability action masking in generation."""
+
+    @pytest.fixture
+    def funcs_only_graph(self):
+        """Build a graph that has only function symbols (no predicates except
+        implicitly via equality)."""
+        from conjecture_gen.tptp_parser import parse_clause
+        from conjecture_gen.graph_builder import clauses_to_graph
+        # X1=f(a) uses $eq as predicate and f, a as functions
+        clauses = [parse_clause('cnf(c1, axiom, (X1=f(a))).')]
+        graph = clauses_to_graph(clauses)
+        return graph
+
+    @pytest.fixture
+    def preds_only_graph(self):
+        """Build a graph that has only predicate symbols (no function symbols)."""
+        from conjecture_gen.tptp_parser import parse_clause
+        from conjecture_gen.graph_builder import clauses_to_graph
+        # p(X1) | ~q(X2) -- p and q are predicates, no functions
+        clauses = [parse_clause('cnf(c1, axiom, (p(X1) | ~q(X2))).')]
+        graph = clauses_to_graph(clauses)
+        return graph
+
+    def test_no_functions_masks_arg_func(self, preds_only_graph):
+        """When graph has no function symbols, ARG_FUNC should be pre-masked."""
+        from conjecture_gen.model import ConjectureModel
+        from conjecture_gen.target_encoder import ARG_FUNC, END_CLAUSE
+
+        model = ConjectureModel(hidden_dim=32, num_gnn_layers=2, dec_layers=1, dec_nhead=2)
+        model.eval()
+        torch.manual_seed(123)
+
+        seqs = model.generate(preds_only_graph, max_steps=30, temperature=1.0)
+        assert len(seqs) == 1
+        seq = seqs[0]
+        # No ARG_FUNC should appear since there are no function symbols
+        func_actions = [act for act, _ in seq if act == ARG_FUNC]
+        assert len(func_actions) == 0, (
+            f"ARG_FUNC appeared {len(func_actions)} times despite no function symbols"
+        )
+
+    def test_no_predicates_masks_pred(self):
+        """When graph has no predicate symbols, PRED should be pre-masked,
+        leading to END_CLAUSE immediately (no way to start a literal)."""
+        from conjecture_gen.model import ConjectureModel
+        from conjecture_gen.target_encoder import PRED, END_CLAUSE
+        from conjecture_gen.tptp_parser import parse_clause
+        from conjecture_gen.graph_builder import clauses_to_graph
+
+        # Build graph where all symbols are functions (artificial case)
+        # We manually modify symbol_is_pred to all False
+        clauses = [parse_clause('cnf(c1, axiom, (p(f(a)))).')]
+        graph = clauses_to_graph(clauses)
+        # Override: pretend all symbols are functions
+        graph.symbol_is_pred = [False] * len(graph.symbol_names)
+
+        model = ConjectureModel(hidden_dim=32, num_gnn_layers=2, dec_layers=1, dec_nhead=2)
+        model.eval()
+        torch.manual_seed(42)
+
+        seqs = model.generate(graph, max_steps=30, temperature=1.0)
+        seq = seqs[0]
+        # PRED should never appear because there are no predicate symbols
+        pred_actions = [act for act, _ in seq if act == PRED]
+        assert len(pred_actions) == 0, (
+            f"PRED appeared {len(pred_actions)} times despite no predicate symbols"
+        )
+
+
+# ---------------------------------------------------------------------------
+# (g) Strict target encoding tests (R03)
+# ---------------------------------------------------------------------------
+
+class TestStrictTargetEncoding:
+    """Tests for strict mode in encode_conjecture."""
+
+    def _make_clause(self, text):
+        from conjecture_gen.tptp_parser import parse_clause
+        return parse_clause(f'cnf(t, axiom, ({text})).')
+
+    def test_mismatched_lengths_raises(self):
+        """Mismatched metadata lengths should raise ValueError in strict mode."""
+        from conjecture_gen.target_encoder import encode_conjecture
+        clause = self._make_clause('p(a)')
+        with pytest.raises(ValueError, match="Metadata length mismatch"):
+            encode_conjecture(
+                clause,
+                symbol_names=['p', 'a'],
+                symbol_is_pred=[True],  # length 1, should be 2
+                symbol_arities=[1, 0],
+                strict=True,
+            )
+
+    def test_mismatched_arities_length_raises(self):
+        """Mismatched symbol_arities length should raise ValueError in strict mode."""
+        from conjecture_gen.target_encoder import encode_conjecture
+        clause = self._make_clause('p(a)')
+        with pytest.raises(ValueError, match="Metadata length mismatch"):
+            encode_conjecture(
+                clause,
+                symbol_names=['p', 'a'],
+                symbol_is_pred=[True, False],
+                symbol_arities=[1],  # length 1, should be 2
+                strict=True,
+            )
+
+    def test_duplicate_keys_raises(self):
+        """Duplicate (name, is_pred, arity) keys should raise ValueError in strict mode."""
+        from conjecture_gen.target_encoder import encode_conjecture
+        clause = self._make_clause('p(a)')
+        with pytest.raises(ValueError, match="Duplicate symbol key"):
+            encode_conjecture(
+                clause,
+                symbol_names=['p', 'p'],
+                symbol_is_pred=[True, True],
+                symbol_arities=[1, 1],  # same key: ('p', True, 1)
+                strict=True,
+            )
+
+    def test_strict_stats_correct(self):
+        """Stats dict should have correct counts in strict mode."""
+        from conjecture_gen.target_encoder import encode_conjecture
+        clause = self._make_clause('p(a)')
+        symbol_names = ['p', 'a']
+        symbol_is_pred = [True, False]
+        symbol_arities = [1, 0]
+
+        seq, stats = encode_conjecture(
+            clause, symbol_names, symbol_is_pred, symbol_arities, strict=True,
+        )
+        assert isinstance(stats, dict)
+        assert stats['exact_hits'] == 2  # p as pred, a as func
+        assert stats['unk_hits'] == 0
+        assert stats['role_fallback_hits'] == 0
+        assert stats['name_fallback_hits'] == 0
+
+    def test_strict_no_fallback_uses_unk(self):
+        """In strict mode, missing symbols should get UNK, not cascading fallback."""
+        from conjecture_gen.target_encoder import encode_conjecture, PRED
+        # 'p' is registered as (p, True, 2) but clause uses p with arity 1
+        clause = self._make_clause('p(a)')
+        symbol_names = ['p', 'a']
+        symbol_is_pred = [True, False]
+        symbol_arities = [2, 0]  # p has arity 2 in metadata, but used with arity 1
+
+        seq, stats = encode_conjecture(
+            clause, symbol_names, symbol_is_pred, symbol_arities, strict=True,
+        )
+        # In strict mode, p(arity=1) won't match (p, True, 2), so UNK
+        pred_args = [arg for act, arg in seq if act == PRED]
+        assert pred_args[0] == len(symbol_names)  # UNK index
+        assert stats['unk_hits'] >= 1
+
+    def test_nonstrict_returns_list_not_tuple(self):
+        """Non-strict mode (default) should return just the sequence list."""
+        from conjecture_gen.target_encoder import encode_conjecture
+        clause = self._make_clause('p(a)')
+        result = encode_conjecture(clause, ['p', 'a'])
+        assert isinstance(result, list)
+
+
+# ---------------------------------------------------------------------------
+# (h) Variant C posterior UNK tests (R06)
+# ---------------------------------------------------------------------------
+
+class TestClauseEncoderUNK:
+    """Tests for ClauseEncoder UNK handling for out-of-range arguments."""
+
+    def test_out_of_range_uses_unk_not_clamp(self):
+        """Out-of-range argument IDs should use the UNK embedding, not clamp."""
+        from conjecture_gen.model_c import ClauseEncoder
+        from conjecture_gen.target_encoder import PRED, ARG_FUNC, END_CLAUSE, END_ARGS
+
+        enc = ClauseEncoder(hidden_dim=32, latent_dim=8, max_arg_vocab=1024)
+
+        # Arguments well within range
+        actions = torch.tensor([[PRED, ARG_FUNC, END_ARGS, END_CLAUSE]])
+        args_in_range = torch.tensor([[0, 1, 0, 0]])
+        lengths = torch.tensor([4])
+
+        mu1, _ = enc(actions, args_in_range, lengths)
+
+        # Arguments out of range (2000 > max_arg_vocab=1024)
+        args_out_range = torch.tensor([[2000, 5000, 0, 0]])
+        mu2, _ = enc(actions, args_out_range, lengths)
+
+        # Both should succeed without errors
+        assert mu1.shape == (1, 8)
+        assert mu2.shape == (1, 8)
+
+        # The out-of-range args should produce different embeddings
+        # than the in-range args (since UNK != embed[0])
+        # (technically could be equal by chance, but extremely unlikely)
+        assert not torch.allclose(mu1, mu2, atol=1e-6), (
+            "Out-of-range and in-range args produced identical latents"
+        )
+
+    def test_negative_args_use_unk(self):
+        """Negative argument values should use UNK embedding."""
+        from conjecture_gen.model_c import ClauseEncoder
+        from conjecture_gen.target_encoder import PRED, END_CLAUSE
+
+        enc = ClauseEncoder(hidden_dim=32, latent_dim=8)
+        actions = torch.tensor([[PRED, END_CLAUSE]])
+        args_neg = torch.tensor([[-1, 0]])
+        lengths = torch.tensor([2])
+
+        # Should not raise
+        mu, logvar = enc(actions, args_neg, lengths)
+        assert mu.shape == (1, 8)
+
+
+# ---------------------------------------------------------------------------
+# (i) Sampler boundary validation tests (R04)
+# ---------------------------------------------------------------------------
+
+class TestSamplerBoundaryValidation:
+    """Tests for new boundary validations in sample_from_logits."""
+
+    def test_fallback_idx_negative_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 10)
+        with pytest.raises(ValueError, match="fallback_idx must be in"):
+            sample_from_logits(logits, fallback_idx=-1)
+
+    def test_fallback_idx_equal_to_vocab_size_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 10)  # vocab_size=10
+        with pytest.raises(ValueError, match="fallback_idx must be in"):
+            sample_from_logits(logits, fallback_idx=10)
+
+    def test_fallback_idx_beyond_vocab_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 5)
+        with pytest.raises(ValueError, match="fallback_idx must be in"):
+            sample_from_logits(logits, fallback_idx=100)
+
+    def test_temperature_nan_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 10)
+        with pytest.raises(ValueError, match="temperature must be finite"):
+            sample_from_logits(logits, temperature=float('nan'))
+
+    def test_temperature_inf_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 10)
+        with pytest.raises(ValueError, match="temperature must be finite"):
+            sample_from_logits(logits, temperature=float('inf'))
+
+    def test_temperature_neg_inf_raises(self):
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.randn(1, 10)
+        with pytest.raises(ValueError, match="temperature must be finite"):
+            sample_from_logits(logits, temperature=float('-inf'))
+
+    def test_valid_fallback_idx_works(self):
+        """Valid fallback_idx should not raise."""
+        from conjecture_gen.sampling import sample_from_logits
+        logits = torch.full((1, 10), float('-inf'))
+        result = sample_from_logits(logits, fallback_idx=5)
+        assert result.item() == 5
+
+
+# ---------------------------------------------------------------------------
+# (j) Exact equality serialization test
+# ---------------------------------------------------------------------------
+
+class TestEqualitySerialization:
+    """Tests for exact round-trip of equality clauses."""
+
+    def _make_clause(self, text):
+        from conjecture_gen.tptp_parser import parse_clause
+        return parse_clause(f'cnf(t, axiom, ({text})).')
+
+    def test_eq_roundtrip_exact(self):
+        """$eq(f(a,b),g(c,d)) should decode to exactly f(a,b)=g(c,d)."""
+        from conjecture_gen.target_encoder import encode_conjecture, decode_sequence
+        clause = self._make_clause('f(a,b)=g(c,d)')
+        symbol_names = ['$eq', 'f', 'g', 'a', 'b', 'c', 'd']
+        symbol_is_pred = [True, False, False, False, False, False, False]
+        symbol_arities = [2, 2, 2, 0, 0, 0, 0]
+
+        seq = encode_conjecture(clause, symbol_names, symbol_is_pred, symbol_arities)
+        decoded = decode_sequence(seq, symbol_names)
+        assert decoded == 'f(a,b)=g(c,d)', f"Expected 'f(a,b)=g(c,d)', got '{decoded}'"
+
+    def test_neq_roundtrip_exact(self):
+        """Negated equality should round-trip to a!=b format."""
+        from conjecture_gen.target_encoder import encode_conjecture, decode_sequence
+        clause = self._make_clause('a!=b')
+        symbol_names = ['$eq', 'a', 'b']
+        symbol_is_pred = [True, False, False]
+        symbol_arities = [2, 0, 0]
+
+        seq = encode_conjecture(clause, symbol_names, symbol_is_pred, symbol_arities)
+        decoded = decode_sequence(seq, symbol_names)
+        assert decoded == 'a!=b', f"Expected 'a!=b', got '{decoded}'"
+
+    def test_nested_eq_roundtrip(self):
+        """f(a,b)=g(c,d) should round-trip exactly, not be a substring match."""
+        from conjecture_gen.target_encoder import encode_conjecture, decode_sequence
+        clause = self._make_clause('f(a,b)=g(c,d)')
+        symbol_names = ['$eq', 'f', 'g', 'a', 'b', 'c', 'd']
+        symbol_is_pred = [True, False, False, False, False, False, False]
+        symbol_arities = [2, 2, 2, 0, 0, 0, 0]
+
+        seq = encode_conjecture(clause, symbol_names, symbol_is_pred, symbol_arities)
+        decoded = decode_sequence(seq, symbol_names)
+        # Must be exact, not just containing '='
+        assert decoded == 'f(a,b)=g(c,d)'
+        # Verify it doesn't contain $eq
+        assert '$eq' not in decoded

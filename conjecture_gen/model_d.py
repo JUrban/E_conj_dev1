@@ -256,7 +256,7 @@ class SSMDecoder(nn.Module):
     @torch.no_grad()
     def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0,
                  top_k=0, top_p=0.0):
-        from conjecture_gen.sampling import sample_action_logits, sample_from_logits, ArityConstraint
+        from conjecture_gen.sampling import sample_action_logits, sample_from_logits, ArityConstraint, SamplingError
         device = next(self.parameters()).device
 
         if batch_data is None:
@@ -270,7 +270,6 @@ class SSMDecoder(nn.Module):
         symbol_embeds, symbol_mask = self._pad_per_sample(x_dict['symbol'], sb, batch_size)
 
         # Get symbol arities for constrained decoding
-        # Get symbol arities — handle both single graph and batched graphs
         sym_arities = getattr(batch_data, 'symbol_arities', None)
         if sym_arities is None:
             sym_arities = [0] * symbol_embeds.shape[1]
@@ -279,6 +278,31 @@ class SSMDecoder(nn.Module):
         elif not isinstance(sym_arities, list):
             sym_arities = [0] * symbol_embeds.shape[1]
         arity_con = ArityConstraint(sym_arities, batch_size)
+
+        # --- Role availability masks (R02): precompute once ---
+        sym_is_pred = getattr(batch_data, 'symbol_is_pred', None)
+        pred_mask_t = None
+        func_mask_t = None
+        has_predicates = True
+        has_functions = True
+        if sym_is_pred is not None:
+            if isinstance(sym_is_pred, list) and sym_is_pred and isinstance(sym_is_pred[0], list):
+                sym_is_pred_flat = sym_is_pred[0]
+            elif isinstance(sym_is_pred, list):
+                sym_is_pred_flat = sym_is_pred
+            else:
+                sym_is_pred_flat = None
+            if sym_is_pred_flat is not None:
+                n_sym = symbol_embeds.shape[1]
+                pred_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
+                func_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
+                for si in range(min(len(sym_is_pred_flat), n_sym)):
+                    if sym_is_pred_flat[si]:
+                        pred_mask_t[si] = True
+                    else:
+                        func_mask_t[si] = True
+                has_predicates = pred_mask_t.any().item()
+                has_functions = func_mask_t.any().item()
 
         all_e, all_b = [], []
         for nt in ['clause', 'literal', 'symbol', 'term', 'variable']:
@@ -323,47 +347,40 @@ class SSMDecoder(nn.Module):
                     if not arity_con.stacks[i]:
                         action_logits[i, END_CLAUSE] += 5.0
                 arity_con.constrain_actions(i, action_logits[i])
+                # R02: pre-mask actions based on role availability
+                if not has_predicates:
+                    action_logits[i, PRED] = float('-inf')
+                if not has_functions:
+                    action_logits[i, ARG_FUNC] = float('-inf')
 
             actions = sample_action_logits(action_logits, temperature=temperature, top_k=top_k, top_p=top_p)
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
 
-            # --- Role masks (Fix R04): mask pointer logits by action role ---
-            sym_is_pred = getattr(batch_data, 'symbol_is_pred', None)
-            if sym_is_pred is not None:
-                if isinstance(sym_is_pred, list) and sym_is_pred and isinstance(sym_is_pred[0], list):
-                    sym_is_pred_flat = sym_is_pred[0]
-                elif isinstance(sym_is_pred, list):
-                    sym_is_pred_flat = sym_is_pred
-                else:
-                    sym_is_pred_flat = None
-                if sym_is_pred_flat is not None:
-                    n_sym = ptr_logits.shape[-1]
-                    pred_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
-                    func_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
-                    for si in range(min(len(sym_is_pred_flat), n_sym)):
-                        if sym_is_pred_flat[si]:
-                            pred_mask_t[si] = True
-                        else:
-                            func_mask_t[si] = True
-                    for i in range(batch_size):
-                        if done[i]:
-                            continue
-                        act = actions[i].item()
-                        if act == PRED and pred_mask_t.any():
-                            ptr_logits[i] = ptr_logits[i].masked_fill(~pred_mask_t, float('-inf'))
-                            if not torch.isfinite(ptr_logits[i]).any():
-                                ptr_logits[i] = self._pointer_scores(
-                                    h_last[i:i+1], symbol_embeds[i:i+1], symbol_mask[i:i+1] if symbol_mask is not None else None
-                                ).squeeze(0)
-                        elif act == ARG_FUNC and func_mask_t.any():
-                            ptr_logits[i] = ptr_logits[i].masked_fill(~func_mask_t, float('-inf'))
-                            if not torch.isfinite(ptr_logits[i]).any():
-                                ptr_logits[i] = self._pointer_scores(
-                                    h_last[i:i+1], symbol_embeds[i:i+1], symbol_mask[i:i+1] if symbol_mask is not None else None
-                                ).squeeze(0)
+            # --- Role masks: mask pointer logits by action role ---
+            if pred_mask_t is not None and func_mask_t is not None:
+                for i in range(batch_size):
+                    if done[i]:
+                        continue
+                    act = actions[i].item()
+                    if act == PRED:
+                        ptr_logits[i] = ptr_logits[i].masked_fill(~pred_mask_t, float('-inf'))
+                    elif act == ARG_FUNC:
+                        ptr_logits[i] = ptr_logits[i].masked_fill(~func_mask_t, float('-inf'))
 
             var_logits = self.var_head(h_last)
-            ptr_sampled = sample_from_logits(ptr_logits, temperature=temperature, top_k=top_k, top_p=top_p)
+            # R02: no fallback for pointer — SamplingError forces END_CLAUSE
+            try:
+                ptr_sampled = sample_from_logits(ptr_logits, temperature=temperature, top_k=top_k, top_p=top_p)
+            except SamplingError:
+                for i in range(batch_size):
+                    if not done[i]:
+                        sequences[i].append((END_CLAUSE, 0))
+                        done[i] = True
+                if all(done):
+                    break
+                all_actions = torch.cat([all_actions, torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)], dim=1)
+                all_args = torch.cat([all_args, torch.zeros((batch_size, 1), dtype=torch.long, device=device)], dim=1)
+                continue
             var_sampled = sample_from_logits(var_logits, temperature=temperature, top_k=top_k, top_p=top_p, fallback_idx=0)
 
             new_args = torch.zeros(batch_size, dtype=torch.long, device=device)

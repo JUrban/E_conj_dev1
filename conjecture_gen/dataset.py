@@ -274,6 +274,10 @@ class ConjectureDataset(Dataset):
     def __len__(self):
         return len(self.samples)
 
+    # Encoding stats accumulator for periodic logging
+    _encoding_stats_accum = {'exact_hits': 0, 'role_fallback_hits': 0,
+                             'name_fallback_hits': 0, 'unk_hits': 0, 'count': 0}
+
     def _build_item(self, idx):
         """Build a single sample (used by both __getitem__ and precompute)."""
         sample = self.samples[idx]
@@ -293,6 +297,7 @@ class ConjectureDataset(Dataset):
             clause, graph.symbol_names,
             symbol_is_pred=getattr(graph, 'symbol_is_pred', None),
             symbol_arities=getattr(graph, 'symbol_arities', None),
+            strict=False,
         )
 
         weight = 1.0 / (1.0 + ratio)

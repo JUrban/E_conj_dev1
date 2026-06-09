@@ -40,7 +40,8 @@ ACTION_NAMES = [
 
 def encode_conjecture(clause: Clause, symbol_names: list[str],
                       symbol_is_pred: list[bool] = None,
-                      symbol_arities: list[int] = None) -> list[tuple[int, int]]:
+                      symbol_arities: list[int] = None,
+                      strict: bool = False) -> 'list[tuple[int, int]] | tuple[list[tuple[int, int]], dict]':
     """Encode a conjecture clause as a sequence of (action_type, argument) pairs.
 
     Args:
@@ -53,29 +54,76 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
                         the same name is used as both predicate and function.
         symbol_arities: Optional list of arities (unused currently, reserved
                         for future arity-aware encoding).
+        strict: If True, enable strict validation mode:
+                - Validate metadata length consistency
+                - Detect duplicate (name, is_pred, arity) keys
+                - No cascading fallback: require exact match or UNK
+                - Return (sequence, stats) tuple instead of just sequence
 
     Returns:
-        List of (action_type, argument) tuples.
-        For actions without a meaningful argument, argument is 0.
-        For PRED/ARG_FUNC, argument is the symbol index in the problem graph.
-        For ARG_VAR, argument is the canonical variable slot.
+        If strict=False (default): List of (action_type, argument) tuples.
+        If strict=True: Tuple of (sequence, stats) where stats is a dict with
+            'exact_hits', 'role_fallback_hits', 'name_fallback_hits', 'unk_hits'.
     """
+    # Encoding stats tracking
+    stats = {'exact_hits': 0, 'role_fallback_hits': 0, 'name_fallback_hits': 0, 'unk_hits': 0}
+
+    # Strict mode: validate metadata consistency
+    if strict:
+        if symbol_is_pred is not None and len(symbol_names) != len(symbol_is_pred):
+            raise ValueError(
+                f"Metadata length mismatch: len(symbol_names)={len(symbol_names)} "
+                f"!= len(symbol_is_pred)={len(symbol_is_pred)}"
+            )
+        if symbol_arities is not None and len(symbol_names) != len(symbol_arities):
+            raise ValueError(
+                f"Metadata length mismatch: len(symbol_names)={len(symbol_names)} "
+                f"!= len(symbol_arities)={len(symbol_arities)}"
+            )
+        if symbol_is_pred is not None and symbol_arities is not None:
+            if len(symbol_is_pred) != len(symbol_arities):
+                raise ValueError(
+                    f"Metadata length mismatch: len(symbol_is_pred)={len(symbol_is_pred)} "
+                    f"!= len(symbol_arities)={len(symbol_arities)}"
+                )
+
     # Build symbol name -> index mapping
     if symbol_is_pred is not None and symbol_arities is not None:
         # Full lookup: (name, is_pred, arity) -> index with fallbacks
         sym_to_idx = {}
-        for i, (name, is_pred, arity) in enumerate(zip(symbol_names, symbol_is_pred, symbol_arities)):
-            sym_to_idx[(name, is_pred, arity)] = i
-            # Fallback without arity for backward compat
-            sym_to_idx.setdefault((name, is_pred), i)
-            sym_to_idx.setdefault(name, i)
+
+        if strict:
+            # Check for duplicate keys
+            seen_keys = set()
+            for i, (name, is_pred, arity) in enumerate(zip(symbol_names, symbol_is_pred, symbol_arities)):
+                key = (name, is_pred, arity)
+                if key in seen_keys:
+                    raise ValueError(f"Duplicate symbol key: {key}")
+                seen_keys.add(key)
+                sym_to_idx[key] = i
+            # In strict mode: NO fallback entries
+        else:
+            for i, (name, is_pred, arity) in enumerate(zip(symbol_names, symbol_is_pred, symbol_arities)):
+                sym_to_idx[(name, is_pred, arity)] = i
+                # Fallback without arity for backward compat
+                sym_to_idx.setdefault((name, is_pred), i)
+                sym_to_idx.setdefault(name, i)
     elif symbol_is_pred is not None:
         # Role-aware lookup: (name, is_pred) -> index
         sym_to_idx = {}
-        for i, (name, is_pred) in enumerate(zip(symbol_names, symbol_is_pred)):
-            sym_to_idx[(name, is_pred)] = i
-            # Also keep name-only fallback for backward compat
-            sym_to_idx.setdefault(name, i)
+
+        if strict:
+            seen_keys = set()
+            for i, (name, is_pred) in enumerate(zip(symbol_names, symbol_is_pred)):
+                key = (name, is_pred)
+                if key in seen_keys:
+                    raise ValueError(f"Duplicate symbol key: {key}")
+                seen_keys.add(key)
+                sym_to_idx[key] = i
+        else:
+            for i, (name, is_pred) in enumerate(zip(symbol_names, symbol_is_pred)):
+                sym_to_idx[(name, is_pred)] = i
+                sym_to_idx.setdefault(name, i)
     else:
         sym_to_idx = {name: i for i, name in enumerate(symbol_names)}
     unk_idx = len(symbol_names)  # UNK symbol index = one past the end
@@ -95,15 +143,65 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
 
     def _get_pred_idx(predicate_name: str, arity: int) -> int:
         """Look up predicate index with arity-aware, role-aware, then name fallbacks."""
-        return sym_to_idx.get((predicate_name, True, arity),
-               sym_to_idx.get((predicate_name, True),
-               sym_to_idx.get(predicate_name, unk_idx)))
+        if strict:
+            # Strict: exact match only
+            if symbol_arities is not None:
+                result = sym_to_idx.get((predicate_name, True, arity))
+            elif symbol_is_pred is not None:
+                result = sym_to_idx.get((predicate_name, True))
+            else:
+                result = sym_to_idx.get(predicate_name)
+            if result is not None:
+                stats['exact_hits'] += 1
+                return result
+            stats['unk_hits'] += 1
+            return unk_idx
+
+        # Non-strict: cascading fallback with stats tracking
+        exact = sym_to_idx.get((predicate_name, True, arity))
+        if exact is not None:
+            stats['exact_hits'] += 1
+            return exact
+        role_fb = sym_to_idx.get((predicate_name, True))
+        if role_fb is not None:
+            stats['role_fallback_hits'] += 1
+            return role_fb
+        name_fb = sym_to_idx.get(predicate_name)
+        if name_fb is not None:
+            stats['name_fallback_hits'] += 1
+            return name_fb
+        stats['unk_hits'] += 1
+        return unk_idx
 
     def _get_func_idx(func_name: str, arity: int) -> int:
         """Look up function index with arity-aware, role-aware, then name fallbacks."""
-        return sym_to_idx.get((func_name, False, arity),
-               sym_to_idx.get((func_name, False),
-               sym_to_idx.get(func_name, unk_idx)))
+        if strict:
+            if symbol_arities is not None:
+                result = sym_to_idx.get((func_name, False, arity))
+            elif symbol_is_pred is not None:
+                result = sym_to_idx.get((func_name, False))
+            else:
+                result = sym_to_idx.get(func_name)
+            if result is not None:
+                stats['exact_hits'] += 1
+                return result
+            stats['unk_hits'] += 1
+            return unk_idx
+
+        exact = sym_to_idx.get((func_name, False, arity))
+        if exact is not None:
+            stats['exact_hits'] += 1
+            return exact
+        role_fb = sym_to_idx.get((func_name, False))
+        if role_fb is not None:
+            stats['role_fallback_hits'] += 1
+            return role_fb
+        name_fb = sym_to_idx.get(func_name)
+        if name_fb is not None:
+            stats['name_fallback_hits'] += 1
+            return name_fb
+        stats['unk_hits'] += 1
+        return unk_idx
 
     def _get_sym_idx(name: str, is_pred: bool = None, arity: int = None) -> int:
         if is_pred is not None and arity is not None and symbol_arities is not None:
@@ -112,9 +210,29 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
             else:
                 return _get_func_idx(name, arity)
         if symbol_is_pred is not None and is_pred is not None:
-            # Try role-aware lookup first, then name-only fallback
-            return sym_to_idx.get((name, is_pred), sym_to_idx.get(name, unk_idx))
-        return sym_to_idx.get(name, unk_idx)
+            if strict:
+                result = sym_to_idx.get((name, is_pred))
+                if result is not None:
+                    stats['exact_hits'] += 1
+                    return result
+                stats['unk_hits'] += 1
+                return unk_idx
+            result = sym_to_idx.get((name, is_pred))
+            if result is not None:
+                stats['exact_hits'] += 1
+                return result
+            fb = sym_to_idx.get(name)
+            if fb is not None:
+                stats['name_fallback_hits'] += 1
+                return fb
+            stats['unk_hits'] += 1
+            return unk_idx
+        result = sym_to_idx.get(name)
+        if result is not None:
+            stats['exact_hits'] += 1
+            return result
+        stats['unk_hits'] += 1
+        return unk_idx
 
     def _encode_term(term: Term):
         if term.is_variable:
@@ -145,6 +263,9 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
         sequence.append((END_ARGS, 0))
 
     sequence.append((END_CLAUSE, 0))
+
+    if strict:
+        return (sequence, stats)
     return sequence
 
 

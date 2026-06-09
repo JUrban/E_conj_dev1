@@ -46,6 +46,19 @@ def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
         raise ValueError(f"top_p must be in [0, 1], got {top_p}")
     if top_k < 0:
         raise ValueError(f"top_k must be >= 0, got {top_k}")
+    # R04: validate fallback_idx bounds
+    vocab_size = logits.shape[-1]
+    if fallback_idx is not None:
+        if not isinstance(fallback_idx, int):
+            raise ValueError(f"fallback_idx must be None or int, got {type(fallback_idx).__name__}")
+        if fallback_idx < 0 or fallback_idx >= vocab_size:
+            raise ValueError(
+                f"fallback_idx must be in [0, {vocab_size}), got {fallback_idx}"
+            )
+    # R04: validate temperature is finite
+    import math
+    if math.isnan(temperature) or math.isinf(temperature):
+        raise ValueError(f"temperature must be finite, got {temperature}")
 
     # Deterministic path
     if temperature <= 0:
