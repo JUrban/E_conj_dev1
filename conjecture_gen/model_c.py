@@ -17,7 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.data import HeteroData
 
-from conjecture_gen.model import HeteroGNNEncoder
+from conjecture_gen.model import HeteroGNNEncoder, build_arg_embeddings
 from conjecture_gen.target_encoder import (
     NUM_ACTION_TYPES, NEW_LIT_POS, NEW_LIT_NEG, PRED,
     ARG_VAR, ARG_FUNC, END_ARGS, END_CLAUSE,
@@ -141,30 +141,12 @@ class VAETransformerDecoder(nn.Module):
         return padded, mask
 
     def _build_input_embeds(self, actions, arguments, symbol_embeds):
-        B, T = actions.shape
-        device = actions.device
         act_emb = self.action_embed(actions)
-        arg_emb = torch.zeros(B, T, self.hidden_dim, device=device)
-        ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
-        if ptr_mask.any():
-            raw_idx = arguments[ptr_mask]
-            max_sym = symbol_embeds.shape[1]
-            in_range = (raw_idx >= 0) & (raw_idx < max_sym)
-            safe_idx = raw_idx.clamp(0, max_sym - 1)
-            bi = torch.arange(B, device=device).unsqueeze(1).expand_as(actions)[ptr_mask]
-            sym_vecs = symbol_embeds[bi, safe_idx]
-            # For out-of-range indices, use learned UNK embedding
-            sym_vecs[~in_range] = self.unk_sym_embed
-            arg_emb[ptr_mask] = self.arg_sym_proj(sym_vecs)
-        var_mask = actions == ARG_VAR
-        if var_mask.any():
-            raw_slots = arguments[var_mask]
-            in_range = (raw_slots >= 0) & (raw_slots < self.max_vars)
-            safe_slots = raw_slots.clamp(0, self.max_vars - 1)
-            var_vecs = self.var_slot_embed(safe_slots)
-            # For out-of-range variable slots, use learned UNK embedding
-            var_vecs[~in_range] = self.unk_var_embed
-            arg_emb[var_mask] = var_vecs
+        arg_emb = build_arg_embeddings(
+            actions, arguments, symbol_embeds,
+            self.arg_sym_proj, self.var_slot_embed, self.max_vars,
+            self.unk_sym_embed, self.unk_var_embed,
+        )
         return self.input_combine(torch.cat([act_emb, arg_emb], dim=-1))
 
     def _pointer_scores(self, h, symbol_embeds, symbol_mask=None):
@@ -266,7 +248,7 @@ class VAETransformerDecoder(nn.Module):
     @torch.no_grad()
     def generate(self, x_dict, batch_data=None, max_steps=80, temperature=1.0,
                  top_k=0, top_p=0.0):
-        from conjecture_gen.sampling import sample_from_logits, ArityConstraint
+        from conjecture_gen.sampling import sample_action_logits, sample_from_logits, ArityConstraint
         device = next(self.parameters()).device
 
         if batch_data is None:
@@ -346,11 +328,47 @@ class VAETransformerDecoder(nn.Module):
                         action_logits[i, END_CLAUSE] += 5.0
                 arity_con.constrain_actions(i, action_logits[i])
 
-            actions = sample_from_logits(action_logits, temperature, top_k, top_p)
+            actions = sample_action_logits(action_logits, temperature=temperature, top_k=top_k, top_p=top_p)
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
+
+            # --- Role masks (Fix R04): mask pointer logits by action role ---
+            sym_is_pred = getattr(batch_data, 'symbol_is_pred', None)
+            if sym_is_pred is not None:
+                if isinstance(sym_is_pred, list) and sym_is_pred and isinstance(sym_is_pred[0], list):
+                    sym_is_pred_flat = sym_is_pred[0]
+                elif isinstance(sym_is_pred, list):
+                    sym_is_pred_flat = sym_is_pred
+                else:
+                    sym_is_pred_flat = None
+                if sym_is_pred_flat is not None:
+                    n_sym = ptr_logits.shape[-1]
+                    pred_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
+                    func_mask_t = torch.zeros(n_sym, dtype=torch.bool, device=device)
+                    for si in range(min(len(sym_is_pred_flat), n_sym)):
+                        if sym_is_pred_flat[si]:
+                            pred_mask_t[si] = True
+                        else:
+                            func_mask_t[si] = True
+                    for i in range(batch_size):
+                        if done[i]:
+                            continue
+                        act = actions[i].item()
+                        if act == PRED and pred_mask_t.any():
+                            ptr_logits[i] = ptr_logits[i].masked_fill(~pred_mask_t, float('-inf'))
+                            if not torch.isfinite(ptr_logits[i]).any():
+                                ptr_logits[i] = self._pointer_scores(
+                                    h_last[i:i+1], symbol_embeds[i:i+1], symbol_mask[i:i+1] if symbol_mask is not None else None
+                                ).squeeze(0)
+                        elif act == ARG_FUNC and func_mask_t.any():
+                            ptr_logits[i] = ptr_logits[i].masked_fill(~func_mask_t, float('-inf'))
+                            if not torch.isfinite(ptr_logits[i]).any():
+                                ptr_logits[i] = self._pointer_scores(
+                                    h_last[i:i+1], symbol_embeds[i:i+1], symbol_mask[i:i+1] if symbol_mask is not None else None
+                                ).squeeze(0)
+
             var_logits = self.var_head(h_last)
-            ptr_sampled = sample_from_logits(ptr_logits, temperature, top_k, top_p)
-            var_sampled = sample_from_logits(var_logits, temperature, top_k, top_p)
+            ptr_sampled = sample_from_logits(ptr_logits, temperature=temperature, top_k=top_k, top_p=top_p)
+            var_sampled = sample_from_logits(var_logits, temperature=temperature, top_k=top_k, top_p=top_p, fallback_idx=0)
 
             new_args = torch.zeros(batch_size, dtype=torch.long, device=device)
             for i in range(batch_size):

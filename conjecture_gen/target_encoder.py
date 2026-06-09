@@ -61,14 +61,21 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
         For ARG_VAR, argument is the canonical variable slot.
     """
     # Build symbol name -> index mapping
-    if symbol_is_pred is not None:
+    if symbol_is_pred is not None and symbol_arities is not None:
+        # Full lookup: (name, is_pred, arity) -> index with fallbacks
+        sym_to_idx = {}
+        for i, (name, is_pred, arity) in enumerate(zip(symbol_names, symbol_is_pred, symbol_arities)):
+            sym_to_idx[(name, is_pred, arity)] = i
+            # Fallback without arity for backward compat
+            sym_to_idx.setdefault((name, is_pred), i)
+            sym_to_idx.setdefault(name, i)
+    elif symbol_is_pred is not None:
         # Role-aware lookup: (name, is_pred) -> index
         sym_to_idx = {}
         for i, (name, is_pred) in enumerate(zip(symbol_names, symbol_is_pred)):
             sym_to_idx[(name, is_pred)] = i
             # Also keep name-only fallback for backward compat
-            if name not in sym_to_idx:
-                sym_to_idx[name] = i
+            sym_to_idx.setdefault(name, i)
     else:
         sym_to_idx = {name: i for i, name in enumerate(symbol_names)}
     unk_idx = len(symbol_names)  # UNK symbol index = one past the end
@@ -86,7 +93,24 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
             next_var_slot += 1
         return var_to_slot[var_name]
 
-    def _get_sym_idx(name: str, is_pred: bool = None) -> int:
+    def _get_pred_idx(predicate_name: str, arity: int) -> int:
+        """Look up predicate index with arity-aware, role-aware, then name fallbacks."""
+        return sym_to_idx.get((predicate_name, True, arity),
+               sym_to_idx.get((predicate_name, True),
+               sym_to_idx.get(predicate_name, unk_idx)))
+
+    def _get_func_idx(func_name: str, arity: int) -> int:
+        """Look up function index with arity-aware, role-aware, then name fallbacks."""
+        return sym_to_idx.get((func_name, False, arity),
+               sym_to_idx.get((func_name, False),
+               sym_to_idx.get(func_name, unk_idx)))
+
+    def _get_sym_idx(name: str, is_pred: bool = None, arity: int = None) -> int:
+        if is_pred is not None and arity is not None and symbol_arities is not None:
+            if is_pred:
+                return _get_pred_idx(name, arity)
+            else:
+                return _get_func_idx(name, arity)
         if symbol_is_pred is not None and is_pred is not None:
             # Try role-aware lookup first, then name-only fallback
             return sym_to_idx.get((name, is_pred), sym_to_idx.get(name, unk_idx))
@@ -97,7 +121,7 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
             slot = _get_var_slot(term.name)
             sequence.append((ARG_VAR, slot))
         else:
-            sym_idx = _get_sym_idx(term.name, is_pred=False)
+            sym_idx = _get_sym_idx(term.name, is_pred=False, arity=len(term.args))
             sequence.append((ARG_FUNC, sym_idx))
             for arg in term.args:
                 _encode_term(arg)
@@ -111,7 +135,7 @@ def encode_conjecture(clause: Clause, symbol_names: list[str],
             sequence.append((NEW_LIT_POS, 0))
 
         # Predicate
-        pred_idx = _get_sym_idx(lit.predicate, is_pred=True)
+        pred_idx = _get_sym_idx(lit.predicate, is_pred=True, arity=len(lit.args))
         sequence.append((PRED, pred_idx))
 
         # Arguments

@@ -12,8 +12,14 @@ from conjecture_gen.target_encoder import (
 )
 
 
+class SamplingError(Exception):
+    """Raised when sampling fails (e.g., all logits are -inf with no fallback)."""
+    pass
+
+
 def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
-                       top_k: int = 0, top_p: float = 0.0) -> torch.Tensor:
+                       top_k: int = 0, top_p: float = 0.0,
+                       fallback_idx: int = None) -> torch.Tensor:
     """Sample from logits with temperature, top-k, and/or nucleus (top-p) filtering.
 
     Args:
@@ -21,11 +27,41 @@ def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
         temperature: temperature scaling (1.0 = no change, <1 = sharper, >1 = flatter)
         top_k: keep only top-k logits (0 = disabled)
         top_p: keep smallest set of logits with cumulative prob >= top_p (0.0 = disabled)
+        fallback_idx: optional index to use when all logits are -inf. If None
+                      and all logits are -inf, raises SamplingError.
 
     Returns:
         (batch,) sampled indices
+
+    Raises:
+        SamplingError: if all logits are -inf for any row and fallback_idx is None.
+        ValueError: if input validation fails.
     """
+    # Input validation
+    if logits.ndim != 2:
+        raise ValueError(
+            f"logits must be 2-dimensional (batch, vocab), got ndim={logits.ndim}"
+        )
+    if not (0.0 <= top_p <= 1.0):
+        raise ValueError(f"top_p must be in [0, 1], got {top_p}")
+    if top_k < 0:
+        raise ValueError(f"top_k must be >= 0, got {top_k}")
+
+    # Deterministic path
     if temperature <= 0:
+        # Check for all-inf rows before argmax
+        finite_mask = torch.isfinite(logits)
+        bad_rows = ~finite_mask.any(dim=-1)
+        if bad_rows.any():
+            if fallback_idx is not None:
+                result = logits.argmax(dim=-1)
+                result[bad_rows] = fallback_idx
+                return result
+            else:
+                raise SamplingError(
+                    "All logits are -inf for some rows and no fallback_idx provided "
+                    "(deterministic path)."
+                )
         return logits.argmax(dim=-1)
 
     logits = logits / temperature
@@ -53,13 +89,30 @@ def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
     finite_mask = torch.isfinite(logits)
     bad_rows = ~finite_mask.any(dim=-1)
     if bad_rows.any():
-        # Fallback: set END_CLAUSE (action 6) to 0 for bad rows
-        logits[bad_rows] = float('-inf')
-        logits[bad_rows, END_CLAUSE] = 0.0  # END_CLAUSE as safe fallback
+        if fallback_idx is not None:
+            logits[bad_rows] = float('-inf')
+            logits[bad_rows, fallback_idx] = 0.0
+        else:
+            raise SamplingError(
+                "All logits are -inf for some rows and no fallback_idx provided."
+            )
 
     # Sample
     probs = F.softmax(logits, dim=-1)
     return torch.multinomial(probs, num_samples=1).squeeze(-1)
+
+
+def sample_action_logits(action_logits: torch.Tensor, **kwargs) -> torch.Tensor:
+    """Convenience wrapper: sample from action logits with END_CLAUSE fallback.
+
+    Args:
+        action_logits: (batch, NUM_ACTION_TYPES) raw action logits
+        **kwargs: passed to sample_from_logits (temperature, top_k, top_p)
+
+    Returns:
+        (batch,) sampled action indices
+    """
+    return sample_from_logits(action_logits, fallback_idx=END_CLAUSE, **kwargs)
 
 
 class ArityConstraint:
