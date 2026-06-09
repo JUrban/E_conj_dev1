@@ -16,6 +16,9 @@ from conjecture_gen.graph_builder import clauses_to_graph
 from conjecture_gen.target_encoder import encode_conjecture
 
 
+CACHE_SCHEMA_VERSION = 5
+
+
 class ConjectureDataset(Dataset):
     """Dataset of (problem_graph, target_sequence, quality_weight) triples.
 
@@ -51,14 +54,22 @@ class ConjectureDataset(Dataset):
 
         # Load or build the full index (all ratios)
         index_path = os.path.join(cache_dir, 'index.pt')
+        rebuild = True
         if os.path.exists(index_path):
             index = torch.load(index_path, weights_only=False)
-            self.samples = index['samples']
-            self.problem_names = index['problem_names']
-        else:
+            cached_schema = index.get('schema', None)
+            if cached_schema == CACHE_SCHEMA_VERSION:
+                self.samples = index['samples']
+                self.problem_names = index['problem_names']
+                rebuild = False
+            else:
+                print(f"Cache schema mismatch (cached={cached_schema}, "
+                      f"current={CACHE_SCHEMA_VERSION}), rebuilding...")
+        if rebuild:
             print("Building dataset index (first time)...")
             self._build_index(problems_dir, lemmas_file, statistics_file)
             torch.save({
+                'schema': CACHE_SCHEMA_VERSION,
                 'samples': self.samples,
                 'problem_names': self.problem_names,
             }, index_path)
@@ -278,7 +289,11 @@ class ConjectureDataset(Dataset):
                 f"Lemma not found: problem={problem_name!r}, cut_id={cut_id!r}. "
                 f"Check that the lemmas file '{self.lemmas_file}' contains this entry."
             )
-        target_seq = encode_conjecture(clause, graph.symbol_names)
+        target_seq = encode_conjecture(
+            clause, graph.symbol_names,
+            symbol_is_pred=getattr(graph, 'symbol_is_pred', None),
+            symbol_arities=getattr(graph, 'symbol_arities', None),
+        )
 
         weight = 1.0 / (1.0 + ratio)
 

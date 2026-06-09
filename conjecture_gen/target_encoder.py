@@ -38,13 +38,21 @@ ACTION_NAMES = [
 ]
 
 
-def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int, int]]:
+def encode_conjecture(clause: Clause, symbol_names: list[str],
+                      symbol_is_pred: list[bool] = None,
+                      symbol_arities: list[int] = None) -> list[tuple[int, int]]:
     """Encode a conjecture clause as a sequence of (action_type, argument) pairs.
 
     Args:
         clause: The conjecture clause to encode.
         symbol_names: List of symbol names from the problem graph, where
                       index i corresponds to symbol node i.
+        symbol_is_pred: Optional list of booleans indicating whether each
+                        symbol is a predicate (True) or function (False).
+                        Enables role-aware lookup to avoid collisions when
+                        the same name is used as both predicate and function.
+        symbol_arities: Optional list of arities (unused currently, reserved
+                        for future arity-aware encoding).
 
     Returns:
         List of (action_type, argument) tuples.
@@ -53,9 +61,16 @@ def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int
         For ARG_VAR, argument is the canonical variable slot.
     """
     # Build symbol name -> index mapping
-    sym_to_idx = {}
-    for i, name in enumerate(symbol_names):
-        sym_to_idx[name] = i
+    if symbol_is_pred is not None:
+        # Role-aware lookup: (name, is_pred) -> index
+        sym_to_idx = {}
+        for i, (name, is_pred) in enumerate(zip(symbol_names, symbol_is_pred)):
+            sym_to_idx[(name, is_pred)] = i
+            # Also keep name-only fallback for backward compat
+            if name not in sym_to_idx:
+                sym_to_idx[name] = i
+    else:
+        sym_to_idx = {name: i for i, name in enumerate(symbol_names)}
     unk_idx = len(symbol_names)  # UNK symbol index = one past the end
 
     # Track variable canonical ordering
@@ -71,7 +86,10 @@ def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int
             next_var_slot += 1
         return var_to_slot[var_name]
 
-    def _get_sym_idx(name: str) -> int:
+    def _get_sym_idx(name: str, is_pred: bool = None) -> int:
+        if symbol_is_pred is not None and is_pred is not None:
+            # Try role-aware lookup first, then name-only fallback
+            return sym_to_idx.get((name, is_pred), sym_to_idx.get(name, unk_idx))
         return sym_to_idx.get(name, unk_idx)
 
     def _encode_term(term: Term):
@@ -79,7 +97,7 @@ def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int
             slot = _get_var_slot(term.name)
             sequence.append((ARG_VAR, slot))
         else:
-            sym_idx = _get_sym_idx(term.name)
+            sym_idx = _get_sym_idx(term.name, is_pred=False)
             sequence.append((ARG_FUNC, sym_idx))
             for arg in term.args:
                 _encode_term(arg)
@@ -93,7 +111,7 @@ def encode_conjecture(clause: Clause, symbol_names: list[str]) -> list[tuple[int
             sequence.append((NEW_LIT_POS, 0))
 
         # Predicate
-        pred_idx = _get_sym_idx(lit.predicate)
+        pred_idx = _get_sym_idx(lit.predicate, is_pred=True)
         sequence.append((PRED, pred_idx))
 
         # Arguments

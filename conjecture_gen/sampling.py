@@ -48,6 +48,15 @@ def sample_from_logits(logits: torch.Tensor, temperature: float = 1.0,
         # Scatter back to original order
         logits = sorted_logits.scatter(1, sorted_indices, sorted_logits)
 
+    # After all filtering, check for all-inf rows (can happen when
+    # arity constraints + role masks remove every option)
+    finite_mask = torch.isfinite(logits)
+    bad_rows = ~finite_mask.any(dim=-1)
+    if bad_rows.any():
+        # Fallback: set END_CLAUSE (action 6) to 0 for bad rows
+        logits[bad_rows] = float('-inf')
+        logits[bad_rows, END_CLAUSE] = 0.0  # END_CLAUSE as safe fallback
+
     # Sample
     probs = F.softmax(logits, dim=-1)
     return torch.multinomial(probs, num_samples=1).squeeze(-1)

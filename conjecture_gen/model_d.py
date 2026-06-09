@@ -131,6 +131,10 @@ class SSMDecoder(nn.Module):
         self.var_slot_embed = nn.Embedding(max_vars, hidden_dim)
         self.input_combine = nn.Linear(hidden_dim * 2, hidden_dim)
 
+        # Learned UNK embeddings for out-of-range symbol/variable indices
+        self.unk_sym_embed = nn.Parameter(torch.zeros(hidden_dim))
+        self.unk_var_embed = nn.Parameter(torch.zeros(hidden_dim))
+
         # SSM layers
         self.ssm_layers = nn.ModuleList([
             SSMBlock(hidden_dim, state_dim) for _ in range(num_layers)
@@ -181,15 +185,25 @@ class SSMDecoder(nn.Module):
 
         ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
         if ptr_mask.any():
-            idx = arguments[ptr_mask].clamp(0, symbol_embeds.shape[1] - 1)
+            raw_idx = arguments[ptr_mask]
+            max_sym = symbol_embeds.shape[1]
+            in_range = (raw_idx >= 0) & (raw_idx < max_sym)
+            safe_idx = raw_idx.clamp(0, max_sym - 1)
             bi = torch.arange(B, device=device).unsqueeze(1).expand_as(actions)[ptr_mask]
-            arg_emb[ptr_mask] = self.arg_sym_proj(symbol_embeds[bi, idx])
+            sym_vecs = symbol_embeds[bi, safe_idx]
+            # For out-of-range indices, use learned UNK embedding
+            sym_vecs[~in_range] = self.unk_sym_embed
+            arg_emb[ptr_mask] = self.arg_sym_proj(sym_vecs)
 
         var_mask = actions == ARG_VAR
         if var_mask.any():
-            arg_emb[var_mask] = self.var_slot_embed(
-                arguments[var_mask].clamp(0, self.max_vars - 1)
-            )
+            raw_slots = arguments[var_mask]
+            in_range = (raw_slots >= 0) & (raw_slots < self.max_vars)
+            safe_slots = raw_slots.clamp(0, self.max_vars - 1)
+            var_vecs = self.var_slot_embed(safe_slots)
+            # For out-of-range variable slots, use learned UNK embedding
+            var_vecs[~in_range] = self.unk_var_embed
+            arg_emb[var_mask] = var_vecs
 
         return self.input_combine(torch.cat([act_emb, arg_emb], dim=-1))
 

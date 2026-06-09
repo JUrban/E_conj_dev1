@@ -121,9 +121,12 @@ def _tokenize(s: str, strict: bool = True) -> list[str]:
 class _Parser:
     """Recursive descent parser for tokenized TPTP clause body."""
 
-    def __init__(self, tokens: list[str]):
+    _PUNCTUATION = frozenset('(,)|~=!=')
+
+    def __init__(self, tokens: list[str], strict: bool = True):
         self.tokens = tokens
         self.pos = 0
+        self.strict = strict
 
     def peek(self) -> Optional[str]:
         if self.pos < len(self.tokens):
@@ -142,14 +145,54 @@ class _Parser:
         self.pos += 1
         return tok
 
+    def consume_identifier(self) -> str:
+        """Consume and return a token that is a valid identifier.
+
+        An identifier is an alphanumeric word token (letters, digits,
+        underscores, '$').  Punctuation tokens ('(', ')', ',', '|', '~',
+        '=', '!=') are rejected.
+
+        Raises TPTPParseError if the next token is not a valid identifier.
+        """
+        tok = self.peek()
+        if tok is None:
+            raise TPTPParseError(
+                f"Unexpected end of tokens, expected identifier"
+            )
+        if tok in ('(', ')', ',', '|', '~', '=', '!='):
+            raise TPTPParseError(
+                f"Expected identifier but got punctuation '{tok}' at pos {self.pos}, "
+                f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+            )
+        # Validate: must consist of alphanumeric, underscore, or '$' characters
+        if not all(c.isalnum() or c in ('_', '$') for c in tok):
+            raise TPTPParseError(
+                f"Invalid identifier '{tok}' at pos {self.pos}: "
+                f"contains non-alphanumeric characters"
+            )
+        self.pos += 1
+        return tok
+
     def parse_term(self) -> Term:
-        name = self.consume()
+        name = self.consume_identifier()
         if self.peek() == '(':
             # function application
             self.consume('(')
+            # Reject empty argument lists like p()
+            if self.strict and self.peek() == ')':
+                raise TPTPParseError(
+                    f"Empty argument list for '{name}' at pos {self.pos}, "
+                    f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+                )
             args = [self.parse_term()]
             while self.peek() == ',':
                 self.consume(',')
+                # Reject trailing comma like p(a,)
+                if self.strict and self.peek() == ')':
+                    raise TPTPParseError(
+                        f"Trailing comma in argument list for '{name}' at pos {self.pos}, "
+                        f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+                    )
                 args.append(self.parse_term())
             self.consume(')')
             return Term(name=name, args=args, is_variable=False)
@@ -191,13 +234,32 @@ class _Parser:
             self.consume('(')
             has_paren = True
 
+        # Reject empty clause body like ()
+        if self.strict and has_paren and self.peek() == ')':
+            raise TPTPParseError(
+                f"Empty clause body at pos {self.pos}, "
+                f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+            )
+
         literals = [self.parse_literal()]
         while self.peek() == '|':
             self.consume('|')
+            # Reject trailing pipe like (p(a)|)
+            if self.strict and self.peek() in (')', None):
+                raise TPTPParseError(
+                    f"Trailing '|' with no following literal at pos {self.pos}, "
+                    f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+                )
             literals.append(self.parse_literal())
 
-        if has_paren and self.peek() == ')':
-            self.consume(')')
+        if has_paren:
+            if self.peek() == ')':
+                self.consume(')')
+            elif self.strict:
+                raise TPTPParseError(
+                    f"Missing closing ')' for clause body at pos {self.pos}, "
+                    f"tokens: {self.tokens[max(0,self.pos-3):self.pos+3]}"
+                )
 
         return literals
 
@@ -262,7 +324,7 @@ def parse_clause(line: str, strict: bool = True) -> Optional[Clause]:
     if not tokens:
         return None
 
-    parser = _Parser(tokens)
+    parser = _Parser(tokens, strict=strict)
     try:
         literals = parser.parse_clause_body()
     except TPTPParseError:

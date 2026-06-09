@@ -26,6 +26,7 @@ import torch.nn.functional as F
 
 from conjecture_gen.tptp_parser import parse_problem_file, parse_clause
 from conjecture_gen.graph_builder import clauses_to_graph
+from conjecture_gen.validation import validate_clause_text
 from conjecture_gen.target_encoder import (
     decode_sequence, NUM_ACTION_TYPES, PRED, ARG_VAR, ARG_FUNC,
     END_CLAUSE, NEW_LIT_POS, NEW_LIT_NEG,
@@ -124,10 +125,9 @@ def generate_for_problem(model, problem_path, n=20, temperature=1.0,
                 continue
             seen.add(decoded)
 
-            # Validate: try to parse as TPTP
-            test_str = f"cnf(test, axiom, ({decoded}))."
-            parsed = parse_clause(test_str)
-            is_valid = parsed is not None and '...' not in decoded
+            # Validate using safe validation helper
+            check = validate_clause_text(decoded)
+            is_valid = check['valid']
 
             heuristic_score = score_sequence(model, graph, seq)
 
@@ -280,9 +280,8 @@ def main():
             for decoded, seq in results:
                 if decoded not in seen:
                     seen.add(decoded)
-                    test_str = f"cnf(test, axiom, ({decoded}))."
-                    parsed = parse_clause(test_str)
-                    is_valid = parsed is not None and '...' not in decoded
+                    check = validate_clause_text(decoded)
+                    is_valid = check['valid']
                     heuristic_score = score_sequence(model, None, seq)
                     conjectures.append({
                         'text': decoded, 'heuristic_score': heuristic_score,

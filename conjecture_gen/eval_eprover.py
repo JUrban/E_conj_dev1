@@ -163,13 +163,13 @@ def negate_clause(clause_text: str) -> str:
     negates each literal (flips negated flag), and serializes back to TPTP.
     Falls back to regex-based negation if parsing fails.
     """
-    from conjecture_gen.tptp_parser import parse_clause
+    from conjecture_gen.validation import validate_clause_text
 
-    tptp_str = f"cnf(test, axiom, ({clause_text}))."
-    parsed = parse_clause(tptp_str)
-
-    if parsed is None:
+    check = validate_clause_text(clause_text)
+    if not check['valid']:
         return _negate_clause_regex(clause_text)
+
+    parsed = check['clause']
 
     try:
         # Collect all variables from the parsed literals

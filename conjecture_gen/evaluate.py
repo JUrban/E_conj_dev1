@@ -24,6 +24,7 @@ from collections import Counter
 
 from conjecture_gen.dataset import ConjectureDataset
 from conjecture_gen.tptp_parser import parse_clause
+from conjecture_gen.validation import validate_clause_text
 from conjecture_gen.target_encoder import (
     decode_sequence, NUM_ACTION_TYPES, PRED, ARG_VAR, ARG_FUNC,
     END_CLAUSE, NEW_LIT_POS, NEW_LIT_NEG, END_ARGS,
@@ -36,25 +37,21 @@ from torch.utils.data import DataLoader
 
 def load_model(checkpoint_path, device):
     from conjecture_gen.checkpoints import load_checkpoint
-    model, checkpoint, _symbol_vocab = load_checkpoint(
+    model, checkpoint, symbol_vocab = load_checkpoint(
         checkpoint_path, device, allow_partial=False,
     )
     args = checkpoint['args']
-    return model, args, checkpoint
+    return model, args, checkpoint, symbol_vocab
 
 
 def check_syntactic_validity(clause_str: str, symbol_names: list[str]) -> dict:
     """Check if a generated clause string is syntactically valid."""
-    if not clause_str or clause_str == '<empty>':
-        return {'valid': False, 'reason': 'empty'}
-    if '...' in clause_str:
-        return {'valid': False, 'reason': 'truncated'}
+    # Use safe validation helper for initial parse check
+    check = validate_clause_text(clause_str)
+    if not check['valid']:
+        return check
 
-    # Try to parse it as a TPTP clause
-    tptp_str = f"cnf(gen, axiom, ({clause_str}))."
-    parsed = parse_clause(tptp_str)
-    if parsed is None:
-        return {'valid': False, 'reason': 'parse_error'}
+    parsed = check['clause']
 
     # Check symbol coverage: all symbols in conjecture should be from the problem
     used_symbols = set()
@@ -259,11 +256,11 @@ def main():
     print(f"Device: {device}")
 
     # Load model
-    model, model_args, checkpoint = load_model(args.model, device)
+    model, model_args, checkpoint, symbol_vocab = load_model(args.model, device)
     print(f"Model: {sum(p.numel() for p in model.parameters()):,} params, "
           f"epoch {checkpoint['epoch']}, val_loss={checkpoint['val_loss']:.4f}")
 
-    # Load dataset
+    # Load dataset (pass symbol_vocab so graphs include symbol_name_ids)
     dataset = ConjectureDataset(
         problems_dir=args.problems_dir,
         lemmas_file=args.lemmas_file,
@@ -272,6 +269,7 @@ def main():
         max_ratio=args.max_ratio,
         max_nodes=args.max_nodes,
         split=args.split,
+        symbol_vocab=symbol_vocab,
     )
 
     # 1. Loss-based metrics
