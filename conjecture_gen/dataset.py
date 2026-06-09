@@ -39,6 +39,7 @@ class ConjectureDataset(Dataset):
         symbol_vocab: dict = None,  # if set, adds named embeddings to graphs
     ):
         self.problems_dir = problems_dir
+        self.lemmas_file = lemmas_file
         self.max_ratio = max_ratio
         self.min_ratio = min_ratio
         self.symbol_vocab = symbol_vocab
@@ -211,9 +212,7 @@ class ConjectureDataset(Dataset):
 
         # Parse all lemmas for this problem and cache
         lemma_dict = {}
-        lemma_file = os.path.join(
-            os.path.dirname(self.problems_dir), 'lemmas'
-        )
+        lemma_file = self.lemmas_file
         prefix = f'./{problem_name}/'
         with open(lemma_file) as f:
             for line in f:
@@ -274,9 +273,11 @@ class ConjectureDataset(Dataset):
 
         clause = self._get_lemma_clause(problem_name, cut_id)
         if clause is None:
-            target_seq = [(6, 0)]
-        else:
-            target_seq = encode_conjecture(clause, graph.symbol_names)
+            raise KeyError(
+                f"Lemma not found: problem={problem_name!r}, cut_id={cut_id!r}. "
+                f"Check that the lemmas file '{self.lemmas_file}' contains this entry."
+            )
+        target_seq = encode_conjecture(clause, graph.symbol_names)
 
         weight = 1.0 / (1.0 + ratio)
 

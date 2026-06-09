@@ -1,4 +1,9 @@
 """
+WARNING: This module is EXPERIMENTAL / UNMAINTAINED.
+Variant B (Graph Growing GNN) showed poor results in comparison
+experiments and is not recommended for production use.
+Prefer variants A, C, or D instead.
+
 Plan B: Graph-Internal Generation ("Graph Growing GNN")
 
 The most novel approach: generate the conjecture by growing the problem

@@ -34,56 +34,11 @@ from conjecture_gen.sampling import sample_from_logits
 
 
 def load_model(checkpoint_path, device):
-    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
-    model_args = checkpoint['args']
+    from conjecture_gen.checkpoints import load_checkpoint
+    model, checkpoint, symbol_vocab = load_checkpoint(
+        checkpoint_path, device, allow_partial=False,
+    )
     variant = checkpoint.get('variant', 'a')
-
-    named = model_args.get('named_embeddings', False)
-    vocab_size = model_args.get('vocab_size', 0)
-
-    if variant == 'd':
-        from conjecture_gen.model_d import ConjectureModelD
-        model = ConjectureModelD(
-            hidden_dim=model_args['hidden_dim'],
-            num_gnn_layers=model_args['num_gnn_layers'],
-            max_vars=model_args.get('max_vars', 20),
-            use_named_embeddings=named, vocab_size=vocab_size,
-        )
-    elif variant == 'c':
-        from conjecture_gen.model_c import ConjectureModelC
-        model = ConjectureModelC(
-            hidden_dim=model_args['hidden_dim'],
-            num_gnn_layers=model_args['num_gnn_layers'],
-            max_vars=model_args.get('max_vars', 20),
-            use_named_embeddings=named, vocab_size=vocab_size,
-        )
-    else:
-        from conjecture_gen.model import ConjectureModel
-        model = ConjectureModel(
-            hidden_dim=model_args['hidden_dim'],
-            num_gnn_layers=model_args['num_gnn_layers'],
-            max_vars=model_args.get('max_vars', 20),
-            use_named_embeddings=named, vocab_size=vocab_size,
-        )
-
-    # Remap old checkpoint keys if needed (transformer_decoder -> dec_layers)
-    state_dict = checkpoint['model_state_dict']
-    remapped = {}
-    for k, v in state_dict.items():
-        new_k = k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.')
-        remapped[new_k] = v
-    model.load_state_dict(remapped, strict=False)
-    model = model.to(device)
-    model.eval()
-
-    # Load vocab if named embeddings were used
-    symbol_vocab = None
-    if named:
-        from conjecture_gen.symbol_vocab import build_vocab
-        symbol_vocab = build_vocab(
-            'problems', cache_path=os.path.join('cache', 'symbol_vocab.pt')
-        )
-
     return model, variant, checkpoint, symbol_vocab
 
 

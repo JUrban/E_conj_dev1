@@ -23,7 +23,6 @@ import torch
 from collections import Counter
 
 from conjecture_gen.dataset import ConjectureDataset
-from conjecture_gen.model import ConjectureModel
 from conjecture_gen.tptp_parser import parse_clause
 from conjecture_gen.target_encoder import (
     decode_sequence, NUM_ACTION_TYPES, PRED, ARG_VAR, ARG_FUNC,
@@ -36,18 +35,11 @@ from torch.utils.data import DataLoader
 
 
 def load_model(checkpoint_path, device):
-    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    from conjecture_gen.checkpoints import load_checkpoint
+    model, checkpoint, _symbol_vocab = load_checkpoint(
+        checkpoint_path, device, allow_partial=False,
+    )
     args = checkpoint['args']
-    model = ConjectureModel(
-        hidden_dim=args['hidden_dim'],
-        num_gnn_layers=args['num_gnn_layers'],
-        max_vars=args.get('max_vars', 20),
-    ).to(device)
-    state_dict = checkpoint['model_state_dict']
-    remapped = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
-                for k, v in state_dict.items()}
-    model.load_state_dict(remapped, strict=False)
-    model.eval()
     return model, args, checkpoint
 
 

@@ -50,7 +50,8 @@ def compute_loss(model_output, batch, pad_value=-1):
         target_actions.reshape(-1),
         reduction='none',
     ).reshape(B, T)
-    action_loss = (action_loss * mask * weights.unsqueeze(1)).sum() / mask.sum().clamp(min=1)
+    weighted_mask = mask * weights.unsqueeze(1)
+    action_loss = (action_loss * weighted_mask).sum() / weighted_mask.sum().clamp(min=1e-8)
 
     # --- Pointer loss (for PRED and ARG_FUNC actions) ---
     pointer_mask = ((target_actions == PRED) | (target_actions == ARG_FUNC)) & mask.bool()
@@ -67,7 +68,8 @@ def compute_loss(model_output, batch, pad_value=-1):
             ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
-        ptr_loss = (ptr_loss * pointer_mask.float() * weights.unsqueeze(1)).sum() / pointer_mask.sum().clamp(min=1)
+        weighted_ptr_mask = pointer_mask.float() * weights.unsqueeze(1)
+        ptr_loss = (ptr_loss * weighted_ptr_mask).sum() / weighted_ptr_mask.sum().clamp(min=1e-8)
     else:
         ptr_loss = torch.tensor(0.0, device=device)
 
@@ -85,7 +87,8 @@ def compute_loss(model_output, batch, pad_value=-1):
             ignore_index=-1,
             reduction='none',
         ).reshape(B, T)
-        var_loss = (var_loss * var_mask.float() * weights.unsqueeze(1)).sum() / var_mask.sum().clamp(min=1)
+        weighted_var_mask = var_mask.float() * weights.unsqueeze(1)
+        var_loss = (var_loss * weighted_var_mask).sum() / weighted_var_mask.sum().clamp(min=1e-8)
     else:
         var_loss = torch.tensor(0.0, device=device)
 

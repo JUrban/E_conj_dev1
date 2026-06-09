@@ -94,30 +94,25 @@ def run_eprover(problem_file: str, extra_axioms: str = None,
         return {'status': f'error:{type(e).__name__}', 'processed_clauses': -1}
 
 
-def negate_clause(clause_text: str) -> str:
-    """Negate a CNF clause for the P2 test.
+def _negate_clause_regex(clause_text: str) -> str:
+    """Regex-based clause negation (fallback).
 
-    A CNF clause ∀X. (L1(X) | L2(X) | ... | Ln(X)) negates to:
-    ∃X. (~L1(X) ∧ ~L2(X) ∧ ... ∧ ~Ln(X))
+    A CNF clause forall X. (L1(X) | L2(X) | ... | Ln(X)) negates to:
+    exists X. (~L1(X) & ~L2(X) & ... & ~Ln(X))
 
     The existential is Skolemized: replace each variable Xi with a
     fresh Skolem constant negsk_i. Then each negated literal becomes
     a separate ground unit clause (implicitly conjoined in CNF).
     """
-    # Collect all variables used in the clause
     var_pattern = re.compile(r'\b(X\d+)\b')
     all_vars = set(var_pattern.findall(clause_text))
 
-    # Create Skolem substitution: X1 -> negsk_1, X2 -> negsk_2, etc.
     skolem_map = {v: f'negsk_{v[1:]}' for v in sorted(all_vars)}
 
-    # Apply substitution to the whole clause
     skolemized = clause_text
     for var, sk in sorted(skolem_map.items(), key=lambda x: -len(x[0])):
-        # Replace whole-word only (longer vars first to avoid X1 matching in X10)
         skolemized = re.sub(r'\b' + var + r'\b', sk, skolemized)
 
-    # Split into literals and negate each
     literals = skolemized.split(' | ')
     negated_clauses = []
     for i, lit in enumerate(literals):
@@ -132,6 +127,94 @@ def negate_clause(clause_text: str) -> str:
             f"cnf(neg_{i}, negated_conjecture, ({neg_lit}))."
         )
     return '\n'.join(negated_clauses)
+
+
+def _serialize_term(term) -> str:
+    """Serialize a Term back to TPTP string."""
+    if not term.args:
+        return term.name
+    return f"{term.name}({','.join(_serialize_term(a) for a in term.args)})"
+
+
+def _collect_vars_from_term(term, var_set):
+    """Collect all variable names from a term."""
+    if term.is_variable:
+        var_set.add(term.name)
+    else:
+        for arg in term.args:
+            _collect_vars_from_term(arg, var_set)
+
+
+def _apply_substitution_term(term, subst):
+    """Apply a variable substitution to a term, returning a new Term."""
+    from conjecture_gen.tptp_parser import Term
+    if term.is_variable:
+        if term.name in subst:
+            return Term(name=subst[term.name], args=[], is_variable=False)
+        return term
+    new_args = [_apply_substitution_term(a, subst) for a in term.args]
+    return Term(name=term.name, args=new_args, is_variable=False)
+
+
+def negate_clause(clause_text: str) -> str:
+    """Negate a CNF clause for the P2 test using AST-based parsing.
+
+    Parses the clause, collects all variables, creates Skolem substitutions,
+    negates each literal (flips negated flag), and serializes back to TPTP.
+    Falls back to regex-based negation if parsing fails.
+    """
+    from conjecture_gen.tptp_parser import parse_clause
+
+    tptp_str = f"cnf(test, axiom, ({clause_text}))."
+    parsed = parse_clause(tptp_str)
+
+    if parsed is None:
+        return _negate_clause_regex(clause_text)
+
+    try:
+        # Collect all variables from the parsed literals
+        all_vars = set()
+        for lit in parsed.literals:
+            for arg in lit.args:
+                _collect_vars_from_term(arg, all_vars)
+
+        # Create Skolem substitution for each variable
+        skolem_map = {}
+        for i, v in enumerate(sorted(all_vars)):
+            skolem_map[v] = f'negsk_{i}'
+
+        # Negate each literal and serialize back to TPTP
+        negated_clauses = []
+        for i, lit in enumerate(parsed.literals):
+            # Apply Skolem substitution to args
+            new_args = [_apply_substitution_term(a, skolem_map) for a in lit.args]
+
+            # Flip negated flag
+            new_negated = not lit.negated
+
+            # Serialize the literal
+            if lit.is_equality:
+                lhs = _serialize_term(new_args[0])
+                rhs = _serialize_term(new_args[1])
+                if new_negated:
+                    lit_str = f"{lhs} != {rhs}"
+                else:
+                    lit_str = f"{lhs} = {rhs}"
+            else:
+                args_str = ','.join(_serialize_term(a) for a in new_args)
+                neg_prefix = '~' if new_negated else ''
+                if new_args:
+                    lit_str = f"{neg_prefix}{lit.predicate}({args_str})"
+                else:
+                    lit_str = f"{neg_prefix}{lit.predicate}"
+
+            negated_clauses.append(
+                f"cnf(neg_{i}, negated_conjecture, ({lit_str}))."
+            )
+        return '\n'.join(negated_clauses)
+
+    except Exception:
+        return _negate_clause_regex(clause_text)
 
 
 def load_original_stats(statistics_file: str) -> dict:

@@ -120,10 +120,24 @@ class GraphBuilder:
             self.edge_attrs[edge_type].append(attr)
 
     def _get_symbol_idx(self, name: str, is_pred: bool, arity: int) -> int:
-        if name in self.symbol_map:
-            return self.symbol_map[name]
+        key = (name, is_pred)
+        if key in self.symbol_map:
+            existing_idx = self.symbol_map[key]
+            # Warn if same (name, role) appears with different arities
+            if self.symbol_arities[existing_idx] != arity:
+                import warnings
+                warnings.warn(
+                    f"Symbol '{name}' (is_pred={is_pred}) seen with arity "
+                    f"{self.symbol_arities[existing_idx]} and {arity}; "
+                    f"keeping max arity",
+                    stacklevel=2,
+                )
+                self.symbol_arities[existing_idx] = max(
+                    self.symbol_arities[existing_idx], arity
+                )
+            return existing_idx
         idx = self.n_symbols
-        self.symbol_map[name] = idx
+        self.symbol_map[key] = idx
         self.symbol_names.append(name)
         self.symbol_arities.append(arity)
         self.symbol_is_pred.append(is_pred)

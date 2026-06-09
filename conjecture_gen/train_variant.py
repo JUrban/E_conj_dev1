@@ -128,6 +128,16 @@ def train(args):
         pin_memory=False, persistent_workers=False,
     )
 
+    if args.variant in ('b', 'e'):
+        import warnings
+        warnings.warn(
+            f"Variant '{args.variant}' is EXPERIMENTAL / UNMAINTAINED and showed "
+            f"poor results in comparison experiments. "
+            f"Consider using variants a, c, or d instead.",
+            UserWarning,
+            stacklevel=1,
+        )
+
     model, loss_fn = get_model_and_loss(args.variant, args)
     model = model.to(device)
     n_params = sum(p.numel() for p in model.parameters())
@@ -146,7 +156,12 @@ def train(args):
     if args.resume:
         ckpt_path = os.path.join(args.resume, 'best_model.pt')
         if os.path.exists(ckpt_path):
-            ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
+            from conjecture_gen.checkpoints import load_checkpoint
+            _resumed_model, ckpt, _sv = load_checkpoint(
+                ckpt_path, device, allow_partial=True,
+            )
+            # Copy the loaded weights into our model (which may have
+            # been constructed with different args for fine-tuning)
             sd = ckpt['model_state_dict']
             sd = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
                   for k, v in sd.items()}

@@ -11,7 +11,7 @@ import torch
 
 from conjecture_gen.tptp_parser import parse_problem_file
 from conjecture_gen.graph_builder import clauses_to_graph
-from conjecture_gen.model import ConjectureModel
+from conjecture_gen.checkpoints import load_checkpoint
 from conjecture_gen.target_encoder import decode_sequence
 
 
@@ -20,20 +20,9 @@ def load_model(checkpoint_path: str, device: torch.device = None):
     if device is None:
         device = torch.device('cpu')
 
-    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
-    model_args = checkpoint['args']
-
-    model = ConjectureModel(
-        hidden_dim=model_args['hidden_dim'],
-        num_gnn_layers=model_args['num_gnn_layers'],
-        max_vars=model_args.get('max_vars', 20),
-    ).to(device)
-
-    state_dict = checkpoint['model_state_dict']
-    remapped = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
-                for k, v in state_dict.items()}
-    model.load_state_dict(remapped, strict=False)
-    model.eval()
+    model, checkpoint, _symbol_vocab = load_checkpoint(
+        checkpoint_path, device, allow_partial=False,
+    )
 
     print(f"Loaded model from epoch {checkpoint['epoch']} "
           f"(val_loss={checkpoint['val_loss']:.4f})")

@@ -1,4 +1,9 @@
 """
+WARNING: This module is EXPERIMENTAL / UNMAINTAINED.
+Variant E (Subgraph Completion) showed poor results in comparison
+experiments and is not recommended for production use.
+Prefer variants A, C, or D instead.
+
 Plan E: Subgraph Completion Model
 
 Instead of autoregressive generation, pre-instantiate K "blank literal slots"
