@@ -1,0 +1,60 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_9, negated_conjecture, (m1_subset_1(esk2_0,esk1_0))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk3_0,esk1_0))).
+cnf(i_0_7, negated_conjecture, (m1_subset_1(esk4_0,esk1_0))).
+cnf(i_0_6, negated_conjecture, (k8_domain_1(esk1_0,esk2_0,esk3_0,esk4_0)=esk1_0)).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_5, negated_conjecture, (esk2_0!=esk3_0)).
+cnf(i_0_4, negated_conjecture, (esk2_0!=esk4_0)).
+cnf(i_0_3, negated_conjecture, (esk4_0!=esk3_0)).
+cnf(i_0_10, negated_conjecture, (~v1_xboole_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_11, plain, (X2=X3|k1_funct_1(esk6_2(X1,X2),X3)=k6_numbers|v1_xboole_0(X1)|~m1_subset_1(X2,X1)|~r2_hidden(X3,X1))).
+cnf(i_0_12, plain, (k3_funct_2(X1,k1_numbers,esk6_2(X1,X2),X2)=1|v1_xboole_0(X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_13, plain, (v1_xboole_0(X1)|m2_funct_2(esk6_2(X1,X2),X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m1_subset_1(X2,X1))).
+cnf(i_0_2, negated_conjecture, (m2_funct_2(esk5_3(X1,X2,X3),esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~m2_funct_2(X3,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~m2_funct_2(X2,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~m2_funct_2(X1,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers)))).
+cnf(i_0_31, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2)).
+cnf(i_0_40, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2)).
+cnf(i_0_34, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2)).
+cnf(i_0_32, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4)).
+cnf(i_0_43, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2)).
+cnf(i_0_41, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4)).
+cnf(i_0_35, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3)).
+cnf(i_0_44, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1)).
+cnf(i_0_30, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_28, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_22, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_1, negated_conjecture, (~m1_subset_1(X6,k1_numbers)|~m1_subset_1(X5,k1_numbers)|~m1_subset_1(X4,k1_numbers)|~m2_funct_2(X3,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~m2_funct_2(X2,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~m2_funct_2(X1,esk1_0,k1_numbers,k9_funct_2(esk1_0,k1_numbers))|~r2_funct_2(esk1_0,k1_numbers,esk5_3(X1,X2,X3),k1_funcsdom(esk1_0,k1_numbers,k5_funcsdom(esk1_0),k1_funcsdom(esk1_0,k1_numbers,k5_funcsdom(esk1_0),k2_funcsdom(esk1_0,k1_numbers,k1_numbers,k9_funct_2(esk1_0,k1_numbers),k7_funcsdom(esk1_0),k1_domain_1(k1_numbers,k9_funct_2(esk1_0,k1_numbers),X4,X1)),k2_funcsdom(esk1_0,k1_numbers,k1_numbers,k9_funct_2(esk1_0,k1_numbers),k7_funcsdom(esk1_0),k1_domain_1(k1_numbers,k9_funct_2(esk1_0,k1_numbers),X5,X2))),k2_funcsdom(esk1_0,k1_numbers,k1_numbers,k9_funct_2(esk1_0,k1_numbers),k7_funcsdom(esk1_0),k1_domain_1(k1_numbers,k9_funct_2(esk1_0,k1_numbers),X6,X3)))))).
+cnf(i_0_39, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_37, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_33, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_25, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_29, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_23, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_42, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_38, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_26, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_27, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk10_7(X6,X7,X5,X3,X2,X4,X1)!=X3|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_21, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk11_7(X6,X7,X5,X3,X2,X4,X1)!=X4|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_19, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|esk12_7(X6,X7,X5,X3,X2,X4,X1)!=X2|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_36, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk10_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_24, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk11_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_20, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|r2_hidden(esk12_7(X6,X7,X5,X3,X2,X4,X1),X6)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_18, plain, (epred1_7(X1,X2,X3,X4,X5,X6,X7)|k3_funct_2(X6,k1_numbers,X5,X4)!=1|k3_funct_2(X6,k1_numbers,X1,X2)!=1|k1_funct_1(X7,esk10_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X5,esk11_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers|k1_funct_1(X1,esk12_7(X6,X7,X5,X3,X2,X4,X1))!=k6_numbers)).
+cnf(i_0_17, plain, (X6=X7|X5=X7|X5=X6|v1_xboole_0(X1)|m1_subset_1(esk7_8(X1,X2,X3,X4,X5,X6,X7,X8),k1_numbers)|k8_domain_1(X1,X5,X6,X7)!=X1|k3_funct_2(X1,k1_numbers,X2,X5)!=1|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~epred1_7(X4,X7,X5,X6,X3,X1,X2)|~m2_funct_2(X8,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X4,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X3,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X2,X1,k1_numbers,k9_funct_2(X1,k1_numbers)))).
+cnf(i_0_16, plain, (X6=X7|X5=X7|X5=X6|v1_xboole_0(X1)|m1_subset_1(esk8_8(X1,X2,X3,X4,X5,X6,X7,X8),k1_numbers)|k8_domain_1(X1,X5,X6,X7)!=X1|k3_funct_2(X1,k1_numbers,X2,X5)!=1|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~epred1_7(X4,X7,X5,X6,X3,X1,X2)|~m2_funct_2(X8,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X4,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X3,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X2,X1,k1_numbers,k9_funct_2(X1,k1_numbers)))).
+cnf(i_0_15, plain, (X6=X7|X5=X7|X5=X6|v1_xboole_0(X1)|m1_subset_1(esk9_8(X1,X2,X3,X4,X5,X6,X7,X8),k1_numbers)|k8_domain_1(X1,X5,X6,X7)!=X1|k3_funct_2(X1,k1_numbers,X2,X5)!=1|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~epred1_7(X4,X7,X5,X6,X3,X1,X2)|~m2_funct_2(X8,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X4,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X3,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X2,X1,k1_numbers,k9_funct_2(X1,k1_numbers)))).
+cnf(i_0_14, plain, (X6=X7|X5=X7|X5=X6|v1_xboole_0(X1)|r2_funct_2(X1,k1_numbers,X8,k1_funcsdom(X1,k1_numbers,k5_funcsdom(X1),k1_funcsdom(X1,k1_numbers,k5_funcsdom(X1),k2_funcsdom(X1,k1_numbers,k1_numbers,k9_funct_2(X1,k1_numbers),k7_funcsdom(X1),k1_domain_1(k1_numbers,k9_funct_2(X1,k1_numbers),esk7_8(X1,X2,X3,X4,X5,X6,X7,X8),X2)),k2_funcsdom(X1,k1_numbers,k1_numbers,k9_funct_2(X1,k1_numbers),k7_funcsdom(X1),k1_domain_1(k1_numbers,k9_funct_2(X1,k1_numbers),esk8_8(X1,X2,X3,X4,X5,X6,X7,X8),X3))),k2_funcsdom(X1,k1_numbers,k1_numbers,k9_funct_2(X1,k1_numbers),k7_funcsdom(X1),k1_domain_1(k1_numbers,k9_funct_2(X1,k1_numbers),esk9_8(X1,X2,X3,X4,X5,X6,X7,X8),X4))))|k8_domain_1(X1,X5,X6,X7)!=X1|k3_funct_2(X1,k1_numbers,X2,X5)!=1|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~epred1_7(X4,X7,X5,X6,X3,X1,X2)|~m2_funct_2(X8,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X4,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X3,X1,k1_numbers,k9_funct_2(X1,k1_numbers))|~m2_funct_2(X2,X1,k1_numbers,k9_funct_2(X1,k1_numbers)))).
+
+

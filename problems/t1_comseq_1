@@ -1,0 +1,52 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_10, negated_conjecture, (v1_relat_1(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v1_funct_1(esk1_0))).
+cnf(i_0_28, plain, (v1_xboole_0(k1_xboole_0))).
+cnf(i_0_31, plain, (r1_tarski(X1,X1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_29, plain, (~v1_xboole_0(k2_numbers))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_6, negated_conjecture, (k9_xtuple_0(esk1_0)=k5_numbers|v1_funct_1(esk1_0))).
+cnf(i_0_32, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_33, plain, (m1_subset_1(X1,k1_zfmisc_1(X2))|~r1_tarski(X1,X2))).
+cnf(i_0_34, plain, (r1_tarski(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_30, plain, (k1_relset_1(X1,X2)=k9_xtuple_0(X2)|~v1_relat_1(X2)|~v4_relat_1(X2,X1))).
+cnf(i_0_14, plain, (r1_tarski(k10_xtuple_0(X1),X2)|~v1_relat_1(X1)|~v5_relat_1(X1,X2))).
+cnf(i_0_4, negated_conjecture, (k9_xtuple_0(esk1_0)=k5_numbers|v1_funct_2(esk1_0,k5_numbers,k2_numbers))).
+cnf(i_0_13, plain, (v5_relat_1(X1,X2)|~v1_relat_1(X1)|~r1_tarski(k10_xtuple_0(X1),X2))).
+cnf(i_0_26, plain, (r1_tarski(X1,X2)|r2_hidden(esk6_2(X1,X2),X1))).
+cnf(i_0_5, negated_conjecture, (v1_funct_1(esk1_0)|m1_subset_1(k1_funct_1(esk1_0,X1),k2_numbers)|~r2_hidden(X1,k5_numbers))).
+cnf(i_0_27, plain, (r2_hidden(X1,X2)|~r2_hidden(X1,X3)|~r1_tarski(X3,X2))).
+cnf(i_0_2, negated_conjecture, (k9_xtuple_0(esk1_0)=k5_numbers|m1_subset_1(esk1_0,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k2_numbers))))).
+cnf(i_0_36, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_25, plain, (r1_tarski(X1,X2)|~r2_hidden(esk6_2(X1,X2),X2))).
+cnf(i_0_22, plain, (r2_hidden(X3,X2)|k10_xtuple_0(X1)!=X2|k1_funct_1(X1,X4)!=X3|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X4,k9_xtuple_0(X1)))).
+cnf(i_0_3, negated_conjecture, (v1_funct_2(esk1_0,k5_numbers,k2_numbers)|m1_subset_1(k1_funct_1(esk1_0,X1),k2_numbers)|~r2_hidden(X1,k5_numbers))).
+cnf(i_0_20, plain, (k10_xtuple_0(X1)=X2|r2_hidden(esk4_2(X1,X2),X2)|r2_hidden(esk5_2(X1,X2),k9_xtuple_0(X1))|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_19, plain, (k10_xtuple_0(X1)=X2|k1_funct_1(X1,esk5_2(X1,X2))=esk4_2(X1,X2)|r2_hidden(esk4_2(X1,X2),X2)|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_1, negated_conjecture, (m1_subset_1(k1_funct_1(esk1_0,X1),k2_numbers)|m1_subset_1(esk1_0,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k2_numbers)))|~r2_hidden(X1,k5_numbers))).
+cnf(i_0_12, plain, (v4_relat_1(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_11, plain, (v5_relat_1(X1,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_35, plain, (m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~v1_relat_1(X1)|~r1_tarski(k9_xtuple_0(X1),X2)|~r1_tarski(k10_xtuple_0(X1),X3))).
+cnf(i_0_21, plain, (k10_xtuple_0(X1)=X2|esk4_2(X1,X2)!=k1_funct_1(X1,X3)|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,k9_xtuple_0(X1))|~r2_hidden(esk4_2(X1,X2),X2))).
+cnf(i_0_23, plain, (k1_funct_1(X1,esk3_3(X1,X2,X3))=X3|k10_xtuple_0(X1)!=X2|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_24, plain, (r2_hidden(esk3_3(X1,X2,X3),k9_xtuple_0(X1))|k10_xtuple_0(X1)!=X2|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_15, plain, (v1_funct_2(X1,X2,X3)|k1_xboole_0!=X3|k1_xboole_0!=X1|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_8, negated_conjecture, (r2_hidden(esk2_0,k5_numbers)|k9_xtuple_0(esk1_0)!=k5_numbers|~v1_funct_1(esk1_0)|~v1_funct_2(esk1_0,k5_numbers,k2_numbers)|~m1_subset_1(esk1_0,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k2_numbers))))).
+cnf(i_0_17, plain, (k1_xboole_0=X3|v1_funct_2(X1,X2,X3)|k1_relset_1(X2,X1)!=X2|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_16, plain, (k1_xboole_0=X1|k1_xboole_0!=X3|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_18, plain, (k1_xboole_0=X3|k1_relset_1(X2,X1)=X2|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_7, negated_conjecture, (k9_xtuple_0(esk1_0)!=k5_numbers|~v1_funct_1(esk1_0)|~v1_funct_2(esk1_0,k5_numbers,k2_numbers)|~m1_subset_1(k1_funct_1(esk1_0,esk2_0),k2_numbers)|~m1_subset_1(esk1_0,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k2_numbers))))).
+
+

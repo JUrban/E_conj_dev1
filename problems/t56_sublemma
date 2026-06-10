@@ -1,0 +1,74 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_13, negated_conjecture, (m1_qc_lang1(esk1_0))).
+cnf(i_0_10, negated_conjecture, (m1_valuat_1(esk4_0,esk1_0,esk3_0))).
+cnf(i_0_12, negated_conjecture, (m2_subset_1(esk2_0,k2_qc_lang1(esk1_0),k3_qc_lang1(esk1_0)))).
+cnf(i_0_8, negated_conjecture, (m2_subset_1(esk6_0,k16_substut1(esk1_0),k38_substut1(esk1_0)))).
+cnf(i_0_6, negated_conjecture, (v3_substut1(k7_sublemma(esk1_0,esk6_0,esk2_0),esk1_0))).
+cnf(i_0_7, negated_conjecture, (m1_substut1(esk7_0,esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0)))).
+cnf(i_0_9, negated_conjecture, (m2_funct_2(esk5_0,k3_qc_lang1(esk1_0),esk3_0,k2_valuat_1(esk1_0,esk3_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_11, negated_conjecture, (~v1_xboole_0(esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk8_0,esk3_0)|m1_subset_1(esk9_0,esk3_0))).
+cnf(i_0_44, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k2_qc_lang1(X1)))).
+cnf(i_0_45, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k3_qc_lang1(X1)))).
+cnf(i_0_20, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k16_substut1(X1)))).
+cnf(i_0_46, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k38_substut1(X1)))).
+cnf(i_0_36, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k9_qc_lang1(X1)))).
+cnf(i_0_43, plain, (~m1_qc_lang1(X1)|~v1_xboole_0(k3_cqc_lang(X1)))).
+cnf(i_0_50, plain, (k1_valuat_1(X1,X2)=k2_valuat_1(X1,X2)|v1_xboole_0(X2)|~m1_qc_lang1(X1))).
+cnf(i_0_30, plain, (m1_subset_1(k3_qc_lang1(X1),k1_zfmisc_1(k2_qc_lang1(X1)))|~m1_qc_lang1(X1))).
+cnf(i_0_28, plain, (m1_subset_1(k38_substut1(X1),k1_zfmisc_1(k16_substut1(X1)))|~m1_qc_lang1(X1))).
+cnf(i_0_29, plain, (m1_subset_1(k3_cqc_lang(X1),k1_zfmisc_1(k9_qc_lang1(X1)))|~m1_qc_lang1(X1))).
+cnf(i_0_49, plain, (k2_sublemma(X1,X2)=k1_xtuple_0(X2)|~m1_qc_lang1(X1)|~m1_subset_1(X2,k38_substut1(X1)))).
+cnf(i_0_24, plain, (v1_funct_1(k2_substut1(X2,X1))|~m1_qc_lang1(X2)|~m1_subset_1(X1,k1_substut1(X2)))).
+cnf(i_0_25, plain, (v1_xboole_0(X2)|m1_funct_2(k2_valuat_1(X1,X2),k3_qc_lang1(X1),X2)|~m1_qc_lang1(X1))).
+cnf(i_0_54, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m2_subset_1(X3,X2,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_26, plain, (m1_subset_1(k32_substut1(X1,X2),k2_zfmisc_1(k9_qc_lang1(X1),k1_substut1(X1)))|~m1_qc_lang1(X1)|~m1_subset_1(X2,k16_substut1(X1)))).
+cnf(i_0_22, plain, (m2_subset_1(k2_sublemma(X1,X2),k9_qc_lang1(X1),k3_cqc_lang(X1))|~m1_qc_lang1(X1)|~m1_subset_1(X2,k38_substut1(X1)))).
+cnf(i_0_51, plain, (k7_sublemma(X1,X2,X3)=k4_tarski(X2,X3)|~m1_qc_lang1(X1)|~m1_subset_1(X3,k3_qc_lang1(X1))|~m1_subset_1(X2,k38_substut1(X1)))).
+cnf(i_0_42, plain, (v1_xboole_0(X3)|v1_xboole_0(X2)|m1_subset_1(X1,X2)|~m2_subset_1(X1,X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_55, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m1_subset_1(X3,X1)|~m2_subset_1(X3,X2,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_47, plain, (k11_cqc_lang(X1,X2,X3)=k15_qc_lang1(X1,X2,X3)|~m1_qc_lang1(X1)|~m1_subset_1(X3,k3_cqc_lang(X1))|~m1_subset_1(X2,k3_qc_lang1(X1)))).
+cnf(i_0_23, plain, (m1_subset_1(k2_substut1(X2,X1),k1_zfmisc_1(k2_zfmisc_1(k3_qc_lang1(X2),k3_qc_lang1(X2))))|~m1_qc_lang1(X2)|~m1_subset_1(X1,k1_substut1(X2)))).
+cnf(i_0_33, plain, (v1_sublemma(k7_sublemma(X2,X3,X1),X2)|~m1_qc_lang1(X2)|~m1_subset_1(X3,k38_substut1(X2))|~m1_subset_1(X1,k3_qc_lang1(X2)))).
+cnf(i_0_19, plain, (m1_subset_1(k15_qc_lang1(X1,X2,X3),k9_qc_lang1(X1))|~m1_qc_lang1(X1)|~m1_subset_1(X3,k9_qc_lang1(X1))|~m1_subset_1(X2,k3_qc_lang1(X1)))).
+cnf(i_0_27, plain, (m2_subset_1(k35_substut1(X1,X2),k2_qc_lang1(X1),k3_qc_lang1(X1))|~m1_qc_lang1(X1)|~m1_subset_1(X2,k2_zfmisc_1(k9_qc_lang1(X1),k1_substut1(X1))))).
+cnf(i_0_38, plain, (m1_subset_1(X1,k1_substut1(X2))|~m1_qc_lang1(X2)|~m1_substut1(X1,X2,X3)|~m1_subset_1(X3,k2_zfmisc_1(k16_substut1(X2),k3_qc_lang1(X2))))).
+cnf(i_0_32, plain, (m1_subset_1(k7_sublemma(X2,X3,X1),k2_zfmisc_1(k16_substut1(X2),k3_qc_lang1(X2)))|~m1_qc_lang1(X2)|~m1_subset_1(X3,k38_substut1(X2))|~m1_subset_1(X1,k3_qc_lang1(X2)))).
+cnf(i_0_52, plain, (v1_xboole_0(X3)|m2_funct_2(X4,X2,X3,X1)|~m1_subset_1(X4,X1)|~m1_funct_2(X1,X2,X3))).
+cnf(i_0_37, plain, (m2_subset_1(k9_sublemma(X1,X2,X3),k16_substut1(X1),k38_substut1(X1))|~m1_qc_lang1(X1)|~v1_sublemma(X2,X1)|~m1_substut1(X3,X1,X2)|~m1_subset_1(X2,k2_zfmisc_1(k16_substut1(X1),k3_qc_lang1(X1))))).
+cnf(i_0_56, plain, (r2_relset_1(X2,X3,X4,X1)|X1!=X4|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_41, plain, (v1_xboole_0(X3)|v1_funct_1(X4)|~m1_funct_2(X1,X2,X3)|~m2_funct_2(X4,X2,X3,X1))).
+cnf(i_0_53, plain, (v1_xboole_0(X3)|m1_subset_1(X4,X1)|~m1_funct_2(X1,X2,X3)|~m2_funct_2(X4,X2,X3,X1))).
+cnf(i_0_48, plain, (k1_sublemma(X1,X2,X3,X4)=k1_funct_4(X3,X4)|v1_xboole_0(X2)|~m1_qc_lang1(X1)|~v1_funct_1(X4)|~m1_subset_1(X3,k2_valuat_1(X1,X2))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(k3_qc_lang1(X1),X2))))).
+cnf(i_0_40, plain, (v1_xboole_0(X3)|v1_funct_2(X4,X2,X3)|~m1_funct_2(X1,X2,X3)|~m2_funct_2(X4,X2,X3,X1))).
+cnf(i_0_39, plain, (v1_xboole_0(X3)|m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_funct_2(X1,X2,X3)|~m2_funct_2(X4,X2,X3,X1))).
+cnf(i_0_16, plain, (v1_xboole_0(X2)|v1_funct_1(k12_sublemma(X4,X2,X3,X1))|~m1_qc_lang1(X4)|~m1_subset_1(X1,X2)|~m1_subset_1(X3,k3_qc_lang1(X4)))).
+cnf(i_0_35, plain, (v1_finset_1(k7_substut1(X2,X4,X3,X1))|~m1_qc_lang1(X2)|~m1_subset_1(X4,k3_qc_lang1(X2))|~m1_subset_1(X3,k9_qc_lang1(X2))|~m1_subset_1(X1,k1_substut1(X2)))).
+cnf(i_0_34, plain, (m1_subset_1(k7_substut1(X2,X4,X3,X1),k1_substut1(X2))|~m1_qc_lang1(X2)|~m1_subset_1(X4,k3_qc_lang1(X2))|~m1_subset_1(X3,k9_qc_lang1(X2))|~m1_subset_1(X1,k1_substut1(X2)))).
+cnf(i_0_57, plain, (X1=X4|~r2_relset_1(X2,X3,X4,X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_15, plain, (v1_xboole_0(X2)|m1_subset_1(k12_sublemma(X4,X2,X3,X1),k1_zfmisc_1(k2_zfmisc_1(k3_qc_lang1(X4),X2)))|~m1_qc_lang1(X4)|~m1_subset_1(X1,X2)|~m1_subset_1(X3,k3_qc_lang1(X4)))).
+cnf(i_0_21, plain, (v1_xboole_0(X2)|m2_funct_2(k1_sublemma(X1,X2,X3,X4),k3_qc_lang1(X1),X2,k2_valuat_1(X1,X2))|~m1_qc_lang1(X1)|~v1_funct_1(X4)|~m1_subset_1(X3,k2_valuat_1(X1,X2))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(k3_qc_lang1(X1),X2))))).
+cnf(i_0_31, plain, (m1_subset_1(k4_relset_1(X1,X2,X3,X4,X5,X6),k1_zfmisc_1(k2_zfmisc_1(X1,X4)))|~m1_subset_1(X6,k1_zfmisc_1(k2_zfmisc_1(X3,X4)))|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_18, plain, (v1_xboole_0(X3)|v1_funct_1(k13_sublemma(X2,X5,X6,X4,X3,X1))|~m1_qc_lang1(X2)|~m1_subset_1(X6,k3_qc_lang1(X2))|~m1_subset_1(X5,k38_substut1(X2))|~m1_subset_1(X1,k2_valuat_1(X2,X3))|~m1_substut1(X4,X2,k7_sublemma(X2,X5,X6)))).
+cnf(i_0_17, plain, (v1_xboole_0(X3)|m1_subset_1(k13_sublemma(X2,X5,X6,X4,X3,X1),k1_zfmisc_1(k2_zfmisc_1(k3_qc_lang1(X2),X3)))|~m1_qc_lang1(X2)|~m1_subset_1(X6,k3_qc_lang1(X2))|~m1_subset_1(X5,k38_substut1(X2))|~m1_subset_1(X1,k2_valuat_1(X2,X3))|~m1_substut1(X4,X2,k7_sublemma(X2,X5,X6)))).
+cnf(i_0_14, plain, (k4_relset_1(k3_qc_lang1(X1),k3_qc_lang1(X1),k3_qc_lang1(X1),X5,k2_substut1(X1,k7_substut1(X1,X3,k11_cqc_lang(X1,X3,k2_sublemma(X1,X2)),X4)),X6)=k13_sublemma(X1,X2,X3,X4,X5,X6)|v1_xboole_0(X5)|~m1_qc_lang1(X1)|~m1_substut1(X4,X1,k7_sublemma(X1,X2,X3))|~m2_subset_1(X3,k2_qc_lang1(X1),k3_qc_lang1(X1))|~m2_subset_1(X2,k16_substut1(X1),k38_substut1(X1))|~m2_funct_2(X6,k3_qc_lang1(X1),X5,k2_valuat_1(X1,X5)))).
+cnf(i_0_58, plain, (v1_xboole_0(X2)|r2_relset_1(k3_qc_lang1(X1),X2,k13_sublemma(X1,X3,X4,X5,X2,k1_sublemma(X1,X2,X6,k12_sublemma(X1,X2,k35_substut1(X1,k32_substut1(X1,k9_sublemma(X1,k7_sublemma(X1,X3,X4),X5))),X7))),k13_sublemma(X1,X3,X4,X5,X2,X6))|~m1_qc_lang1(X1)|~m1_subset_1(X7,X2)|~v3_substut1(k7_sublemma(X1,X3,X4),X1)|~m1_substut1(X5,X1,k7_sublemma(X1,X3,X4))|~m2_subset_1(X4,k2_qc_lang1(X1),k3_qc_lang1(X1))|~m2_subset_1(X3,k16_substut1(X1),k38_substut1(X1))|~m2_funct_2(X6,k3_qc_lang1(X1),X2,k2_valuat_1(X1,X2)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk8_0,esk3_0)|~r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk9_0)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,esk5_0),k12_sublemma(esk1_0,esk3_0,esk2_0,esk9_0))),esk4_0))).
+cnf(i_0_1, negated_conjecture, (r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),X1)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,esk5_0),k12_sublemma(esk1_0,esk3_0,esk2_0,X1))),esk4_0)|r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),X2)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),X2))),k12_sublemma(esk1_0,esk3_0,esk2_0,X2))),esk4_0)|~m1_subset_1(X2,esk3_0)|~m1_subset_1(X1,esk3_0))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk9_0,esk3_0)|~r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk8_0)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk8_0))),k12_sublemma(esk1_0,esk3_0,esk2_0,esk8_0))),esk4_0))).
+cnf(i_0_2, negated_conjecture, (~r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk9_0)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,esk5_0),k12_sublemma(esk1_0,esk3_0,esk2_0,esk9_0))),esk4_0)|~r1_sublemma(esk1_0,esk6_0,esk3_0,k1_sublemma(esk1_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk8_0)),k14_sublemma(esk1_0,esk3_0,k13_sublemma(esk1_0,esk6_0,esk2_0,esk7_0,esk3_0,k1_sublemma(esk1_0,esk3_0,esk5_0,k12_sublemma(esk1_0,esk3_0,k35_substut1(esk1_0,k32_substut1(esk1_0,k9_sublemma(esk1_0,k7_sublemma(esk1_0,esk6_0,esk2_0),esk7_0))),esk8_0))),k12_sublemma(esk1_0,esk3_0,esk2_0,esk8_0))),esk4_0))).
+
+

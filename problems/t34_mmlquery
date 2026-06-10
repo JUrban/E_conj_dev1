@@ -1,0 +1,28 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk2_0,esk1_0))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,esk1_0))))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k2_mmlquery(esk1_0,esk4_0,k1_mmlquery(esk1_0,esk3_0,esk2_0))!=k1_mmlquery(esk1_0,k22_mmlquery(esk1_0,esk3_0,esk4_0),esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_6, plain, (k7_relat_1(X1,k1_tarski(X2))=k9_relat_1(X1,X2)|~v1_relat_1(X1))).
+cnf(i_0_12, plain, (k7_relat_1(k3_relat_1(X1,X2),X3)=k7_relat_1(X2,k7_relat_1(X1,X3))|~v1_relat_1(X2)|~v1_relat_1(X1))).
+cnf(i_0_5, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_9, plain, (k1_mmlquery(X1,X2,X3)=k9_relat_1(X2,X3)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_11, plain, (k2_mmlquery(X1,X2,X3)=k7_relat_1(X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_7, plain, (m1_subset_1(k1_mmlquery(X1,X2,X3),k1_zfmisc_1(X1))|~m1_subset_1(X3,X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_10, plain, (k22_mmlquery(X1,X2,X3)=k3_relat_1(X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X1)))|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_8, plain, (m1_subset_1(k22_mmlquery(X1,X2,X3),k1_zfmisc_1(k2_zfmisc_1(X1,X1)))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X1)))|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+
+

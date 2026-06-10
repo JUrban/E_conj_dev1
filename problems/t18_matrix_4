@@ -1,0 +1,55 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_21, negated_conjecture, (v13_algstr_0(esk1_0))).
+cnf(i_0_20, negated_conjecture, (v33_algstr_0(esk1_0))).
+cnf(i_0_19, negated_conjecture, (v3_group_1(esk1_0))).
+cnf(i_0_18, negated_conjecture, (v5_group_1(esk1_0))).
+cnf(i_0_17, negated_conjecture, (v2_rlvect_1(esk1_0))).
+cnf(i_0_16, negated_conjecture, (v3_rlvect_1(esk1_0))).
+cnf(i_0_15, negated_conjecture, (v4_rlvect_1(esk1_0))).
+cnf(i_0_14, negated_conjecture, (v4_vectsp_1(esk1_0))).
+cnf(i_0_13, negated_conjecture, (v5_vectsp_1(esk1_0))).
+cnf(i_0_12, negated_conjecture, (l6_algstr_0(esk1_0))).
+cnf(i_0_11, negated_conjecture, (v1_matrix_1(esk2_0))).
+cnf(i_0_9, negated_conjecture, (v1_matrix_1(esk3_0))).
+cnf(i_0_7, negated_conjecture, (v1_matrix_1(esk4_0))).
+cnf(i_0_5, negated_conjecture, (k3_finseq_1(esk3_0)=k3_finseq_1(esk2_0))).
+cnf(i_0_4, negated_conjecture, (k3_finseq_1(esk4_0)=k3_finseq_1(esk3_0))).
+cnf(i_0_3, negated_conjecture, (k1_matrix_1(esk3_0)=k1_matrix_1(esk2_0))).
+cnf(i_0_2, negated_conjecture, (k1_matrix_1(esk4_0)=k1_matrix_1(esk3_0))).
+cnf(i_0_10, negated_conjecture, (m2_finseq_1(esk2_0,k3_finseq_2(u1_struct_0(esk1_0))))).
+cnf(i_0_8, negated_conjecture, (m2_finseq_1(esk3_0,k3_finseq_2(u1_struct_0(esk1_0))))).
+cnf(i_0_6, negated_conjecture, (m2_finseq_1(esk4_0,k3_finseq_2(u1_struct_0(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_23, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_22, negated_conjecture, (~v6_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (k1_matrix_4(esk1_0,k1_matrix_4(esk1_0,esk4_0,esk2_0),k1_matrix_4(esk1_0,esk4_0,esk3_0))!=k1_matrix_4(esk1_0,esk3_0,esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_36, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_37, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_35, plain, (v2_struct_0(X2)|v6_struct_0(X2)|v1_matrix_1(k2_matrix_3(X2,X1))|~v13_algstr_0(X2)|~v33_algstr_0(X2)|~v3_group_1(X2)|~v5_group_1(X2)|~v2_rlvect_1(X2)|~v3_rlvect_1(X2)|~v4_rlvect_1(X2)|~v4_vectsp_1(X2)|~v5_vectsp_1(X2)|~l6_algstr_0(X2)|~v1_matrix_1(X1)|~m1_finseq_1(X1,k3_finseq_2(u1_struct_0(X2))))).
+cnf(i_0_34, plain, (v2_struct_0(X2)|v6_struct_0(X2)|m2_finseq_1(k2_matrix_3(X2,X1),k3_finseq_2(u1_struct_0(X2)))|~v13_algstr_0(X2)|~v33_algstr_0(X2)|~v3_group_1(X2)|~v5_group_1(X2)|~v2_rlvect_1(X2)|~v3_rlvect_1(X2)|~v4_rlvect_1(X2)|~v4_vectsp_1(X2)|~v5_vectsp_1(X2)|~l6_algstr_0(X2)|~v1_matrix_1(X1)|~m1_finseq_1(X1,k3_finseq_2(u1_struct_0(X2))))).
+cnf(i_0_33, plain, (v2_struct_0(X2)|v6_struct_0(X2)|v1_matrix_1(k1_matrix_4(X2,X3,X1))|~v13_algstr_0(X2)|~v33_algstr_0(X2)|~v3_group_1(X2)|~v5_group_1(X2)|~v2_rlvect_1(X2)|~v3_rlvect_1(X2)|~v4_rlvect_1(X2)|~v4_vectsp_1(X2)|~v5_vectsp_1(X2)|~l6_algstr_0(X2)|~v1_matrix_1(X3)|~v1_matrix_1(X1)|~m1_finseq_1(X3,k3_finseq_2(u1_struct_0(X2)))|~m1_finseq_1(X1,k3_finseq_2(u1_struct_0(X2))))).
+cnf(i_0_24, plain, (k3_matrix_3(X1,X2,k2_matrix_3(X1,X3))=k1_matrix_4(X1,X2,X3)|v2_struct_0(X1)|v6_struct_0(X1)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_32, plain, (v2_struct_0(X2)|v6_struct_0(X2)|m2_finseq_1(k1_matrix_4(X2,X3,X1),k3_finseq_2(u1_struct_0(X2)))|~v13_algstr_0(X2)|~v33_algstr_0(X2)|~v3_group_1(X2)|~v5_group_1(X2)|~v2_rlvect_1(X2)|~v3_rlvect_1(X2)|~v4_rlvect_1(X2)|~v4_vectsp_1(X2)|~v5_vectsp_1(X2)|~l6_algstr_0(X2)|~v1_matrix_1(X3)|~v1_matrix_1(X1)|~m1_finseq_1(X3,k3_finseq_2(u1_struct_0(X2)))|~m1_finseq_1(X1,k3_finseq_2(u1_struct_0(X2))))).
+cnf(i_0_31, plain, (k3_finseq_1(X2)=k3_finseq_1(X4)|v2_struct_0(X1)|v6_struct_0(X1)|k3_matrix_3(X1,X2,X3)!=X4|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_30, plain, (k1_matrix_1(X2)=k1_matrix_1(X4)|v2_struct_0(X1)|v6_struct_0(X1)|k3_matrix_3(X1,X2,X3)!=X4|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_38, plain, (k1_matrix_4(X1,X2,k1_matrix_4(X1,X2,X3))=X3|v2_struct_0(X1)|v6_struct_0(X1)|k3_finseq_1(X2)!=k3_finseq_1(X3)|k1_matrix_1(X2)!=k1_matrix_1(X3)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_39, plain, (k1_matrix_4(X1,k1_matrix_4(X1,X2,X3),X4)=k1_matrix_4(X1,k1_matrix_4(X1,X2,X4),X3)|v2_struct_0(X1)|v6_struct_0(X1)|k3_finseq_1(X3)!=k3_finseq_1(X4)|k3_finseq_1(X2)!=k3_finseq_1(X3)|k1_matrix_1(X3)!=k1_matrix_1(X4)|k1_matrix_1(X2)!=k1_matrix_1(X3)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_28, plain, (k3_matrix_3(X1,X2,X3)=X4|v2_struct_0(X1)|v6_struct_0(X1)|v7_ordinal1(esk5_4(X1,X2,X3,X4))|k3_finseq_1(X2)!=k3_finseq_1(X4)|k1_matrix_1(X2)!=k1_matrix_1(X4)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_27, plain, (k3_matrix_3(X1,X2,X3)=X4|v2_struct_0(X1)|v6_struct_0(X1)|v7_ordinal1(esk6_4(X1,X2,X3,X4))|k3_finseq_1(X2)!=k3_finseq_1(X4)|k1_matrix_1(X2)!=k1_matrix_1(X4)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_29, plain, (k3_rlvect_1(X1,k3_matrix_1(u1_struct_0(X1),X2,X5,X6),k3_matrix_1(u1_struct_0(X1),X3,X5,X6))=k3_matrix_1(u1_struct_0(X1),X4,X5,X6)|v2_struct_0(X1)|v6_struct_0(X1)|k3_matrix_3(X1,X2,X3)!=X4|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~v7_ordinal1(X6)|~v7_ordinal1(X5)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1)))|~r2_hidden(k4_tarski(X5,X6),k2_matrix_1(X2)))).
+cnf(i_0_26, plain, (k3_matrix_3(X1,X2,X3)=X4|v2_struct_0(X1)|v6_struct_0(X1)|r2_hidden(k4_tarski(esk5_4(X1,X2,X3,X4),esk6_4(X1,X2,X3,X4)),k2_matrix_1(X2))|k3_finseq_1(X2)!=k3_finseq_1(X4)|k1_matrix_1(X2)!=k1_matrix_1(X4)|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+cnf(i_0_25, plain, (k3_matrix_3(X1,X2,X3)=X4|v2_struct_0(X1)|v6_struct_0(X1)|k3_finseq_1(X2)!=k3_finseq_1(X4)|k1_matrix_1(X2)!=k1_matrix_1(X4)|k3_rlvect_1(X1,k3_matrix_1(u1_struct_0(X1),X2,esk5_4(X1,X2,X3,X4),esk6_4(X1,X2,X3,X4)),k3_matrix_1(u1_struct_0(X1),X3,esk5_4(X1,X2,X3,X4),esk6_4(X1,X2,X3,X4)))!=k3_matrix_1(u1_struct_0(X1),X4,esk5_4(X1,X2,X3,X4),esk6_4(X1,X2,X3,X4))|~v13_algstr_0(X1)|~v33_algstr_0(X1)|~v3_group_1(X1)|~v5_group_1(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v4_vectsp_1(X1)|~v5_vectsp_1(X1)|~l6_algstr_0(X1)|~v1_matrix_1(X4)|~v1_matrix_1(X3)|~v1_matrix_1(X2)|~m2_finseq_1(X4,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X3,k3_finseq_2(u1_struct_0(X1)))|~m2_finseq_1(X2,k3_finseq_2(u1_struct_0(X1))))).
+
+

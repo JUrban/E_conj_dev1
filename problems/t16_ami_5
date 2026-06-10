@@ -1,0 +1,80 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_61, plain, (k4_ordinal1=k5_numbers)).
+cnf(i_0_9, negated_conjecture, (v1_relat_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v1_funct_1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v1_ami_2(esk3_0))).
+cnf(i_0_67, plain, (v2_xxreal_0(2))).
+cnf(i_0_65, plain, (m1_subset_1(2,k5_numbers))).
+cnf(i_0_64, plain, (m1_subset_1(2,k1_numbers))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk2_0,k5_numbers))).
+cnf(i_0_52, plain, (v2_memstr_0(k1_ami_3,2))).
+cnf(i_0_54, plain, (v3_memstr_0(k1_ami_3,2))).
+cnf(i_0_40, plain, (v1_extpro_1(k1_ami_3,2))).
+cnf(i_0_49, plain, (v1_extpro_1(k1_ami_3,2))).
+cnf(i_0_51, plain, (v1_extpro_1(k1_ami_3,2))).
+cnf(i_0_53, plain, (v1_extpro_1(k1_ami_3,2))).
+cnf(i_0_39, plain, (l1_extpro_1(k1_ami_3,2))).
+cnf(i_0_8, negated_conjecture, (v4_relat_1(esk1_0,u1_struct_0(k1_ami_3)))).
+cnf(i_0_5, negated_conjecture, (v1_partfun1(esk1_0,u1_struct_0(k1_ami_3)))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(k1_ami_3)))).
+cnf(i_0_69, plain, (k9_xtuple_0(k7_funcop_1(X1,X2))=X1)).
+cnf(i_0_6, negated_conjecture, (v5_funct_1(esk1_0,k2_memstr_0(2,k1_ami_3)))).
+cnf(i_0_66, plain, (m2_subset_1(2,k1_numbers,k5_numbers))).
+cnf(i_0_68, plain, (r1_tarski(k10_xtuple_0(k7_funcop_1(X1,X2)),k1_tarski(X2)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_63, plain, (~v1_xboole_0(2))).
+cnf(i_0_50, plain, (~v2_struct_0(k1_ami_3))).
+cnf(i_0_1, negated_conjecture, (k1_funct_1(k1_funct_4(esk1_0,k7_memstr_0(2,k1_ami_3,esk2_0)),esk3_0)!=k1_funct_1(esk1_0,esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_10, plain, (v1_xboole_0(X1)|~v7_ordinal1(X1)|~v1_setfam_1(X1))).
+cnf(i_0_16, plain, (v7_ordinal1(X1)|~m1_subset_1(X1,k4_ordinal1))).
+cnf(i_0_28, plain, (r2_hidden(X3,X1)|X2!=X3|k1_tarski(X2)!=X1)).
+cnf(i_0_47, plain, (l1_compos_1(X1)|~l1_extpro_1(X1,X2))).
+cnf(i_0_29, plain, (X2=X3|k1_tarski(X2)!=X1|~r2_hidden(X3,X1))).
+cnf(i_0_48, plain, (l1_memstr_0(X1,X2)|~l1_extpro_1(X1,X2))).
+cnf(i_0_70, plain, (k4_struct_0(k1_ami_3)!=X1|~v1_ami_2(X1)|~m1_subset_1(X1,u1_struct_0(k1_ami_3)))).
+cnf(i_0_15, plain, (v1_xboole_0(X2)|~v1_relat_1(X2)|~v1_xboole_0(X1)|~v4_relat_1(X2,X1))).
+cnf(i_0_71, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_60, plain, (k1_relset_1(X1,X2)=k9_xtuple_0(X2)|~v1_relat_1(X2)|~v4_relat_1(X2,X1))).
+cnf(i_0_42, plain, (v1_relat_1(k1_funct_4(X2,X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_41, plain, (v1_funct_1(k1_funct_4(X2,X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_26, plain, (k1_tarski(X2)=X1|esk5_2(X2,X1)=X2|r2_hidden(esk5_2(X2,X1),X1))).
+cnf(i_0_35, plain, (r2_hidden(X4,X1)|k2_xboole_0(X2,X3)!=X1|~r2_hidden(X4,X3))).
+cnf(i_0_36, plain, (r2_hidden(X4,X1)|k2_xboole_0(X2,X3)!=X1|~r2_hidden(X4,X2))).
+cnf(i_0_31, plain, (k1_relset_1(X2,X1)=X2|~v1_relat_1(X1)|~v4_relat_1(X1,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_30, plain, (v1_partfun1(X1,X2)|k1_relset_1(X2,X1)!=X2|~v1_relat_1(X1)|~v4_relat_1(X1,X2))).
+cnf(i_0_37, plain, (r2_hidden(X4,X3)|r2_hidden(X4,X2)|k2_xboole_0(X2,X3)!=X1|~r2_hidden(X4,X1))).
+cnf(i_0_27, plain, (k1_tarski(X2)=X1|esk5_2(X2,X1)!=X2|~r2_hidden(esk5_2(X2,X1),X1))).
+cnf(i_0_25, plain, (k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))=k9_xtuple_0(X3)|k1_funct_4(X1,X2)!=X3|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_58, plain, (v1_setfam_1(X2)|v2_struct_0(X1)|v1_relat_1(esk7_2(X2,X1))|~v2_memstr_0(X1,X2)|~v3_memstr_0(X1,X2)|~l1_memstr_0(X1,X2))).
+cnf(i_0_56, plain, (v1_setfam_1(X2)|v2_struct_0(X1)|v1_funct_1(esk7_2(X2,X1))|~v2_memstr_0(X1,X2)|~v3_memstr_0(X1,X2)|~l1_memstr_0(X1,X2))).
+cnf(i_0_57, plain, (v1_setfam_1(X2)|v2_struct_0(X1)|v4_relat_1(esk7_2(X2,X1),u1_struct_0(X1))|~v2_memstr_0(X1,X2)|~v3_memstr_0(X1,X2)|~l1_memstr_0(X1,X2))).
+cnf(i_0_59, plain, (v1_setfam_1(X2)|v2_struct_0(X1)|~v2_memstr_0(X1,X2)|~v3_memstr_0(X1,X2)|~l1_memstr_0(X1,X2)|~v1_xboole_0(esk7_2(X2,X1)))).
+cnf(i_0_55, plain, (v1_setfam_1(X2)|v2_struct_0(X1)|v5_funct_1(esk7_2(X2,X1),k2_memstr_0(X2,X1))|~v2_memstr_0(X1,X2)|~v3_memstr_0(X1,X2)|~l1_memstr_0(X1,X2))).
+cnf(i_0_17, plain, (k7_memstr_0(X1,X2,X3)=k7_funcop_1(k1_tarski(k4_struct_0(X2)),X3)|v1_setfam_1(X1)|v2_struct_0(X2)|~v7_ordinal1(X3)|~v2_memstr_0(X2,X1)|~v3_memstr_0(X2,X1)|~l1_memstr_0(X2,X1))).
+cnf(i_0_46, plain, (v1_setfam_1(X3)|v2_struct_0(X2)|v1_relat_1(k7_memstr_0(X3,X2,X1))|~v7_ordinal1(X1)|~v2_memstr_0(X2,X3)|~v3_memstr_0(X2,X3)|~l1_memstr_0(X2,X3))).
+cnf(i_0_44, plain, (v1_setfam_1(X3)|v2_struct_0(X2)|v1_funct_1(k7_memstr_0(X3,X2,X1))|~v7_ordinal1(X1)|~v2_memstr_0(X2,X3)|~v3_memstr_0(X2,X3)|~l1_memstr_0(X2,X3))).
+cnf(i_0_45, plain, (v1_setfam_1(X3)|v2_struct_0(X2)|v4_relat_1(k7_memstr_0(X3,X2,X1),u1_struct_0(X2))|~v7_ordinal1(X1)|~v2_memstr_0(X2,X3)|~v3_memstr_0(X2,X3)|~l1_memstr_0(X2,X3))).
+cnf(i_0_23, plain, (k1_funct_1(X1,X4)=k1_funct_1(X3,X4)|r2_hidden(X4,k9_xtuple_0(X2))|k1_funct_4(X1,X2)!=X3|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1)|~r2_hidden(X4,k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))))).
+cnf(i_0_24, plain, (k1_funct_1(X2,X4)=k1_funct_1(X3,X4)|k1_funct_4(X1,X2)!=X3|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1)|~r2_hidden(X4,k9_xtuple_0(X2))|~r2_hidden(X4,k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))))).
+cnf(i_0_43, plain, (v1_setfam_1(X3)|v2_struct_0(X2)|v5_funct_1(k7_memstr_0(X3,X2,X1),k2_memstr_0(X3,X2))|~v7_ordinal1(X1)|~v2_memstr_0(X2,X3)|~v3_memstr_0(X2,X3)|~l1_memstr_0(X2,X3))).
+cnf(i_0_22, plain, (k1_funct_4(X1,X2)=X3|r2_hidden(esk4_3(X1,X2,X3),k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2)))|k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_32, plain, (k2_xboole_0(X2,X3)=X1|r2_hidden(esk6_3(X2,X3,X1),X3)|r2_hidden(esk6_3(X2,X3,X1),X2)|r2_hidden(esk6_3(X2,X3,X1),X1))).
+cnf(i_0_33, plain, (k2_xboole_0(X2,X3)=X1|~r2_hidden(esk6_3(X2,X3,X1),X3)|~r2_hidden(esk6_3(X2,X3,X1),X1))).
+cnf(i_0_34, plain, (k2_xboole_0(X2,X3)=X1|~r2_hidden(esk6_3(X2,X3,X1),X2)|~r2_hidden(esk6_3(X2,X3,X1),X1))).
+cnf(i_0_20, plain, (k1_funct_4(X1,X2)=X3|r2_hidden(esk4_3(X1,X2,X3),k9_xtuple_0(X2))|k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|k1_funct_1(X1,esk4_3(X1,X2,X3))!=k1_funct_1(X3,esk4_3(X1,X2,X3))|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_19, plain, (k1_funct_4(X1,X2)=X3|k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|k1_funct_1(X2,esk4_3(X1,X2,X3))!=k1_funct_1(X3,esk4_3(X1,X2,X3))|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1)|~r2_hidden(esk4_3(X1,X2,X3),k9_xtuple_0(X2)))).
+cnf(i_0_18, plain, (k1_funct_4(X1,X2)=X3|k2_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|k1_funct_1(X2,esk4_3(X1,X2,X3))!=k1_funct_1(X3,esk4_3(X1,X2,X3))|k1_funct_1(X1,esk4_3(X1,X2,X3))!=k1_funct_1(X3,esk4_3(X1,X2,X3))|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+
+

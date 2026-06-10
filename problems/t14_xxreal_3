@@ -1,0 +1,51 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_11, plain, (k2_xxreal_3(k2_xxreal_0)=k1_xxreal_0)).
+cnf(i_0_9, plain, (v1_xxreal_0(k2_xxreal_0))).
+cnf(i_0_8, plain, (v1_xxreal_0(k1_xxreal_0))).
+cnf(i_0_3, negated_conjecture, (v1_xxreal_0(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_2, negated_conjecture, (esk1_0!=k2_xxreal_0)).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_7, plain, (v1_xxreal_0(k2_xxreal_3(X1))|~v1_xxreal_0(X1))).
+cnf(i_0_10, plain, (k2_xxreal_3(k2_xxreal_3(X1))=X1|~v1_xxreal_0(X1))).
+cnf(i_0_1, negated_conjecture, (k3_xxreal_3(k2_xxreal_0,esk1_0)!=k2_xxreal_0|k3_xxreal_3(esk1_0,k2_xxreal_0)!=k1_xxreal_0)).
+cnf(i_0_4, plain, (k1_xxreal_3(X1,X2)=k1_xxreal_3(X2,X1)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1))).
+cnf(i_0_6, plain, (k1_xxreal_3(X1,k2_xxreal_3(X2))=k3_xxreal_3(X1,X2)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1))).
+cnf(i_0_5, plain, (epred2_3(X1,X2,X3)|~v1_xxreal_0(X3)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1))).
+cnf(i_0_42, plain, (k2_xxreal_0=X3|k2_xxreal_0=X2|k1_xxreal_0=X3|k1_xxreal_0=X2|k1_xxreal_3(X3,X2)=X1|epred1_3(X1,X2,X3)|k6_numbers!=X1)).
+cnf(i_0_24, plain, (k2_xxreal_0=X3|k1_xxreal_0=X2|k1_xxreal_3(X3,X2)=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X2|k1_xxreal_0!=X3|k6_numbers!=X1)).
+cnf(i_0_30, plain, (k2_xxreal_0=X2|k1_xxreal_0=X3|k1_xxreal_3(X3,X2)=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X3|k1_xxreal_0!=X2|k6_numbers!=X1)).
+cnf(i_0_12, plain, (k1_xxreal_3(X3,X2)=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X3|k2_xxreal_0!=X2|k1_xxreal_0!=X3|k1_xxreal_0!=X2|k6_numbers!=X1)).
+cnf(i_0_43, plain, (k2_xxreal_0=X3|k2_xxreal_0=X2|k1_xxreal_0=X3|k1_xxreal_0=X2|k6_numbers=X1|epred1_3(X1,X2,X3)|k1_xxreal_3(X3,X2)!=X1)).
+cnf(i_0_25, plain, (k2_xxreal_0=X3|k1_xxreal_0=X2|k6_numbers=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X2|k1_xxreal_0!=X3|k1_xxreal_3(X3,X2)!=X1)).
+cnf(i_0_31, plain, (k2_xxreal_0=X2|k1_xxreal_0=X3|k6_numbers=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X3|k1_xxreal_0!=X2|k1_xxreal_3(X3,X2)!=X1)).
+cnf(i_0_13, plain, (k6_numbers=X1|epred1_3(X1,X2,X3)|k2_xxreal_0!=X3|k2_xxreal_0!=X2|k1_xxreal_0!=X3|k1_xxreal_0!=X2|k1_xxreal_3(X3,X2)!=X1)).
+cnf(i_0_50, plain, (k2_xxreal_0=X3|k1_xxreal_3(X3,X2)=X1|k1_xxreal_0!=X2|k1_xxreal_0!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_52, plain, (k2_xxreal_0=X2|k1_xxreal_3(X3,X2)=X1|k1_xxreal_0!=X3|k1_xxreal_0!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_46, plain, (k1_xxreal_0=X3|k1_xxreal_3(X3,X2)=X1|k2_xxreal_0!=X2|k2_xxreal_0!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_48, plain, (k1_xxreal_0=X2|k1_xxreal_3(X3,X2)=X1|k2_xxreal_0!=X3|k2_xxreal_0!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_51, plain, (k2_xxreal_0=X3|k1_xxreal_0=X1|k1_xxreal_0!=X2|k1_xxreal_3(X3,X2)!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_53, plain, (k2_xxreal_0=X2|k1_xxreal_0=X1|k1_xxreal_0!=X3|k1_xxreal_3(X3,X2)!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_47, plain, (k2_xxreal_0=X1|k1_xxreal_0=X3|k2_xxreal_0!=X2|k1_xxreal_3(X3,X2)!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_49, plain, (k2_xxreal_0=X1|k1_xxreal_0=X2|k2_xxreal_0!=X3|k1_xxreal_3(X3,X2)!=X1|~epred2_3(X1,X2,X3))).
+cnf(i_0_54, plain, (k1_xxreal_3(X3,X2)=X1|X3!=X4|X2!=X5|k2_xcmplx_0(X4,X5)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~v1_xcmplx_0(X5)|~v1_xcmplx_0(X4)|~epred2_3(X1,X2,X3))).
+cnf(i_0_45, plain, (v1_xreal_0(X3)|~epred1_3(X1,X2,X3)|~epred2_3(X1,X2,X3))).
+cnf(i_0_44, plain, (v1_xreal_0(X2)|~epred1_3(X1,X2,X3)|~epred2_3(X1,X2,X3))).
+cnf(i_0_57, plain, (esk2_3(X3,X2,X1)=X3|k1_xxreal_3(X3,X2)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~epred2_3(X1,X2,X3))).
+cnf(i_0_56, plain, (esk3_3(X3,X2,X1)=X2|k1_xxreal_3(X3,X2)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~epred2_3(X1,X2,X3))).
+cnf(i_0_59, plain, (v1_xcmplx_0(esk2_3(X3,X2,X1))|k1_xxreal_3(X3,X2)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~epred2_3(X1,X2,X3))).
+cnf(i_0_58, plain, (v1_xcmplx_0(esk3_3(X3,X2,X1))|k1_xxreal_3(X3,X2)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~epred2_3(X1,X2,X3))).
+cnf(i_0_55, plain, (k2_xcmplx_0(esk2_3(X3,X2,X1),esk3_3(X3,X2,X1))=X1|k1_xxreal_3(X3,X2)!=X1|~v1_xreal_0(X3)|~v1_xreal_0(X2)|~epred2_3(X1,X2,X3))).
+
+

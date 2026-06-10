@@ -1,0 +1,36 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_12, negated_conjecture, (v1_diraf(esk1_0))).
+cnf(i_0_11, negated_conjecture, (l1_analoaf(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v1_aff_1(esk2_0,esk1_0))).
+cnf(i_0_5, negated_conjecture, (v1_aff_1(esk3_0,esk1_0))).
+cnf(i_0_10, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_9, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_7, negated_conjecture, (m1_subset_1(esk5_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_4, negated_conjecture, (r2_aff_4(esk1_0,esk2_0,esk3_0,esk4_0))).
+cnf(i_0_3, negated_conjecture, (r2_aff_4(esk1_0,esk2_0,esk3_0,esk5_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_2, negated_conjecture, (esk3_0!=esk2_0)).
+cnf(i_0_13, negated_conjecture, (~v7_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (~r2_aff_4(esk1_0,esk2_0,esk4_0,esk5_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_20, plain, (X3=X4|X1=X2|v7_struct_0(X5)|~v1_diraf(X5)|~l1_analoaf(X5)|~v1_aff_1(X4,X5)|~v1_aff_1(X3,X5)|~r1_tarski(X4,X2)|~r1_tarski(X4,X1)|~r1_tarski(X3,X2)|~r1_tarski(X3,X1)|~v1_aff_4(X2,X5)|~v1_aff_4(X1,X5)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X5)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X5)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X5)))|~m1_subset_1(X1,k1_zfmisc_1(u1_struct_0(X5))))).
+cnf(i_0_14, plain, (v7_struct_0(X1)|r2_aff_4(X1,X2,X3,X4)|~v1_diraf(X1)|~l1_analoaf(X1)|~r1_tarski(X4,X5)|~r1_tarski(X3,X5)|~r1_tarski(X2,X5)|~v1_aff_4(X5,X1)|~m1_subset_1(X5,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_16, plain, (v7_struct_0(X1)|r1_tarski(X4,esk6_4(X1,X2,X3,X4))|~v1_diraf(X1)|~l1_analoaf(X1)|~r2_aff_4(X1,X2,X3,X4)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_17, plain, (v7_struct_0(X1)|r1_tarski(X3,esk6_4(X1,X2,X3,X4))|~v1_diraf(X1)|~l1_analoaf(X1)|~r2_aff_4(X1,X2,X3,X4)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_18, plain, (v7_struct_0(X1)|r1_tarski(X2,esk6_4(X1,X2,X3,X4))|~v1_diraf(X1)|~l1_analoaf(X1)|~r2_aff_4(X1,X2,X3,X4)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_15, plain, (v7_struct_0(X1)|v1_aff_4(esk6_4(X1,X2,X3,X4),X1)|~v1_diraf(X1)|~l1_analoaf(X1)|~r2_aff_4(X1,X2,X3,X4)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_19, plain, (v7_struct_0(X1)|m1_subset_1(esk6_4(X1,X2,X3,X4),k1_zfmisc_1(u1_struct_0(X1)))|~v1_diraf(X1)|~l1_analoaf(X1)|~r2_aff_4(X1,X2,X3,X4)|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X3,k1_zfmisc_1(u1_struct_0(X1)))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+
+

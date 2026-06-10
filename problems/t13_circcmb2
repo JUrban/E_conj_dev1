@@ -1,0 +1,54 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_28, negated_conjecture, (v2_msafree2(esk1_0))).
+cnf(i_0_24, negated_conjecture, (v2_msafree2(esk2_0))).
+cnf(i_0_20, negated_conjecture, (v2_msafree2(esk3_0))).
+cnf(i_0_27, negated_conjecture, (l1_msualg_1(esk1_0))).
+cnf(i_0_23, negated_conjecture, (l1_msualg_1(esk2_0))).
+cnf(i_0_19, negated_conjecture, (l1_msualg_1(esk3_0))).
+cnf(i_0_2, negated_conjecture, (v7_ordinal1(esk9_0))).
+cnf(i_0_17, negated_conjecture, (k2_circcomb(esk1_0,esk2_0)=esk3_0)).
+cnf(i_0_16, negated_conjecture, (v4_msualg_1(esk4_0,esk1_0))).
+cnf(i_0_13, negated_conjecture, (v4_msualg_1(esk5_0,esk2_0))).
+cnf(i_0_10, negated_conjecture, (v4_msualg_1(esk6_0,esk3_0))).
+cnf(i_0_15, negated_conjecture, (v4_msafree2(esk4_0,esk1_0))).
+cnf(i_0_12, negated_conjecture, (v4_msafree2(esk5_0,esk2_0))).
+cnf(i_0_9, negated_conjecture, (v4_msafree2(esk6_0,esk3_0))).
+cnf(i_0_14, negated_conjecture, (l3_msualg_1(esk4_0,esk1_0))).
+cnf(i_0_11, negated_conjecture, (l3_msualg_1(esk5_0,esk2_0))).
+cnf(i_0_8, negated_conjecture, (l3_msualg_1(esk6_0,esk3_0))).
+cnf(i_0_3, negated_conjecture, (k5_relat_1(esk7_0,u1_struct_0(esk1_0))=esk8_0)).
+cnf(i_0_18, negated_conjecture, (r1_xboole_0(k2_msafree2(esk1_0),k3_msafree2(esk2_0)))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk7_0,k4_card_3(u3_msualg_1(esk3_0,esk6_0))))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk8_0,k4_card_3(u3_msualg_1(esk1_0,esk4_0))))).
+cnf(i_0_6, negated_conjecture, (k3_circcomb(esk1_0,esk2_0,esk4_0,esk5_0)=esk6_0)).
+cnf(i_0_7, negated_conjecture, (r2_circcomb(esk1_0,esk2_0,esk4_0,esk5_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_30, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_26, negated_conjecture, (~v2_struct_0(esk2_0))).
+cnf(i_0_22, negated_conjecture, (~v2_struct_0(esk3_0))).
+cnf(i_0_29, negated_conjecture, (~v11_struct_0(esk1_0))).
+cnf(i_0_25, negated_conjecture, (~v11_struct_0(esk2_0))).
+cnf(i_0_21, negated_conjecture, (~v11_struct_0(esk3_0))).
+cnf(i_0_1, negated_conjecture, (k5_relat_1(k5_facirc_1(esk3_0,esk6_0,esk7_0,esk9_0),u1_struct_0(esk1_0))!=k5_facirc_1(esk1_0,esk4_0,esk8_0,esk9_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_35, plain, (v2_struct_0(X1)|v11_struct_0(X1)|epred1_1(X1)|~v2_msafree2(X1)|~l1_msualg_1(X1))).
+cnf(i_0_36, plain, (k5_facirc_1(X1,X2,X3,k6_numbers)=X3|v2_struct_0(X1)|v11_struct_0(X1)|~v2_msafree2(X1)|~l1_msualg_1(X1)|~v4_msualg_1(X2,X1)|~v4_msafree2(X2,X1)|~l3_msualg_1(X2,X1)|~m1_subset_1(X3,k4_card_3(u3_msualg_1(X1,X2))))).
+cnf(i_0_31, plain, (v2_struct_0(X1)|v11_struct_0(X1)|m1_subset_1(k5_facirc_1(X1,X2,X3,X4),k4_card_3(u3_msualg_1(X1,X2)))|~v2_msafree2(X1)|~l1_msualg_1(X1)|~v7_ordinal1(X4)|~v4_msualg_1(X2,X1)|~v4_msafree2(X2,X1)|~l3_msualg_1(X2,X1)|~m1_subset_1(X3,k4_card_3(u3_msualg_1(X1,X2))))).
+cnf(i_0_37, plain, (k6_circuit2(X1,X2,k5_facirc_1(X1,X2,X3,X4))=k5_facirc_1(X1,X2,X3,k1_nat_1(X4,1))|v2_struct_0(X1)|v11_struct_0(X1)|~v2_msafree2(X1)|~l1_msualg_1(X1)|~v7_ordinal1(X4)|~v4_msualg_1(X2,X1)|~v4_msafree2(X2,X1)|~l3_msualg_1(X2,X1)|~m1_subset_1(X3,k4_card_3(u3_msualg_1(X1,X2))))).
+cnf(i_0_38, plain, (k5_relat_1(k6_circuit2(X4,X5,X6),u1_struct_0(X1))=k6_circuit2(X1,X2,X3)|v2_struct_0(X7)|v2_struct_0(X4)|v11_struct_0(X7)|v11_struct_0(X4)|k2_circcomb(X1,X7)!=X4|k5_relat_1(X6,u1_struct_0(X1))!=X3|k3_circcomb(X1,X7,X2,X8)!=X5|~v2_msafree2(X7)|~v2_msafree2(X4)|~l1_msualg_1(X7)|~l1_msualg_1(X4)|~epred1_1(X1)|~v4_msualg_1(X8,X7)|~v4_msualg_1(X5,X4)|~v4_msualg_1(X2,X1)|~v4_msafree2(X8,X7)|~v4_msafree2(X5,X4)|~v4_msafree2(X2,X1)|~l3_msualg_1(X8,X7)|~l3_msualg_1(X5,X4)|~l3_msualg_1(X2,X1)|~r2_circcomb(X1,X7,X2,X8)|~r1_xboole_0(k2_msafree2(X1),k3_msafree2(X7))|~m1_subset_1(X6,k4_card_3(u3_msualg_1(X4,X5)))|~m1_subset_1(X3,k4_card_3(u3_msualg_1(X1,X2))))).
+cnf(i_0_34, plain, (k5_relat_1(k5_facirc_1(X5,X6,X4,X7),u1_struct_0(X2))=k5_facirc_1(X2,X3,X1,X7)|v2_struct_0(X5)|v2_struct_0(X2)|v11_struct_0(X5)|v11_struct_0(X2)|v7_ordinal1(esk10_6(X2,X5,X3,X6,X4,X1))|k5_relat_1(k5_facirc_1(X5,X6,X4,k6_numbers),u1_struct_0(X2))!=k5_facirc_1(X2,X3,X1,k6_numbers)|~v2_msafree2(X5)|~v2_msafree2(X2)|~l1_msualg_1(X5)|~l1_msualg_1(X2)|~v7_ordinal1(X7)|~v4_msualg_1(X6,X5)|~v4_msualg_1(X3,X2)|~v4_msafree2(X6,X5)|~v4_msafree2(X3,X2)|~l3_msualg_1(X6,X5)|~l3_msualg_1(X3,X2)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(X5,X6)))|~m1_subset_1(X1,k4_card_3(u3_msualg_1(X2,X3))))).
+cnf(i_0_33, plain, (k5_relat_1(k5_facirc_1(X5,X6,X4,X7),u1_struct_0(X2))=k5_facirc_1(X2,X3,X1,X7)|k5_relat_1(k5_facirc_1(X5,X6,X4,esk10_6(X2,X5,X3,X6,X4,X1)),u1_struct_0(X2))=k5_facirc_1(X2,X3,X1,esk10_6(X2,X5,X3,X6,X4,X1))|v2_struct_0(X5)|v2_struct_0(X2)|v11_struct_0(X5)|v11_struct_0(X2)|k5_relat_1(k5_facirc_1(X5,X6,X4,k6_numbers),u1_struct_0(X2))!=k5_facirc_1(X2,X3,X1,k6_numbers)|~v2_msafree2(X5)|~v2_msafree2(X2)|~l1_msualg_1(X5)|~l1_msualg_1(X2)|~v7_ordinal1(X7)|~v4_msualg_1(X6,X5)|~v4_msualg_1(X3,X2)|~v4_msafree2(X6,X5)|~v4_msafree2(X3,X2)|~l3_msualg_1(X6,X5)|~l3_msualg_1(X3,X2)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(X5,X6)))|~m1_subset_1(X1,k4_card_3(u3_msualg_1(X2,X3))))).
+cnf(i_0_32, plain, (k5_relat_1(k5_facirc_1(X5,X6,X4,X7),u1_struct_0(X2))=k5_facirc_1(X2,X3,X1,X7)|v2_struct_0(X5)|v2_struct_0(X2)|v11_struct_0(X5)|v11_struct_0(X2)|k5_relat_1(k5_facirc_1(X5,X6,X4,k6_numbers),u1_struct_0(X2))!=k5_facirc_1(X2,X3,X1,k6_numbers)|k5_relat_1(k5_facirc_1(X5,X6,X4,k1_nat_1(esk10_6(X2,X5,X3,X6,X4,X1),1)),u1_struct_0(X2))!=k5_facirc_1(X2,X3,X1,k1_nat_1(esk10_6(X2,X5,X3,X6,X4,X1),1))|~v2_msafree2(X5)|~v2_msafree2(X2)|~l1_msualg_1(X5)|~l1_msualg_1(X2)|~v7_ordinal1(X7)|~v4_msualg_1(X6,X5)|~v4_msualg_1(X3,X2)|~v4_msafree2(X6,X5)|~v4_msafree2(X3,X2)|~l3_msualg_1(X6,X5)|~l3_msualg_1(X3,X2)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(X5,X6)))|~m1_subset_1(X1,k4_card_3(u3_msualg_1(X2,X3))))).
+
+

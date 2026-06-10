@@ -1,0 +1,25 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk1_0,k1_intpro_1))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk2_0,k1_intpro_1))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk3_0,k1_intpro_1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r2_hidden(k3_intpro_1(k5_intpro_1(k5_intpro_1(esk1_0,esk2_0),esk3_0),k5_intpro_1(esk1_0,k5_intpro_1(esk2_0,esk3_0))),k8_intpro_1))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_5, plain, (m1_subset_1(k5_intpro_1(X1,X2),k1_intpro_1)|~m1_subset_1(X2,k1_intpro_1)|~m1_subset_1(X1,k1_intpro_1))).
+cnf(i_0_7, plain, (r2_hidden(k3_intpro_1(k5_intpro_1(X1,X2),k5_intpro_1(X2,X1)),k8_intpro_1)|~m1_subset_1(X2,k1_intpro_1)|~m1_subset_1(X1,k1_intpro_1))).
+cnf(i_0_6, plain, (r2_hidden(k3_intpro_1(X1,X2),k8_intpro_1)|~m1_subset_1(X3,k1_intpro_1)|~m1_subset_1(X2,k1_intpro_1)|~m1_subset_1(X1,k1_intpro_1)|~r2_hidden(k3_intpro_1(X3,X2),k8_intpro_1)|~r2_hidden(k3_intpro_1(X1,X3),k8_intpro_1))).
+cnf(i_0_8, plain, (r2_hidden(k3_intpro_1(k5_intpro_1(X1,X2),k5_intpro_1(X1,X3)),k8_intpro_1)|~m1_subset_1(X3,k1_intpro_1)|~m1_subset_1(X2,k1_intpro_1)|~m1_subset_1(X1,k1_intpro_1)|~r2_hidden(k3_intpro_1(X2,X3),k8_intpro_1))).
+cnf(i_0_9, plain, (r2_hidden(k3_intpro_1(k5_intpro_1(X1,k5_intpro_1(X2,X3)),k5_intpro_1(X2,k5_intpro_1(X1,X3))),k8_intpro_1)|~m1_subset_1(X3,k1_intpro_1)|~m1_subset_1(X2,k1_intpro_1)|~m1_subset_1(X1,k1_intpro_1))).
+
+

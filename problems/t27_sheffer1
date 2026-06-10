@@ -1,0 +1,88 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_6, negated_conjecture, (v10_lattices(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v17_lattices(esk1_0))).
+cnf(i_0_4, negated_conjecture, (v8_robbins1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v9_sheffer1(esk1_0))).
+cnf(i_0_2, negated_conjecture, (l3_sheffer1(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_7, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (~v11_sheffer1(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_42, plain, (l3_lattices(X1)|~l4_robbins1(X1))).
+cnf(i_0_40, plain, (l4_robbins1(X1)|~l3_sheffer1(X1))).
+cnf(i_0_41, plain, (l1_sheffer1(X1)|~l3_sheffer1(X1))).
+cnf(i_0_43, plain, (l2_robbins1(X1)|~l4_robbins1(X1))).
+cnf(i_0_38, plain, (l1_robbins1(X1)|~l2_robbins1(X1))).
+cnf(i_0_39, plain, (l2_lattices(X1)|~l2_robbins1(X1))).
+cnf(i_0_13, plain, (v2_struct_0(X1)|v4_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_12, plain, (v2_struct_0(X1)|v5_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_11, plain, (v2_struct_0(X1)|v6_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_10, plain, (v2_struct_0(X1)|v7_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_9, plain, (v2_struct_0(X1)|v8_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_8, plain, (v2_struct_0(X1)|v9_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_29, plain, (v2_struct_0(X1)|epred1_1(X1)|~v9_sheffer1(X1)|~l3_sheffer1(X1))).
+cnf(i_0_21, plain, (v2_struct_0(X1)|v4_lattices(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_20, plain, (v2_struct_0(X1)|v6_lattices(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|v11_lattices(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_18, plain, (v2_struct_0(X1)|v1_sheffer1(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_17, plain, (v2_struct_0(X1)|v2_sheffer1(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_16, plain, (v2_struct_0(X1)|v3_sheffer1(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_15, plain, (v2_struct_0(X1)|v4_sheffer1(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_24, plain, (v2_struct_0(X1)|v6_robbins1(X1)|~v10_lattices(X1)|~v17_lattices(X1)|~v8_robbins1(X1)|~l4_robbins1(X1))).
+cnf(i_0_33, plain, (v2_struct_0(X1)|v11_sheffer1(X1)|m1_subset_1(esk3_1(X1),u1_struct_0(X1))|~l1_sheffer1(X1))).
+cnf(i_0_32, plain, (v2_struct_0(X1)|v11_sheffer1(X1)|m1_subset_1(esk4_1(X1),u1_struct_0(X1))|~l1_sheffer1(X1))).
+cnf(i_0_28, plain, (v2_struct_0(X1)|v9_sheffer1(X1)|m1_subset_1(esk2_1(X1),u1_struct_0(X1))|~l3_sheffer1(X1)|~epred1_1(X1))).
+cnf(i_0_74, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1)))).
+cnf(i_0_73, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1)))).
+cnf(i_0_71, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1)))).
+cnf(i_0_70, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1)))).
+cnf(i_0_65, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1)))).
+cnf(i_0_64, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1)))).
+cnf(i_0_62, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1)))).
+cnf(i_0_61, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1)))).
+cnf(i_0_36, plain, (v2_struct_0(X1)|m1_subset_1(k3_robbins1(X1,X2),u1_struct_0(X1))|~l1_robbins1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_30, plain, (k5_sheffer1(X1,X2,X2)=k3_robbins1(X1,X2)|v2_struct_0(X1)|~v9_sheffer1(X1)|~l3_sheffer1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_46, plain, (k5_robbins1(X1,X2,k7_robbins1(X1))=X2|v2_struct_0(X1)|~v4_lattices(X1)|~v5_lattices(X1)|~v6_robbins1(X1)|~l2_robbins1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_47, plain, (k6_robbins1(X1,X2,k3_robbins1(X1,X2))=k7_robbins1(X1)|v2_struct_0(X1)|~v4_lattices(X1)|~v5_lattices(X1)|~v6_robbins1(X1)|~l2_robbins1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_27, plain, (v2_struct_0(X1)|v9_sheffer1(X1)|k5_sheffer1(X1,esk2_1(X1),esk2_1(X1))!=k3_robbins1(X1,esk2_1(X1))|~l3_sheffer1(X1)|~epred1_1(X1))).
+cnf(i_0_44, plain, (k5_robbins1(X1,X2,X3)=k1_lattices(X1,X2,X3)|v2_struct_0(X1)|~v4_lattices(X1)|~l2_robbins1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_45, plain, (k6_robbins1(X1,X2,X3)=k4_robbins1(X1,X2,X3)|v2_struct_0(X1)|~v4_lattices(X1)|~v5_lattices(X1)|~l2_robbins1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_37, plain, (v2_struct_0(X1)|m1_subset_1(k5_sheffer1(X1,X2,X3),u1_struct_0(X1))|~l1_sheffer1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_75, plain, (k1_lattices(X1,k3_robbins1(X1,X2),k3_robbins1(X1,X3))=k5_sheffer1(X1,X2,X3)|~epred1_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_35, plain, (k3_robbins1(X1,k1_lattices(X1,k3_robbins1(X1,X2),k3_robbins1(X1,X3)))=k4_robbins1(X1,X2,X3)|v2_struct_0(X1)|~l2_robbins1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_72, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1)))).
+cnf(i_0_69, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1)))).
+cnf(i_0_63, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1)))).
+cnf(i_0_60, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1)))).
+cnf(i_0_76, plain, (k5_sheffer1(X1,k5_sheffer1(X1,X2,X3),k5_sheffer1(X1,X2,X3))=k2_lattices(X1,X2,X3)|~epred1_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_77, plain, (k5_sheffer1(X1,k5_sheffer1(X1,X2,X2),k5_sheffer1(X1,X3,X3))=k1_lattices(X1,X2,X3)|~epred1_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_34, plain, (k5_sheffer1(X1,X2,k5_sheffer1(X1,X3,k5_sheffer1(X1,X3,X3)))=k5_sheffer1(X1,X2,X2)|v2_struct_0(X1)|~v11_sheffer1(X1)|~l1_sheffer1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_68, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_67, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_59, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_58, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_56, plain, (epred1_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_55, plain, (epred1_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_53, plain, (epred1_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_52, plain, (epred1_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_31, plain, (v2_struct_0(X1)|v11_sheffer1(X1)|k5_sheffer1(X1,esk3_1(X1),k5_sheffer1(X1,esk4_1(X1),k5_sheffer1(X1,esk4_1(X1),esk4_1(X1))))!=k5_sheffer1(X1,esk3_1(X1),esk3_1(X1))|~l1_sheffer1(X1))).
+cnf(i_0_66, plain, (epred1_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_57, plain, (epred1_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_54, plain, (epred1_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_51, plain, (epred1_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1)))).
+cnf(i_0_50, plain, (epred1_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_49, plain, (epred1_1(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+cnf(i_0_48, plain, (epred1_1(X1)|k1_lattices(X1,k3_robbins1(X1,esk9_1(X1)),k3_robbins1(X1,esk10_1(X1)))!=k5_sheffer1(X1,esk9_1(X1),esk10_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk5_1(X1),esk5_1(X1)),k5_sheffer1(X1,esk6_1(X1),esk6_1(X1)))!=k1_lattices(X1,esk5_1(X1),esk6_1(X1))|k5_sheffer1(X1,k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)),k5_sheffer1(X1,esk7_1(X1),esk8_1(X1)))!=k2_lattices(X1,esk7_1(X1),esk8_1(X1)))).
+
+

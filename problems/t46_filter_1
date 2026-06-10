@@ -1,0 +1,91 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_38, negated_conjecture, (v10_lattices(esk1_0))).
+cnf(i_0_35, negated_conjecture, (v10_lattices(esk2_0))).
+cnf(i_0_37, negated_conjecture, (l3_lattices(esk1_0))).
+cnf(i_0_34, negated_conjecture, (l3_lattices(esk2_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_39, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_36, negated_conjecture, (~v2_struct_0(esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_42, plain, (v2_struct_0(X1)|v11_lattices(X1)|~l3_lattices(X1)|~v17_lattices(X1))).
+cnf(i_0_41, plain, (v2_struct_0(X1)|v15_lattices(X1)|~l3_lattices(X1)|~v17_lattices(X1))).
+cnf(i_0_40, plain, (v2_struct_0(X1)|v16_lattices(X1)|~l3_lattices(X1)|~v17_lattices(X1))).
+cnf(i_0_27, negated_conjecture, (v10_lattices(esk1_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_25, negated_conjecture, (v10_lattices(esk1_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_26, negated_conjecture, (v10_lattices(esk1_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_11, negated_conjecture, (v10_lattices(esk2_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_9, negated_conjecture, (v10_lattices(esk2_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_10, negated_conjecture, (v10_lattices(esk2_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_19, negated_conjecture, (l3_lattices(esk1_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_17, negated_conjecture, (l3_lattices(esk1_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_18, negated_conjecture, (l3_lattices(esk1_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_3, negated_conjecture, (l3_lattices(esk2_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_1, negated_conjecture, (l3_lattices(esk2_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_2, negated_conjecture, (l3_lattices(esk2_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_23, negated_conjecture, (v17_lattices(esk1_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_21, negated_conjecture, (v17_lattices(esk1_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_22, negated_conjecture, (v17_lattices(esk1_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_7, negated_conjecture, (v17_lattices(esk2_0)|v10_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_5, negated_conjecture, (v17_lattices(esk2_0)|l3_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_6, negated_conjecture, (v17_lattices(esk2_0)|v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_31, negated_conjecture, (v10_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk1_0))).
+cnf(i_0_15, negated_conjecture, (v10_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk2_0))).
+cnf(i_0_29, negated_conjecture, (l3_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk1_0))).
+cnf(i_0_13, negated_conjecture, (l3_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk2_0))).
+cnf(i_0_30, negated_conjecture, (v17_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk1_0))).
+cnf(i_0_14, negated_conjecture, (v17_lattices(k7_filter_1(esk1_0,esk2_0))|~v2_struct_0(esk2_0))).
+cnf(i_0_44, plain, (v2_struct_0(X1)|v17_lattices(X1)|~l3_lattices(X1)|~v11_lattices(X1)|~v15_lattices(X1)|~v16_lattices(X1))).
+cnf(i_0_28, negated_conjecture, (v10_lattices(esk1_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_12, negated_conjecture, (v10_lattices(esk2_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_20, negated_conjecture, (l3_lattices(esk1_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_4, negated_conjecture, (l3_lattices(esk2_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_24, negated_conjecture, (v17_lattices(esk1_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_8, negated_conjecture, (v17_lattices(esk2_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_32, negated_conjecture, (~v2_struct_0(esk1_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_16, negated_conjecture, (~v2_struct_0(esk2_0)|~v2_struct_0(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_46, plain, (v2_struct_0(X2)|v2_struct_0(X1)|epred1_2(X1,X2)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1))).
+cnf(i_0_50, plain, (v2_struct_0(X2)|v2_struct_0(X1)|epred2_2(X1,X2)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1))).
+cnf(i_0_49, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v15_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1))).
+cnf(i_0_47, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v15_lattices(X2)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_48, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v15_lattices(X1)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_61, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v10_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v11_lattices(X2)|~v11_lattices(X1)|~epred1_2(X1,X2))).
+cnf(i_0_59, plain, (v2_struct_0(X2)|v2_struct_0(X1)|l3_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v11_lattices(X2)|~v11_lattices(X1)|~epred1_2(X1,X2))).
+cnf(i_0_60, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v11_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v11_lattices(X2)|~v11_lattices(X1)|~epred1_2(X1,X2))).
+cnf(i_0_76, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v10_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1)|~v16_lattices(X2)|~v16_lattices(X1)|~epred2_2(X1,X2))).
+cnf(i_0_73, plain, (v2_struct_0(X2)|v2_struct_0(X1)|l3_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1)|~v16_lattices(X2)|~v16_lattices(X1)|~epred2_2(X1,X2))).
+cnf(i_0_75, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v15_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1)|~v16_lattices(X2)|~v16_lattices(X1)|~epred2_2(X1,X2))).
+cnf(i_0_74, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v16_lattices(k7_filter_1(X1,X2))|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1)|~v16_lattices(X2)|~v16_lattices(X1)|~epred2_2(X1,X2))).
+cnf(i_0_62, plain, (v2_struct_0(X2)|v2_struct_0(X1)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v11_lattices(X2)|~v11_lattices(X1)|~epred1_2(X1,X2)|~v2_struct_0(k7_filter_1(X1,X2)))).
+cnf(i_0_77, plain, (v2_struct_0(X2)|v2_struct_0(X1)|~v10_lattices(X2)|~v10_lattices(X1)|~l3_lattices(X2)|~l3_lattices(X1)|~v15_lattices(X2)|~v15_lattices(X1)|~v16_lattices(X2)|~v16_lattices(X1)|~epred2_2(X1,X2)|~v2_struct_0(k7_filter_1(X1,X2)))).
+cnf(i_0_33, negated_conjecture, (v2_struct_0(esk1_0)|v2_struct_0(esk2_0)|v2_struct_0(k7_filter_1(esk1_0,esk2_0))|~v10_lattices(esk1_0)|~v10_lattices(esk2_0)|~l3_lattices(esk1_0)|~l3_lattices(esk2_0)|~v17_lattices(esk1_0)|~v17_lattices(esk2_0)|~v10_lattices(k7_filter_1(esk1_0,esk2_0))|~l3_lattices(k7_filter_1(esk1_0,esk2_0))|~v17_lattices(k7_filter_1(esk1_0,esk2_0)))).
+cnf(i_0_53, plain, (v10_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_57, plain, (v10_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_51, plain, (l3_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_55, plain, (l3_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_52, plain, (v11_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_56, plain, (v11_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_54, plain, (v2_struct_0(k7_filter_1(X1,X2))|~v2_struct_0(X2)|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_58, plain, (v2_struct_0(k7_filter_1(X1,X2))|~v2_struct_0(X1)|~epred1_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v11_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_66, plain, (v10_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_71, plain, (v10_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_63, plain, (l3_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_68, plain, (l3_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_65, plain, (v15_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_70, plain, (v15_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_64, plain, (v16_lattices(X2)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_69, plain, (v16_lattices(X1)|v2_struct_0(k7_filter_1(X1,X2))|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_67, plain, (v2_struct_0(k7_filter_1(X1,X2))|~v2_struct_0(X2)|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+cnf(i_0_72, plain, (v2_struct_0(k7_filter_1(X1,X2))|~v2_struct_0(X1)|~epred2_2(X1,X2)|~v10_lattices(k7_filter_1(X1,X2))|~l3_lattices(k7_filter_1(X1,X2))|~v15_lattices(k7_filter_1(X1,X2))|~v16_lattices(k7_filter_1(X1,X2)))).
+
+

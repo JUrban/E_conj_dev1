@@ -1,0 +1,104 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_33, negated_conjecture, (m1_subset_1(esk2_0,esk1_0))).
+cnf(i_0_32, negated_conjecture, (m1_subset_1(esk3_0,esk1_0))).
+cnf(i_0_31, negated_conjecture, (m1_subset_1(esk4_0,esk1_0))).
+cnf(i_0_30, negated_conjecture, (m1_subset_1(esk5_0,esk1_0))).
+cnf(i_0_29, negated_conjecture, (m1_subset_1(esk6_0,esk1_0))).
+cnf(i_0_28, negated_conjecture, (m1_subset_1(esk7_0,esk1_0))).
+cnf(i_0_27, negated_conjecture, (m1_subset_1(esk8_0,esk1_0))).
+cnf(i_0_26, negated_conjecture, (m1_subset_1(esk9_0,esk1_0))).
+cnf(i_0_25, negated_conjecture, (m1_subset_1(esk10_0,esk1_0))).
+cnf(i_0_24, negated_conjecture, (m1_subset_1(esk11_0,esk1_0))).
+cnf(i_0_23, negated_conjecture, (m1_subset_1(esk12_0,esk1_0))).
+cnf(i_0_22, negated_conjecture, (m1_subset_1(esk13_0,esk1_0))).
+cnf(i_0_21, negated_conjecture, (m1_subset_1(esk14_0,esk1_0))).
+cnf(i_0_20, negated_conjecture, (m1_subset_1(esk15_0,esk1_0))).
+cnf(i_0_19, negated_conjecture, (m1_subset_1(esk16_0,esk1_0))).
+cnf(i_0_18, negated_conjecture, (m1_subset_1(esk17_0,esk1_0))).
+cnf(i_0_17, negated_conjecture, (m1_subset_1(esk18_0,esk1_0))).
+cnf(i_0_16, negated_conjecture, (m1_subset_1(esk19_0,esk1_0))).
+cnf(i_0_15, negated_conjecture, (m1_subset_1(esk20_0,esk1_0))).
+cnf(i_0_14, negated_conjecture, (m1_subset_1(esk21_0,esk1_0))).
+cnf(i_0_13, negated_conjecture, (m1_subset_1(esk22_0,esk1_0))).
+cnf(i_0_12, negated_conjecture, (m1_subset_1(esk23_0,esk1_0))).
+cnf(i_0_11, negated_conjecture, (m1_subset_1(esk24_0,esk1_0))).
+cnf(i_0_10, negated_conjecture, (m1_subset_1(esk25_0,esk1_0))).
+cnf(i_0_9, negated_conjecture, (m1_subset_1(esk26_0,esk1_0))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk27_0,esk1_0))).
+cnf(i_0_7, negated_conjecture, (m1_subset_1(esk28_0,esk1_0))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk29_0,esk1_0))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk30_0,esk1_0))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk31_0,esk1_0))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk32_0,esk1_0))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk33_0,esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_34, negated_conjecture, (~v1_xboole_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_69, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_70, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_35, plain, (m2_finseq_1(k8_finseq_1(X1,X2,X3),X1)|~m1_finseq_1(X3,X1)|~m1_finseq_1(X2,X1))).
+cnf(i_0_68, plain, (v1_xboole_0(X1)|v3_card_1(k8_finseq_1(X1,X2,X3),32)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_36, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),32)=k1_funct_1(X3,16)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_67, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),1)=k1_funct_1(X2,1)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_66, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),2)=k1_funct_1(X2,2)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_65, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),3)=k1_funct_1(X2,3)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_64, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),4)=k1_funct_1(X2,4)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_63, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),5)=k1_funct_1(X2,5)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_62, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),6)=k1_funct_1(X2,6)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_61, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),7)=k1_funct_1(X2,7)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_60, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),8)=k1_funct_1(X2,8)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_59, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),9)=k1_funct_1(X2,9)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_58, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),10)=k1_funct_1(X2,10)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_57, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),11)=k1_funct_1(X2,11)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_56, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),12)=k1_funct_1(X2,12)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_55, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),13)=k1_funct_1(X2,13)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_54, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),14)=k1_funct_1(X2,14)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_53, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),15)=k1_funct_1(X2,15)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_52, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),16)=k1_funct_1(X2,16)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_51, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),17)=k1_funct_1(X3,1)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_50, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),18)=k1_funct_1(X3,2)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_49, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),19)=k1_funct_1(X3,3)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_48, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),20)=k1_funct_1(X3,4)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_47, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),21)=k1_funct_1(X3,5)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_46, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),22)=k1_funct_1(X3,6)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_45, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),23)=k1_funct_1(X3,7)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_44, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),24)=k1_funct_1(X3,8)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_43, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),25)=k1_funct_1(X3,9)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_42, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),26)=k1_funct_1(X3,10)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_41, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),27)=k1_funct_1(X3,11)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_40, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),28)=k1_funct_1(X3,12)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_39, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),29)=k1_funct_1(X3,13)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_38, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),30)=k1_funct_1(X3,14)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_37, plain, (k1_funct_1(k8_finseq_1(X1,X2,X3),31)=k1_funct_1(X3,15)|v1_xboole_0(X1)|~m2_finseq_1(X3,X1)|~m2_finseq_1(X2,X1)|~v3_card_1(X3,16)|~v3_card_1(X2,16))).
+cnf(i_0_1, negated_conjecture, (k1_funct_1(X1,32)!=esk33_0|k1_funct_1(X1,1)!=esk2_0|k1_funct_1(X1,2)!=esk3_0|k1_funct_1(X1,3)!=esk4_0|k1_funct_1(X1,4)!=esk5_0|k1_funct_1(X1,5)!=esk6_0|k1_funct_1(X1,6)!=esk7_0|k1_funct_1(X1,7)!=esk8_0|k1_funct_1(X1,8)!=esk9_0|k1_funct_1(X1,9)!=esk10_0|k1_funct_1(X1,10)!=esk11_0|k1_funct_1(X1,11)!=esk12_0|k1_funct_1(X1,12)!=esk13_0|k1_funct_1(X1,13)!=esk14_0|k1_funct_1(X1,14)!=esk15_0|k1_funct_1(X1,15)!=esk16_0|k1_funct_1(X1,16)!=esk17_0|k1_funct_1(X1,17)!=esk18_0|k1_funct_1(X1,18)!=esk19_0|k1_funct_1(X1,19)!=esk20_0|k1_funct_1(X1,20)!=esk21_0|k1_funct_1(X1,21)!=esk22_0|k1_funct_1(X1,22)!=esk23_0|k1_funct_1(X1,23)!=esk24_0|k1_funct_1(X1,24)!=esk25_0|k1_funct_1(X1,25)!=esk26_0|k1_funct_1(X1,26)!=esk27_0|k1_funct_1(X1,27)!=esk28_0|k1_funct_1(X1,28)!=esk29_0|k1_funct_1(X1,29)!=esk30_0|k1_funct_1(X1,30)!=esk31_0|k1_funct_1(X1,31)!=esk32_0|~m2_finseq_1(X1,esk1_0)|~v3_card_1(X1,32))).
+cnf(i_0_86, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),1)=X2|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_85, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),2)=X3|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_84, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),3)=X4|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_83, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),4)=X5|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_82, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),5)=X6|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_81, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),6)=X7|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_80, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),7)=X8|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_79, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),8)=X9|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_78, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),9)=X10|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_77, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),10)=X11|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_76, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),11)=X12|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_75, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),12)=X13|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_74, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),13)=X14|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_73, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),14)=X15|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_72, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),15)=X16|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_71, plain, (k1_funct_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),16)=X17|v1_xboole_0(X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_88, plain, (v1_xboole_0(X1)|m2_finseq_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),X1)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_87, plain, (v1_xboole_0(X1)|v3_card_1(esk34_17(X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17),16)|~m1_subset_1(X17,X1)|~m1_subset_1(X16,X1)|~m1_subset_1(X15,X1)|~m1_subset_1(X14,X1)|~m1_subset_1(X13,X1)|~m1_subset_1(X12,X1)|~m1_subset_1(X11,X1)|~m1_subset_1(X10,X1)|~m1_subset_1(X9,X1)|~m1_subset_1(X8,X1)|~m1_subset_1(X7,X1)|~m1_subset_1(X6,X1)|~m1_subset_1(X5,X1)|~m1_subset_1(X4,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X2,X1))).
+
+

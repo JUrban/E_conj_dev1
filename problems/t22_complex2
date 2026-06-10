@@ -1,0 +1,78 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_41, plain, (k1_xboole_0=k6_numbers)).
+cnf(i_0_36, plain, (k11_arytm_3=k1_xboole_0)).
+cnf(i_0_37, plain, (k32_sin_cos=k31_sin_cos)).
+cnf(i_0_40, plain, (k5_complex1=k1_xboole_0)).
+cnf(i_0_33, plain, (k4_xcmplx_0(1)=c5__xreal_0)).
+cnf(i_0_59, plain, (k18_sin_cos(k32_sin_cos)=k6_numbers)).
+cnf(i_0_4, negated_conjecture, (v1_xcmplx_0(esk1_0))).
+cnf(i_0_30, plain, (v3_membered(k1_numbers))).
+cnf(i_0_60, plain, (k21_sin_cos(k32_sin_cos)=k1_real_1(1))).
+cnf(i_0_32, plain, (k1_arytm_0(c3__xreal_0,c5__xreal_0)=k6_numbers)).
+cnf(i_0_42, plain, (r1_xxreal_0(0,0))).
+cnf(i_0_31, plain, (k2_xcmplx_0(1,k4_xcmplx_0(1))=k6_numbers)).
+cnf(i_0_43, plain, (k2_xcmplx_0(1,k4_xcmplx_0(1))=0)).
+cnf(i_0_55, plain, (k18_sin_cos(k8_real_1(2,k32_sin_cos))=k6_numbers)).
+cnf(i_0_61, plain, (k18_sin_cos(k10_real_1(k32_sin_cos,2))=1)).
+cnf(i_0_56, plain, (k21_sin_cos(k8_real_1(2,k32_sin_cos))=1)).
+cnf(i_0_62, plain, (k21_sin_cos(k10_real_1(k32_sin_cos,2))=k6_numbers)).
+cnf(i_0_58, plain, (k21_sin_cos(k7_real_1(k32_sin_cos,k10_real_1(k32_sin_cos,2)))=k6_numbers)).
+cnf(i_0_57, plain, (k18_sin_cos(k7_real_1(k32_sin_cos,k10_real_1(k32_sin_cos,2)))=k1_real_1(1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_28, plain, (~v1_xboole_0(k1_numbers))).
+cnf(i_0_34, plain, (~r1_xxreal_0(k32_sin_cos,k6_numbers))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_1, negated_conjecture, (k1_comptrig(esk1_0)=k32_sin_cos|k4_complex1(esk1_0)=k6_numbers)).
+cnf(i_0_6, plain, (v1_xcmplx_0(X1)|~v1_xreal_0(X1))).
+cnf(i_0_7, plain, (v1_membered(X1)|~v3_membered(X1))).
+cnf(i_0_38, plain, (k3_complex1(X1)=k1_complex1(X1)|~v1_xcmplx_0(X1))).
+cnf(i_0_39, plain, (k2_complex1(X1)=k4_complex1(X1)|~v1_xcmplx_0(X1))).
+cnf(i_0_27, plain, (v1_xreal_0(k1_complex1(X1))|~v1_xcmplx_0(X1))).
+cnf(i_0_29, plain, (v1_xreal_0(k2_complex1(X1))|~v1_xcmplx_0(X1))).
+cnf(i_0_45, plain, (k17_complex1(X1)=X1|k1_comptrig(X1)!=k6_numbers|~v1_xcmplx_0(X1))).
+cnf(i_0_44, plain, (k1_comptrig(X1)=k6_numbers|k17_complex1(X1)!=X1|~v1_xcmplx_0(X1))).
+cnf(i_0_3, negated_conjecture, (r1_xxreal_0(k6_numbers,k3_complex1(esk1_0))|k1_comptrig(esk1_0)!=k32_sin_cos|k4_complex1(esk1_0)!=k6_numbers)).
+cnf(i_0_48, plain, (r1_xxreal_0(k6_numbers,k1_comptrig(X1))|~v1_xcmplx_0(X1))).
+cnf(i_0_24, plain, (m1_subset_1(k1_comptrig(X1),k1_numbers)|~v1_xcmplx_0(X1))).
+cnf(i_0_25, plain, (m1_subset_1(k3_complex1(X1),k1_numbers)|~v1_xcmplx_0(X1))).
+cnf(i_0_26, plain, (m1_subset_1(k4_complex1(X1),k1_numbers)|~v1_xcmplx_0(X1))).
+cnf(i_0_2, negated_conjecture, (k1_comptrig(esk1_0)=k32_sin_cos|~r1_xxreal_0(k6_numbers,k3_complex1(esk1_0)))).
+cnf(i_0_53, plain, (r1_xxreal_0(k17_complex1(X1),k6_numbers)|k6_numbers!=X1|~v1_xcmplx_0(X1))).
+cnf(i_0_5, plain, (v1_xcmplx_0(X1)|~v1_membered(X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_35, plain, (k5_arytm_0(k3_complex1(X1),k4_complex1(X1))=X1|~v1_xcmplx_0(X1))).
+cnf(i_0_22, plain, (k2_complex1(X1)=X2|k6_numbers!=X2|~v1_xcmplx_0(X1)|~r2_hidden(X1,k1_numbers))).
+cnf(i_0_14, plain, (k1_complex1(X1)=X2|X1!=X2|~v1_xcmplx_0(X1)|~r2_hidden(X1,k1_numbers))).
+cnf(i_0_23, plain, (k6_numbers=X2|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1)|~r2_hidden(X1,k1_numbers))).
+cnf(i_0_50, plain, (k1_comptrig(X1)=k32_sin_cos|r1_xxreal_0(k6_numbers,X1)|~m1_subset_1(X1,k1_numbers))).
+cnf(i_0_15, plain, (X1=X2|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1)|~r2_hidden(X1,k1_numbers))).
+cnf(i_0_54, plain, (k6_numbers=X1|~v1_xcmplx_0(X1)|~r1_xxreal_0(k17_complex1(X1),k6_numbers))).
+cnf(i_0_46, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_10, plain, (esk2_2(X1,X2)=X1|r2_hidden(X1,k1_numbers)|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_18, plain, (esk3_2(X1,X2)=X1|r2_hidden(X1,k1_numbers)|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_49, plain, (k1_comptrig(X1)=k6_numbers|~m1_subset_1(X1,k1_numbers)|~r1_xxreal_0(k6_numbers,X1))).
+cnf(i_0_13, plain, (r2_hidden(X1,k1_numbers)|v1_funct_1(esk2_2(X1,X2))|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_21, plain, (r2_hidden(X1,k1_numbers)|v1_funct_1(esk3_2(X1,X2))|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_9, plain, (k1_funct_1(esk2_2(X1,X2),k6_numbers)=X2|r2_hidden(X1,k1_numbers)|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_17, plain, (k1_funct_1(esk3_2(X1,X2),1)=X2|r2_hidden(X1,k1_numbers)|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_47, plain, (~v1_xcmplx_0(X1)|~r1_xxreal_0(k8_real_1(2,k32_sin_cos),k1_comptrig(X1)))).
+cnf(i_0_52, plain, (r1_xxreal_0(k6_numbers,k4_complex1(X1))|~v1_xcmplx_0(X1)|~r1_xxreal_0(k6_numbers,k18_sin_cos(k1_comptrig(X1))))).
+cnf(i_0_51, plain, (r1_xxreal_0(k4_complex1(X1),k6_numbers)|~v1_xcmplx_0(X1)|~r1_xxreal_0(k18_sin_cos(k1_comptrig(X1)),k6_numbers))).
+cnf(i_0_12, plain, (r2_hidden(X1,k1_numbers)|v1_funct_2(esk2_2(X1,X2),2,k1_numbers)|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_20, plain, (r2_hidden(X1,k1_numbers)|v1_funct_2(esk3_2(X1,X2),2,k1_numbers)|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_11, plain, (r2_hidden(X1,k1_numbers)|m1_subset_1(esk2_2(X1,X2),k1_zfmisc_1(k2_zfmisc_1(2,k1_numbers)))|k1_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_19, plain, (r2_hidden(X1,k1_numbers)|m1_subset_1(esk3_2(X1,X2),k1_zfmisc_1(k2_zfmisc_1(2,k1_numbers)))|k2_complex1(X1)!=X2|~v1_xcmplx_0(X1))).
+cnf(i_0_8, plain, (k1_complex1(X1)=X2|r2_hidden(X1,k1_numbers)|X1!=X3|k1_funct_1(X3,k6_numbers)!=X2|~v1_xcmplx_0(X1)|~v1_funct_1(X3)|~v1_funct_2(X3,2,k1_numbers)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(2,k1_numbers))))).
+cnf(i_0_16, plain, (k2_complex1(X1)=X2|r2_hidden(X1,k1_numbers)|X1!=X3|k1_funct_1(X3,1)!=X2|~v1_xcmplx_0(X1)|~v1_funct_1(X3)|~v1_funct_2(X3,2,k1_numbers)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(2,k1_numbers))))).
+
+

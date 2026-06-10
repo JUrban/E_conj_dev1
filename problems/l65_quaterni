@@ -1,0 +1,27 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_5, negated_conjecture, (v1_quaterni(esk1_0))).
+cnf(i_0_4, negated_conjecture, (v1_quaterni(esk2_0))).
+cnf(i_0_3, negated_conjecture, (v1_quaterni(esk3_0))).
+cnf(i_0_2, negated_conjecture, (v1_quaterni(esk4_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k6_quaterni(k7_real_1(k7_real_1(k7_real_1(k17_quaterni(esk1_0),k17_quaterni(esk2_0)),k17_quaterni(esk3_0)),k17_quaterni(esk4_0)),k7_real_1(k7_real_1(k7_real_1(k18_quaterni(esk1_0),k18_quaterni(esk2_0)),k18_quaterni(esk3_0)),k18_quaterni(esk4_0)),k7_real_1(k7_real_1(k7_real_1(k19_quaterni(esk1_0),k19_quaterni(esk2_0)),k19_quaterni(esk3_0)),k19_quaterni(esk4_0)),k7_real_1(k7_real_1(k7_real_1(k20_quaterni(esk1_0),k20_quaterni(esk2_0)),k20_quaterni(esk3_0)),k20_quaterni(esk4_0)))!=k7_quaterni(k7_quaterni(k7_quaterni(esk1_0,esk2_0),esk3_0),esk4_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_6, plain, (v1_quaterni(k7_quaterni(X1,X2))|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_10, plain, (k7_real_1(k17_quaterni(X1),k17_quaterni(X2))=k17_quaterni(X3)|k7_quaterni(X1,X2)!=X3|~v1_quaterni(X3)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_9, plain, (k7_real_1(k18_quaterni(X1),k18_quaterni(X2))=k18_quaterni(X3)|k7_quaterni(X1,X2)!=X3|~v1_quaterni(X3)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_8, plain, (k7_real_1(k19_quaterni(X1),k19_quaterni(X2))=k19_quaterni(X3)|k7_quaterni(X1,X2)!=X3|~v1_quaterni(X3)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_7, plain, (k7_real_1(k20_quaterni(X1),k20_quaterni(X2))=k20_quaterni(X3)|k7_quaterni(X1,X2)!=X3|~v1_quaterni(X3)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_11, plain, (k6_quaterni(k7_real_1(k17_quaterni(X1),k17_quaterni(X2)),k7_real_1(k18_quaterni(X1),k18_quaterni(X2)),k7_real_1(k19_quaterni(X1),k19_quaterni(X2)),k7_real_1(k20_quaterni(X1),k20_quaterni(X2)))=k7_quaterni(X1,X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+
+

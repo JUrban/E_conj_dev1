@@ -1,0 +1,31 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (k1_funct_1(esk4_0,esk1_0)=esk5_0)).
+cnf(i_0_3, negated_conjecture, (k1_funct_1(esk4_0,esk2_0)=esk6_0)).
+cnf(i_0_2, negated_conjecture, (k1_funct_1(esk4_0,esk3_0)=esk7_0)).
+cnf(i_0_7, negated_conjecture, (m1_subset_1(esk5_0,k6_margrel1))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk6_0,k6_margrel1))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk7_0,k6_margrel1))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk4_0,k4_card_3(u3_msualg_1(k8_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1),k10_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1)))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_9, negated_conjecture, (k4_tarski(k10_finseq_1(esk1_0,esk2_0),k4_gfacirc1)!=esk3_0)).
+cnf(i_0_1, negated_conjecture, (k1_twoscomp(k8_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1),k10_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1),k5_facirc_1(k8_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1),k10_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1),esk4_0,2),k9_facirc_1(esk1_0,esk2_0,esk3_0,k4_gfacirc1))!=k2_binarith(k2_binarith(k9_margrel1(esk5_0),esk6_0),k9_margrel1(esk7_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_13, plain, (k2_binarith(k2_binarith(k9_margrel1(X1),X2),k9_margrel1(X3))=k2_binarith(k2_binarith(X1,k9_margrel1(X2)),k9_margrel1(X3))|~m1_subset_1(X3,k6_margrel1)|~m1_subset_1(X2,k6_margrel1)|~m1_subset_1(X1,k6_margrel1))).
+cnf(i_0_15, plain, (k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1)=X1|k1_funct_1(k5_facirc_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),X4,2),X3)=X6|k1_funct_1(X4,X3)!=X6|k1_funct_1(X4,X2)!=X5|k1_funct_1(X4,X1)!=X7|~m1_subset_1(X7,k6_margrel1)|~m1_subset_1(X6,k6_margrel1)|~m1_subset_1(X5,k6_margrel1)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1)))))).
+cnf(i_0_16, plain, (k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1)=X1|k1_funct_1(k5_facirc_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),X4,2),X2)=X5|k1_funct_1(X4,X3)!=X6|k1_funct_1(X4,X2)!=X5|k1_funct_1(X4,X1)!=X7|~m1_subset_1(X7,k6_margrel1)|~m1_subset_1(X6,k6_margrel1)|~m1_subset_1(X5,k6_margrel1)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1)))))).
+cnf(i_0_14, plain, (k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1)=X1|k1_funct_1(k5_facirc_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),X4,2),X1)=X7|k1_funct_1(X4,X3)!=X6|k1_funct_1(X4,X2)!=X5|k1_funct_1(X4,X1)!=X7|~m1_subset_1(X7,k6_margrel1)|~m1_subset_1(X6,k6_margrel1)|~m1_subset_1(X5,k6_margrel1)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1)))))).
+cnf(i_0_17, plain, (k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1)=X1|k1_funct_1(k5_facirc_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),X4,2),k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1))=k2_binarith(X5,k9_margrel1(X6))|k1_funct_1(X4,X3)!=X6|k1_funct_1(X4,X2)!=X5|k1_funct_1(X4,X1)!=X7|~m1_subset_1(X7,k6_margrel1)|~m1_subset_1(X6,k6_margrel1)|~m1_subset_1(X5,k6_margrel1)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1)))))).
+cnf(i_0_18, plain, (k4_tarski(k10_finseq_1(X2,X3),k4_gfacirc1)=X1|k1_twoscomp(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),k5_facirc_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1),X4,2),k9_facirc_1(X2,X3,X1,k4_gfacirc1))=k2_binarith(k2_binarith(X5,k9_margrel1(X6)),k9_margrel1(X7))|k1_funct_1(X4,X3)!=X6|k1_funct_1(X4,X2)!=X5|k1_funct_1(X4,X1)!=X7|~m1_subset_1(X7,k6_margrel1)|~m1_subset_1(X6,k6_margrel1)|~m1_subset_1(X5,k6_margrel1)|~m1_subset_1(X4,k4_card_3(u3_msualg_1(k8_facirc_1(X2,X3,X1,k4_gfacirc1),k10_facirc_1(X2,X3,X1,k4_gfacirc1)))))).
+
+

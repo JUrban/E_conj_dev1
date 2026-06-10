@@ -1,0 +1,38 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_19, plain, (k4_ordinal1=k5_numbers)).
+cnf(i_0_7, negated_conjecture, (v1_funct_1(esk2_0))).
+cnf(i_0_4, negated_conjecture, (v1_funct_1(esk3_0))).
+cnf(i_0_16, plain, (v3_ordinal1(k4_ordinal1))).
+cnf(i_0_6, negated_conjecture, (v1_funct_2(esk2_0,k5_numbers,k9_setfam_1(esk1_0)))).
+cnf(i_0_3, negated_conjecture, (v1_funct_2(esk3_0,k5_numbers,k9_setfam_1(esk1_0)))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk2_0,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(esk1_0)))))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk3_0,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(esk1_0)))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_17, plain, (~v1_xboole_0(k4_ordinal1))).
+cnf(i_0_1, negated_conjecture, (~r1_tarski(k4_kurato_0(esk1_0,k1_setlim_2(esk1_0,esk2_0,esk3_0)),k9_subset_1(esk1_0,k4_kurato_0(esk1_0,esk2_0),k4_kurato_0(esk1_0,esk3_0))))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_8, plain, (v7_ordinal1(X1)|~m1_subset_1(X1,k4_ordinal1))).
+cnf(i_0_20, plain, (k8_nat_1(X1,X2,X3)=k1_funct_1(X2,X3)|~v1_funct_1(X2)|~v7_ordinal1(X3)|~v1_funct_2(X2,k5_numbers,X1)|~m1_subset_1(X2,k9_setfam_1(k2_zfmisc_1(k5_numbers,X1))))).
+cnf(i_0_18, plain, (k3_funct_2(X1,X2,X3,X4)=k1_funct_1(X3,X4)|v1_xboole_0(X1)|~v1_funct_1(X3)|~m1_subset_1(X4,X1)|~v1_funct_2(X3,X1,X2)|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_9, plain, (k1_setlim_2(X1,X2,X3)=k1_setlim_2(X1,X3,X2)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X1))|~v1_funct_2(X2,k5_numbers,k9_setfam_1(X1))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X1))))|~m1_subset_1(X2,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X1)))))).
+cnf(i_0_15, plain, (v1_funct_1(k1_setlim_2(X2,X3,X1))|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_14, plain, (v1_funct_2(k1_setlim_2(X2,X3,X1),k5_numbers,k9_setfam_1(X2))|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_13, plain, (m1_subset_1(k1_setlim_2(X2,X3,X1),k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_12, plain, (k9_subset_1(X2,k8_nat_1(k9_setfam_1(X2),X1,X5),k8_nat_1(k9_setfam_1(X2),X3,X5))=k8_nat_1(k9_setfam_1(X2),X4,X5)|k1_setlim_2(X2,X1,X3)!=X4|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X1)|~m1_subset_1(X5,k5_numbers)|~v1_funct_2(X4,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X4,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_11, plain, (k1_setlim_2(X2,X1,X3)=X4|m1_subset_1(esk4_4(X2,X1,X3,X4),k5_numbers)|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X4,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X4,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_23, plain, (m1_subset_1(esk5_4(X2,X1,X3,X4),k5_numbers)|r1_tarski(k4_kurato_0(X2,X4),k9_subset_1(X2,k4_kurato_0(X2,X1),k4_kurato_0(X2,X3)))|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X4,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X4,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_10, plain, (k1_setlim_2(X2,X1,X3)=X4|k9_subset_1(X2,k8_nat_1(k9_setfam_1(X2),X1,esk4_4(X2,X1,X3,X4)),k8_nat_1(k9_setfam_1(X2),X3,esk4_4(X2,X1,X3,X4)))!=k8_nat_1(k9_setfam_1(X2),X4,esk4_4(X2,X1,X3,X4))|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X4,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X4,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+cnf(i_0_22, plain, (r1_tarski(k4_kurato_0(X2,X4),k9_subset_1(X2,k4_kurato_0(X2,X1),k4_kurato_0(X2,X3)))|k9_subset_1(X2,k3_funct_2(k5_numbers,k9_setfam_1(X2),X1,esk5_4(X2,X1,X3,X4)),k3_funct_2(k5_numbers,k9_setfam_1(X2),X3,esk5_4(X2,X1,X3,X4)))!=k3_funct_2(k5_numbers,k9_setfam_1(X2),X4,esk5_4(X2,X1,X3,X4))|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v1_funct_2(X4,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X3,k5_numbers,k9_setfam_1(X2))|~v1_funct_2(X1,k5_numbers,k9_setfam_1(X2))|~m1_subset_1(X4,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X3,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2))))|~m1_subset_1(X1,k9_setfam_1(k2_zfmisc_1(k5_numbers,k9_setfam_1(X2)))))).
+
+

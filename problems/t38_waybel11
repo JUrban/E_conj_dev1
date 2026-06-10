@@ -1,0 +1,93 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_18, negated_conjecture, (v2_pre_topc(esk1_0))).
+cnf(i_0_17, negated_conjecture, (v3_orders_2(esk1_0))).
+cnf(i_0_16, negated_conjecture, (v4_orders_2(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v4_orders_2(esk3_0))).
+cnf(i_0_15, negated_conjecture, (v5_orders_2(esk1_0))).
+cnf(i_0_14, negated_conjecture, (v1_lattice3(esk1_0))).
+cnf(i_0_13, negated_conjecture, (v2_lattice3(esk1_0))).
+cnf(i_0_12, negated_conjecture, (v3_lattice3(esk1_0))).
+cnf(i_0_11, negated_conjecture, (v3_waybel_3(esk1_0))).
+cnf(i_0_10, negated_conjecture, (v4_waybel11(esk1_0))).
+cnf(i_0_9, negated_conjecture, (l1_waybel_9(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v7_waybel_0(esk3_0))).
+cnf(i_0_4, negated_conjecture, (l1_waybel_0(esk3_0,esk1_0))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+cnf(i_0_3, negated_conjecture, (r2_hidden(esk3_0,k6_yellow_6(esk1_0)))).
+cnf(i_0_21, plain, (k2_tarski(X1,X2)=k2_tarski(X2,X1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_7, negated_conjecture, (~v2_struct_0(esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_66, plain, (l1_pre_topc(X1)|~l1_waybel_9(X1))).
+cnf(i_0_65, plain, (l1_orders_2(X1)|~l1_waybel_9(X1))).
+cnf(i_0_64, plain, (l1_struct_0(X1)|~l1_pre_topc(X1))).
+cnf(i_0_20, plain, (~v2_lattice3(X1)|~v2_struct_0(X1)|~l1_orders_2(X1))).
+cnf(i_0_69, plain, (v1_xboole_0(u1_struct_0(X1))|~v2_struct_0(X1)|~l1_struct_0(X1))).
+cnf(i_0_72, plain, (v2_struct_0(X1)|~l1_struct_0(X1)|~v1_xboole_0(u1_struct_0(X1)))).
+cnf(i_0_63, plain, (v2_struct_0(X1)|m4_yellow_6(k2_waybel11(X1),X1)|~v3_orders_2(X1)|~l1_orders_2(X1))).
+cnf(i_0_19, plain, (g1_pre_topc(u1_struct_0(X1),u1_pre_topc(X1))=X1|~l1_pre_topc(X1)|~v1_pre_topc(X1))).
+cnf(i_0_70, plain, (v2_struct_0(X2)|v2_pre_topc(k13_yellow_6(X2,X1))|~l1_struct_0(X2)|~m4_yellow_6(X1,X2))).
+cnf(i_0_71, plain, (v2_struct_0(X2)|v1_pre_topc(k13_yellow_6(X2,X1))|~l1_struct_0(X2)|~m4_yellow_6(X1,X2))).
+cnf(i_0_67, plain, (m1_subset_1(u1_pre_topc(X1),k1_zfmisc_1(k1_zfmisc_1(u1_struct_0(X1))))|~l1_pre_topc(X1))).
+cnf(i_0_44, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|v4_orders_2(esk7_2(X1,X2))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_43, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|v7_waybel_0(esk7_2(X1,X2))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_57, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|v4_orders_2(esk9_2(X1,X2))|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_55, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|v7_waybel_0(esk9_2(X1,X2))|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_68, plain, (v8_yellow_6(k2_waybel11(X1),X1)|~v3_orders_2(X1)|~v4_orders_2(X1)|~v5_orders_2(X1)|~v1_lattice3(X1)|~v2_lattice3(X1)|~v3_lattice3(X1)|~v3_waybel_3(X1)|~l1_orders_2(X1))).
+cnf(i_0_61, plain, (l1_pre_topc(g1_pre_topc(X2,X1))|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_62, plain, (v1_pre_topc(g1_pre_topc(X2,X1))|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_1, negated_conjecture, (r1_waybel11(esk1_0,esk3_0,esk2_0)|r2_hidden(esk2_0,k10_yellow_6(esk1_0,esk3_0)))).
+cnf(i_0_23, plain, (k6_yellow_6(X1)=X2|esk5_2(X1,X2)=esk6_2(X1,X2)|v2_struct_0(X1)|r2_hidden(esk5_2(X1,X2),X2)|~l1_struct_0(X1))).
+cnf(i_0_42, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|l1_waybel_0(esk7_2(X1,X2),X1)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_54, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|l1_waybel_0(esk9_2(X1,X2),X1)|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_56, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|v6_waybel_0(esk9_2(X1,X2),X1)|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_27, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|v4_orders_2(esk6_2(X1,X2))|r2_hidden(esk5_2(X1,X2),X2)|~l1_struct_0(X1))).
+cnf(i_0_25, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|v7_waybel_0(esk6_2(X1,X2))|r2_hidden(esk5_2(X1,X2),X2)|~l1_struct_0(X1))).
+cnf(i_0_77, plain, (k12_yellow_6(k13_yellow_6(X1,X2))=X2|v2_struct_0(X1)|~l1_struct_0(X1)|~m4_yellow_6(X2,X1)|~v8_yellow_6(X2,X1))).
+cnf(i_0_41, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|m1_subset_1(esk8_2(X1,X2),u1_struct_0(X1))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_52, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|m1_subset_1(esk10_2(X1,X2),u1_struct_0(X1))|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_53, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|r2_hidden(esk9_2(X1,X2),k6_yellow_6(X1))|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_45, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1)|~v2_struct_0(esk7_2(X1,X2)))).
+cnf(i_0_58, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1)|~v2_struct_0(esk9_2(X1,X2)))).
+cnf(i_0_24, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|l1_waybel_0(esk6_2(X1,X2),X1)|r2_hidden(esk5_2(X1,X2),X2)|~l1_struct_0(X1))).
+cnf(i_0_26, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|r2_hidden(esk5_2(X1,X2),X2)|v6_waybel_0(esk6_2(X1,X2),X1)|~l1_struct_0(X1))).
+cnf(i_0_74, plain, (X2=X3|g1_pre_topc(X2,X1)!=g1_pre_topc(X3,X4)|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_73, plain, (X1=X4|g1_pre_topc(X2,X1)!=g1_pre_topc(X3,X4)|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_78, plain, (v2_struct_0(X1)|v8_yellow_6(X2,X1)|k12_yellow_6(k13_yellow_6(X1,X2))!=X2|~l1_struct_0(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_32, plain, (esk4_3(X1,X2,X3)=X3|v2_struct_0(X1)|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_28, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|r2_hidden(esk5_2(X1,X2),X2)|~l1_struct_0(X1)|~v2_struct_0(esk6_2(X1,X2)))).
+cnf(i_0_76, plain, (g1_pre_topc(u1_struct_0(X1),u1_pre_topc(X1))=k13_yellow_6(X1,k2_waybel11(X1))|~v2_pre_topc(X1)|~v3_orders_2(X1)|~v4_orders_2(X1)|~v5_orders_2(X1)|~v1_lattice3(X1)|~v2_lattice3(X1)|~v3_lattice3(X1)|~v4_waybel11(X1)|~l1_waybel_9(X1))).
+cnf(i_0_75, plain, (k12_yellow_6(X1)=k12_yellow_6(X2)|v2_struct_0(X2)|v2_struct_0(X1)|g1_pre_topc(u1_struct_0(X1),u1_pre_topc(X1))!=g1_pre_topc(u1_struct_0(X2),u1_pre_topc(X2))|~v2_pre_topc(X2)|~v2_pre_topc(X1)|~l1_pre_topc(X2)|~l1_pre_topc(X1))).
+cnf(i_0_2, negated_conjecture, (~r1_waybel11(esk1_0,esk3_0,esk2_0)|~r2_hidden(esk2_0,k10_yellow_6(esk1_0,esk3_0)))).
+cnf(i_0_22, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X1)|r2_hidden(esk5_2(X1,X2),X2)|r2_hidden(u1_struct_0(esk6_2(X1,X2)),k1_yellow_6(u1_struct_0(X1)))|~l1_struct_0(X1))).
+cnf(i_0_36, plain, (v2_struct_0(X1)|v4_orders_2(esk4_3(X1,X2,X3))|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_34, plain, (v2_struct_0(X1)|v7_waybel_0(esk4_3(X1,X2,X3))|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_30, plain, (v2_struct_0(X4)|v2_struct_0(X1)|r2_hidden(X3,X2)|X3!=X4|k6_yellow_6(X1)!=X2|~v4_orders_2(X4)|~v7_waybel_0(X4)|~l1_struct_0(X1)|~l1_waybel_0(X4,X1)|~v6_waybel_0(X4,X1)|~r2_hidden(u1_struct_0(X4),k1_yellow_6(u1_struct_0(X1))))).
+cnf(i_0_33, plain, (v2_struct_0(X1)|l1_waybel_0(esk4_3(X1,X2,X3),X1)|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_35, plain, (v2_struct_0(X1)|v6_waybel_0(esk4_3(X1,X2,X3),X1)|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_37, plain, (v2_struct_0(X1)|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2)|~v2_struct_0(esk4_3(X1,X2,X3)))).
+cnf(i_0_29, plain, (k6_yellow_6(X1)=X2|v2_struct_0(X3)|v2_struct_0(X1)|esk5_2(X1,X2)!=X3|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_struct_0(X1)|~l1_waybel_0(X3,X1)|~v6_waybel_0(X3,X1)|~r2_hidden(esk5_2(X1,X2),X2)|~r2_hidden(u1_struct_0(X3),k1_yellow_6(u1_struct_0(X1))))).
+cnf(i_0_31, plain, (v2_struct_0(X1)|r2_hidden(u1_struct_0(esk4_3(X1,X2,X3)),k1_yellow_6(u1_struct_0(X1)))|k6_yellow_6(X1)!=X2|~l1_struct_0(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_48, plain, (v2_struct_0(X3)|v2_struct_0(X1)|r2_hidden(X3,k6_yellow_6(X1))|k12_yellow_6(X1)!=X2|~v2_pre_topc(X1)|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_pre_topc(X1)|~l1_waybel_0(X3,X1)|~m4_yellow_6(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~r2_hidden(k2_tarski(k2_tarski(X3,X4),k1_tarski(X3)),X2))).
+cnf(i_0_46, plain, (v2_struct_0(X3)|v2_struct_0(X1)|r2_hidden(k2_tarski(k2_tarski(X3,X4),k1_tarski(X3)),X2)|k12_yellow_6(X1)!=X2|~v2_pre_topc(X1)|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_pre_topc(X1)|~l1_waybel_0(X3,X1)|~m4_yellow_6(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~r2_hidden(X3,k6_yellow_6(X1))|~r2_hidden(X4,k10_yellow_6(X1,X3)))).
+cnf(i_0_47, plain, (v2_struct_0(X3)|v2_struct_0(X1)|r2_hidden(X4,k10_yellow_6(X1,X3))|k12_yellow_6(X1)!=X2|~v2_pre_topc(X1)|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_pre_topc(X1)|~l1_waybel_0(X3,X1)|~m4_yellow_6(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~r2_hidden(k2_tarski(k2_tarski(X3,X4),k1_tarski(X3)),X2))).
+cnf(i_0_59, plain, (v2_struct_0(X3)|v2_struct_0(X1)|r2_hidden(k2_tarski(k2_tarski(X3,X4),k1_tarski(X3)),X2)|k2_waybel11(X1)!=X2|~v3_orders_2(X1)|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_orders_2(X1)|~l1_waybel_0(X3,X1)|~v6_waybel_0(X3,X1)|~m4_yellow_6(X2,X1)|~r1_waybel11(X1,X3,X4)|~m1_subset_1(X4,u1_struct_0(X1))|~r2_hidden(X3,k6_yellow_6(X1)))).
+cnf(i_0_60, plain, (v2_struct_0(X3)|v2_struct_0(X1)|r1_waybel11(X1,X3,X4)|k2_waybel11(X1)!=X2|~v3_orders_2(X1)|~v4_orders_2(X3)|~v7_waybel_0(X3)|~l1_orders_2(X1)|~l1_waybel_0(X3,X1)|~v6_waybel_0(X3,X1)|~m4_yellow_6(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~r2_hidden(X3,k6_yellow_6(X1))|~r2_hidden(k2_tarski(k2_tarski(X3,X4),k1_tarski(X3)),X2))).
+cnf(i_0_39, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|r2_hidden(esk7_2(X1,X2),k6_yellow_6(X1))|r2_hidden(k2_tarski(k2_tarski(esk7_2(X1,X2),esk8_2(X1,X2)),k1_tarski(esk7_2(X1,X2))),X2)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_50, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|r1_waybel11(X1,esk9_2(X1,X2),esk10_2(X1,X2))|r2_hidden(k2_tarski(k2_tarski(esk9_2(X1,X2),esk10_2(X1,X2)),k1_tarski(esk9_2(X1,X2))),X2)|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_38, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|r2_hidden(esk8_2(X1,X2),k10_yellow_6(X1,esk7_2(X1,X2)))|r2_hidden(k2_tarski(k2_tarski(esk7_2(X1,X2),esk8_2(X1,X2)),k1_tarski(esk7_2(X1,X2))),X2)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1))).
+cnf(i_0_51, plain, (k2_waybel11(X1)=X2|v2_struct_0(X1)|~v3_orders_2(X1)|~l1_orders_2(X1)|~m4_yellow_6(X2,X1)|~r1_waybel11(X1,esk9_2(X1,X2),esk10_2(X1,X2))|~r2_hidden(k2_tarski(k2_tarski(esk9_2(X1,X2),esk10_2(X1,X2)),k1_tarski(esk9_2(X1,X2))),X2))).
+cnf(i_0_40, plain, (k12_yellow_6(X1)=X2|v2_struct_0(X1)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m4_yellow_6(X2,X1)|~r2_hidden(esk7_2(X1,X2),k6_yellow_6(X1))|~r2_hidden(esk8_2(X1,X2),k10_yellow_6(X1,esk7_2(X1,X2)))|~r2_hidden(k2_tarski(k2_tarski(esk7_2(X1,X2),esk8_2(X1,X2)),k1_tarski(esk7_2(X1,X2))),X2))).
+
+

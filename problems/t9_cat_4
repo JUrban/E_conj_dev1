@@ -1,0 +1,56 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_28, plain, (m1_subset_1(esk11_1(X1),X1))).
+cnf(i_0_34, plain, (v2_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_37, plain, (v2_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_33, plain, (v3_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_32, plain, (v4_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_31, plain, (v5_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_30, plain, (v6_cat_1(k5_cat_4(X1,X2)))).
+cnf(i_0_25, plain, (v2_cat_4(k5_cat_4(X1,X2)))).
+cnf(i_0_29, plain, (v2_cat_4(k5_cat_4(X1,X2)))).
+cnf(i_0_24, plain, (l1_cat_4(k5_cat_4(X1,X2)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(k5_cat_4(esk1_0,esk2_0))))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk4_0,u4_struct_0(k5_cat_4(esk1_0,esk2_0))))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk5_0,u4_struct_0(k5_cat_4(esk1_0,esk2_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_36, plain, (~v2_struct_0(k5_cat_4(X1,X2)))).
+cnf(i_0_35, plain, (~v11_struct_0(k5_cat_4(X1,X2)))).
+cnf(i_0_1, negated_conjecture, (~r2_cat_3(k5_cat_4(esk1_0,esk2_0),esk3_0,esk4_0,esk5_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_27, plain, (l1_cat_1(X1)|~l1_cat_4(X1))).
+cnf(i_0_26, plain, (l1_graph_1(X1)|~l1_cat_1(X1))).
+cnf(i_0_23, plain, (v2_struct_0(X1)|v11_struct_0(X1)|m1_subset_1(k3_graph_1(X1,X2),u1_struct_0(X1))|~l1_graph_1(X1)|~m1_subset_1(X2,u4_struct_0(X1)))).
+cnf(i_0_22, plain, (m1_subset_1(k1_cat_1(X1,X2,X3),u4_struct_0(X1))|~l1_cat_1(X1)|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u4_struct_0(X1)))).
+cnf(i_0_38, plain, (X1=X2|~m1_subset_1(X2,u1_struct_0(k5_cat_4(X3,X4)))|~m1_subset_1(X1,u1_struct_0(k5_cat_4(X3,X4))))).
+cnf(i_0_39, plain, (X1=X2|~m1_subset_1(X2,u4_struct_0(k5_cat_4(X3,X4)))|~m1_subset_1(X1,u4_struct_0(k5_cat_4(X3,X4))))).
+cnf(i_0_40, plain, (r2_hidden(X1,k2_cat_1(k5_cat_4(X2,X3),X4,X5))|~m1_subset_1(X5,u1_struct_0(k5_cat_4(X2,X3)))|~m1_subset_1(X4,u1_struct_0(k5_cat_4(X2,X3)))|~m1_subset_1(X1,u4_struct_0(k5_cat_4(X2,X3))))).
+cnf(i_0_20, plain, (k3_graph_1(X1,X4)=X2|v2_struct_0(X1)|v11_struct_0(X1)|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4))).
+cnf(i_0_21, plain, (k3_graph_1(X1,X3)=X2|v2_struct_0(X1)|v11_struct_0(X1)|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4))).
+cnf(i_0_14, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|m1_subset_1(esk7_4(X1,X2,X3,X4),u1_struct_0(X1))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_13, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|m1_subset_1(esk8_4(X1,X2,X3,X4),u4_struct_0(X1))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_12, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|m1_subset_1(esk9_4(X1,X2,X3,X4),u4_struct_0(X1))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_11, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|r2_hidden(esk8_4(X1,X2,X3,X4),k2_cat_1(X1,esk7_4(X1,X2,X3,X4),k4_graph_1(X1,X3)))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_10, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|r2_hidden(esk9_4(X1,X2,X3,X4),k2_cat_1(X1,esk7_4(X1,X2,X3,X4),k4_graph_1(X1,X4)))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_9, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|m1_subset_1(esk10_5(X1,X2,X3,X4,X5),u4_struct_0(X1))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X5,u4_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X5,k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2)))).
+cnf(i_0_8, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|r2_hidden(esk10_5(X1,X2,X3,X4,X5),k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2))|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X5,u4_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X5,k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2)))).
+cnf(i_0_5, plain, (esk10_5(X1,X2,X3,X4,X5)=X5|k1_cat_1(X1,esk10_5(X1,X2,X3,X4,X5),X4)=esk9_4(X1,X2,X3,X4)|v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X5,u4_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X5,k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2)))).
+cnf(i_0_6, plain, (esk10_5(X1,X2,X3,X4,X5)=X5|k1_cat_1(X1,esk10_5(X1,X2,X3,X4,X5),X3)=esk8_4(X1,X2,X3,X4)|v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X5,u4_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X5,k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2)))).
+cnf(i_0_7, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_cat_3(X1,X2,X3,X4)|k3_graph_1(X1,X4)!=X2|k3_graph_1(X1,X3)!=X2|esk10_5(X1,X2,X3,X4,X5)!=X5|k1_cat_1(X1,esk10_5(X1,X2,X3,X4,X5),X4)!=esk9_4(X1,X2,X3,X4)|k1_cat_1(X1,esk10_5(X1,X2,X3,X4,X5),X3)!=esk8_4(X1,X2,X3,X4)|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X5,u4_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X5,k2_cat_1(X1,esk7_4(X1,X2,X3,X4),X2)))).
+cnf(i_0_17, plain, (esk6_7(X1,X2,X3,X4,X5,X6,X7)=X8|v2_struct_0(X1)|v11_struct_0(X1)|k1_cat_1(X1,X8,X4)!=X7|k1_cat_1(X1,X8,X3)!=X6|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X8,u4_struct_0(X1))|~m1_subset_1(X7,u4_struct_0(X1))|~m1_subset_1(X6,u4_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4)|~r2_hidden(X8,k2_cat_1(X1,X5,X2))|~r2_hidden(X7,k2_cat_1(X1,X5,k4_graph_1(X1,X4)))|~r2_hidden(X6,k2_cat_1(X1,X5,k4_graph_1(X1,X3))))).
+cnf(i_0_15, plain, (k1_cat_1(X1,X8,X4)=X7|v2_struct_0(X1)|v11_struct_0(X1)|esk6_7(X1,X2,X3,X4,X5,X6,X7)!=X8|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X8,u4_struct_0(X1))|~m1_subset_1(X7,u4_struct_0(X1))|~m1_subset_1(X6,u4_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4)|~r2_hidden(X8,k2_cat_1(X1,X5,X2))|~r2_hidden(X7,k2_cat_1(X1,X5,k4_graph_1(X1,X4)))|~r2_hidden(X6,k2_cat_1(X1,X5,k4_graph_1(X1,X3))))).
+cnf(i_0_16, plain, (k1_cat_1(X1,X8,X3)=X6|v2_struct_0(X1)|v11_struct_0(X1)|esk6_7(X1,X2,X3,X4,X5,X6,X7)!=X8|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X8,u4_struct_0(X1))|~m1_subset_1(X7,u4_struct_0(X1))|~m1_subset_1(X6,u4_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4)|~r2_hidden(X8,k2_cat_1(X1,X5,X2))|~r2_hidden(X7,k2_cat_1(X1,X5,k4_graph_1(X1,X4)))|~r2_hidden(X6,k2_cat_1(X1,X5,k4_graph_1(X1,X3))))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|v11_struct_0(X1)|m1_subset_1(esk6_7(X1,X2,X3,X4,X5,X6,X7),u4_struct_0(X1))|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X7,u4_struct_0(X1))|~m1_subset_1(X6,u4_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4)|~r2_hidden(X7,k2_cat_1(X1,X5,k4_graph_1(X1,X4)))|~r2_hidden(X6,k2_cat_1(X1,X5,k4_graph_1(X1,X3))))).
+cnf(i_0_18, plain, (v2_struct_0(X1)|v11_struct_0(X1)|r2_hidden(esk6_7(X1,X2,X3,X4,X5,X6,X7),k2_cat_1(X1,X5,X2))|~v2_cat_1(X1)|~v3_cat_1(X1)|~v4_cat_1(X1)|~v5_cat_1(X1)|~v6_cat_1(X1)|~l1_cat_1(X1)|~m1_subset_1(X7,u4_struct_0(X1))|~m1_subset_1(X6,u4_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u4_struct_0(X1))|~m1_subset_1(X3,u4_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_cat_3(X1,X2,X3,X4)|~r2_hidden(X7,k2_cat_1(X1,X5,k4_graph_1(X1,X4)))|~r2_hidden(X6,k2_cat_1(X1,X5,k4_graph_1(X1,X3))))).
+
+

@@ -1,0 +1,30 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r2_relset_1(esk1_0,esk1_0,k18_mmlquery(esk1_0,k18_mmlquery(esk1_0,k18_mmlquery(esk1_0,esk2_0))),k18_mmlquery(esk1_0,esk2_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_9, plain, (m1_subset_1(k18_mmlquery(X1,X2),k1_zfmisc_1(k2_zfmisc_1(X1,X1)))|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_14, plain, (k1_relset_1(X1,k18_mmlquery(X1,k18_mmlquery(X1,X2)))=k1_relset_1(X1,X2)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_13, plain, (X3=X4|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2)))|~r2_hidden(k4_tarski(X3,X4),k18_mmlquery(X2,X1)))).
+cnf(i_0_12, plain, (r2_hidden(X3,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2)))|~r2_hidden(k4_tarski(X3,X4),k18_mmlquery(X2,X1)))).
+cnf(i_0_10, plain, (r2_hidden(X3,k1_relset_1(X2,X1))|r2_hidden(k4_tarski(X3,X4),k18_mmlquery(X2,X1))|X3!=X4|~r2_hidden(X3,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_11, plain, (~r2_hidden(X3,k1_relset_1(X2,X1))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2)))|~r2_hidden(k4_tarski(X3,X4),k18_mmlquery(X2,X1)))).
+cnf(i_0_8, plain, (r2_hidden(k4_tarski(X5,X6),X4)|~m1_subset_1(X6,X3)|~m1_subset_1(X5,X2)|~r2_relset_1(X2,X3,X1,X4)|~r2_hidden(k4_tarski(X5,X6),X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_7, plain, (r2_hidden(k4_tarski(X5,X6),X1)|~m1_subset_1(X6,X3)|~m1_subset_1(X5,X2)|~r2_relset_1(X2,X3,X1,X4)|~r2_hidden(k4_tarski(X5,X6),X4)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_6, plain, (r2_relset_1(X2,X3,X1,X4)|m1_subset_1(esk3_4(X2,X3,X1,X4),X2)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_5, plain, (r2_relset_1(X2,X3,X1,X4)|m1_subset_1(esk4_4(X2,X3,X1,X4),X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_3, plain, (r2_relset_1(X2,X3,X1,X4)|r2_hidden(k4_tarski(esk3_4(X2,X3,X1,X4),esk4_4(X2,X3,X1,X4)),X4)|r2_hidden(k4_tarski(esk3_4(X2,X3,X1,X4),esk4_4(X2,X3,X1,X4)),X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_4, plain, (r2_relset_1(X2,X3,X1,X4)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~r2_hidden(k4_tarski(esk3_4(X2,X3,X1,X4),esk4_4(X2,X3,X1,X4)),X4)|~r2_hidden(k4_tarski(esk3_4(X2,X3,X1,X4),esk4_4(X2,X3,X1,X4)),X1))).
+
+

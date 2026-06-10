@@ -1,0 +1,113 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_7, negated_conjecture, (v1_ami_2(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v1_ami_2(esk2_0))).
+cnf(i_0_27, plain, (v4_finsub_1(k5_finsub_1(X1)))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk1_0,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk3_0,u1_compos_1(k1_scmfsa_2)))).
+cnf(i_0_29, plain, (v1_finset_1(k2_tarski(X1,X2)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k5_scmfsa_m(esk1_0,esk2_0)!=k1_sf_mastr(esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_33, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X2))).
+cnf(i_0_25, plain, (v1_finset_1(X3)|k5_finsub_1(X2)!=X1|~v4_finsub_1(X1)|~r2_hidden(X3,X1))).
+cnf(i_0_37, plain, (m1_subset_1(X1,k1_zfmisc_1(X2))|~r1_tarski(X1,X2))).
+cnf(i_0_38, plain, (r1_tarski(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_26, plain, (r1_tarski(X3,X2)|k5_finsub_1(X2)!=X1|~v4_finsub_1(X1)|~r2_hidden(X3,X1))).
+cnf(i_0_2, negated_conjecture, (k6_scmfsa_2(esk1_0,esk2_0)=esk3_0|k7_scmfsa_2(esk1_0,esk2_0)=esk3_0|k8_scmfsa_2(esk1_0,esk2_0)=esk3_0|k9_scmfsa_2(esk1_0,esk2_0)=esk3_0|k10_scmfsa_2(esk1_0,esk2_0)=esk3_0)).
+cnf(i_0_24, plain, (r2_hidden(X3,X1)|k5_finsub_1(X2)!=X1|~v4_finsub_1(X1)|~v1_finset_1(X3)|~r1_tarski(X3,X2))).
+cnf(i_0_8, plain, (epred1_2(X1,X2)|~m1_subset_1(X2,u1_compos_1(k1_scmfsa_2))|~m1_subset_1(X1,k5_finsub_1(k2_scmfsa_2)))).
+cnf(i_0_21, plain, (k5_finsub_1(X2)=X1|v1_finset_1(esk5_2(X2,X1))|r2_hidden(esk5_2(X2,X1),X1)|~v4_finsub_1(X1))).
+cnf(i_0_86, plain, (v1_ami_2(esk8_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~epred1_2(X1,X2))).
+cnf(i_0_79, plain, (v1_ami_2(esk8_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~epred1_2(X1,X2))).
+cnf(i_0_72, plain, (v1_ami_2(esk10_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_63, plain, (v1_ami_2(esk10_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_70, plain, (v1_ami_2(esk11_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_61, plain, (v1_ami_2(esk11_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_54, plain, (v1_ami_2(esk13_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~epred1_2(X1,X2))).
+cnf(i_0_47, plain, (v1_ami_2(esk13_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~epred1_2(X1,X2))).
+cnf(i_0_68, plain, (m1_scmfsa_2(esk12_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_59, plain, (m1_scmfsa_2(esk12_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_52, plain, (m1_scmfsa_2(esk14_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~epred1_2(X1,X2))).
+cnf(i_0_45, plain, (m1_scmfsa_2(esk14_2(X2,X1))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~epred1_2(X1,X2))).
+cnf(i_0_82, plain, (k4_scmfsa_m(esk8_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~epred1_2(X1,X2))).
+cnf(i_0_75, plain, (k4_scmfsa_m(esk8_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~epred1_2(X1,X2))).
+cnf(i_0_50, plain, (k4_scmfsa_m(esk13_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~epred1_2(X1,X2))).
+cnf(i_0_43, plain, (k4_scmfsa_m(esk13_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~epred1_2(X1,X2))).
+cnf(i_0_22, plain, (k5_finsub_1(X2)=X1|r2_hidden(esk5_2(X2,X1),X1)|r1_tarski(esk5_2(X2,X1),X2)|~v4_finsub_1(X1))).
+cnf(i_0_30, plain, (k5_scmfsa_m(X1,X2)=k2_tarski(X1,X2)|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_85, plain, (m1_subset_1(esk8_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~epred1_2(X1,X2))).
+cnf(i_0_78, plain, (m1_subset_1(esk8_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~epred1_2(X1,X2))).
+cnf(i_0_71, plain, (m1_subset_1(esk10_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_62, plain, (m1_subset_1(esk10_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_69, plain, (m1_subset_1(esk11_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_60, plain, (m1_subset_1(esk11_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_53, plain, (m1_subset_1(esk13_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~epred1_2(X1,X2))).
+cnf(i_0_46, plain, (m1_subset_1(esk13_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~epred1_2(X1,X2))).
+cnf(i_0_31, plain, (k2_compos_0(u1_compos_1(k1_scmfsa_2),k6_scmfsa_2(X1,X2))=1|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_32, plain, (k2_compos_0(u1_compos_1(k1_scmfsa_2),k7_scmfsa_2(X1,X2))=2|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_34, plain, (k2_compos_0(u1_compos_1(k1_scmfsa_2),k8_scmfsa_2(X1,X2))=3|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_35, plain, (k2_compos_0(u1_compos_1(k1_scmfsa_2),k9_scmfsa_2(X1,X2))=4|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_36, plain, (k2_compos_0(u1_compos_1(k1_scmfsa_2),k10_scmfsa_2(X1,X2))=5|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_28, plain, (m1_subset_1(k5_scmfsa_m(X1,X2),k1_zfmisc_1(k2_scmfsa_2))|~v1_ami_2(X2)|~v1_ami_2(X1)|~m1_subset_1(X2,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X1,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_66, plain, (k5_scmfsa_m(esk10_2(X2,X1),esk11_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_57, plain, (k5_scmfsa_m(esk10_2(X2,X1),esk11_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_49, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k16_scmfsa_2(X3,X4)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~v1_ami_2(X3)|~m1_scmfsa_2(X4)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_42, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k16_scmfsa_2(X3,X4)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~v1_ami_2(X3)|~m1_scmfsa_2(X4)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_48, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k17_scmfsa_2(X3,X4)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~v1_ami_2(X3)|~m1_scmfsa_2(X4)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_41, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k17_scmfsa_2(X3,X4)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~v1_ami_2(X3)|~m1_scmfsa_2(X4)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_84, plain, (m2_subset_1(esk9_2(X2,X1),k1_numbers,k5_numbers)|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~epred1_2(X1,X2))).
+cnf(i_0_77, plain, (m2_subset_1(esk9_2(X2,X1),k1_numbers,k5_numbers)|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~epred1_2(X1,X2))).
+cnf(i_0_23, plain, (k5_finsub_1(X2)=X1|~v4_finsub_1(X1)|~v1_finset_1(esk5_2(X2,X1))|~r2_hidden(esk5_2(X2,X1),X1)|~r1_tarski(esk5_2(X2,X1),X2))).
+cnf(i_0_83, plain, (k12_scmfsa_2(esk9_2(X2,X1),esk8_2(X2,X1))=X2|k13_scmfsa_2(esk9_2(X2,X1),esk8_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~epred1_2(X1,X2))).
+cnf(i_0_76, plain, (k12_scmfsa_2(esk9_2(X2,X1),esk8_2(X2,X1))=X2|k13_scmfsa_2(esk9_2(X2,X1),esk8_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~epred1_2(X1,X2))).
+cnf(i_0_51, plain, (k16_scmfsa_2(esk13_2(X2,X1),esk14_2(X2,X1))=X2|k17_scmfsa_2(esk13_2(X2,X1),esk14_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=11|~epred1_2(X1,X2))).
+cnf(i_0_44, plain, (k16_scmfsa_2(esk13_2(X2,X1),esk14_2(X2,X1))=X2|k17_scmfsa_2(esk13_2(X2,X1),esk14_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=12|~epred1_2(X1,X2))).
+cnf(i_0_81, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k12_scmfsa_2(X4,X3)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~m2_subset_1(X4,k1_numbers,k5_numbers))).
+cnf(i_0_74, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k12_scmfsa_2(X4,X3)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~m2_subset_1(X4,k1_numbers,k5_numbers))).
+cnf(i_0_80, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k13_scmfsa_2(X4,X3)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=7|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~m2_subset_1(X4,k1_numbers,k5_numbers))).
+cnf(i_0_73, plain, (k1_sf_mastr(X2)=X1|k4_scmfsa_m(X3)!=X1|k13_scmfsa_2(X4,X3)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=8|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~m2_subset_1(X4,k1_numbers,k5_numbers))).
+cnf(i_0_65, plain, (k1_sf_mastr(X2)=X1|k5_scmfsa_m(X3,X4)!=X1|k14_scmfsa_2(X4,X3,X5)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~v1_ami_2(X4)|~v1_ami_2(X3)|~m1_scmfsa_2(X5)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_56, plain, (k1_sf_mastr(X2)=X1|k5_scmfsa_m(X3,X4)!=X1|k14_scmfsa_2(X4,X3,X5)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~v1_ami_2(X4)|~v1_ami_2(X3)|~m1_scmfsa_2(X5)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_64, plain, (k1_sf_mastr(X2)=X1|k5_scmfsa_m(X3,X4)!=X1|k15_scmfsa_2(X4,X3,X5)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~v1_ami_2(X4)|~v1_ami_2(X3)|~m1_scmfsa_2(X5)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_55, plain, (k1_sf_mastr(X2)=X1|k5_scmfsa_m(X3,X4)!=X1|k15_scmfsa_2(X4,X3,X5)!=X2|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~v1_ami_2(X4)|~v1_ami_2(X3)|~m1_scmfsa_2(X5)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2)))).
+cnf(i_0_67, plain, (k14_scmfsa_2(esk11_2(X2,X1),esk10_2(X2,X1),esk12_2(X2,X1))=X2|k15_scmfsa_2(esk11_2(X2,X1),esk10_2(X2,X1),esk12_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=9|~epred1_2(X1,X2))).
+cnf(i_0_58, plain, (k14_scmfsa_2(esk11_2(X2,X1),esk10_2(X2,X1),esk12_2(X2,X1))=X2|k15_scmfsa_2(esk11_2(X2,X1),esk10_2(X2,X1),esk12_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)!=10|~epred1_2(X1,X2))).
+cnf(i_0_15, plain, (r2_hidden(X7,X1)|X6!=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1)).
+cnf(i_0_16, plain, (r2_hidden(X7,X1)|X5!=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1)).
+cnf(i_0_17, plain, (r2_hidden(X7,X1)|X4!=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1)).
+cnf(i_0_18, plain, (r2_hidden(X7,X1)|X3!=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1)).
+cnf(i_0_19, plain, (r2_hidden(X7,X1)|X2!=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1)).
+cnf(i_0_20, plain, (X6=X7|X5=X7|X4=X7|X3=X7|X2=X7|k3_enumset1(X2,X3,X4,X5,X6)!=X1|~r2_hidden(X7,X1))).
+cnf(i_0_39, plain, (k1_sf_mastr(X2)=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=7|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=8|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=9|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=10|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=11|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=12|r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5))|k1_xboole_0!=X1|~epred1_2(X1,X2))).
+cnf(i_0_40, plain, (k1_xboole_0=X1|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=7|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=8|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=9|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=10|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=11|k2_compos_0(u1_compos_1(k1_scmfsa_2),X2)=12|r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5))|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2))).
+cnf(i_0_97, plain, (v1_ami_2(esk6_2(X2,X1))|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_95, plain, (v1_ami_2(esk7_2(X2,X1))|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_96, plain, (m1_subset_1(esk6_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_94, plain, (m1_subset_1(esk7_2(X2,X1),u1_struct_0(k1_scmfsa_2))|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_92, plain, (k5_scmfsa_m(esk6_2(X2,X1),esk7_2(X2,X1))=X1|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_91, plain, (k1_sf_mastr(X2)=X1|k6_scmfsa_2(X3,X4)!=X2|k5_scmfsa_m(X3,X4)!=X1|~v1_ami_2(X4)|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_90, plain, (k1_sf_mastr(X2)=X1|k7_scmfsa_2(X3,X4)!=X2|k5_scmfsa_m(X3,X4)!=X1|~v1_ami_2(X4)|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_89, plain, (k1_sf_mastr(X2)=X1|k8_scmfsa_2(X3,X4)!=X2|k5_scmfsa_m(X3,X4)!=X1|~v1_ami_2(X4)|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_88, plain, (k1_sf_mastr(X2)=X1|k9_scmfsa_2(X3,X4)!=X2|k5_scmfsa_m(X3,X4)!=X1|~v1_ami_2(X4)|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_87, plain, (k1_sf_mastr(X2)=X1|k10_scmfsa_2(X3,X4)!=X2|k5_scmfsa_m(X3,X4)!=X1|~v1_ami_2(X4)|~v1_ami_2(X3)|~epred1_2(X1,X2)|~m1_subset_1(X4,u1_struct_0(k1_scmfsa_2))|~m1_subset_1(X3,u1_struct_0(k1_scmfsa_2))|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_93, plain, (k6_scmfsa_2(esk6_2(X2,X1),esk7_2(X2,X1))=X2|k7_scmfsa_2(esk6_2(X2,X1),esk7_2(X2,X1))=X2|k8_scmfsa_2(esk6_2(X2,X1),esk7_2(X2,X1))=X2|k9_scmfsa_2(esk6_2(X2,X1),esk7_2(X2,X1))=X2|k10_scmfsa_2(esk6_2(X2,X1),esk7_2(X2,X1))=X2|k1_sf_mastr(X2)!=X1|~epred1_2(X1,X2)|~r2_hidden(k2_compos_0(u1_compos_1(k1_scmfsa_2),X2),k3_enumset1(1,2,3,4,5)))).
+cnf(i_0_10, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)!=X6|~r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+cnf(i_0_11, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)!=X5|~r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+cnf(i_0_12, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)!=X4|~r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+cnf(i_0_13, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)!=X3|~r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+cnf(i_0_14, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)!=X2|~r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+cnf(i_0_9, plain, (k3_enumset1(X2,X3,X4,X5,X6)=X1|esk4_6(X2,X3,X4,X5,X6,X1)=X6|esk4_6(X2,X3,X4,X5,X6,X1)=X5|esk4_6(X2,X3,X4,X5,X6,X1)=X4|esk4_6(X2,X3,X4,X5,X6,X1)=X3|esk4_6(X2,X3,X4,X5,X6,X1)=X2|r2_hidden(esk4_6(X2,X3,X4,X5,X6,X1),X1))).
+
+

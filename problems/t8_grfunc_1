@@ -1,0 +1,34 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_5, plain, (k2_tarski(X1,X2)=k2_tarski(X2,X1))).
+cnf(i_0_16, plain, (v1_relat_1(k2_tarski(k4_tarski(X1,X2),k4_tarski(X3,X4))))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_6, plain, (v1_funct_1(X1)|esk6_1(X1)!=esk7_1(X1))).
+cnf(i_0_13, plain, (r2_hidden(X4,X1)|X3!=X4|k2_tarski(X2,X3)!=X1)).
+cnf(i_0_14, plain, (r2_hidden(X4,X1)|X2!=X4|k2_tarski(X2,X3)!=X1)).
+cnf(i_0_17, plain, (X2=X4|k4_tarski(X1,X2)!=k4_tarski(X3,X4))).
+cnf(i_0_18, plain, (X1=X3|k4_tarski(X1,X2)!=k4_tarski(X3,X4))).
+cnf(i_0_15, plain, (X3=X4|X2=X4|k2_tarski(X2,X3)!=X1|~r2_hidden(X4,X1))).
+cnf(i_0_8, plain, (v1_funct_1(X1)|r2_hidden(k4_tarski(esk5_1(X1),esk6_1(X1)),X1))).
+cnf(i_0_7, plain, (v1_funct_1(X1)|r2_hidden(k4_tarski(esk5_1(X1),esk7_1(X1)),X1))).
+cnf(i_0_2, negated_conjecture, (esk2_0=esk4_0|v1_relat_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0)))|esk3_0!=esk1_0)).
+cnf(i_0_1, negated_conjecture, (esk2_0=esk4_0|v1_funct_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0)))|esk3_0!=esk1_0)).
+cnf(i_0_9, plain, (X1=X2|~v1_funct_1(X4)|~r2_hidden(k4_tarski(X3,X2),X4)|~r2_hidden(k4_tarski(X3,X1),X4))).
+cnf(i_0_10, plain, (k2_tarski(X2,X3)=X1|esk8_3(X2,X3,X1)=X3|esk8_3(X2,X3,X1)=X2|r2_hidden(esk8_3(X2,X3,X1),X1))).
+cnf(i_0_11, plain, (k2_tarski(X2,X3)=X1|esk8_3(X2,X3,X1)!=X3|~r2_hidden(esk8_3(X2,X3,X1),X1))).
+cnf(i_0_12, plain, (k2_tarski(X2,X3)=X1|esk8_3(X2,X3,X1)!=X2|~r2_hidden(esk8_3(X2,X3,X1),X1))).
+cnf(i_0_4, negated_conjecture, (esk3_0=esk1_0|~v1_relat_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0)))|~v1_funct_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0))))).
+cnf(i_0_3, negated_conjecture, (esk2_0!=esk4_0|~v1_relat_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0)))|~v1_funct_1(k2_tarski(k4_tarski(esk1_0,esk2_0),k4_tarski(esk3_0,esk4_0))))).
+
+

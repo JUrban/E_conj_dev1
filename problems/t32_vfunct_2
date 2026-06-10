@@ -1,0 +1,72 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_52, negated_conjecture, (v13_algstr_0(esk2_0))).
+cnf(i_0_51, negated_conjecture, (v2_rlvect_1(esk2_0))).
+cnf(i_0_50, negated_conjecture, (v3_rlvect_1(esk2_0))).
+cnf(i_0_49, negated_conjecture, (v4_rlvect_1(esk2_0))).
+cnf(i_0_48, negated_conjecture, (v3_normsp_0(esk2_0))).
+cnf(i_0_47, negated_conjecture, (v4_normsp_0(esk2_0))).
+cnf(i_0_46, negated_conjecture, (v2_clvect_1(esk2_0))).
+cnf(i_0_45, negated_conjecture, (v3_clvect_1(esk2_0))).
+cnf(i_0_44, negated_conjecture, (v4_clvect_1(esk2_0))).
+cnf(i_0_43, negated_conjecture, (v5_clvect_1(esk2_0))).
+cnf(i_0_42, negated_conjecture, (v8_clvect_1(esk2_0))).
+cnf(i_0_41, negated_conjecture, (l2_clvect_1(esk2_0))).
+cnf(i_0_40, negated_conjecture, (v1_funct_1(esk3_0))).
+cnf(i_0_38, negated_conjecture, (v1_funct_1(esk4_0))).
+cnf(i_0_58, plain, (k3_xboole_0(X1,X2)=k3_xboole_0(X2,X1))).
+cnf(i_0_85, plain, (r1_tarski(k3_xboole_0(X1,X2),X1))).
+cnf(i_0_39, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,u1_struct_0(esk2_0)))))).
+cnf(i_0_37, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,u1_struct_0(esk2_0)))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_54, negated_conjecture, (~v1_xboole_0(esk1_0))).
+cnf(i_0_53, negated_conjecture, (~v2_struct_0(esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_79, plain, (l2_algstr_0(X1)|~l1_clvect_1(X1))).
+cnf(i_0_81, plain, (l1_clvect_1(X1)|~l2_clvect_1(X1))).
+cnf(i_0_80, plain, (l2_normsp_0(X1)|~l2_clvect_1(X1))).
+cnf(i_0_60, plain, (r1_tarski(X2,X1)|X1!=X2)).
+cnf(i_0_61, plain, (r1_tarski(X1,X2)|X1!=X2)).
+cnf(i_0_86, plain, (m1_subset_1(X1,k1_zfmisc_1(X2))|~r1_tarski(X1,X2))).
+cnf(i_0_87, plain, (r1_tarski(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_59, plain, (X1=X2|~r1_tarski(X2,X1)|~r1_tarski(X1,X2))).
+cnf(i_0_68, plain, (k1_relset_1(X2,X1)=X2|~v1_relat_1(X1)|~v1_partfun1(X1,X2)|~v4_relat_1(X1,X2))).
+cnf(i_0_67, plain, (v1_partfun1(X1,X2)|k1_relset_1(X2,X1)!=X2|~v1_relat_1(X1)|~v4_relat_1(X1,X2))).
+cnf(i_0_74, plain, (m1_subset_1(k1_relset_1(X1,X2),k1_zfmisc_1(X1))|~v1_relat_1(X2)|~v4_relat_1(X2,X1))).
+cnf(i_0_82, plain, (k9_subset_1(X1,X2,X2)=X2|~m1_subset_1(X3,k1_zfmisc_1(X1)))).
+cnf(i_0_84, plain, (k9_subset_1(X1,X2,X3)=k3_xboole_0(X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(X1)))).
+cnf(i_0_55, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_57, plain, (v4_relat_1(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_56, plain, (v5_relat_1(X1,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_76, plain, (v1_xboole_0(X2)|v2_struct_0(X3)|v1_funct_1(k2_vfunct_1(X2,X3,X4,X1))|~v1_funct_1(X4)|~v1_funct_1(X1)|~l2_algstr_0(X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3)))))).
+cnf(i_0_83, plain, (k1_vfunct_1(X1,X2,X3,X4)=k3_vfunct_2(X1,X2,X3,X4)|v1_xboole_0(X1)|v2_struct_0(X2)|~v13_algstr_0(X2)|~v2_rlvect_1(X2)|~v3_rlvect_1(X2)|~v4_rlvect_1(X2)|~v3_normsp_0(X2)|~v4_normsp_0(X2)|~v2_clvect_1(X2)|~v3_clvect_1(X2)|~v4_clvect_1(X2)|~v5_clvect_1(X2)|~v8_clvect_1(X2)|~l2_clvect_1(X2)|~v1_funct_1(X4)|~v1_funct_1(X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_78, plain, (v1_xboole_0(X2)|v2_struct_0(X3)|v1_funct_1(k3_vfunct_2(X2,X3,X4,X1))|~v13_algstr_0(X3)|~v2_rlvect_1(X3)|~v3_rlvect_1(X3)|~v4_rlvect_1(X3)|~v3_normsp_0(X3)|~v4_normsp_0(X3)|~v2_clvect_1(X3)|~v3_clvect_1(X3)|~v4_clvect_1(X3)|~v5_clvect_1(X3)|~v8_clvect_1(X3)|~l2_clvect_1(X3)|~v1_funct_1(X4)|~v1_funct_1(X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3)))))).
+cnf(i_0_75, plain, (v1_xboole_0(X2)|v2_struct_0(X3)|m1_subset_1(k2_vfunct_1(X2,X3,X4,X1),k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~v1_funct_1(X4)|~v1_funct_1(X1)|~l2_algstr_0(X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3)))))).
+cnf(i_0_36, negated_conjecture, (v1_partfun1(esk3_0,esk1_0)|v1_partfun1(k3_vfunct_2(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0)|v1_partfun1(k2_vfunct_1(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0))).
+cnf(i_0_22, negated_conjecture, (v1_partfun1(esk4_0,esk1_0)|v1_partfun1(k3_vfunct_2(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0)|v1_partfun1(k2_vfunct_1(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0))).
+cnf(i_0_77, plain, (v1_xboole_0(X2)|v2_struct_0(X3)|m1_subset_1(k3_vfunct_2(X2,X3,X4,X1),k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~v13_algstr_0(X3)|~v2_rlvect_1(X3)|~v3_rlvect_1(X3)|~v4_rlvect_1(X3)|~v3_normsp_0(X3)|~v4_normsp_0(X3)|~v2_clvect_1(X3)|~v3_clvect_1(X3)|~v4_clvect_1(X3)|~v5_clvect_1(X3)|~v8_clvect_1(X3)|~l2_clvect_1(X3)|~v1_funct_1(X4)|~v1_funct_1(X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3))))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,u1_struct_0(X3)))))).
+cnf(i_0_73, plain, (k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))=k1_relset_1(X1,X5)|v1_xboole_0(X1)|v2_struct_0(X2)|k2_vfunct_1(X1,X2,X3,X4)!=X5|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_66, plain, (k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))=k1_relset_1(X1,X5)|v1_xboole_0(X1)|v2_struct_0(X2)|k1_vfunct_1(X1,X2,X3,X4)!=X5|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_24, negated_conjecture, (v1_partfun1(esk3_0,esk1_0)|v1_partfun1(esk4_0,esk1_0)|v1_partfun1(k3_vfunct_2(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0)|v1_partfun1(k2_vfunct_1(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0))).
+cnf(i_0_34, negated_conjecture, (v1_partfun1(esk3_0,esk1_0)|v1_partfun1(esk4_0,esk1_0)|v1_partfun1(k3_vfunct_2(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0)|v1_partfun1(k2_vfunct_1(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0))).
+cnf(i_0_65, plain, (k1_algstr_0(X2,k7_partfun1(u1_struct_0(X2),X3,X6),k7_partfun1(u1_struct_0(X2),X4,X6))=k7_partfun1(u1_struct_0(X2),X5,X6)|v1_xboole_0(X1)|v2_struct_0(X2)|k1_vfunct_1(X1,X2,X3,X4)!=X5|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X6,X1)|~r2_hidden(X6,k1_relset_1(X1,X5))|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_72, plain, (k5_algstr_0(X2,k7_partfun1(u1_struct_0(X2),X3,X6),k7_partfun1(u1_struct_0(X2),X4,X6))=k7_partfun1(u1_struct_0(X2),X5,X6)|v1_xboole_0(X1)|v2_struct_0(X2)|k2_vfunct_1(X1,X2,X3,X4)!=X5|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X6,X1)|~r2_hidden(X6,k1_relset_1(X1,X5))|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_1, negated_conjecture, (~v1_partfun1(esk3_0,esk1_0)|~v1_partfun1(esk4_0,esk1_0)|~v1_partfun1(k3_vfunct_2(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0)|~v1_partfun1(k2_vfunct_1(esk1_0,esk2_0,esk3_0,esk4_0),esk1_0))).
+cnf(i_0_71, plain, (k2_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|m1_subset_1(esk6_5(X1,X2,X3,X4,X5),X1)|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_64, plain, (k1_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|m1_subset_1(esk5_5(X1,X2,X3,X4,X5),X1)|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_70, plain, (k2_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|r2_hidden(esk6_5(X1,X2,X3,X4,X5),k1_relset_1(X1,X5))|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_63, plain, (k1_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|r2_hidden(esk5_5(X1,X2,X3,X4,X5),k1_relset_1(X1,X5))|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_69, plain, (k2_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|k5_algstr_0(X2,k7_partfun1(u1_struct_0(X2),X3,esk6_5(X1,X2,X3,X4,X5)),k7_partfun1(u1_struct_0(X2),X4,esk6_5(X1,X2,X3,X4,X5)))!=k7_partfun1(u1_struct_0(X2),X5,esk6_5(X1,X2,X3,X4,X5))|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+cnf(i_0_62, plain, (k1_vfunct_1(X1,X2,X3,X4)=X5|v1_xboole_0(X1)|v2_struct_0(X2)|k9_subset_1(X1,k1_relset_1(X1,X3),k1_relset_1(X1,X4))!=k1_relset_1(X1,X5)|k1_algstr_0(X2,k7_partfun1(u1_struct_0(X2),X3,esk5_5(X1,X2,X3,X4,X5)),k7_partfun1(u1_struct_0(X2),X4,esk5_5(X1,X2,X3,X4,X5)))!=k7_partfun1(u1_struct_0(X2),X5,esk5_5(X1,X2,X3,X4,X5))|~v1_funct_1(X5)|~v1_funct_1(X4)|~v1_funct_1(X3)|~l2_algstr_0(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2))))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,u1_struct_0(X2)))))).
+
+

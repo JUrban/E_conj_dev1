@@ -1,0 +1,41 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (v4_scmyciel(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v7_scmyciel(esk2_0,k6_scmyciel(esk1_0)))).
+cnf(i_0_2, negated_conjecture, (m1_eqrel_1(esk2_0,k3_tarski(k6_scmyciel(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_15, plain, (v4_scmyciel(k6_scmyciel(X1))|~v4_scmyciel(X1))).
+cnf(i_0_18, plain, (v4_scmyciel(k7_scmyciel(X1,X2))|~v4_scmyciel(X1))).
+cnf(i_0_1, negated_conjecture, (~v10_scmyciel(esk2_0,esk1_0)|~m1_eqrel_1(esk2_0,k3_tarski(esk1_0)))).
+cnf(i_0_21, plain, (m1_subset_1(X1,k1_zfmisc_1(X2))|~r1_tarski(X1,X2))).
+cnf(i_0_22, plain, (r1_tarski(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_5, plain, (k6_subset_1(k5_scmyciel(k3_tarski(X1)),k1_scmyciel(X1))=k6_scmyciel(X1)|~v4_scmyciel(X1))).
+cnf(i_0_16, plain, (m1_subset_1(k7_scmyciel(X1,X2),k1_zfmisc_1(X1))|~v4_scmyciel(X1))).
+cnf(i_0_17, plain, (m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_eqrel_1(X1,X2))).
+cnf(i_0_23, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_20, plain, (k3_tarski(k7_scmyciel(X1,X2))=X2|~v4_scmyciel(X1)|~r1_tarski(X2,k3_tarski(X1)))).
+cnf(i_0_19, plain, (k3_tarski(k6_subset_1(k5_scmyciel(k3_tarski(X1)),k1_scmyciel(X1)))=k3_tarski(X1)|~v4_scmyciel(X1))).
+cnf(i_0_25, plain, (v9_scmyciel(k3_tarski(X2),X1)|~v4_scmyciel(X2)|~v4_scmyciel(X1)|~v5_scmyciel(X2)|~m1_subset_1(X2,k1_zfmisc_1(k6_scmyciel(X1))))).
+cnf(i_0_7, plain, (v7_scmyciel(X2,X1)|r2_hidden(esk3_2(X1,X2),X2)|~v4_scmyciel(X1)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_12, plain, (v10_scmyciel(X2,X1)|r2_hidden(esk4_2(X1,X2),X2)|~v4_scmyciel(X1)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_14, plain, (v9_scmyciel(X3,X1)|~v4_scmyciel(X1)|~v10_scmyciel(X2,X1)|~r2_hidden(X3,X2)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_24, plain, (m1_subset_1(k3_tarski(X2),k1_zfmisc_1(k3_tarski(X1)))|~v4_scmyciel(X2)|~v4_scmyciel(X1)|~v5_scmyciel(X2)|~m1_subset_1(X2,k1_zfmisc_1(k6_scmyciel(X1))))).
+cnf(i_0_10, plain, (v4_scmyciel(k7_scmyciel(X1,X3))|~v4_scmyciel(X1)|~v7_scmyciel(X2,X1)|~r2_hidden(X3,X2)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_9, plain, (v5_scmyciel(k7_scmyciel(X1,X3))|~v4_scmyciel(X1)|~v7_scmyciel(X2,X1)|~r2_hidden(X3,X2)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_13, plain, (m1_subset_1(X3,k1_zfmisc_1(k3_tarski(X1)))|~v4_scmyciel(X1)|~v10_scmyciel(X2,X1)|~r2_hidden(X3,X2)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_8, plain, (m1_subset_1(k7_scmyciel(X1,X3),k1_zfmisc_1(X1))|~v4_scmyciel(X1)|~v7_scmyciel(X2,X1)|~r2_hidden(X3,X2)|~m1_eqrel_1(X2,k3_tarski(X1)))).
+cnf(i_0_11, plain, (v10_scmyciel(X2,X1)|~v4_scmyciel(X1)|~m1_eqrel_1(X2,k3_tarski(X1))|~v9_scmyciel(esk4_2(X1,X2),X1)|~m1_subset_1(esk4_2(X1,X2),k1_zfmisc_1(k3_tarski(X1))))).
+cnf(i_0_6, plain, (v7_scmyciel(X2,X1)|~v4_scmyciel(X1)|~m1_eqrel_1(X2,k3_tarski(X1))|~v4_scmyciel(k7_scmyciel(X1,esk3_2(X1,X2)))|~v5_scmyciel(k7_scmyciel(X1,esk3_2(X1,X2)))|~m1_subset_1(k7_scmyciel(X1,esk3_2(X1,X2)),k1_zfmisc_1(X1)))).
+
+

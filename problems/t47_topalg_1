@@ -1,0 +1,67 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_6, negated_conjecture, (v2_pre_topc(esk1_0))).
+cnf(i_0_5, negated_conjecture, (l1_pre_topc(esk1_0))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_7, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_51, plain, (~v1_xboole_0(X1)|~r2_hidden(X2,X1))).
+cnf(i_0_48, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_35, plain, (v2_struct_0(X2)|v3_relat_2(k4_topalg_1(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_34, plain, (v2_struct_0(X2)|v8_relat_2(k4_topalg_1(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_31, plain, (v2_struct_0(X2)|v15_algstr_0(k5_topalg_1(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_30, plain, (v2_struct_0(X2)|l3_algstr_0(k5_topalg_1(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_44, plain, (v2_struct_0(X2)|v1_relat_1(esk13_2(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_41, plain, (v2_struct_0(X2)|v1_funct_1(esk13_2(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_40, plain, (v2_struct_0(X2)|v1_partfun1(esk13_2(X2,X1),u1_struct_0(k5_topmetr))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_43, plain, (v2_struct_0(X2)|v4_relat_1(esk13_2(X2,X1),u1_struct_0(k5_topmetr))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_42, plain, (v2_struct_0(X2)|v5_relat_1(esk13_2(X2,X1),u1_struct_0(X2))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_37, plain, (v2_struct_0(X2)|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~v1_xboole_0(k4_topalg_1(X2,X1))|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_45, plain, (v2_struct_0(X2)|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~v1_xboole_0(esk13_2(X2,X1))|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_12, plain, (k1_topalg_1(X1,X2,X2)=k2_topalg_1(X1,X2)|v2_struct_0(X1)|~l1_pre_topc(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_36, plain, (v2_struct_0(X2)|v1_partfun1(k4_topalg_1(X2,X1),k2_topalg_1(X2,X1))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_38, plain, (v2_struct_0(X2)|v5_pre_topc(esk13_2(X2,X1),k5_topmetr,X2)|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_39, plain, (v2_struct_0(X2)|v1_funct_2(esk13_2(X2,X1),u1_struct_0(k5_topmetr),u1_struct_0(X2))|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_28, plain, (k8_eqrel_1(k2_topalg_1(X1,X2),k4_topalg_1(X1,X2))=u1_struct_0(X3)|v2_struct_0(X1)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_47, plain, (k7_eqrel_1(X1,X2)=k8_eqrel_1(X1,X2)|~v3_relat_2(X2)|~v8_relat_2(X2)|~v1_partfun1(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_33, plain, (m1_subset_1(k7_eqrel_1(X1,X2),k1_zfmisc_1(k1_zfmisc_1(X1)))|~v3_relat_2(X2)|~v8_relat_2(X2)|~v1_partfun1(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+cnf(i_0_2, negated_conjecture, (m1_borsuk_2(esk4_0,esk1_0,esk2_0,esk2_0)|r2_hidden(esk3_0,u1_struct_0(k5_topalg_1(esk1_0,esk2_0))))).
+cnf(i_0_22, plain, (k5_topalg_1(X1,X2)=X3|v2_struct_0(X1)|m1_subset_1(esk11_3(X1,X2,X3),u1_struct_0(X3))|k8_eqrel_1(k2_topalg_1(X1,X2),k4_topalg_1(X1,X2))!=u1_struct_0(X3)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_21, plain, (k5_topalg_1(X1,X2)=X3|v2_struct_0(X1)|m1_subset_1(esk12_3(X1,X2,X3),u1_struct_0(X3))|k8_eqrel_1(k2_topalg_1(X1,X2),k4_topalg_1(X1,X2))!=u1_struct_0(X3)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_46, plain, (v2_struct_0(X2)|m1_borsuk_2(esk13_2(X2,X1),X2,X1,X1)|~v2_pre_topc(X2)|~l1_pre_topc(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_50, plain, (m1_subset_1(esk14_3(X3,X2,X1),X2)|~v3_relat_2(X1)|~v8_relat_2(X1)|~v1_partfun1(X1,X2)|~r2_hidden(X3,k7_eqrel_1(X2,X1))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_16, plain, (k7_eqrel_1(X2,X1)=X3|m1_subset_1(esk7_3(X2,X1,X3),k1_zfmisc_1(X2))|~v3_relat_2(X1)|~v8_relat_2(X1)|~v1_partfun1(X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_29, plain, (v2_struct_0(X1)|m1_subset_1(k4_topalg_1(X1,X2),k1_zfmisc_1(k2_zfmisc_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2))))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_1, negated_conjecture, (k6_eqrel_1(k2_topalg_1(esk1_0,esk2_0),k2_topalg_1(esk1_0,esk2_0),k4_topalg_1(esk1_0,esk2_0),esk4_0)=esk3_0|r2_hidden(esk3_0,u1_struct_0(k5_topalg_1(esk1_0,esk2_0))))).
+cnf(i_0_11, plain, (v2_struct_0(X1)|m1_borsuk_2(X5,X1,X2,X3)|k1_topalg_1(X1,X2,X3)!=X4|~l1_pre_topc(X1)|~r2_hidden(X5,X4)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_14, plain, (k7_eqrel_1(X2,X1)=X3|r2_hidden(esk7_3(X2,X1,X3),X3)|r2_hidden(esk8_3(X2,X1,X3),X2)|~v3_relat_2(X1)|~v8_relat_2(X1)|~v1_partfun1(X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_10, plain, (v2_struct_0(X1)|r2_hidden(X5,X4)|k1_topalg_1(X1,X2,X3)!=X4|~l1_pre_topc(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_borsuk_2(X5,X1,X2,X3))).
+cnf(i_0_49, plain, (k6_eqrel_1(X2,X2,X1,esk14_3(X3,X2,X1))=X3|~v3_relat_2(X1)|~v8_relat_2(X1)|~v1_partfun1(X1,X2)|~r2_hidden(X3,k7_eqrel_1(X2,X1))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_32, plain, (m1_subset_1(k6_eqrel_1(X1,X2,X3,X4),k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_17, plain, (r2_hidden(X4,X3)|k7_eqrel_1(X2,X1)!=X3|k6_eqrel_1(X2,X2,X1,X5)!=X4|~v3_relat_2(X1)|~v8_relat_2(X1)|~r2_hidden(X5,X2)|~v1_partfun1(X1,X2)|~m1_subset_1(X4,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_13, plain, (k7_eqrel_1(X2,X1)=X3|k6_eqrel_1(X2,X2,X1,esk8_3(X2,X1,X3))=esk7_3(X2,X1,X3)|r2_hidden(esk7_3(X2,X1,X3),X3)|~v3_relat_2(X1)|~v8_relat_2(X1)|~v1_partfun1(X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_19, plain, (r2_hidden(esk6_4(X2,X1,X3,X4),X2)|k7_eqrel_1(X2,X1)!=X3|~v3_relat_2(X1)|~v8_relat_2(X1)|~r2_hidden(X4,X3)|~v1_partfun1(X1,X2)|~m1_subset_1(X4,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_15, plain, (k7_eqrel_1(X2,X1)=X3|k6_eqrel_1(X2,X2,X1,X4)!=esk7_3(X2,X1,X3)|~v3_relat_2(X1)|~v8_relat_2(X1)|~r2_hidden(X4,X2)|~v1_partfun1(X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~r2_hidden(esk7_3(X2,X1,X3),X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_3, negated_conjecture, (k6_eqrel_1(k2_topalg_1(esk1_0,esk2_0),k2_topalg_1(esk1_0,esk2_0),k4_topalg_1(esk1_0,esk2_0),X1)!=esk3_0|~m1_borsuk_2(X1,esk1_0,esk2_0,esk2_0)|~r2_hidden(esk3_0,u1_struct_0(k5_topalg_1(esk1_0,esk2_0))))).
+cnf(i_0_18, plain, (k6_eqrel_1(X2,X2,X1,esk6_4(X2,X1,X3,X4))=X4|k7_eqrel_1(X2,X1)!=X3|~v3_relat_2(X1)|~v8_relat_2(X1)|~r2_hidden(X4,X3)|~v1_partfun1(X1,X2)|~m1_subset_1(X4,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k1_zfmisc_1(X2)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_8, plain, (k1_topalg_1(X1,X2,X3)=X4|v2_struct_0(X1)|r2_hidden(esk5_4(X1,X2,X3,X4),X4)|m1_borsuk_2(esk5_4(X1,X2,X3,X4),X1,X2,X3)|~l1_pre_topc(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_9, plain, (k1_topalg_1(X1,X2,X3)=X4|v2_struct_0(X1)|~l1_pre_topc(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(esk5_4(X1,X2,X3,X4),X4)|~m1_borsuk_2(esk5_4(X1,X2,X3,X4),X1,X2,X3))).
+cnf(i_0_27, plain, (v2_struct_0(X1)|m1_borsuk_2(esk9_5(X1,X2,X3,X4,X5),X1,X2,X2)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X5,u1_struct_0(X3))|~m1_subset_1(X4,u1_struct_0(X3))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_26, plain, (v2_struct_0(X1)|m1_borsuk_2(esk10_5(X1,X2,X3,X4,X5),X1,X2,X2)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X5,u1_struct_0(X3))|~m1_subset_1(X4,u1_struct_0(X3))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_25, plain, (k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),esk9_5(X1,X2,X3,X4,X5))=X4|v2_struct_0(X1)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X5,u1_struct_0(X3))|~m1_subset_1(X4,u1_struct_0(X3))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_24, plain, (k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),esk10_5(X1,X2,X3,X4,X5))=X5|v2_struct_0(X1)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X5,u1_struct_0(X3))|~m1_subset_1(X4,u1_struct_0(X3))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_20, plain, (k5_topalg_1(X1,X2)=X3|v2_struct_0(X1)|k8_eqrel_1(k2_topalg_1(X1,X2),k4_topalg_1(X1,X2))!=u1_struct_0(X3)|k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),X5)!=esk12_3(X1,X2,X3)|k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),X4)!=esk11_3(X1,X2,X3)|k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),k1_borsuk_2(X1,X2,X2,X2,X4,X5))!=k5_binop_1(u1_struct_0(X3),u2_algstr_0(X3),esk11_3(X1,X2,X3),esk12_3(X1,X2,X3))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X2,u1_struct_0(X1))|~m1_borsuk_2(X5,X1,X2,X2)|~m1_borsuk_2(X4,X1,X2,X2))).
+cnf(i_0_23, plain, (k6_eqrel_1(k2_topalg_1(X1,X2),k2_topalg_1(X1,X2),k4_topalg_1(X1,X2),k1_borsuk_2(X1,X2,X2,X2,esk9_5(X1,X2,X3,X4,X5),esk10_5(X1,X2,X3,X4,X5)))=k5_binop_1(u1_struct_0(X3),u2_algstr_0(X3),X4,X5)|v2_struct_0(X1)|k5_topalg_1(X1,X2)!=X3|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~v15_algstr_0(X3)|~l3_algstr_0(X3)|~m1_subset_1(X5,u1_struct_0(X3))|~m1_subset_1(X4,u1_struct_0(X3))|~m1_subset_1(X2,u1_struct_0(X1)))).
+
+

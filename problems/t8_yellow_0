@@ -1,0 +1,43 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_40, negated_conjecture, (l1_orders_2(esk1_0))).
+cnf(i_0_39, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+cnf(i_0_38, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk1_0)))).
+cnf(i_0_37, negated_conjecture, (m1_subset_1(esk4_0,u1_struct_0(esk1_0)))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_44, plain, (r2_hidden(X4,X1)|X3!=X4|k2_tarski(X2,X3)!=X1)).
+cnf(i_0_45, plain, (r2_hidden(X4,X1)|X2!=X4|k2_tarski(X2,X3)!=X1)).
+cnf(i_0_46, plain, (X3=X4|X2=X4|k2_tarski(X2,X3)!=X1|~r2_hidden(X4,X1))).
+cnf(i_0_48, plain, (r1_lattice3(X1,X3,X2)|r2_hidden(esk6_3(X1,X3,X2),X3)|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_52, plain, (r2_lattice3(X1,X3,X2)|r2_hidden(esk7_3(X1,X3,X2),X3)|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_49, plain, (r1_lattice3(X1,X3,X2)|m1_subset_1(esk6_3(X1,X3,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_53, plain, (r2_lattice3(X1,X3,X2)|m1_subset_1(esk7_3(X1,X3,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_54, plain, (r1_orders_2(X1,X3,X2)|~l1_orders_2(X1)|~r2_hidden(X3,X4)|~r2_lattice3(X1,X4,X2)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_50, plain, (r1_orders_2(X1,X2,X3)|~l1_orders_2(X1)|~r2_hidden(X3,X4)|~r1_lattice3(X1,X4,X2)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_36, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk3_0)|r1_orders_2(esk1_0,esk3_0,esk2_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_35, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk3_0)|r1_orders_2(esk1_0,esk4_0,esk2_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_30, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk4_0)|r1_orders_2(esk1_0,esk3_0,esk2_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_29, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk4_0)|r1_orders_2(esk1_0,esk4_0,esk2_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_41, plain, (k2_tarski(X2,X3)=X1|esk5_3(X2,X3,X1)=X3|esk5_3(X2,X3,X1)=X2|r2_hidden(esk5_3(X2,X3,X1),X1))).
+cnf(i_0_42, plain, (k2_tarski(X2,X3)=X1|esk5_3(X2,X3,X1)!=X3|~r2_hidden(esk5_3(X2,X3,X1),X1))).
+cnf(i_0_43, plain, (k2_tarski(X2,X3)=X1|esk5_3(X2,X3,X1)!=X2|~r2_hidden(esk5_3(X2,X3,X1),X1))).
+cnf(i_0_47, plain, (r1_lattice3(X1,X3,X2)|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1))|~r1_orders_2(X1,X2,esk6_3(X1,X3,X2)))).
+cnf(i_0_51, plain, (r2_lattice3(X1,X3,X2)|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1))|~r1_orders_2(X1,esk7_3(X1,X3,X2),X2))).
+cnf(i_0_31, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk3_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|~r1_orders_2(esk1_0,esk3_0,esk2_0)|~r1_orders_2(esk1_0,esk4_0,esk2_0)|~r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_25, negated_conjecture, (r1_orders_2(esk1_0,esk2_0,esk4_0)|r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|~r1_orders_2(esk1_0,esk3_0,esk2_0)|~r1_orders_2(esk1_0,esk4_0,esk2_0)|~r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_6, negated_conjecture, (r1_orders_2(esk1_0,esk3_0,esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|~r1_orders_2(esk1_0,esk2_0,esk3_0)|~r1_orders_2(esk1_0,esk2_0,esk4_0)|~r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_5, negated_conjecture, (r1_orders_2(esk1_0,esk4_0,esk2_0)|r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|~r1_orders_2(esk1_0,esk2_0,esk3_0)|~r1_orders_2(esk1_0,esk2_0,esk4_0)|~r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+cnf(i_0_1, negated_conjecture, (~r1_orders_2(esk1_0,esk2_0,esk3_0)|~r1_orders_2(esk1_0,esk2_0,esk4_0)|~r1_orders_2(esk1_0,esk3_0,esk2_0)|~r1_orders_2(esk1_0,esk4_0,esk2_0)|~r1_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0)|~r2_lattice3(esk1_0,k2_tarski(esk3_0,esk4_0),esk2_0))).
+
+

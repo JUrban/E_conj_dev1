@@ -1,0 +1,29 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (v1_quaterni(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v1_quaterni(esk2_0))).
+cnf(i_0_2, negated_conjecture, (v1_quaterni(esk3_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k29_quaterni(k27_quaterni(esk1_0,esk3_0),k27_quaterni(esk2_0,esk3_0))!=k27_quaterni(k29_quaterni(esk1_0,esk2_0),esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_10, plain, (k28_quaterni(X1)=k8_quaterni(X1)|~v1_quaterni(X1))).
+cnf(i_0_6, plain, (v1_quaterni(k8_quaterni(X1))|~v1_quaterni(X1))).
+cnf(i_0_11, plain, (k29_quaterni(X1,X2)=k9_quaterni(X1,X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_9, plain, (k27_quaterni(X1,X2)=k10_quaterni(X1,X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_8, plain, (k7_quaterni(X1,X2)=k26_quaterni(X1,X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_7, plain, (v1_quaterni(k10_quaterni(X1,X2))|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_5, plain, (k7_quaterni(X1,k8_quaterni(X2))=k9_quaterni(X1,X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_13, plain, (k28_quaterni(k27_quaterni(X1,X2))=k27_quaterni(k28_quaterni(X1),X2)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+cnf(i_0_12, plain, (k26_quaterni(k27_quaterni(X1,X3),k27_quaterni(X2,X3))=k27_quaterni(k26_quaterni(X1,X2),X3)|~v1_quaterni(X3)|~v1_quaterni(X2)|~v1_quaterni(X1))).
+
+

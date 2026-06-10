@@ -1,0 +1,61 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_29, plain, (v2_group_1(k2_cayley(X1)))).
+cnf(i_0_28, plain, (v3_group_1(k2_cayley(X1)))).
+cnf(i_0_21, plain, (l3_algstr_0(k2_cayley(X1)))).
+cnf(i_0_23, plain, (v15_algstr_0(k2_cayley(X1)))).
+cnf(i_0_30, plain, (v15_algstr_0(k2_cayley(X1)))).
+cnf(i_0_22, plain, (v1_monoid_0(k2_cayley(X1)))).
+cnf(i_0_27, plain, (v1_monoid_0(k2_cayley(X1)))).
+cnf(i_0_2, negated_conjecture, (r2_tarski(esk1_0,esk2_0))).
+cnf(i_0_37, plain, (r1_tarski(X1,X1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_31, plain, (~v2_struct_0(k2_cayley(X1)))).
+cnf(i_0_1, negated_conjecture, (~r2_group_6(k2_cayley(esk1_0),k2_cayley(esk2_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_47, plain, (k1_xboole_0=X1|~v1_xboole_0(X1))).
+cnf(i_0_43, plain, (k1_xboole_0=X1|~r2_wellord2(X1,k1_xboole_0))).
+cnf(i_0_36, plain, (r2_tarski(X1,X2)|~r2_wellord2(X1,X2))).
+cnf(i_0_35, plain, (r2_wellord2(X1,X2)|~r2_tarski(X1,X2))).
+cnf(i_0_39, plain, (r2_wellord2(X1,X2)|~r2_wellord2(X2,X1))).
+cnf(i_0_32, plain, (k2_relset_1(X1,X2)=k10_xtuple_0(X2)|~v1_relat_1(X2)|~v5_relat_1(X2,X1))).
+cnf(i_0_15, plain, (r2_wellord2(X1,X2)|k9_xtuple_0(X3)!=X1|k10_xtuple_0(X3)!=X2|~v1_funct_1(X3)|~v2_funct_1(X3)|~v1_relat_1(X3))).
+cnf(i_0_19, plain, (v1_funct_1(esk4_2(X1,X2))|~r2_wellord2(X1,X2))).
+cnf(i_0_18, plain, (v2_funct_1(esk4_2(X1,X2))|~r2_wellord2(X1,X2))).
+cnf(i_0_20, plain, (v1_relat_1(esk4_2(X1,X2))|~r2_wellord2(X1,X2))).
+cnf(i_0_17, plain, (k9_xtuple_0(esk4_2(X1,X2))=X1|~r2_wellord2(X1,X2))).
+cnf(i_0_16, plain, (k10_xtuple_0(esk4_2(X1,X2))=X2|~r2_wellord2(X1,X2))).
+cnf(i_0_14, plain, (k2_relset_1(X2,X1)=X2|~v1_relat_1(X1)|~v5_relat_1(X1,X2)|~v2_funct_2(X1,X2))).
+cnf(i_0_13, plain, (v2_funct_2(X1,X2)|k2_relset_1(X2,X1)!=X2|~v1_relat_1(X1)|~v5_relat_1(X1,X2))).
+cnf(i_0_38, plain, (v2_struct_0(X2)|v2_struct_0(X1)|r2_group_6(X1,X1)|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~v15_algstr_0(X2)|~v15_algstr_0(X1))).
+cnf(i_0_33, plain, (v2_struct_0(X2)|v2_struct_0(X1)|r2_group_6(X2,X1)|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~v15_algstr_0(X2)|~v15_algstr_0(X1)|~r1_group_6(X2,X1))).
+cnf(i_0_34, plain, (v2_struct_0(X2)|v2_struct_0(X1)|r1_group_6(X2,X1)|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~v15_algstr_0(X2)|~v15_algstr_0(X1)|~r2_group_6(X2,X1))).
+cnf(i_0_12, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v1_funct_1(esk3_2(X1,X2))|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~r1_group_6(X1,X2))).
+cnf(i_0_45, plain, (v1_funct_2(X1,k9_xtuple_0(X1),X2)|~v1_funct_1(X1)|~v1_relat_1(X1)|~r1_tarski(k10_xtuple_0(X1),X2))).
+cnf(i_0_4, plain, (v4_relat_1(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_3, plain, (v5_relat_1(X1,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_44, plain, (m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k9_xtuple_0(X1),X2)))|~v1_funct_1(X1)|~v1_relat_1(X1)|~r1_tarski(k10_xtuple_0(X1),X2))).
+cnf(i_0_10, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v1_group_6(esk3_2(X1,X2),X1,X2)|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~r1_group_6(X1,X2))).
+cnf(i_0_8, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v3_funct_2(esk3_2(X1,X2),u1_struct_0(X1),u1_struct_0(X2))|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~r1_group_6(X1,X2))).
+cnf(i_0_11, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v1_funct_2(esk3_2(X1,X2),u1_struct_0(X1),u1_struct_0(X2))|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~r1_group_6(X1,X2))).
+cnf(i_0_5, plain, (v3_funct_2(X1,X2,X3)|~v1_funct_1(X1)|~v2_funct_1(X1)|~v2_funct_2(X1,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_9, plain, (v2_struct_0(X2)|v2_struct_0(X1)|m1_subset_1(esk3_2(X1,X2),k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X2))))|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~r1_group_6(X1,X2))).
+cnf(i_0_26, plain, (v1_funct_1(k3_cayley(X2,X3,X1))|~v1_funct_1(X1)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_25, plain, (v1_funct_2(k3_cayley(X2,X3,X1),u1_struct_0(k2_cayley(X2)),u1_struct_0(k2_cayley(X3)))|~v1_funct_1(X1)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_41, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|v2_funct_1(k3_cayley(X1,X2,X3))|~v1_funct_1(X3)|~v3_funct_2(X3,X1,X2)|~v1_funct_2(X3,X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_42, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|v2_funct_2(k3_cayley(X1,X2,X3),u1_struct_0(k2_cayley(X2)))|~v1_funct_1(X3)|~v3_funct_2(X3,X1,X2)|~v1_funct_2(X3,X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_40, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|v1_group_6(k3_cayley(X1,X2,X3),k2_cayley(X1),k2_cayley(X2))|~v1_funct_1(X3)|~v3_funct_2(X3,X1,X2)|~v1_funct_2(X3,X1,X2)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_24, plain, (m1_subset_1(k3_cayley(X2,X3,X1),k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(k2_cayley(X2)),u1_struct_0(k2_cayley(X3)))))|~v1_funct_1(X1)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_7, plain, (v2_struct_0(X2)|v2_struct_0(X1)|r1_group_6(X1,X2)|~v1_funct_1(X3)|~v2_group_1(X2)|~v2_group_1(X1)|~v3_group_1(X2)|~v3_group_1(X1)|~l3_algstr_0(X2)|~l3_algstr_0(X1)|~v1_group_6(X3,X1,X2)|~v3_funct_2(X3,u1_struct_0(X1),u1_struct_0(X2))|~v1_funct_2(X3,u1_struct_0(X1),u1_struct_0(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X2)))))).
+
+

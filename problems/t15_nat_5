@@ -1,0 +1,41 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_13, negated_conjecture, (v7_ordinal1(esk1_0))).
+cnf(i_0_12, negated_conjecture, (v7_ordinal1(esk2_0))).
+cnf(i_0_11, negated_conjecture, (v7_ordinal1(esk3_0))).
+cnf(i_0_10, negated_conjecture, (v7_ordinal1(esk4_0))).
+cnf(i_0_9, negated_conjecture, (v7_ordinal1(esk5_0))).
+cnf(i_0_8, negated_conjecture, (v7_ordinal1(esk6_0))).
+cnf(i_0_3, negated_conjecture, (r1_int_2(esk1_0,esk2_0))).
+cnf(i_0_7, negated_conjecture, (r2_hidden(esk3_0,k3_moebius1(esk1_0)))).
+cnf(i_0_6, negated_conjecture, (r2_hidden(esk4_0,k3_moebius1(esk2_0)))).
+cnf(i_0_5, negated_conjecture, (r2_hidden(esk5_0,k3_moebius1(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (r2_hidden(esk6_0,k3_moebius1(esk2_0)))).
+cnf(i_0_2, negated_conjecture, (k24_binop_2(esk5_0,esk6_0)=k24_binop_2(esk3_0,esk4_0))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_1, negated_conjecture, (esk5_0!=esk3_0|esk6_0!=esk4_0)).
+cnf(i_0_14, plain, (v1_int_1(X1)|~v7_ordinal1(X1))).
+cnf(i_0_15, plain, (k24_binop_2(X1,X2)=k24_binop_2(X2,X1)|~v7_ordinal1(X2)|~v7_ordinal1(X1))).
+cnf(i_0_21, plain, (k3_xcmplx_0(X1,X2)=k24_binop_2(X1,X2)|~v7_ordinal1(X2)|~v7_ordinal1(X1))).
+cnf(i_0_20, plain, (v7_ordinal1(k3_xcmplx_0(X1,X2))|~v7_ordinal1(X2)|~v7_ordinal1(X1))).
+cnf(i_0_19, plain, (v1_int_1(k3_xcmplx_0(X1,X2))|~v1_int_1(X2)|~v1_int_1(X1))).
+cnf(i_0_22, plain, (r1_int_2(X1,X2)|~v1_int_1(X2)|~v1_int_1(X1)|~r1_int_2(X2,X1))).
+cnf(i_0_16, plain, (r1_nat_d(X1,X2)|k3_xcmplx_0(X1,X3)!=X2|~v7_ordinal1(X3)|~v7_ordinal1(X2)|~v7_ordinal1(X1))).
+cnf(i_0_25, plain, (X1=X2|~v7_ordinal1(X2)|~v7_ordinal1(X1)|~r1_nat_d(X2,X1)|~r1_nat_d(X1,X2))).
+cnf(i_0_18, plain, (v7_ordinal1(esk7_2(X1,X2))|~v7_ordinal1(X2)|~v7_ordinal1(X1)|~r1_nat_d(X1,X2))).
+cnf(i_0_17, plain, (k3_xcmplx_0(X1,esk7_2(X1,X2))=X2|~v7_ordinal1(X2)|~v7_ordinal1(X1)|~r1_nat_d(X1,X2))).
+cnf(i_0_23, plain, (r1_nat_d(X1,X2)|~v7_ordinal1(X3)|~v7_ordinal1(X2)|~v7_ordinal1(X1)|~r1_int_2(X3,X1)|~r1_nat_d(X1,k3_xcmplx_0(X3,X2)))).
+cnf(i_0_24, plain, (r1_int_2(X1,X2)|~v7_ordinal1(X4)|~v7_ordinal1(X3)|~v7_ordinal1(X2)|~v7_ordinal1(X1)|~r1_int_2(X3,X4)|~r2_hidden(X2,k3_moebius1(X4))|~r2_hidden(X1,k3_moebius1(X3)))).
+
+

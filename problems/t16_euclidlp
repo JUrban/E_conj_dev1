@@ -1,0 +1,31 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_13, plain, (k4_ordinal1=k5_numbers)).
+cnf(i_0_11, plain, (v6_membered(k4_ordinal1))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk1_0,k5_numbers))).
+cnf(i_0_5, negated_conjecture, (m2_finseq_2(esk2_0,k1_numbers,k1_euclid(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (m2_finseq_2(esk3_0,k1_numbers,k1_euclid(esk1_0)))).
+cnf(i_0_3, negated_conjecture, (m2_finseq_2(esk4_0,k1_numbers,k1_euclid(esk1_0)))).
+cnf(i_0_2, negated_conjecture, (m2_finseq_2(esk5_0,k1_numbers,k1_euclid(esk1_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k7_euclid(esk1_0,k7_euclid(esk1_0,esk2_0,esk4_0),k7_euclid(esk1_0,esk3_0,esk5_0))!=k7_euclid(esk1_0,k7_euclid(esk1_0,esk2_0,esk3_0),k7_euclid(esk1_0,esk4_0,esk5_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_9, plain, (m1_finseq_2(k1_euclid(X1),k1_numbers)|~v7_ordinal1(X1))).
+cnf(i_0_7, plain, (v7_ordinal1(X1)|~v6_membered(X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_14, plain, (m2_finseq_2(X3,X2,X1)|~m1_subset_1(X3,X1)|~m1_finseq_2(X1,X2))).
+cnf(i_0_15, plain, (m1_subset_1(X3,X1)|~m1_finseq_2(X1,X2)|~m2_finseq_2(X3,X2,X1))).
+cnf(i_0_8, plain, (k7_euclid(X1,X2,X3)=k7_euclid(X1,X3,X2)|~v7_ordinal1(X1)|~m1_subset_1(X3,k1_euclid(X1))|~m1_subset_1(X2,k1_euclid(X1)))).
+cnf(i_0_10, plain, (m2_finseq_2(k7_euclid(X1,X2,X3),k1_numbers,k1_euclid(X1))|~v7_ordinal1(X1)|~m1_subset_1(X3,k1_euclid(X1))|~m1_subset_1(X2,k1_euclid(X1)))).
+cnf(i_0_12, plain, (k7_euclid(X1,k7_euclid(X1,X2,X3),X4)=k7_euclid(X1,X2,k7_euclid(X1,X3,X4))|~v7_ordinal1(X1)|~m2_finseq_2(X4,k1_numbers,k1_euclid(X1))|~m2_finseq_2(X3,k1_numbers,k1_euclid(X1))|~m2_finseq_2(X2,k1_numbers,k1_euclid(X1)))).
+
+

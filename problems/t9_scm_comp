@@ -1,0 +1,72 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_26, plain, (v1_funct_1(esk3_0))).
+cnf(i_0_16, plain, (v1_lang1(k1_scm_comp))).
+cnf(i_0_15, plain, (v1_dtconstr(k1_scm_comp))).
+cnf(i_0_14, plain, (v2_dtconstr(k1_scm_comp))).
+cnf(i_0_13, plain, (v3_dtconstr(k1_scm_comp))).
+cnf(i_0_12, plain, (v3_bintree1(k1_scm_comp))).
+cnf(i_0_11, plain, (l1_lang1(k1_scm_comp))).
+cnf(i_0_25, plain, (v1_funct_2(esk3_0,k4_dtconstr(k1_scm_comp),k5_numbers))).
+cnf(i_0_2, negated_conjecture, (m2_subset_1(esk1_0,u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_24, plain, (m1_subset_1(esk3_0,k1_zfmisc_1(k2_zfmisc_1(k4_dtconstr(k1_scm_comp),k5_numbers))))).
+cnf(i_0_23, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk3_0,o_0_2_scm_comp)=k17_scm_comp(o_0_2_scm_comp))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_17, plain, (~v2_struct_0(k1_scm_comp))).
+cnf(i_0_1, negated_conjecture, (k17_scm_comp(k3_scm_comp(esk1_0))!=k16_scm_comp(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_20, plain, (v2_struct_0(X1)|~v1_dtconstr(X1)|~l1_lang1(X1)|~v1_xboole_0(k6_dtconstr(X1)))).
+cnf(i_0_3, plain, (v1_xboole_0(X1)|~v1_xboole_0(X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|m1_subset_1(k6_dtconstr(X1),k1_zfmisc_1(u1_struct_0(X1)))|~v1_dtconstr(X1)|~l1_lang1(X1))).
+cnf(i_0_10, plain, (m2_subset_1(k16_scm_comp(X1),k1_numbers,k5_numbers)|~m1_subset_1(X1,k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_51, plain, (epred1_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(k1_scm_comp))|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_50, plain, (epred1_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(k1_scm_comp))|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_49, plain, (k1_bintree1(u1_struct_0(k1_scm_comp),esk6_1(X1))=esk8_1(X1)|epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_48, plain, (k1_bintree1(u1_struct_0(k1_scm_comp),esk7_1(X1))=esk9_1(X1)|epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_27, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m2_subset_1(X3,X2,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_46, plain, (epred1_1(X1)|m2_subset_1(esk10_1(X1),k1_numbers,k5_numbers)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_45, plain, (epred1_1(X1)|m2_subset_1(esk11_1(X1),k1_numbers,k5_numbers)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_54, plain, (epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp))|m2_subset_1(esk5_1(X1),u1_struct_0(k1_scm_comp),k7_dtconstr(k1_scm_comp)))).
+cnf(i_0_28, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m1_subset_1(X3,X1)|~m2_subset_1(X3,X2,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_47, plain, (epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp))|r1_lang1(k1_scm_comp,esk5_1(X1),k4_pre_poly(u1_struct_0(k1_scm_comp),esk8_1(X1),esk9_1(X1))))).
+cnf(i_0_18, plain, (m1_dtconstr(k3_scm_comp(X1),u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp))|~m1_subset_1(X1,k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_44, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,esk6_1(X1))=esk10_1(X1)|epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_43, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,esk7_1(X1))=esk11_1(X1)|epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_53, plain, (epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp))|m1_dtconstr(esk6_1(X1),u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_52, plain, (epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp))|m1_dtconstr(esk7_1(X1),u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_22, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk3_0,k3_scm_comp(X1))=k16_scm_comp(X1)|~m2_subset_1(X1,u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_56, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(X2))=k16_scm_comp(X2)|~epred1_1(X1)|~m2_subset_1(X2,u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp)))).
+cnf(i_0_38, plain, (epred1_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_37, plain, (epred1_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_36, plain, (k1_bintree1(u1_struct_0(k1_scm_comp),esk6_1(X1))=esk8_1(X1)|epred1_1(X1)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_35, plain, (k1_bintree1(u1_struct_0(k1_scm_comp),esk7_1(X1))=esk9_1(X1)|epred1_1(X1)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_33, plain, (epred1_1(X1)|m2_subset_1(esk10_1(X1),k1_numbers,k5_numbers)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_32, plain, (epred1_1(X1)|m2_subset_1(esk11_1(X1),k1_numbers,k5_numbers)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_41, plain, (epred1_1(X1)|m2_subset_1(esk5_1(X1),u1_struct_0(k1_scm_comp),k7_dtconstr(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_9, plain, (v1_funct_1(esk2_2(X1,X2))|k17_scm_comp(X1)!=X2|~m2_subset_1(X2,k1_numbers,k5_numbers)|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_5, plain, (epred1_1(esk2_2(X1,X2))|k17_scm_comp(X1)!=X2|~m2_subset_1(X2,k1_numbers,k5_numbers)|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_8, plain, (v1_funct_2(esk2_2(X1,X2),k4_dtconstr(k1_scm_comp),k5_numbers)|k17_scm_comp(X1)!=X2|~m2_subset_1(X2,k1_numbers,k5_numbers)|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_7, plain, (m1_subset_1(esk2_2(X1,X2),k1_zfmisc_1(k2_zfmisc_1(k4_dtconstr(k1_scm_comp),k5_numbers)))|k17_scm_comp(X1)!=X2|~m2_subset_1(X2,k1_numbers,k5_numbers)|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_34, plain, (epred1_1(X1)|r1_lang1(k1_scm_comp,esk5_1(X1),k4_pre_poly(u1_struct_0(k1_scm_comp),esk8_1(X1),esk9_1(X1)))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_31, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,esk6_1(X1))=esk10_1(X1)|epred1_1(X1)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_30, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,esk7_1(X1))=esk11_1(X1)|epred1_1(X1)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_40, plain, (epred1_1(X1)|m1_dtconstr(esk6_1(X1),u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_39, plain, (epred1_1(X1)|m1_dtconstr(esk7_1(X1),u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1)))).
+cnf(i_0_42, plain, (epred1_1(X1)|m2_subset_1(esk4_1(X1),u1_struct_0(k1_scm_comp),k6_dtconstr(k1_scm_comp))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k2_scm_comp(esk5_1(X1),esk6_1(X1),esk7_1(X1)))!=k7_nat_1(esk10_1(X1),esk11_1(X1)))).
+cnf(i_0_6, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk2_2(X1,X2),X1)=X2|k17_scm_comp(X1)!=X2|~m2_subset_1(X2,k1_numbers,k5_numbers)|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_29, plain, (epred1_1(X1)|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k3_scm_comp(esk4_1(X1)))!=k16_scm_comp(esk4_1(X1))|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k2_scm_comp(esk5_1(X1),esk6_1(X1),esk7_1(X1)))!=k7_nat_1(esk10_1(X1),esk11_1(X1)))).
+cnf(i_0_4, plain, (k17_scm_comp(X1)=X2|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X3,X1)!=X2|~v1_funct_1(X3)|~epred1_1(X3)|~m2_subset_1(X2,k1_numbers,k5_numbers)|~v1_funct_2(X3,k4_dtconstr(k1_scm_comp),k5_numbers)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(k4_dtconstr(k1_scm_comp),k5_numbers)))|~m1_dtconstr(X1,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_21, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk3_0,k2_scm_comp(X1,X2,X3))=k7_nat_1(X4,X5)|k1_bintree1(u1_struct_0(k1_scm_comp),X3)!=X7|k1_bintree1(u1_struct_0(k1_scm_comp),X2)!=X6|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk3_0,X3)!=X5|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,esk3_0,X2)!=X4|~m1_subset_1(X7,u1_struct_0(k1_scm_comp))|~m1_subset_1(X6,u1_struct_0(k1_scm_comp))|~m2_subset_1(X5,k1_numbers,k5_numbers)|~m2_subset_1(X4,k1_numbers,k5_numbers)|~m2_subset_1(X1,u1_struct_0(k1_scm_comp),k7_dtconstr(k1_scm_comp))|~r1_lang1(k1_scm_comp,X1,k4_pre_poly(u1_struct_0(k1_scm_comp),X6,X7))|~m1_dtconstr(X3,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp))|~m1_dtconstr(X2,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+cnf(i_0_55, plain, (k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,k2_scm_comp(X2,X3,X4))=k7_nat_1(X5,X6)|k1_bintree1(u1_struct_0(k1_scm_comp),X4)!=X8|k1_bintree1(u1_struct_0(k1_scm_comp),X3)!=X7|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,X4)!=X6|k3_funct_2(k4_dtconstr(k1_scm_comp),k5_numbers,X1,X3)!=X5|~epred1_1(X1)|~m1_subset_1(X8,u1_struct_0(k1_scm_comp))|~m1_subset_1(X7,u1_struct_0(k1_scm_comp))|~m2_subset_1(X6,k1_numbers,k5_numbers)|~m2_subset_1(X5,k1_numbers,k5_numbers)|~m2_subset_1(X2,u1_struct_0(k1_scm_comp),k7_dtconstr(k1_scm_comp))|~r1_lang1(k1_scm_comp,X2,k4_pre_poly(u1_struct_0(k1_scm_comp),X7,X8))|~m1_dtconstr(X4,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp))|~m1_dtconstr(X3,u1_struct_0(k1_scm_comp),k5_trees_3(u1_struct_0(k1_scm_comp)),k4_dtconstr(k1_scm_comp)))).
+
+

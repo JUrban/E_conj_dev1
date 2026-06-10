@@ -1,0 +1,73 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_35, plain, (k1_zf_lang=a_0_0_zf_lang)).
+cnf(i_0_48, plain, (k5_numbers=k4_ordinal1)).
+cnf(i_0_34, negated_conjecture, (v1_zf_lang(esk1_0))).
+cnf(i_0_53, plain, (k3_tarski(k1_tarski(X1))=X1)).
+cnf(i_0_33, negated_conjecture, (m2_finseq_1(esk1_0,k5_numbers))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_32, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0))).
+cnf(i_0_28, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_57, plain, (k1_zf_model(k20_zf_lang(X1))=k1_zf_model(X1)|~v4_zf_lang(X1)|~epred1_1(X1))).
+cnf(i_0_45, plain, (epred1_1(X1)|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_46, plain, (k2_zf_model(X1)=k1_zf_model(X1)|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_51, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_52, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_37, plain, (v1_zf_lang(k20_zf_lang(X1))|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_39, plain, (v1_zf_lang(k21_zf_lang(X1))|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_41, plain, (v1_zf_lang(k22_zf_lang(X1))|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_43, plain, (v1_zf_lang(k24_zf_lang(X1))|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_59, plain, (k2_tarski(k18_zf_lang(X1),k19_zf_lang(X1))=k1_zf_model(X1)|~v2_zf_lang(X1)|~epred1_1(X1))).
+cnf(i_0_58, plain, (k2_tarski(k18_zf_lang(X1),k19_zf_lang(X1))=k1_zf_model(X1)|~v3_zf_lang(X1)|~epred1_1(X1))).
+cnf(i_0_8, negated_conjecture, (v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_36, plain, (m2_finseq_1(k20_zf_lang(X1),k5_numbers)|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_38, plain, (m2_finseq_1(k21_zf_lang(X1),k5_numbers)|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_40, plain, (m2_finseq_1(k22_zf_lang(X1),k5_numbers)|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_42, plain, (m2_finseq_1(k24_zf_lang(X1),k5_numbers)|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_24, negated_conjecture, (v2_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_16, negated_conjecture, (v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_44, plain, (m1_subset_1(k2_zf_model(X1),k1_zfmisc_1(k1_zf_lang))|~v1_zf_lang(X1)|~m1_finseq_1(X1,k5_numbers))).
+cnf(i_0_4, negated_conjecture, (v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_20, negated_conjecture, (v2_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_12, negated_conjecture, (v3_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0))).
+cnf(i_0_56, plain, (k3_tarski(k2_tarski(X2,X3))=k1_zf_model(X1)|k1_zf_model(k21_zf_lang(X1))!=X2|k1_zf_model(k22_zf_lang(X1))!=X3|~v5_zf_lang(X1)|~epred1_1(X1))).
+cnf(i_0_50, plain, (k7_subset_1(X1,X2,X3)=k6_subset_1(X2,X3)|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_31, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_30, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_55, plain, (k6_subset_1(k3_tarski(k1_tarski(k1_zf_model(k24_zf_lang(X1)))),k1_tarski(k23_zf_lang(X1)))=k1_zf_model(X1)|~v6_zf_lang(X1)|~epred1_1(X1))).
+cnf(i_0_47, plain, (k3_tarski(k2_tarski(X2,X3))=k4_subset_1(X1,X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_27, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_26, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v4_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_23, negated_conjecture, (v2_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_22, negated_conjecture, (v2_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_15, negated_conjecture, (v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_14, negated_conjecture, (v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v5_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_2, negated_conjecture, (v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_19, negated_conjecture, (v2_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_18, negated_conjecture, (v2_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_11, negated_conjecture, (v3_zf_lang(esk1_0)|v5_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_10, negated_conjecture, (v3_zf_lang(esk1_0)|v6_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_29, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_25, negated_conjecture, (v2_zf_lang(esk1_0)|v3_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v4_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_21, negated_conjecture, (v2_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_13, negated_conjecture, (v3_zf_lang(esk1_0)|v4_zf_lang(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_1, negated_conjecture, (k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_17, negated_conjecture, (v2_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v3_zf_lang(esk1_0)|k2_zf_model(k20_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k2_tarski(k18_zf_lang(esk1_0),k19_zf_lang(esk1_0))!=k2_zf_model(esk1_0)|k4_subset_1(k1_zf_lang,k2_zf_model(k21_zf_lang(esk1_0)),k2_zf_model(k22_zf_lang(esk1_0)))!=k2_zf_model(esk1_0)|k7_subset_1(k1_zf_lang,k2_zf_model(k24_zf_lang(esk1_0)),k1_tarski(k23_zf_lang(esk1_0)))!=k2_zf_model(esk1_0))).
+
+

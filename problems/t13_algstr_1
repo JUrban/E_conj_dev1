@@ -1,0 +1,143 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_7, negated_conjecture, (v21_algstr_0(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v3_group_1(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v4_vectsp_1(esk1_0))).
+cnf(i_0_4, negated_conjecture, (v5_algstr_1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (l4_algstr_0(esk1_0))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_8, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_25, plain, (l3_algstr_0(X1)|~l4_algstr_0(X1))).
+cnf(i_0_26, plain, (l3_struct_0(X1)|~l4_algstr_0(X1))).
+cnf(i_0_27, plain, (v2_struct_0(X1)|epred1_1(X1)|~l4_algstr_0(X1))).
+cnf(i_0_10, plain, (v19_algstr_0(X1)|~v21_algstr_0(X1)|~l3_algstr_0(X1))).
+cnf(i_0_9, plain, (v20_algstr_0(X1)|~v21_algstr_0(X1)|~l3_algstr_0(X1))).
+cnf(i_0_13, plain, (v20_algstr_0(X1)|m1_subset_1(esk3_1(X1),u1_struct_0(X1))|~l3_algstr_0(X1))).
+cnf(i_0_21, plain, (v2_struct_0(X1)|v4_vectsp_1(X1)|m1_subset_1(esk5_1(X1),u1_struct_0(X1))|~l4_algstr_0(X1))).
+cnf(i_0_12, plain, (v20_algstr_0(X1)|~l3_algstr_0(X1)|~v17_algstr_0(esk3_1(X1),X1))).
+cnf(i_0_14, plain, (v17_algstr_0(X2,X1)|~l3_algstr_0(X1)|~v20_algstr_0(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_11, plain, (v2_struct_0(X2)|v23_algstr_0(X1,X2)|~v21_algstr_0(X2)|~v5_algstr_1(X2)|~l4_algstr_0(X2)|~m1_subset_1(X1,u1_struct_0(X2)))).
+cnf(i_0_24, plain, (m1_subset_1(k9_algstr_0(X1,X2),u1_struct_0(X1))|~l4_algstr_0(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_122, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_116, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_110, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_121, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_115, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_109, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_120, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_114, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_108, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_119, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_113, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_107, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_118, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_112, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_106, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~epred1_1(X1))).
+cnf(i_0_123, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_117, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_111, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_17, plain, (m1_subset_1(esk4_2(X1,X2),u1_struct_0(X1))|~l4_algstr_0(X1)|~v23_algstr_0(X2,X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_23, plain, (k6_algstr_0(X1,X2,k5_struct_0(X1))=X2|v2_struct_0(X1)|~v4_vectsp_1(X1)|~l4_algstr_0(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_22, plain, (k6_algstr_0(X1,k5_struct_0(X1),X2)=X2|v2_struct_0(X1)|~v4_vectsp_1(X1)|~l4_algstr_0(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_126, plain, (v2_struct_0(X1)|m1_subset_1(esk6_2(X1,X2),u1_struct_0(X1))|~v21_algstr_0(X1)|~v3_group_1(X1)|~v4_vectsp_1(X1)|~v5_algstr_1(X1)|~l4_algstr_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_127, plain, (k6_algstr_0(X1,X2,k5_struct_0(X1))=X2|v2_struct_0(X1)|~v21_algstr_0(X1)|~v3_group_1(X1)|~v4_vectsp_1(X1)|~v5_algstr_1(X1)|~l4_algstr_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_16, plain, (k6_algstr_0(X1,esk4_2(X1,X2),X2)=k5_struct_0(X1)|~l4_algstr_0(X1)|~v23_algstr_0(X2,X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_125, plain, (k6_algstr_0(X1,X2,esk6_2(X1,X2))=k5_struct_0(X1)|v2_struct_0(X1)|~v21_algstr_0(X1)|~v3_group_1(X1)|~v4_vectsp_1(X1)|~v5_algstr_1(X1)|~l4_algstr_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_74, plain, (v21_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_68, plain, (v21_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_62, plain, (v21_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_73, plain, (v3_group_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_67, plain, (v3_group_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_61, plain, (v3_group_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_72, plain, (v4_vectsp_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_66, plain, (v4_vectsp_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_60, plain, (v4_vectsp_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_71, plain, (v5_algstr_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_65, plain, (v5_algstr_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_59, plain, (v5_algstr_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_70, plain, (l4_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_64, plain, (l4_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_58, plain, (l4_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1))).
+cnf(i_0_15, plain, (v23_algstr_0(X2,X1)|k6_algstr_0(X1,X3,X2)!=k5_struct_0(X1)|~l4_algstr_0(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_75, plain, (m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_69, plain, (m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_63, plain, (m1_subset_1(esk8_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_98, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_92, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_86, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_97, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_91, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_85, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_96, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_90, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_84, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_95, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_89, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_83, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_94, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_88, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_82, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_19, plain, (k6_algstr_0(X1,X3,X2)=k5_struct_0(X1)|k9_algstr_0(X1,X2)!=X3|~l4_algstr_0(X1)|~v23_algstr_0(X2,X1)|~v17_algstr_0(X2,X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_99, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_93, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_87, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_18, plain, (k9_algstr_0(X1,X2)=X3|k6_algstr_0(X1,X3,X2)!=k5_struct_0(X1)|~l4_algstr_0(X1)|~v23_algstr_0(X2,X1)|~v17_algstr_0(X2,X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_1, negated_conjecture, (k6_algstr_0(esk1_0,esk2_0,k9_algstr_0(esk1_0,esk2_0))!=k5_struct_0(esk1_0)|k6_algstr_0(esk1_0,k9_algstr_0(esk1_0,esk2_0),esk2_0)!=k5_struct_0(esk1_0))).
+cnf(i_0_20, plain, (v2_struct_0(X1)|v4_vectsp_1(X1)|k6_algstr_0(X1,k5_struct_0(X1),esk5_1(X1))!=esk5_1(X1)|k6_algstr_0(X1,esk5_1(X1),k5_struct_0(X1))!=esk5_1(X1)|~l4_algstr_0(X1))).
+cnf(i_0_50, plain, (v21_algstr_0(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_44, plain, (v21_algstr_0(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_38, plain, (v21_algstr_0(X1)|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_49, plain, (v3_group_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_43, plain, (v3_group_1(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_37, plain, (v3_group_1(X1)|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_48, plain, (v4_vectsp_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_42, plain, (v4_vectsp_1(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_36, plain, (v4_vectsp_1(X1)|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_47, plain, (v5_algstr_1(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_41, plain, (v5_algstr_1(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_35, plain, (v5_algstr_1(X1)|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_46, plain, (l4_algstr_0(X1)|m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_40, plain, (l4_algstr_0(X1)|m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_34, plain, (l4_algstr_0(X1)|m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_51, plain, (m1_subset_1(esk9_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_45, plain, (m1_subset_1(esk10_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_39, plain, (m1_subset_1(esk11_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_124, plain, (k6_algstr_0(X1,k6_algstr_0(X1,X2,X3),X4)=k6_algstr_0(X1,X2,k6_algstr_0(X1,X3,X4))|v2_struct_0(X1)|~v21_algstr_0(X1)|~v3_group_1(X1)|~v4_vectsp_1(X1)|~v5_algstr_1(X1)|~l4_algstr_0(X1)|~epred1_1(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_104, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_103, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_102, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_101, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_100, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_105, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_56, plain, (v21_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_55, plain, (v3_group_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_54, plain, (v4_vectsp_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_53, plain, (v5_algstr_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_52, plain, (l4_algstr_0(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1))).
+cnf(i_0_57, plain, (m1_subset_1(esk8_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~v2_struct_0(X1)|~epred1_1(X1))).
+cnf(i_0_80, plain, (v21_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_79, plain, (v3_group_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_78, plain, (v4_vectsp_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_77, plain, (v5_algstr_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_76, plain, (l4_algstr_0(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_81, plain, (m1_subset_1(esk7_1(X1),u1_struct_0(X1))|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_32, plain, (v21_algstr_0(X1)|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_31, plain, (v3_group_1(X1)|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_30, plain, (v4_vectsp_1(X1)|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_29, plain, (v5_algstr_1(X1)|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_28, plain, (l4_algstr_0(X1)|k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_33, plain, (k6_algstr_0(X1,esk8_1(X1),X2)!=k5_struct_0(X1)|k6_algstr_0(X1,esk7_1(X1),k5_struct_0(X1))!=esk7_1(X1)|k6_algstr_0(X1,k6_algstr_0(X1,esk9_1(X1),esk10_1(X1)),esk11_1(X1))!=k6_algstr_0(X1,esk9_1(X1),k6_algstr_0(X1,esk10_1(X1),esk11_1(X1)))|~v2_struct_0(X1)|~epred1_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+
+

@@ -1,0 +1,83 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_53, negated_conjecture, (v1_zf_lang(esk2_0))).
+cnf(i_0_51, negated_conjecture, (v1_zf_lang(esk3_0))).
+cnf(i_0_49, negated_conjecture, (v6_zf_lang(esk2_0))).
+cnf(i_0_52, negated_conjecture, (m2_finseq_1(esk2_0,k5_numbers))).
+cnf(i_0_50, negated_conjecture, (m2_finseq_1(esk3_0,k5_numbers))).
+cnf(i_0_54, negated_conjecture, (m2_subset_1(esk1_0,k5_numbers,k1_zf_lang))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_47, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|v1_zf_lang(esk4_0))).
+cnf(i_0_35, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0)).
+cnf(i_0_41, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|m2_finseq_1(esk4_0,k5_numbers))).
+cnf(i_0_58, plain, (v1_zf_lang(esk7_1(X1))|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_57, plain, (m2_finseq_1(esk7_1(X1),k5_numbers)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_48, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|v1_zf_lang(esk4_0)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang))).
+cnf(i_0_56, plain, (k8_zf_lang(esk6_1(X1),esk7_1(X1))=X1|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_23, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|v1_zf_lang(esk4_0)|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_79, plain, (v6_zf_lang(X2)|v1_zf_lang(esk11_2(X2,X1))|k23_zf_lang(X2)!=X1|~epred1_2(X1,X2))).
+cnf(i_0_5, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|k23_zf_lang(esk2_0)!=esk1_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_36, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang))).
+cnf(i_0_42, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k24_zf_lang(esk2_0)=esk3_0|m2_finseq_1(esk4_0,k5_numbers)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang))).
+cnf(i_0_83, plain, (v1_zf_lang(esk10_2(X2,X1))|k23_zf_lang(X2)!=X1|~v6_zf_lang(X2)|~epred1_2(X1,X2))).
+cnf(i_0_11, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_17, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|m2_finseq_1(esk4_0,k5_numbers)|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_78, plain, (v6_zf_lang(X2)|m2_finseq_1(esk11_2(X2,X1),k5_numbers)|k23_zf_lang(X2)!=X1|~epred1_2(X1,X2))).
+cnf(i_0_77, plain, (k13_zf_lang(X1,esk11_2(X2,X1))=X2|v6_zf_lang(X2)|k23_zf_lang(X2)!=X1|~epred1_2(X1,X2))).
+cnf(i_0_82, plain, (m2_finseq_1(esk10_2(X2,X1),k5_numbers)|k23_zf_lang(X2)!=X1|~v6_zf_lang(X2)|~epred1_2(X1,X2))).
+cnf(i_0_81, plain, (k8_zf_lang(X1,esk10_2(X2,X1))=X2|k23_zf_lang(X2)!=X1|~v6_zf_lang(X2)|~epred1_2(X1,X2))).
+cnf(i_0_76, plain, (k23_zf_lang(X2)=X1|v6_zf_lang(X2)|k13_zf_lang(X1,X3)!=X2|~v1_zf_lang(X3)|~epred1_2(X1,X2)|~m2_finseq_1(X3,k5_numbers))).
+cnf(i_0_80, plain, (k23_zf_lang(X2)=X1|k8_zf_lang(X1,X3)!=X2|~v1_zf_lang(X3)|~v6_zf_lang(X2)|~epred1_2(X1,X2)|~m2_finseq_1(X3,k5_numbers))).
+cnf(i_0_59, plain, (m2_subset_1(esk6_1(X1),k5_numbers,k1_zf_lang)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_24, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|v1_zf_lang(esk4_0)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_6, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k23_zf_lang(esk2_0)!=esk1_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_72, plain, (k8_zf_lang(esk8_2(X1,X2),X2)=X1|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_43, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|v1_zf_lang(esk4_0)|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_12, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_18, negated_conjecture, (k24_zf_lang(esk2_0)=esk3_0|m2_finseq_1(esk4_0,k5_numbers)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_63, plain, (k13_zf_lang(esk9_2(X1,X2),X2)=X1|v6_zf_lang(X1)|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_66, plain, (k8_zf_lang(esk8_2(X1,X2),X2)=X1|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_44, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|v1_zf_lang(esk4_0)|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_31, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_37, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|m2_finseq_1(esk4_0,k5_numbers)|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_32, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_38, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|m2_finseq_1(esk4_0,k5_numbers)|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_61, plain, (epred1_2(X2,X1)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_60, plain, (epred1_2(X2,X1)|~v1_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_73, plain, (m2_subset_1(esk8_2(X1,X2),k5_numbers,k1_zf_lang)|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_64, plain, (v6_zf_lang(X1)|m2_subset_1(esk9_2(X1,X2),k5_numbers,k1_zf_lang)|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_67, plain, (m2_subset_1(esk8_2(X1,X2),k5_numbers,k1_zf_lang)|k24_zf_lang(X1)!=X2|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers))).
+cnf(i_0_19, negated_conjecture, (v1_zf_lang(esk4_0)|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_45, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|v1_zf_lang(esk4_0)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_1, negated_conjecture, (k23_zf_lang(esk2_0)!=esk1_0|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_20, negated_conjecture, (k8_zf_lang(esk5_0,esk3_0)=esk2_0|v1_zf_lang(esk4_0)|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_55, plain, (v6_zf_lang(X1)|k8_zf_lang(X2,X3)!=X1|~v1_zf_lang(X3)|~v1_zf_lang(X1)|~m2_finseq_1(X3,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_7, negated_conjecture, (k8_zf_lang(esk1_0,esk4_0)=esk2_0|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_2, negated_conjecture, (k8_zf_lang(esk5_0,esk3_0)=esk2_0|k23_zf_lang(esk2_0)!=esk1_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_13, negated_conjecture, (m2_finseq_1(esk4_0,k5_numbers)|k24_zf_lang(esk2_0)!=esk3_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_33, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|k8_zf_lang(esk1_0,esk4_0)=esk2_0|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_39, negated_conjecture, (k23_zf_lang(esk2_0)=esk1_0|m2_finseq_1(esk4_0,k5_numbers)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X1,esk3_0)!=esk2_0|~m2_subset_1(X1,k5_numbers,k1_zf_lang))).
+cnf(i_0_8, negated_conjecture, (k8_zf_lang(esk1_0,esk4_0)=esk2_0|k8_zf_lang(esk5_0,esk3_0)=esk2_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_14, negated_conjecture, (k8_zf_lang(esk5_0,esk3_0)=esk2_0|m2_finseq_1(esk4_0,k5_numbers)|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_71, plain, (k24_zf_lang(X1)=X2|k8_zf_lang(X3,X2)!=X1|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X3,k5_numbers,k1_zf_lang))).
+cnf(i_0_62, plain, (k24_zf_lang(X1)=X2|v6_zf_lang(X1)|k13_zf_lang(X3,X2)!=X1|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X3,k5_numbers,k1_zf_lang))).
+cnf(i_0_65, plain, (k24_zf_lang(X1)=X2|k8_zf_lang(X3,X2)!=X1|~v1_zf_lang(X2)|~v1_zf_lang(X1)|~v6_zf_lang(X1)|~v11_zf_lang(X1)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X3,k5_numbers,k1_zf_lang))).
+cnf(i_0_21, negated_conjecture, (v1_zf_lang(esk4_0)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_3, negated_conjecture, (m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k23_zf_lang(esk2_0)!=esk1_0|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_9, negated_conjecture, (k8_zf_lang(esk1_0,esk4_0)=esk2_0|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_15, negated_conjecture, (m2_finseq_1(esk4_0,k5_numbers)|m2_subset_1(esk5_0,k5_numbers,k1_zf_lang)|k8_zf_lang(X2,esk3_0)!=esk2_0|k8_zf_lang(esk1_0,X1)!=esk2_0|~v1_zf_lang(X1)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X2,k5_numbers,k1_zf_lang))).
+cnf(i_0_75, plain, (X3=X4|k8_zf_lang(X3,X1)!=k8_zf_lang(X4,X2)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X4,k5_numbers,k1_zf_lang)|~m2_subset_1(X3,k5_numbers,k1_zf_lang))).
+cnf(i_0_74, plain, (X1=X2|k8_zf_lang(X3,X1)!=k8_zf_lang(X4,X2)|~m2_finseq_1(X2,k5_numbers)|~m2_finseq_1(X1,k5_numbers)|~m2_subset_1(X4,k5_numbers,k1_zf_lang)|~m2_subset_1(X3,k5_numbers,k1_zf_lang))).
+
+

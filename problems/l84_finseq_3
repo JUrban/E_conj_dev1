@@ -1,0 +1,61 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_8, plain, (k1_xboole_0=o_0_0_xboole_0)).
+cnf(i_0_7, negated_conjecture, (v1_relat_1(esk1_0))).
+cnf(i_0_4, negated_conjecture, (v1_relat_1(esk2_0))).
+cnf(i_0_6, negated_conjecture, (v1_funct_1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v1_funct_1(esk2_0))).
+cnf(i_0_5, negated_conjecture, (v1_finseq_1(esk1_0))).
+cnf(i_0_2, negated_conjecture, (v1_finseq_1(esk2_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k7_finseq_1(k1_finseq_3(esk2_0,esk3_0),k1_finseq_3(esk1_0,esk3_0))!=k1_finseq_3(k7_finseq_1(esk2_0,esk1_0),esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_9, plain, (k7_finseq_1(k1_finseq_3(X1,X2),k1_finseq_3(k1_xboole_0,X2))=k1_finseq_3(k7_finseq_1(X1,k1_xboole_0),X2)|~v1_relat_1(X1)|~v1_funct_1(X1)|~v1_finseq_1(X1))).
+cnf(i_0_45, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_relat_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_41, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_relat_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_44, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_funct_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_40, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_funct_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_43, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_finseq_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_39, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|v1_finseq_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_37, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk8_0)|v1_funct_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_29, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk8_0)|v1_finseq_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_33, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk10_0)|v1_funct_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_25, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk10_0)|v1_finseq_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_36, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk6_0)|v1_funct_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_32, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk6_0)|v1_funct_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_35, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk6_0)|v1_finseq_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_31, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk6_0)|v1_finseq_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_28, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk8_0)|v1_finseq_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_24, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk10_0)|v1_finseq_1(esk6_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_27, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_finseq_1(esk6_0)|v1_finseq_1(esk8_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_23, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_finseq_1(esk6_0)|v1_finseq_1(esk10_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_42, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|k7_finseq_1(k1_finseq_3(X4,X5),k1_finseq_3(esk8_0,X5))=k1_finseq_3(k7_finseq_1(X4,esk8_0),X5)|v1_relat_1(esk6_0)|~v1_relat_1(X4)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X4)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X4)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_34, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|k7_finseq_1(k1_finseq_3(X4,X5),k1_finseq_3(esk8_0,X5))=k1_finseq_3(k7_finseq_1(X4,esk8_0),X5)|v1_funct_1(esk6_0)|~v1_relat_1(X4)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X4)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X4)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_26, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|k7_finseq_1(k1_finseq_3(X4,X5),k1_finseq_3(esk8_0,X5))=k1_finseq_3(k7_finseq_1(X4,esk8_0),X5)|v1_finseq_1(esk6_0)|~v1_relat_1(X4)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X4)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X4)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_21, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk8_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_17, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk10_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_20, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk8_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_16, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk10_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_19, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_finseq_1(esk8_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_15, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_finseq_1(esk10_0)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_13, plain, (k7_finseq_1(k1_finseq_3(X2,X4),k1_finseq_3(k7_finseq_1(X1,k9_finseq_1(X3)),X4))=k1_finseq_3(k7_finseq_1(X2,k7_finseq_1(X1,k9_finseq_1(X3))),X4)|v1_relat_1(esk4_1(X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_12, plain, (k7_finseq_1(k1_finseq_3(X2,X4),k1_finseq_3(k7_finseq_1(X1,k9_finseq_1(X3)),X4))=k1_finseq_3(k7_finseq_1(X2,k7_finseq_1(X1,k9_finseq_1(X3))),X4)|v1_funct_1(esk4_1(X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_11, plain, (k7_finseq_1(k1_finseq_3(X2,X4),k1_finseq_3(k7_finseq_1(X1,k9_finseq_1(X3)),X4))=k1_finseq_3(k7_finseq_1(X2,k7_finseq_1(X1,k9_finseq_1(X3))),X4)|v1_finseq_1(esk4_1(X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_18, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|k7_finseq_1(k1_finseq_3(X4,X5),k1_finseq_3(esk8_0,X5))=k1_finseq_3(k7_finseq_1(X4,esk8_0),X5)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|~v1_relat_1(X4)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X4)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X4)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_38, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_relat_1(esk6_0)|k7_finseq_1(k1_finseq_3(esk10_0,esk11_0),k1_finseq_3(k7_finseq_1(esk8_0,k9_finseq_1(esk9_0)),esk11_0))!=k1_finseq_3(k7_finseq_1(esk10_0,k7_finseq_1(esk8_0,k9_finseq_1(esk9_0))),esk11_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_30, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_funct_1(esk6_0)|k7_finseq_1(k1_finseq_3(esk10_0,esk11_0),k1_finseq_3(k7_finseq_1(esk8_0,k9_finseq_1(esk9_0)),esk11_0))!=k1_finseq_3(k7_finseq_1(esk10_0,k7_finseq_1(esk8_0,k9_finseq_1(esk9_0))),esk11_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_22, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|v1_finseq_1(esk6_0)|k7_finseq_1(k1_finseq_3(esk10_0,esk11_0),k1_finseq_3(k7_finseq_1(esk8_0,k9_finseq_1(esk9_0)),esk11_0))!=k1_finseq_3(k7_finseq_1(esk10_0,k7_finseq_1(esk8_0,k9_finseq_1(esk9_0))),esk11_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_10, plain, (k7_finseq_1(k1_finseq_3(X2,X4),k1_finseq_3(k7_finseq_1(X1,k9_finseq_1(X3)),X4))=k1_finseq_3(k7_finseq_1(X2,k7_finseq_1(X1,k9_finseq_1(X3))),X4)|k7_finseq_1(k1_finseq_3(esk4_1(X1),esk5_1(X1)),k1_finseq_3(X1,esk5_1(X1)))!=k1_finseq_3(k7_finseq_1(esk4_1(X1),X1),esk5_1(X1))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_14, plain, (k7_finseq_1(k1_finseq_3(X1,X3),k1_finseq_3(X2,X3))=k1_finseq_3(k7_finseq_1(X1,X2),X3)|k7_finseq_1(k1_finseq_3(esk6_0,esk7_0),k1_finseq_3(k1_xboole_0,esk7_0))!=k1_finseq_3(k7_finseq_1(esk6_0,k1_xboole_0),esk7_0)|k7_finseq_1(k1_finseq_3(esk10_0,esk11_0),k1_finseq_3(k7_finseq_1(esk8_0,k9_finseq_1(esk9_0)),esk11_0))!=k1_finseq_3(k7_finseq_1(esk10_0,k7_finseq_1(esk8_0,k9_finseq_1(esk9_0))),esk11_0)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+
+

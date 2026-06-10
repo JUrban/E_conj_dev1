@@ -1,0 +1,23 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (v1_xboolean(esk1_0))).
+cnf(i_0_3, negated_conjecture, (v1_xboolean(esk2_0))).
+cnf(i_0_2, negated_conjecture, (v1_xboolean(esk3_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k7_xboolean(k7_xboolean(k7_xboolean(k7_xboolean(esk1_0,esk2_0),esk3_0),esk1_0),k7_xboolean(esk2_0,esk3_0))!=k2_xboolean)).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_6, plain, (k7_xboolean(X1,X1)=k2_xboolean|~v1_xboolean(X1))).
+cnf(i_0_5, plain, (v1_xboolean(k7_xboolean(X1,X2))|~v1_xboolean(X2)|~v1_xboolean(X1))).
+cnf(i_0_7, plain, (k7_xboolean(k7_xboolean(X1,X2),X3)=k7_xboolean(X1,k7_xboolean(X2,X3))|~v1_xboolean(X3)|~v1_xboolean(X2)|~v1_xboolean(X1))).
+
+

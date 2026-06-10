@@ -1,0 +1,56 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_7, negated_conjecture, (l1_graph_1(esk2_0))).
+cnf(i_0_4, negated_conjecture, (v7_graph_1(esk5_0,esk2_0))).
+cnf(i_0_3, negated_conjecture, (m2_graph_1(esk5_0,esk2_0))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk2_0)))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk4_0,u1_struct_0(esk2_0)))).
+cnf(i_0_2, negated_conjecture, (r2_graph_5(esk2_0,esk3_0,esk4_0,esk5_0,esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_8, negated_conjecture, (~v2_struct_0(esk2_0))).
+cnf(i_0_1, negated_conjecture, (~r1_tarski(k6_graph_5(esk2_0,esk5_0),k5_graph_5(esk2_0,esk3_0,esk4_0,esk1_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_15, plain, (r1_tarski(X1,X2)|r2_hidden(esk6_2(X1,X2),X1))).
+cnf(i_0_24, plain, (v2_struct_0(X2)|m2_finseq_1(X1,u4_struct_0(X2))|~l1_graph_1(X2)|~m2_graph_1(X1,X2))).
+cnf(i_0_16, plain, (r2_hidden(X1,X2)|~r1_tarski(X3,X2)|~r2_hidden(X1,X3))).
+cnf(i_0_14, plain, (r1_tarski(X1,X2)|~r2_hidden(esk6_2(X1,X2),X2))).
+cnf(i_0_9, plain, (k6_graph_5(X1,X2)=a_2_3_graph_5(X1,X2)|v2_struct_0(X1)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1))).
+cnf(i_0_30, plain, (esk7_3(X3,X2,X1)=X3|v2_struct_0(X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_29, plain, (v2_struct_0(X2)|esk7_3(X3,X2,X1)!=k1_xboole_0|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_33, plain, (v2_struct_0(X2)|v7_graph_1(esk7_3(X3,X2,X1),X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_31, plain, (v2_struct_0(X2)|m2_graph_1(esk7_3(X3,X2,X1),X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_32, plain, (v2_struct_0(X2)|v1_graph_4(esk7_3(X3,X2,X1),X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_26, plain, (v2_struct_0(X2)|r1_tarski(k10_xtuple_0(esk7_3(X3,X2,X1)),k10_xtuple_0(X1))|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_28, plain, (k1_funct_1(u1_graph_1(X2),k1_funct_1(esk7_3(X3,X2,X1),1))=k1_funct_1(u1_graph_1(X2),k1_funct_1(X1,1))|v2_struct_0(X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_13, plain, (v2_struct_0(X1)|k1_xboole_0!=X2|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r1_graph_5(X1,X2,X3,X4))).
+cnf(i_0_25, plain, (k1_xboole_0=X4|v2_struct_0(X2)|r2_hidden(X3,a_2_3_graph_5(X2,X1))|X3!=X4|k1_funct_1(u1_graph_1(X2),k1_funct_1(X1,1))!=k1_funct_1(u1_graph_1(X2),k1_funct_1(X4,1))|k1_funct_1(u2_graph_1(X2),k1_funct_1(X1,k3_finseq_1(X1)))!=k1_funct_1(u2_graph_1(X2),k1_funct_1(X4,k3_finseq_1(X4)))|~l1_graph_1(X2)|~v7_graph_1(X4,X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X4,X2)|~m2_graph_1(X1,X2)|~v1_graph_4(X4,X2)|~r1_tarski(k10_xtuple_0(X4),k10_xtuple_0(X1)))).
+cnf(i_0_10, plain, (k1_xboole_0=X2|v2_struct_0(X1)|r1_graph_5(X1,X2,X3,X4)|k1_funct_1(u1_graph_1(X1),k1_funct_1(X2,1))!=X3|k1_funct_1(u2_graph_1(X1),k1_funct_1(X2,k3_finseq_1(X2)))!=X4|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1)))).
+cnf(i_0_12, plain, (k1_funct_1(u1_graph_1(X1),k1_funct_1(X2,1))=X3|v2_struct_0(X1)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r1_graph_5(X1,X2,X3,X4))).
+cnf(i_0_11, plain, (k1_funct_1(u2_graph_1(X1),k1_funct_1(X2,k3_finseq_1(X2)))=X4|v2_struct_0(X1)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r1_graph_5(X1,X2,X3,X4))).
+cnf(i_0_23, plain, (k5_graph_5(X1,X2,X3,X4)=a_4_0_graph_5(X1,X2,X3,X4)|v2_struct_0(X1)|~l1_graph_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_40, plain, (v2_struct_0(X1)|r1_tarski(k7_subset_1(u1_struct_0(X1),k2_graph_5(X1,X2),X3),X4)|~l1_graph_1(X1)|~m2_finseq_1(X5,u4_struct_0(X1))|~m2_finseq_1(X2,u4_struct_0(X1))|~r1_tarski(k10_xtuple_0(X2),k10_xtuple_0(X5))|~r1_tarski(k7_subset_1(u1_struct_0(X1),k2_graph_5(X1,X5),X3),X4))).
+cnf(i_0_27, plain, (k1_funct_1(u2_graph_1(X2),k1_funct_1(esk7_3(X3,X2,X1),k3_finseq_1(esk7_3(X3,X2,X1))))=k1_funct_1(u2_graph_1(X2),k1_funct_1(X1,k3_finseq_1(X1)))|v2_struct_0(X2)|~l1_graph_1(X2)|~v7_graph_1(X1,X2)|~m2_graph_1(X1,X2)|~r2_hidden(X3,a_2_3_graph_5(X2,X1)))).
+cnf(i_0_17, plain, (v2_struct_0(X1)|r2_graph_5(X1,X2,X3,X4,X5)|~l1_graph_1(X1)|~v7_graph_1(X4,X1)|~m2_graph_1(X4,X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r1_graph_5(X1,X4,X2,X3)|~r1_tarski(k7_subset_1(u1_struct_0(X1),k2_graph_5(X1,X4),k1_tarski(X3)),X5))).
+cnf(i_0_22, plain, (v2_struct_0(X1)|v1_graph_4(X2,X1)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r4_graph_5(X1,X2,X3,X4,X5))).
+cnf(i_0_36, plain, (esk8_5(X4,X2,X3,X1,X5)=X4|v2_struct_0(X2)|~l1_graph_1(X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5)))).
+cnf(i_0_18, plain, (v2_struct_0(X1)|r1_tarski(k7_subset_1(u1_struct_0(X1),k2_graph_5(X1,X4),k1_tarski(X3)),X5)|~l1_graph_1(X1)|~v7_graph_1(X4,X1)|~m2_graph_1(X4,X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_graph_5(X1,X2,X3,X4,X5))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|r1_graph_5(X1,X4,X2,X3)|~l1_graph_1(X1)|~v7_graph_1(X4,X1)|~m2_graph_1(X4,X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_graph_5(X1,X2,X3,X4,X5))).
+cnf(i_0_34, plain, (v2_struct_0(X2)|r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5))|X4!=X6|~l1_graph_1(X2)|~v7_graph_1(X6,X2)|~m2_graph_1(X6,X2)|~v1_graph_4(X6,X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r4_graph_5(X2,X6,X3,X1,X5))).
+cnf(i_0_21, plain, (v2_struct_0(X1)|r2_graph_5(X1,X3,X4,X2,X5)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r4_graph_5(X1,X2,X3,X4,X5))).
+cnf(i_0_20, plain, (v2_struct_0(X1)|r4_graph_5(X1,X2,X3,X4,X5)|~l1_graph_1(X1)|~v7_graph_1(X2,X1)|~m2_graph_1(X2,X1)|~v1_graph_4(X2,X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r2_graph_5(X1,X3,X4,X2,X5))).
+cnf(i_0_39, plain, (v2_struct_0(X2)|v7_graph_1(esk8_5(X4,X2,X3,X1,X5),X2)|~l1_graph_1(X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5)))).
+cnf(i_0_37, plain, (v2_struct_0(X2)|m2_graph_1(esk8_5(X4,X2,X3,X1,X5),X2)|~l1_graph_1(X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5)))).
+cnf(i_0_38, plain, (v2_struct_0(X2)|v1_graph_4(esk8_5(X4,X2,X3,X1,X5),X2)|~l1_graph_1(X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5)))).
+cnf(i_0_35, plain, (v2_struct_0(X2)|r4_graph_5(X2,esk8_5(X4,X2,X3,X1,X5),X3,X1,X5)|~l1_graph_1(X2)|~m1_subset_1(X3,u1_struct_0(X2))|~m1_subset_1(X1,u1_struct_0(X2))|~r2_hidden(X4,a_4_0_graph_5(X2,X3,X1,X5)))).
+
+

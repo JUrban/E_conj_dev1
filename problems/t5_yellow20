@@ -1,0 +1,46 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_14, negated_conjecture, (v2_altcat_1(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v2_altcat_1(esk2_0))).
+cnf(i_0_13, negated_conjecture, (v11_altcat_1(esk1_0))).
+cnf(i_0_8, negated_conjecture, (v11_altcat_1(esk2_0))).
+cnf(i_0_12, negated_conjecture, (v12_altcat_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v12_altcat_1(esk2_0))).
+cnf(i_0_11, negated_conjecture, (l2_altcat_1(esk1_0))).
+cnf(i_0_6, negated_conjecture, (l2_altcat_1(esk2_0))).
+cnf(i_0_5, negated_conjecture, (m2_functor0(esk3_0,esk1_0,esk2_0))).
+cnf(i_0_3, negated_conjecture, (m2_functor0(esk4_0,esk2_0,esk1_0))).
+cnf(i_0_4, negated_conjecture, (v21_functor0(esk3_0,esk1_0,esk2_0))).
+cnf(i_0_2, negated_conjecture, (k13_functor0(esk1_0,esk2_0,esk1_0,esk3_0,esk4_0)=k12_functor0(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_15, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_10, negated_conjecture, (~v2_struct_0(esk2_0))).
+cnf(i_0_1, negated_conjecture, (g2_functor0(esk2_0,esk1_0,u1_functor0(esk2_0,esk1_0,esk4_0),u2_functor0(esk2_0,esk1_0,esk4_0))!=k15_functor0(esk1_0,esk2_0,esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_23, plain, (l1_altcat_1(X1)|~l2_altcat_1(X1))).
+cnf(i_0_17, plain, (v2_struct_0(X1)|v1_altcat_2(X1)|~v12_altcat_1(X1)|~l2_altcat_1(X1))).
+cnf(i_0_25, plain, (k12_functor0(X1)=k11_functor0(X1)|v2_struct_0(X1)|~v2_altcat_1(X1)|~v12_altcat_1(X1)|~l2_altcat_1(X1))).
+cnf(i_0_24, plain, (v2_struct_0(X3)|v2_struct_0(X2)|l2_functor0(X1,X2,X3)|~v2_altcat_1(X2)|~v12_altcat_1(X3)|~v12_altcat_1(X2)|~l2_altcat_1(X3)|~l2_altcat_1(X2)|~m2_functor0(X1,X2,X3))).
+cnf(i_0_20, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v8_functor0(X3,X2,X1)|~v2_altcat_1(X2)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~m2_functor0(X3,X2,X1))).
+cnf(i_0_19, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v12_functor0(X3,X2,X1)|~v2_altcat_1(X2)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~m2_functor0(X3,X2,X1))).
+cnf(i_0_21, plain, (v2_struct_0(X3)|v2_struct_0(X2)|l2_functor0(k15_functor0(X2,X3,X1),X3,X2)|~l1_altcat_1(X3)|~l1_altcat_1(X2)|~l2_functor0(X1,X2,X3))).
+cnf(i_0_22, plain, (v2_struct_0(X3)|v2_struct_0(X2)|v9_functor0(k15_functor0(X2,X3,X1),X3,X2)|~l1_altcat_1(X3)|~l1_altcat_1(X2)|~l2_functor0(X1,X2,X3))).
+cnf(i_0_29, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v21_functor0(k15_functor0(X1,X2,X3),X2,X1)|~v2_altcat_1(X2)|~v2_altcat_1(X1)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~v21_functor0(X3,X1,X2)|~l2_functor0(X3,X1,X2)|~v8_functor0(X3,X1,X2))).
+cnf(i_0_28, plain, (v2_struct_0(X2)|v2_struct_0(X1)|v8_functor0(k15_functor0(X1,X2,X3),X2,X1)|~v2_altcat_1(X2)|~v2_altcat_1(X1)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~v21_functor0(X3,X1,X2)|~l2_functor0(X3,X1,X2)|~v8_functor0(X3,X1,X2))).
+cnf(i_0_16, plain, (g2_functor0(X2,X3,u1_functor0(X2,X3,X1),u2_functor0(X2,X3,X1))=X1|~l1_altcat_1(X3)|~l1_altcat_1(X2)|~l2_functor0(X1,X2,X3)|~v9_functor0(X1,X2,X3))).
+cnf(i_0_30, plain, (g2_functor0(X1,X2,u1_functor0(X1,X2,X3),u2_functor0(X1,X2,X3))=k13_functor0(X1,X2,X2,X3,k11_functor0(X2))|v2_struct_0(X2)|v2_struct_0(X1)|~v2_altcat_1(X1)|~v12_altcat_1(X2)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~l2_functor0(X3,X1,X2)|~v8_functor0(X3,X1,X2))).
+cnf(i_0_31, plain, (g2_functor0(X1,X2,u1_functor0(X1,X2,X3),u2_functor0(X1,X2,X3))=k13_functor0(X1,X1,X2,k12_functor0(X1),X3)|v2_struct_0(X2)|v2_struct_0(X1)|~v2_altcat_1(X1)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~l2_functor0(X3,X1,X2)|~v8_functor0(X3,X1,X2))).
+cnf(i_0_26, plain, (k13_functor0(X1,X2,X1,X3,X4)=k12_functor0(X1)|v2_struct_0(X2)|v2_struct_0(X1)|g2_functor0(X1,X2,u1_functor0(X1,X2,X3),u2_functor0(X1,X2,X3))!=k15_functor0(X2,X1,X4)|~v2_altcat_1(X2)|~v2_altcat_1(X1)|~v12_altcat_1(X2)|~v12_altcat_1(X1)|~l2_altcat_1(X2)|~l2_altcat_1(X1)|~v1_altcat_2(X2)|~v1_altcat_2(X1)|~v21_functor0(X4,X2,X1)|~l2_functor0(X4,X2,X1)|~l2_functor0(X3,X1,X2)|~v8_functor0(X4,X2,X1)|~v8_functor0(X3,X1,X2))).
+cnf(i_0_27, plain, (k13_functor0(X1,X5,X3,k13_functor0(X1,X2,X5,X4,X6),X7)=k13_functor0(X1,X2,X3,X4,k13_functor0(X2,X5,X3,X6,X7))|v2_struct_0(X5)|v2_struct_0(X3)|v2_struct_0(X2)|v2_struct_0(X1)|~l1_altcat_1(X5)|~l1_altcat_1(X3)|~l1_altcat_1(X2)|~l1_altcat_1(X1)|~v1_altcat_2(X5)|~v1_altcat_2(X3)|~v1_altcat_2(X2)|~l2_functor0(X7,X5,X3)|~l2_functor0(X6,X2,X5)|~l2_functor0(X4,X1,X2)|~v8_functor0(X6,X2,X5)|~v8_functor0(X4,X1,X2))).
+
+

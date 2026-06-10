@@ -1,0 +1,29 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_7, negated_conjecture, (v1_xxreal_0(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v1_xxreal_0(esk2_0))).
+cnf(i_0_5, negated_conjecture, (v1_xxreal_0(esk3_0))).
+cnf(i_0_4, negated_conjecture, (v1_xxreal_0(esk4_0))).
+cnf(i_0_3, negated_conjecture, (r1_xxreal_0(esk3_0,esk4_0))).
+cnf(i_0_8, plain, (k3_xboole_0(X1,X2)=k3_xboole_0(X2,X1))).
+cnf(i_0_13, plain, (k3_xboole_0(k3_xboole_0(X1,X2),X3)=k3_xboole_0(X1,k3_xboole_0(X2,X3)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_2, negated_conjecture, (~r1_xxreal_0(esk2_0,esk1_0))).
+cnf(i_0_1, negated_conjecture, (k3_xboole_0(k4_xxreal_1(esk1_0,esk3_0),k2_xxreal_1(esk2_0,esk4_0))!=k2_xxreal_1(esk2_0,esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_9, plain, (r1_xxreal_0(X1,X1)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1))).
+cnf(i_0_11, plain, (k3_xboole_0(k4_xxreal_1(X1,X2),k1_xxreal_1(X3,X4))=k2_xxreal_1(X3,X2)|r1_xxreal_0(X3,X1)|~v1_xxreal_0(X4)|~v1_xxreal_0(X3)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1)|~r1_xxreal_0(X2,X4))).
+cnf(i_0_12, plain, (k3_xboole_0(k2_xxreal_1(X1,X2),k2_xxreal_1(X3,X4))=k2_xxreal_1(X3,X2)|~v1_xxreal_0(X4)|~v1_xxreal_0(X3)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1)|~r1_xxreal_0(X2,X4)|~r1_xxreal_0(X1,X3))).
+cnf(i_0_10, plain, (k3_xboole_0(k2_xxreal_1(X1,X2),k1_xxreal_1(X3,X4))=k2_xxreal_1(X3,X2)|~v1_xxreal_0(X4)|~v1_xxreal_0(X3)|~v1_xxreal_0(X2)|~v1_xxreal_0(X1)|~r1_xxreal_0(X2,X4)|~r1_xxreal_0(X1,X3))).
+
+

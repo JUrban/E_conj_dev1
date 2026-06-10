@@ -1,0 +1,35 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_3, negated_conjecture, (m1_qc_lang1(esk1_0))).
+cnf(i_0_2, negated_conjecture, (m2_finseq_1(esk2_0,k3_cqc_lang(esk1_0)))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_17, plain, (~m1_qc_lang1(X1)|~v1_finset_1(k3_qc_lang1(X1)))).
+cnf(i_0_18, plain, (k1_card_1(k3_qc_lang1(X1))=k1_card_1(k1_qc_lang1(X1))|~m1_qc_lang1(X1))).
+cnf(i_0_19, plain, (~v1_xboole_0(X1)|~r2_hidden(X2,X1))).
+cnf(i_0_7, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_11, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X2))).
+cnf(i_0_8, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_14, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_4, plain, (v1_xboole_0(X1)|~v1_xboole_0(X2)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_6, plain, (m1_subset_1(k3_qc_lang1(X1),k1_zfmisc_1(k2_qc_lang1(X1)))|~m1_qc_lang1(X1))).
+cnf(i_0_15, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_16, plain, (v1_finset_1(k3_calcul_1(X1,X2))|~m1_qc_lang1(X1)|~m2_finseq_1(X2,k3_cqc_lang(X1)))).
+cnf(i_0_12, plain, (X1=X2|r2_hidden(esk3_2(X1,X2),X2)|r2_hidden(esk3_2(X1,X2),X1))).
+cnf(i_0_5, plain, (m1_subset_1(k3_calcul_1(X1,X2),k1_zfmisc_1(k3_qc_lang1(X1)))|~m1_qc_lang1(X1)|~m1_finseq_1(X2,k3_cqc_lang(X1)))).
+cnf(i_0_9, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m2_subset_1(X3,X2,X1)|~m1_subset_1(X3,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+cnf(i_0_13, plain, (X1=X2|~r2_hidden(esk3_2(X1,X2),X2)|~r2_hidden(esk3_2(X1,X2),X1))).
+cnf(i_0_1, negated_conjecture, (r2_hidden(X1,k3_calcul_1(esk1_0,esk2_0))|~m2_subset_1(X1,k2_qc_lang1(esk1_0),k3_qc_lang1(esk1_0)))).
+cnf(i_0_10, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m1_subset_1(X3,X1)|~m2_subset_1(X3,X2,X1)|~m1_subset_1(X1,k1_zfmisc_1(X2)))).
+
+

@@ -1,0 +1,44 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_17, negated_conjecture, (esk3_0=esk2_0)).
+cnf(i_0_20, negated_conjecture, (l1_metric_1(esk1_0))).
+cnf(i_0_19, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_18, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(u1_struct_0(k3_pcomps_1(esk1_0)))))).
+
+# Unprocessed negative unit clauses:
+
+# Unprocessed non-unit clauses:
+cnf(i_0_30, plain, (l1_pre_topc(k3_pcomps_1(X1))|~l1_metric_1(X1))).
+cnf(i_0_33, plain, (v1_pre_topc(k3_pcomps_1(X1))|~l1_metric_1(X1))).
+cnf(i_0_32, plain, (v2_pre_topc(k3_pcomps_1(X1))|~l1_metric_1(X1))).
+cnf(i_0_28, plain, (g1_pre_topc(u1_struct_0(X1),k2_pcomps_1(X1))=k3_pcomps_1(X1)|~l1_metric_1(X1))).
+cnf(i_0_21, plain, (g1_pre_topc(u1_struct_0(X1),u1_pre_topc(X1))=X1|~l1_pre_topc(X1)|~v1_pre_topc(X1))).
+cnf(i_0_16, negated_conjecture, (v2_compl_sp(esk2_0,esk1_0)|v3_compl_sp(esk2_0,esk1_0)|v3_pre_topc(esk3_0,k3_pcomps_1(esk1_0))|v4_pre_topc(esk3_0,k3_pcomps_1(esk1_0)))).
+cnf(i_0_29, plain, (m1_subset_1(k2_pcomps_1(X1),k1_zfmisc_1(k1_zfmisc_1(u1_struct_0(X1))))|~l1_metric_1(X1))).
+cnf(i_0_13, negated_conjecture, (v2_compl_sp(esk2_0,esk1_0)|v3_pre_topc(esk3_0,k3_pcomps_1(esk1_0))|~v3_compl_sp(esk2_0,esk1_0)|~v4_pre_topc(esk3_0,k3_pcomps_1(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (v3_compl_sp(esk2_0,esk1_0)|v4_pre_topc(esk3_0,k3_pcomps_1(esk1_0))|~v2_compl_sp(esk2_0,esk1_0)|~v3_pre_topc(esk3_0,k3_pcomps_1(esk1_0)))).
+cnf(i_0_36, plain, (k3_subset_1(X1,k3_subset_1(X1,X2))=X2|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_31, plain, (m1_subset_1(k3_subset_1(X1,X2),k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_1, negated_conjecture, (~v2_compl_sp(esk2_0,esk1_0)|~v3_compl_sp(esk2_0,esk1_0)|~v3_pre_topc(esk3_0,k3_pcomps_1(esk1_0))|~v4_pre_topc(esk3_0,k3_pcomps_1(esk1_0)))).
+cnf(i_0_38, plain, (k2_pre_topc(X1,X2)=X2|~l1_pre_topc(X1)|~v4_pre_topc(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_35, plain, (X2=X3|g1_pre_topc(X2,X1)!=g1_pre_topc(X3,X4)|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_34, plain, (X1=X4|g1_pre_topc(X2,X1)!=g1_pre_topc(X3,X4)|~m1_subset_1(X1,k1_zfmisc_1(k1_zfmisc_1(X2))))).
+cnf(i_0_23, plain, (r2_hidden(X2,u1_pre_topc(X1))|~l1_pre_topc(X1)|~v3_pre_topc(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_25, plain, (r2_hidden(X2,k2_pcomps_1(X1))|~l1_metric_1(X1)|~v2_compl_sp(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_37, plain, (v4_pre_topc(X2,X1)|k2_pre_topc(X1,X2)!=X2|~l1_pre_topc(X1)|~v2_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_24, plain, (v2_compl_sp(X2,X1)|~l1_metric_1(X1)|~r2_hidden(X2,k2_pcomps_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_22, plain, (v3_pre_topc(X2,X1)|~l1_pre_topc(X1)|~r2_hidden(X2,u1_pre_topc(X1))|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_27, plain, (v2_compl_sp(k3_subset_1(u1_struct_0(X1),X2),X1)|~l1_metric_1(X1)|~v3_compl_sp(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_40, plain, (v3_pre_topc(k3_subset_1(u1_struct_0(X1),X2),X1)|~l1_pre_topc(X1)|~v4_pre_topc(X2,X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_26, plain, (v3_compl_sp(X2,X1)|~l1_metric_1(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1)))|~v2_compl_sp(k3_subset_1(u1_struct_0(X1),X2),X1))).
+cnf(i_0_39, plain, (v4_pre_topc(X2,X1)|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1)))|~v3_pre_topc(k3_subset_1(u1_struct_0(X1),X2),X1))).
+
+

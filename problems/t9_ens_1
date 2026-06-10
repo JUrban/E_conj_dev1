@@ -1,0 +1,40 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk2_0,k2_ens_1(esk1_0)))).
+cnf(i_0_14, plain, (k2_xtuple_0(k4_tarski(X1,X2))=X2)).
+cnf(i_0_13, plain, (k1_xtuple_0(k4_tarski(X1,X2))=X1)).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_4, negated_conjecture, (~v1_xboole_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_10, plain, (v1_xboole_0(X1)|v4_funct_1(k1_ens_1(X1)))).
+cnf(i_0_9, plain, (v1_xboole_0(X1)|~v1_xboole_0(k1_ens_1(X1)))).
+cnf(i_0_11, plain, (v1_xboole_0(X2)|v1_funct_1(k2_xtuple_0(X1))|~m1_subset_1(X1,k2_ens_1(X2)))).
+cnf(i_0_12, plain, (v1_xboole_0(X2)|v1_relat_1(k2_xtuple_0(X1))|~m1_subset_1(X1,k2_ens_1(X2)))).
+cnf(i_0_8, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|~v1_xboole_0(k2_zfmisc_1(X1,X2)))).
+cnf(i_0_18, plain, (v1_xboole_0(X1)|v1_funct_1(esk3_2(X1,X2))|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_19, plain, (esk4_2(X1,X2)=k1_xboole_0|v1_xboole_0(X1)|esk5_2(X1,X2)!=k1_xboole_0|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_7, plain, (v1_xboole_0(X1)|m1_subset_1(k4_ens_1(X1,X2),X1)|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_6, plain, (v1_xboole_0(X1)|m1_subset_1(k3_ens_1(X1,X2),X1)|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_22, plain, (v1_xboole_0(X1)|m1_subset_1(esk4_2(X1,X2),X1)|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_21, plain, (v1_xboole_0(X1)|m1_subset_1(esk5_2(X1,X2),X1)|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_23, plain, (v1_xboole_0(X1)|m1_subset_1(esk3_2(X1,X2),k1_ens_1(X1))|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_17, plain, (v1_xboole_0(X1)|v1_funct_2(esk3_2(X1,X2),esk4_2(X1,X2),esk5_2(X1,X2))|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_15, plain, (k1_domain_1(X1,X2,X3,X4)=k4_tarski(X3,X4)|v1_xboole_0(X2)|v1_xboole_0(X1)|~m1_subset_1(X4,X2)|~m1_subset_1(X3,X1))).
+cnf(i_0_16, plain, (v1_xboole_0(X1)|m1_subset_1(esk3_2(X1,X2),k1_zfmisc_1(k2_zfmisc_1(esk4_2(X1,X2),esk5_2(X1,X2))))|~m1_subset_1(X2,k2_ens_1(X1)))).
+cnf(i_0_2, negated_conjecture, (k4_ens_1(esk1_0,esk2_0)=k1_xboole_0|~v1_funct_1(k2_xtuple_0(esk2_0))|~v1_funct_2(k2_xtuple_0(esk2_0),k3_ens_1(esk1_0,esk2_0),k4_ens_1(esk1_0,esk2_0))|~m1_subset_1(k2_xtuple_0(esk2_0),k1_zfmisc_1(k2_zfmisc_1(k3_ens_1(esk1_0,esk2_0),k4_ens_1(esk1_0,esk2_0)))))).
+cnf(i_0_1, negated_conjecture, (k3_ens_1(esk1_0,esk2_0)!=k1_xboole_0|~v1_funct_1(k2_xtuple_0(esk2_0))|~v1_funct_2(k2_xtuple_0(esk2_0),k3_ens_1(esk1_0,esk2_0),k4_ens_1(esk1_0,esk2_0))|~m1_subset_1(k2_xtuple_0(esk2_0),k1_zfmisc_1(k2_zfmisc_1(k3_ens_1(esk1_0,esk2_0),k4_ens_1(esk1_0,esk2_0)))))).
+cnf(i_0_5, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|m1_subset_1(k1_domain_1(X1,X2,X3,X4),k2_zfmisc_1(X1,X2))|~m1_subset_1(X4,X2)|~m1_subset_1(X3,X1))).
+cnf(i_0_24, plain, (k4_tarski(k1_domain_1(X2,X2,k3_ens_1(X2,X1),k4_ens_1(X2,X1)),k2_xtuple_0(X1))=X1|v1_xboole_0(X2)|~m1_subset_1(X1,k2_ens_1(X2)))).
+cnf(i_0_20, plain, (k1_domain_1(k2_zfmisc_1(X1,X1),k1_ens_1(X1),k1_domain_1(X1,X1,esk4_2(X1,X2),esk5_2(X1,X2)),esk3_2(X1,X2))=X2|v1_xboole_0(X1)|~m1_subset_1(X2,k2_ens_1(X1)))).
+
+

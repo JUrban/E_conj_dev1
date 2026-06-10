@@ -1,0 +1,35 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_7, negated_conjecture, (l1_orders_2(esk1_0))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_8, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_16, plain, (m1_subset_1(k3_subset_1(X1,X2),k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_15, plain, (m1_subset_1(k1_fin_topo(X1,X2),k1_zfmisc_1(u1_struct_0(X1)))|~l1_orders_2(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_2, negated_conjecture, (k2_fintopo2(esk1_0,esk2_0,esk3_0,esk4_0)=k8_margrel1|r2_hidden(esk3_0,k1_fin_topo(esk1_0,esk2_0)))).
+cnf(i_0_1, negated_conjecture, (k2_fintopo2(esk1_0,esk2_0,esk3_0,esk4_0)=k8_margrel1|r2_hidden(esk3_0,k3_subset_1(u1_struct_0(esk1_0),esk4_0)))).
+cnf(i_0_9, plain, (k1_fintopo2(X1,X2,X3,X4)=k7_margrel1|v2_struct_0(X1)|r2_hidden(X3,X4)|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_13, plain, (k2_fintopo2(X1,X2,X3,X4)=k7_margrel1|v2_struct_0(X1)|r2_hidden(X3,k1_fin_topo(X1,X2))|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_10, plain, (k1_fintopo2(X1,X2,X3,X4)=k7_margrel1|v2_struct_0(X1)|r2_hidden(X3,k1_fin_topo(X1,X2))|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_12, plain, (k2_fintopo2(X1,X2,X3,X4)=k7_margrel1|v2_struct_0(X1)|r2_hidden(X3,k3_subset_1(u1_struct_0(X1),X4))|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_11, plain, (k1_fintopo2(X1,X2,X3,X4)=k8_margrel1|v2_struct_0(X1)|~l1_orders_2(X1)|~r2_hidden(X3,X4)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X3,k1_fin_topo(X1,X2))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_17, plain, (k1_fintopo2(X1,X2,X3,X4)=k8_margrel1|v2_struct_0(X1)|~l1_orders_2(X1)|~r2_hidden(X3,X4)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X3,k1_fin_topo(X1,X2))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_3, negated_conjecture, (k2_fintopo2(esk1_0,esk2_0,esk3_0,esk4_0)!=k8_margrel1|~r2_hidden(esk3_0,k1_fin_topo(esk1_0,esk2_0))|~r2_hidden(esk3_0,k3_subset_1(u1_struct_0(esk1_0),esk4_0)))).
+cnf(i_0_14, plain, (k2_fintopo2(X1,X2,X3,X4)=k8_margrel1|v2_struct_0(X1)|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r2_hidden(X3,k1_fin_topo(X1,X2))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1)))|~r2_hidden(X3,k3_subset_1(u1_struct_0(X1),X4)))).
+cnf(i_0_18, plain, (v2_struct_0(X1)|r2_hidden(X3,X4)|k1_fintopo2(X1,X2,X3,X4)!=k8_margrel1|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|r2_hidden(X3,k1_fin_topo(X1,X2))|k1_fintopo2(X1,X2,X3,X4)!=k8_margrel1|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+
+

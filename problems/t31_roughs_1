@@ -1,0 +1,27 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_4, negated_conjecture, (v3_roughs_1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (l1_orders_2(esk1_0))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_5, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (k3_roughs_1(esk1_0,k4_roughs_1(esk1_0,k3_roughs_1(esk1_0,esk2_0)))!=k3_roughs_1(esk1_0,esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_9, plain, (k3_subset_1(X1,k3_subset_1(X1,X2))=X2|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_7, plain, (m1_subset_1(k3_subset_1(X1,X2),k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_6, plain, (v2_struct_0(X1)|m1_subset_1(k3_roughs_1(X1,X2),k1_zfmisc_1(u1_struct_0(X1)))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_8, plain, (v2_struct_0(X1)|m1_subset_1(k4_roughs_1(X1,X2),k1_zfmisc_1(u1_struct_0(X1)))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_10, plain, (k4_roughs_1(X1,k3_subset_1(u1_struct_0(X1),X2))=k3_subset_1(u1_struct_0(X1),k3_roughs_1(X1,X2))|v2_struct_0(X1)|~v3_roughs_1(X1)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_11, plain, (k4_roughs_1(X1,k3_roughs_1(X1,k4_roughs_1(X1,X2)))=k4_roughs_1(X1,X2)|v2_struct_0(X1)|~v3_roughs_1(X1)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+
+

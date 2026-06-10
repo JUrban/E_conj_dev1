@@ -1,0 +1,33 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_16, plain, (v1_partfun1(k6_partfun1(X1),X1))).
+cnf(i_0_18, plain, (v1_relat_1(k2_zfmisc_1(k1_tarski(X1),k1_tarski(X2))))).
+cnf(i_0_17, plain, (v1_funct_1(k2_zfmisc_1(k1_tarski(X1),k1_tarski(X2))))).
+cnf(i_0_21, plain, (k2_zfmisc_1(k1_tarski(X1),k1_tarski(X2))=k1_tarski(k4_tarski(X1,X2)))).
+cnf(i_0_15, plain, (m1_subset_1(k6_partfun1(X1),k1_zfmisc_1(k2_zfmisc_1(X1,X1))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k2_zfmisc_1(k1_tarski(esk1_0),k1_tarski(esk1_0))!=k6_partfun1(k1_tarski(esk1_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_11, plain, (r2_hidden(X3,X1)|X2!=X3|k1_tarski(X2)!=X1)).
+cnf(i_0_12, plain, (X2=X3|k1_tarski(X2)!=X1|~r2_hidden(X3,X1))).
+cnf(i_0_9, plain, (k1_tarski(X2)=X1|esk4_2(X2,X1)=X2|r2_hidden(esk4_2(X2,X1),X1))).
+cnf(i_0_7, plain, (X3=X4|k6_partfun1(X2)!=X1|~v1_relat_1(X1)|~r2_hidden(k4_tarski(X3,X4),X1))).
+cnf(i_0_6, plain, (r2_hidden(k4_tarski(X3,X4),X1)|X3!=X4|k6_partfun1(X2)!=X1|~v1_relat_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_10, plain, (k1_tarski(X2)=X1|esk4_2(X2,X1)!=X2|~r2_hidden(esk4_2(X2,X1),X1))).
+cnf(i_0_8, plain, (r2_hidden(X3,X2)|k6_partfun1(X2)!=X1|~v1_relat_1(X1)|~r2_hidden(k4_tarski(X3,X4),X1))).
+cnf(i_0_2, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_3, plain, (k6_partfun1(X2)=X1|esk2_2(X2,X1)=esk3_2(X2,X1)|r2_hidden(k4_tarski(esk2_2(X2,X1),esk3_2(X2,X1)),X1)|~v1_relat_1(X1))).
+cnf(i_0_4, plain, (k6_partfun1(X2)=X1|r2_hidden(esk2_2(X2,X1),X2)|r2_hidden(k4_tarski(esk2_2(X2,X1),esk3_2(X2,X1)),X1)|~v1_relat_1(X1))).
+cnf(i_0_5, plain, (k6_partfun1(X2)=X1|esk2_2(X2,X1)!=esk3_2(X2,X1)|~v1_relat_1(X1)|~r2_hidden(esk2_2(X2,X1),X2)|~r2_hidden(k4_tarski(esk2_2(X2,X1),esk3_2(X2,X1)),X1))).
+
+

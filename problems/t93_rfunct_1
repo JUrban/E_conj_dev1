@@ -1,0 +1,66 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_31, negated_conjecture, (v1_funct_1(esk4_0))).
+cnf(i_0_29, negated_conjecture, (v1_funct_1(esk5_0))).
+cnf(i_0_48, plain, (v3_membered(k1_numbers))).
+cnf(i_0_30, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(k2_zfmisc_1(esk3_0,k1_numbers))))).
+cnf(i_0_28, negated_conjecture, (m1_subset_1(esk5_0,k1_zfmisc_1(k2_zfmisc_1(esk3_0,k1_numbers))))).
+cnf(i_0_14, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_32, negated_conjecture, (~v1_xboole_0(esk3_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_40, plain, (v1_seq_2(X1)|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_39, plain, (v2_seq_2(X1)|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_35, plain, (v1_comseq_2(X1)|~v1_funct_1(X1)|~v3_funct_1(X1)|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_49, plain, (v3_valued_0(k5_relat_1(X1,X2))|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_50, plain, (v1_relat_1(k5_relat_1(X1,X2))|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_34, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_33, plain, (v3_valued_0(X1)|~v3_membered(X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_53, plain, (epred1_4(X1,X2,X3,X4)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_relat_1(X2)|~v1_relat_1(X1))).
+cnf(i_0_51, plain, (k2_partfun1(X1,X2,X3,X4)=k5_relat_1(X3,X4)|~v1_funct_1(X3)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_45, plain, (v1_funct_1(k2_partfun1(X2,X3,X1,X4))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_56, plain, (v1_seq_2(k5_relat_1(k1_valued_1(X1,X2),k3_xboole_0(X4,X3)))|~v1_seq_2(k5_relat_1(X2,X3))|~v1_seq_2(k5_relat_1(X1,X4))|~epred1_4(X1,X2,X3,X4))).
+cnf(i_0_55, plain, (v2_seq_2(k5_relat_1(k1_valued_1(X1,X2),k3_xboole_0(X4,X3)))|~v2_seq_2(k5_relat_1(X2,X3))|~v2_seq_2(k5_relat_1(X1,X4))|~epred1_4(X1,X2,X3,X4))).
+cnf(i_0_54, plain, (v1_comseq_2(k5_relat_1(k1_valued_1(X1,X2),k3_xboole_0(X4,X3)))|~v1_comseq_2(k5_relat_1(X2,X3))|~v1_comseq_2(k5_relat_1(X1,X4))|~epred1_4(X1,X2,X3,X4))).
+cnf(i_0_44, plain, (m1_subset_1(k2_partfun1(X2,X3,X1,X4),k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_23, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0)))).
+cnf(i_0_17, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_15, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_26, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_24, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_27, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_18, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0)))).
+cnf(i_0_52, plain, (k3_valued_1(X1,X2,X3,X4,X5)=k1_valued_1(X4,X5)|~v1_funct_1(X5)|~v1_funct_1(X4)|~v3_membered(X3)|~v3_membered(X2)|~m1_subset_1(X5,k1_zfmisc_1(k2_zfmisc_1(X1,X3)))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_47, plain, (v1_funct_1(k3_valued_1(X2,X5,X3,X4,X1))|~v1_funct_1(X4)|~v1_funct_1(X1)|~v3_membered(X5)|~v3_membered(X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X5)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_46, plain, (m1_subset_1(k3_valued_1(X2,X5,X3,X4,X1),k1_zfmisc_1(k2_zfmisc_1(X2,k1_numbers)))|~v1_funct_1(X4)|~v1_funct_1(X1)|~v3_membered(X5)|~v3_membered(X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X5)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_5, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_11, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_13, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_20, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_22, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_25, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_21, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_8, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_16, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_6, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_12, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_9, negated_conjecture, (v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_19, negated_conjecture, (v1_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_2, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_4, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_10, negated_conjecture, (v3_funct_1(k2_partfun1(esk3_0,k1_numbers,esk5_0,esk2_0))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_7, negated_conjecture, (v2_seq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_3, negated_conjecture, (v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,esk4_0,esk1_0))|~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+cnf(i_0_1, negated_conjecture, (~v1_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v2_seq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0)))|~v1_comseq_2(k2_partfun1(esk3_0,k1_numbers,k3_valued_1(esk3_0,k1_numbers,k1_numbers,esk4_0,esk5_0),k3_xboole_0(esk1_0,esk2_0))))).
+
+

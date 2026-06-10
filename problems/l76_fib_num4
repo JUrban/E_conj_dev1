@@ -1,0 +1,63 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_24, plain, (k4_ordinal1=k5_numbers)).
+cnf(i_0_25, plain, (k6_numbers=k1_xboole_0)).
+cnf(i_0_21, plain, (v1_xcmplx_0(esk1_0))).
+cnf(i_0_18, plain, (v1_xreal_0(esk1_0))).
+cnf(i_0_20, plain, (v1_xxreal_0(esk1_0))).
+cnf(i_0_19, plain, (v3_xxreal_0(esk1_0))).
+cnf(i_0_37, plain, (v2_xxreal_0(3))).
+cnf(i_0_33, plain, (v2_xxreal_0(2))).
+cnf(i_0_41, plain, (v2_xxreal_0(5))).
+cnf(i_0_14, plain, (v3_ordinal1(k4_ordinal1))).
+cnf(i_0_34, plain, (m1_subset_1(3,k1_numbers))).
+cnf(i_0_35, plain, (m1_subset_1(3,k5_numbers))).
+cnf(i_0_30, plain, (m1_subset_1(2,k1_numbers))).
+cnf(i_0_31, plain, (m1_subset_1(2,k5_numbers))).
+cnf(i_0_38, plain, (m1_subset_1(5,k1_numbers))).
+cnf(i_0_39, plain, (m1_subset_1(5,k5_numbers))).
+cnf(i_0_42, plain, (m1_subset_1(k1_xboole_0,k4_ordinal1))).
+cnf(i_0_11, plain, (m1_subset_1(k5_numbers,k1_zfmisc_1(k1_numbers)))).
+cnf(i_0_27, plain, (r1_xxreal_0(2,k7_xcmplx_0(9,4)))).
+cnf(i_0_28, plain, (r1_xxreal_0(k7_xcmplx_0(9,4),5))).
+cnf(i_0_36, plain, (m2_subset_1(3,k1_numbers,k5_numbers))).
+cnf(i_0_32, plain, (m2_subset_1(2,k1_numbers,k5_numbers))).
+cnf(i_0_40, plain, (m2_subset_1(5,k1_numbers,k5_numbers))).
+cnf(i_0_29, plain, (k3_xcmplx_0(k7_xcmplx_0(3,2),k7_xcmplx_0(3,2))=k7_xcmplx_0(9,4))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_15, plain, (~v1_xboole_0(k4_ordinal1))).
+cnf(i_0_1, negated_conjecture, (~r1_xxreal_0(k6_square_1(k4_square_1(k13_complex1(3,2))),k7_square_1(5)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_4, plain, (v1_xcmplx_0(X1)|~v1_xreal_0(X1))).
+cnf(i_0_5, plain, (v1_xxreal_0(X1)|~v1_xreal_0(X1))).
+cnf(i_0_47, plain, (k7_xcmplx_0(k6_numbers,X1)=k6_numbers|~v1_xcmplx_0(X1))).
+cnf(i_0_8, plain, (~v1_xxreal_0(X1)|~v3_xxreal_0(X1)|~v1_xboole_0(X1))).
+cnf(i_0_6, plain, (~v1_xxreal_0(X1)|~v3_xxreal_0(X1)|~v2_xxreal_0(X1))).
+cnf(i_0_2, plain, (v1_xcmplx_0(X1)|~m1_subset_1(X1,k1_numbers))).
+cnf(i_0_3, plain, (v1_xreal_0(X1)|~m1_subset_1(X1,k1_numbers))).
+cnf(i_0_9, plain, (k3_xcmplx_0(X1,X1)=k3_square_1(X1)|~v1_xcmplx_0(X1))).
+cnf(i_0_26, plain, (k6_square_1(X1)=k7_square_1(X1)|~m1_subset_1(X1,k1_numbers))).
+cnf(i_0_23, plain, (k4_square_1(X1)=k3_square_1(X1)|~m1_subset_1(X1,k2_numbers))).
+cnf(i_0_48, plain, (v3_xxreal_0(X2)|v2_xxreal_0(X1)|r1_xxreal_0(X1,X2)|~v1_xreal_0(X2)|~v1_xreal_0(X1))).
+cnf(i_0_45, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_22, plain, (k13_complex1(X1,X2)=k7_xcmplx_0(X1,X2)|~v1_xcmplx_0(X2)|~v1_xcmplx_0(X1))).
+cnf(i_0_13, plain, (v1_xcmplx_0(k7_xcmplx_0(X1,X2))|~v1_xcmplx_0(X2)|~v1_xcmplx_0(X1))).
+cnf(i_0_16, plain, (v1_xreal_0(k3_xcmplx_0(X1,X2))|~v1_xreal_0(X2)|~v1_xreal_0(X1))).
+cnf(i_0_17, plain, (v1_xreal_0(k7_xcmplx_0(X1,X2))|~v1_xreal_0(X2)|~v1_xreal_0(X1))).
+cnf(i_0_44, plain, (v3_xxreal_0(X1)|~v1_xreal_0(X2)|~v1_xreal_0(X1)|~v3_xxreal_0(X2)|~r1_xxreal_0(X1,X2))).
+cnf(i_0_10, plain, (m1_subset_1(k13_complex1(X1,X2),k2_numbers)|~v1_xcmplx_0(X2)|~v1_xcmplx_0(X1))).
+cnf(i_0_46, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_12, plain, (v3_xxreal_0(X1)|v2_xxreal_0(X2)|~v1_xreal_0(X2)|~v1_xreal_0(X1)|~v2_xxreal_0(k7_xcmplx_0(X1,X2)))).
+cnf(i_0_43, plain, (r1_xxreal_0(k6_square_1(X1),k6_square_1(X2))|~v1_xreal_0(X2)|~v1_xreal_0(X1)|~r1_xxreal_0(X1,X2)|~r1_xxreal_0(k6_numbers,X1))).
+
+

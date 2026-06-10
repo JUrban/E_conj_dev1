@@ -1,0 +1,35 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_2, negated_conjecture, (v7_ordinal1(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k2_xboole_0(a_1_0_necklace(esk1_0),a_1_1_necklace(esk1_0))!=u1_orders_2(k4_necklace(esk1_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_12, plain, (v1_orders_2(k1_necklace(X1))|~v7_ordinal1(X1))).
+cnf(i_0_14, plain, (v1_orders_2(k2_necklace(X1))|~l1_orders_2(X1))).
+cnf(i_0_11, plain, (l1_orders_2(k1_necklace(X1))|~v7_ordinal1(X1))).
+cnf(i_0_13, plain, (l1_orders_2(k2_necklace(X1))|~l1_orders_2(X1))).
+cnf(i_0_10, plain, (k2_necklace(k1_necklace(X1))=k4_necklace(X1)|~v7_ordinal1(X1))).
+cnf(i_0_19, plain, (k2_relat_1(X1)=a_1_1_necklace(X2)|a_1_0_necklace(X2)!=X1|~v7_ordinal1(X2)|~v1_relat_1(X1))).
+cnf(i_0_6, plain, (u1_struct_0(X2)=X1|k1_necklace(X1)!=X2|~v7_ordinal1(X1)|~v1_orders_2(X2)|~l1_orders_2(X2))).
+cnf(i_0_5, plain, (a_1_0_necklace(X1)=u1_orders_2(X2)|k1_necklace(X1)!=X2|~v7_ordinal1(X1)|~v1_orders_2(X2)|~l1_orders_2(X2))).
+cnf(i_0_9, plain, (u1_struct_0(X1)=u1_struct_0(X2)|k2_necklace(X1)!=X2|~v1_orders_2(X2)|~l1_orders_2(X2)|~l1_orders_2(X1))).
+cnf(i_0_4, plain, (k1_necklace(X1)=X2|u1_struct_0(X2)!=X1|a_1_0_necklace(X1)!=u1_orders_2(X2)|~v7_ordinal1(X1)|~v1_orders_2(X2)|~l1_orders_2(X2))).
+cnf(i_0_3, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_18, plain, (k4_subset_1(X1,X2,X3)=k2_xboole_0(X2,X3)|~m1_subset_1(X3,k1_zfmisc_1(X1))|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_16, plain, (m1_subset_1(u1_orders_2(X1),k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1))))|~l1_orders_2(X1))).
+cnf(i_0_17, plain, (k3_relset_1(X1,X2,X3)=k2_relat_1(X3)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_8, plain, (k4_subset_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)),u1_orders_2(X1),k3_relset_1(u1_struct_0(X1),u1_struct_0(X1),u1_orders_2(X1)))=u1_orders_2(X2)|k2_necklace(X1)!=X2|~v1_orders_2(X2)|~l1_orders_2(X2)|~l1_orders_2(X1))).
+cnf(i_0_15, plain, (m1_subset_1(k3_relset_1(X1,X2,X3),k1_zfmisc_1(k2_zfmisc_1(X2,X1)))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_7, plain, (k2_necklace(X1)=X2|u1_struct_0(X1)!=u1_struct_0(X2)|k4_subset_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)),u1_orders_2(X1),k3_relset_1(u1_struct_0(X1),u1_struct_0(X1),u1_orders_2(X1)))!=u1_orders_2(X2)|~v1_orders_2(X2)|~l1_orders_2(X2)|~l1_orders_2(X1))).
+
+

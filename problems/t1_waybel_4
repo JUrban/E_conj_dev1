@@ -1,0 +1,61 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_16, negated_conjecture, (v3_orders_2(esk1_0))).
+cnf(i_0_15, negated_conjecture, (v4_orders_2(esk1_0))).
+cnf(i_0_14, negated_conjecture, (v5_orders_2(esk1_0))).
+cnf(i_0_13, negated_conjecture, (v1_yellow_0(esk1_0))).
+cnf(i_0_12, negated_conjecture, (v1_lattice3(esk1_0))).
+cnf(i_0_11, negated_conjecture, (l1_orders_2(esk1_0))).
+cnf(i_0_10, negated_conjecture, (v2_waybel_4(esk2_0,esk1_0))).
+cnf(i_0_9, negated_conjecture, (v3_waybel_4(esk2_0,esk1_0))).
+cnf(i_0_7, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk1_0)))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk4_0,u1_struct_0(esk1_0)))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk5_0,u1_struct_0(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk6_0,u1_struct_0(esk1_0)))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(esk1_0),u1_struct_0(esk1_0)))))).
+cnf(i_0_3, negated_conjecture, (r2_hidden(k1_domain_1(u1_struct_0(esk1_0),u1_struct_0(esk1_0),esk3_0,esk5_0),esk2_0))).
+cnf(i_0_2, negated_conjecture, (r2_hidden(k1_domain_1(u1_struct_0(esk1_0),u1_struct_0(esk1_0),esk4_0,esk6_0),esk2_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r2_hidden(k1_domain_1(u1_struct_0(esk1_0),u1_struct_0(esk1_0),k13_lattice3(esk1_0,esk3_0,esk4_0),k13_lattice3(esk1_0,esk5_0,esk6_0)),esk2_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_35, plain, (l1_struct_0(X1)|~l1_orders_2(X1))).
+cnf(i_0_17, plain, (~v1_lattice3(X1)|~l1_orders_2(X1)|~v2_struct_0(X1))).
+cnf(i_0_36, plain, (v2_struct_0(X1)|~l1_struct_0(X1)|~v1_xboole_0(u1_struct_0(X1)))).
+cnf(i_0_37, plain, (k13_lattice3(X1,X2,X3)=k10_lattice3(X1,X2,X3)|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_34, plain, (m1_subset_1(k13_lattice3(X1,X2,X3),u1_struct_0(X1))|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_25, plain, (v2_waybel_4(X2,X1)|m1_subset_1(esk7_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_24, plain, (v2_waybel_4(X2,X1)|m1_subset_1(esk8_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_23, plain, (v2_waybel_4(X2,X1)|m1_subset_1(esk9_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_22, plain, (v2_waybel_4(X2,X1)|m1_subset_1(esk10_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_44, plain, (r1_orders_2(X1,X3,X4)|k13_lattice3(X1,X2,X3)!=X4|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_45, plain, (r1_orders_2(X1,X2,X4)|k13_lattice3(X1,X2,X3)!=X4|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_32, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|m1_subset_1(esk11_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_31, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|m1_subset_1(esk12_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_30, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|m1_subset_1(esk13_2(X1,X2),u1_struct_0(X1))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_38, plain, (k1_domain_1(X1,X2,X3,X4)=k4_tarski(X3,X4)|v1_xboole_0(X2)|v1_xboole_0(X1)|~m1_subset_1(X4,X2)|~m1_subset_1(X3,X1))).
+cnf(i_0_19, plain, (v2_waybel_4(X2,X1)|r1_orders_2(X1,esk8_2(X1,X2),esk9_2(X1,X2))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_21, plain, (v2_waybel_4(X2,X1)|r1_orders_2(X1,esk10_2(X1,X2),esk7_2(X1,X2))|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_20, plain, (v2_waybel_4(X2,X1)|r2_hidden(k4_tarski(esk7_2(X1,X2),esk8_2(X1,X2)),X2)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_18, plain, (v2_waybel_4(X2,X1)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1))))|~r2_hidden(k4_tarski(esk10_2(X1,X2),esk9_2(X1,X2)),X2))).
+cnf(i_0_43, plain, (r1_orders_2(X1,X4,X5)|k13_lattice3(X1,X2,X3)!=X4|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~r1_orders_2(X1,X3,X5)|~r1_orders_2(X1,X2,X5)|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_26, plain, (r2_hidden(k4_tarski(X3,X4),X2)|~l1_orders_2(X1)|~v2_waybel_4(X2,X1)|~r1_orders_2(X1,X5,X4)|~r1_orders_2(X1,X3,X6)|~m1_subset_1(X6,u1_struct_0(X1))|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~r2_hidden(k4_tarski(X6,X5),X2)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_29, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),esk11_2(X1,X2),esk13_2(X1,X2)),X2)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_28, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),esk12_2(X1,X2),esk13_2(X1,X2)),X2)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1)))))).
+cnf(i_0_42, plain, (k13_lattice3(X1,X2,X3)=X4|m1_subset_1(esk14_4(X1,X2,X3,X4),u1_struct_0(X1))|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~r1_orders_2(X1,X3,X4)|~r1_orders_2(X1,X2,X4)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_40, plain, (k13_lattice3(X1,X2,X3)=X4|r1_orders_2(X1,X3,esk14_4(X1,X2,X3,X4))|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~r1_orders_2(X1,X3,X4)|~r1_orders_2(X1,X2,X4)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_41, plain, (k13_lattice3(X1,X2,X3)=X4|r1_orders_2(X1,X2,esk14_4(X1,X2,X3,X4))|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~r1_orders_2(X1,X3,X4)|~r1_orders_2(X1,X2,X4)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_39, plain, (k13_lattice3(X1,X2,X3)=X4|~v5_orders_2(X1)|~v1_lattice3(X1)|~l1_orders_2(X1)|~r1_orders_2(X1,X3,X4)|~r1_orders_2(X1,X2,X4)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~r1_orders_2(X1,X4,esk14_4(X1,X2,X3,X4)))).
+cnf(i_0_27, plain, (v2_struct_0(X1)|v3_waybel_4(X2,X1)|~l1_orders_2(X1)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1))))|~r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),k10_lattice3(X1,esk11_2(X1,X2),esk12_2(X1,X2)),esk13_2(X1,X2)),X2))).
+cnf(i_0_33, plain, (v2_struct_0(X1)|r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),k10_lattice3(X1,X3,X4),X5),X2)|~l1_orders_2(X1)|~v3_waybel_4(X2,X1)|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(u1_struct_0(X1),u1_struct_0(X1))))|~r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),X4,X5),X2)|~r2_hidden(k1_domain_1(u1_struct_0(X1),u1_struct_0(X1),X3,X5),X2))).
+
+

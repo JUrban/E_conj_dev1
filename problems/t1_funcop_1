@@ -1,0 +1,36 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_11, plain, (v1_relat_1(k12_funct_3(X1)))).
+cnf(i_0_15, plain, (v1_relat_1(k6_partfun1(X1)))).
+cnf(i_0_17, plain, (v1_relat_1(k6_partfun1(X1)))).
+cnf(i_0_10, plain, (v1_funct_1(k12_funct_3(X1)))).
+cnf(i_0_14, plain, (v1_funct_1(k12_funct_3(X1)))).
+cnf(i_0_16, plain, (v1_funct_1(k6_partfun1(X1)))).
+cnf(i_0_19, plain, (k9_xtuple_0(k6_partfun1(X1))=X1)).
+cnf(i_0_18, plain, (k3_xboole_0(X1,X1)=X1)).
+cnf(i_0_13, plain, (v1_funct_2(k12_funct_3(X1),X1,k2_zfmisc_1(X1,X1)))).
+cnf(i_0_12, plain, (m1_subset_1(k12_funct_3(X1),k1_zfmisc_1(k2_zfmisc_1(X1,k2_zfmisc_1(X1,X1)))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k13_funct_3(k6_partfun1(esk1_0),k6_partfun1(esk1_0))!=k12_funct_3(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_5, plain, (k9_xtuple_0(X1)=X2|k12_funct_3(X2)!=X1|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_22, plain, (k1_funct_1(k6_partfun1(X1),X2)=X2|~r2_hidden(X2,X1))).
+cnf(i_0_3, plain, (k12_funct_3(X2)=X1|r2_hidden(esk2_2(X2,X1),X2)|k9_xtuple_0(X1)!=X2|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_4, plain, (k4_tarski(X3,X3)=k1_funct_1(X1,X3)|k12_funct_3(X2)!=X1|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_9, plain, (k3_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))=k9_xtuple_0(X3)|k13_funct_3(X1,X2)!=X3|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_8, plain, (k4_tarski(k1_funct_1(X1,X4),k1_funct_1(X2,X4))=k1_funct_1(X3,X4)|k13_funct_3(X1,X2)!=X3|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1)|~r2_hidden(X4,k9_xtuple_0(X3)))).
+cnf(i_0_2, plain, (k12_funct_3(X2)=X1|k9_xtuple_0(X1)!=X2|k4_tarski(esk2_2(X2,X1),esk2_2(X2,X1))!=k1_funct_1(X1,esk2_2(X2,X1))|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_7, plain, (k13_funct_3(X1,X2)=X3|r2_hidden(esk3_3(X1,X2,X3),k9_xtuple_0(X3))|k3_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+cnf(i_0_6, plain, (k13_funct_3(X1,X2)=X3|k3_xboole_0(k9_xtuple_0(X1),k9_xtuple_0(X2))!=k9_xtuple_0(X3)|k4_tarski(k1_funct_1(X1,esk3_3(X1,X2,X3)),k1_funct_1(X2,esk3_3(X1,X2,X3)))!=k1_funct_1(X3,esk3_3(X1,X2,X3))|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v1_funct_1(X1))).
+
+

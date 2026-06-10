@@ -1,0 +1,92 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_12, negated_conjecture, (v2_unialg_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v2_unialg_1(esk2_0))).
+cnf(i_0_11, negated_conjecture, (v3_unialg_1(esk1_0))).
+cnf(i_0_6, negated_conjecture, (v3_unialg_1(esk2_0))).
+cnf(i_0_10, negated_conjecture, (v4_unialg_1(esk1_0))).
+cnf(i_0_5, negated_conjecture, (v4_unialg_1(esk2_0))).
+cnf(i_0_9, negated_conjecture, (l1_unialg_1(esk1_0))).
+cnf(i_0_4, negated_conjecture, (l1_unialg_1(esk2_0))).
+cnf(i_0_3, negated_conjecture, (r1_unialg_2(esk1_0,esk2_0))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk3_0,u4_struct_0(k6_msualg_1(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_13, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_8, negated_conjecture, (~v2_struct_0(esk2_0))).
+cnf(i_0_1, negated_conjecture, (~m5_margrel1(k5_msualg_1(k6_msualg_1(esk1_0),esk3_0,k1_msuhom_1(k6_msualg_1(esk1_0),k6_msualg_1(esk2_0),k9_msualg_1(esk2_0))),u1_struct_0(esk2_0),k1_unialg_2(esk2_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_49, plain, (l1_struct_0(X1)|~l1_unialg_1(X1))).
+cnf(i_0_50, plain, (l1_struct_0(X1)|~l5_struct_0(X1))).
+cnf(i_0_48, plain, (l5_struct_0(X1)|~l1_msualg_1(X1))).
+cnf(i_0_53, plain, (v1_relat_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_52, plain, (v1_funct_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_51, plain, (v1_finseq_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_61, plain, (v2_struct_0(X1)|~l1_struct_0(X1)|~v1_xboole_0(u1_struct_0(X1)))).
+cnf(i_0_55, plain, (v11_struct_0(X1)|~l5_struct_0(X1)|~v1_xboole_0(u4_struct_0(X1)))).
+cnf(i_0_68, plain, (k4_finseq_1(X1)=k9_xtuple_0(X1)|~v1_relat_1(X1)|~v1_funct_1(X1)|~v1_finseq_1(X1))).
+cnf(i_0_15, plain, (v7_struct_0(X1)|~l1_struct_0(X1)|~v13_struct_0(X1,1))).
+cnf(i_0_16, plain, (~v2_struct_0(X1)|~l1_struct_0(X1)|~v13_struct_0(X1,1))).
+cnf(i_0_74, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X2))).
+cnf(i_0_70, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_69, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_17, plain, (k8_msualg_1(X1)=u1_unialg_1(X1)|v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_75, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_35, plain, (v2_struct_0(X1)|l1_msualg_1(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_39, plain, (v2_struct_0(X1)|v7_struct_0(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_60, plain, (v2_struct_0(X1)|v7_struct_0(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_44, plain, (v2_struct_0(X1)|v1_relat_1(k7_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_41, plain, (v2_struct_0(X1)|v1_funct_1(k7_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_37, plain, (v2_struct_0(X1)|v1_msualg_1(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_57, plain, (v2_struct_0(X1)|v1_msualg_1(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_36, plain, (v2_struct_0(X1)|v5_msualg_1(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_56, plain, (v2_struct_0(X1)|v5_msualg_1(k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_43, plain, (v2_struct_0(X1)|v2_relat_1(k7_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_21, plain, (k10_xtuple_0(u1_unialg_1(X1))=k1_unialg_2(X1)|v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_38, plain, (v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~v11_struct_0(k6_msualg_1(X1)))).
+cnf(i_0_59, plain, (v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~v11_struct_0(k6_msualg_1(X1)))).
+cnf(i_0_58, plain, (v2_struct_0(X1)|v13_struct_0(k6_msualg_1(X1),1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_67, plain, (k4_finseq_1(k1_unialg_1(X1))=k4_finseq_1(u1_unialg_1(X1))|v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_46, plain, (v2_struct_0(X1)|l3_msualg_1(k9_msualg_1(X1),k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_47, plain, (v2_struct_0(X1)|v3_msualg_1(k9_msualg_1(X1),k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_63, plain, (v2_struct_0(X1)|v3_msualg_1(k9_msualg_1(X1),k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_34, plain, (v2_struct_0(X1)|m4_margrel1(k1_unialg_2(X1),u1_struct_0(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_62, plain, (v2_struct_0(X1)|v4_msualg_1(k9_msualg_1(X1),k6_msualg_1(X1))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_42, plain, (v2_struct_0(X1)|v4_relat_1(k7_msualg_1(X1),u1_struct_0(k6_msualg_1(X1)))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_40, plain, (v2_struct_0(X1)|v1_partfun1(k7_msualg_1(X1),u1_struct_0(k6_msualg_1(X1)))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_33, plain, (k1_tarski(k6_numbers)=u1_struct_0(X2)|v2_struct_0(X1)|v11_struct_0(X2)|k6_msualg_1(X1)!=X2|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~l1_msualg_1(X2)|~v7_struct_0(X2)|~v1_msualg_1(X2)|~v5_msualg_1(X2))).
+cnf(i_0_32, plain, (k4_finseq_1(k1_unialg_1(X1))=u4_struct_0(X2)|v2_struct_0(X1)|v11_struct_0(X2)|k6_msualg_1(X1)!=X2|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~l1_msualg_1(X2)|~v7_struct_0(X2)|~v1_msualg_1(X2)|~v5_msualg_1(X2))).
+cnf(i_0_25, plain, (r2_hidden(X3,X2)|k10_xtuple_0(X1)!=X2|k1_funct_1(X1,X4)!=X3|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X4,k9_xtuple_0(X1)))).
+cnf(i_0_19, plain, (v2_struct_0(X2)|v2_struct_0(X1)|r1_unialg_2(X1,X2)|k1_unialg_1(X1)!=k1_unialg_1(X2)|~v2_unialg_1(X2)|~v2_unialg_1(X1)|~v3_unialg_1(X2)|~v3_unialg_1(X1)|~v4_unialg_1(X2)|~v4_unialg_1(X1)|~l1_unialg_1(X2)|~l1_unialg_1(X1))).
+cnf(i_0_73, plain, (k6_msualg_1(X1)=k6_msualg_1(X2)|v2_struct_0(X2)|v2_struct_0(X1)|~v2_unialg_1(X2)|~v2_unialg_1(X1)|~v3_unialg_1(X2)|~v3_unialg_1(X1)|~v4_unialg_1(X2)|~v4_unialg_1(X1)|~l1_unialg_1(X2)|~l1_unialg_1(X1)|~r1_unialg_2(X1,X2))).
+cnf(i_0_20, plain, (k1_unialg_1(X1)=k1_unialg_1(X2)|v2_struct_0(X2)|v2_struct_0(X1)|~v2_unialg_1(X2)|~v2_unialg_1(X1)|~v3_unialg_1(X2)|~v3_unialg_1(X1)|~v4_unialg_1(X2)|~v4_unialg_1(X1)|~l1_unialg_1(X2)|~l1_unialg_1(X1)|~r1_unialg_2(X1,X2))).
+cnf(i_0_54, plain, (m2_finseq_1(u1_unialg_1(X1),k4_partfun1(k3_finseq_2(u1_struct_0(X1)),u1_struct_0(X1)))|~l1_unialg_1(X1))).
+cnf(i_0_71, plain, (v1_xboole_0(X2)|m5_margrel1(X3,X2,X1)|~m1_subset_1(X3,X1)|~m4_margrel1(X1,X2))).
+cnf(i_0_23, plain, (k10_xtuple_0(X1)=X2|r2_hidden(esk5_2(X1,X2),X2)|r2_hidden(esk6_2(X1,X2),k9_xtuple_0(X1))|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_18, plain, (g3_msualg_1(k6_msualg_1(X1),k7_msualg_1(X1),k8_msualg_1(X1))=k9_msualg_1(X1)|v2_struct_0(X1)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_22, plain, (k10_xtuple_0(X1)=X2|k1_funct_1(X1,esk6_2(X1,X2))=esk5_2(X1,X2)|r2_hidden(esk5_2(X1,X2),X2)|~v1_relat_1(X1)|~v1_funct_1(X1))).
+cnf(i_0_72, plain, (v1_xboole_0(X2)|m1_subset_1(X3,X1)|~m4_margrel1(X1,X2)|~m5_margrel1(X3,X2,X1))).
+cnf(i_0_76, plain, (k1_msuhom_1(X2,X2,X1)=X1|v2_struct_0(X2)|v11_struct_0(X2)|~l1_msualg_1(X2)|~v1_msualg_1(X2)|~l3_msualg_1(X1,X2)|~v3_msualg_1(X1,X2)|~v4_msualg_1(X1,X2))).
+cnf(i_0_30, plain, (k1_margrel1(k5_numbers,k4_finseq_1(k1_unialg_1(X1)),k6_numbers)=u2_msualg_1(X2)|v2_struct_0(X1)|v11_struct_0(X2)|k6_msualg_1(X1)!=X2|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~l1_msualg_1(X2)|~v7_struct_0(X2)|~v1_msualg_1(X2)|~v5_msualg_1(X2))).
+cnf(i_0_24, plain, (k10_xtuple_0(X1)=X2|esk5_2(X1,X2)!=k1_funct_1(X1,X3)|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,k9_xtuple_0(X1))|~r2_hidden(esk5_2(X1,X2),X2))).
+cnf(i_0_14, plain, (g3_msualg_1(X2,u3_msualg_1(X2,X1),u4_msualg_1(X2,X1))=X1|v2_struct_0(X2)|~l1_msualg_1(X2)|~l3_msualg_1(X1,X2)|~v3_msualg_1(X1,X2))).
+cnf(i_0_28, plain, (k1_funct_1(u4_msualg_1(X1,X3),X2)=k5_msualg_1(X1,X2,X3)|v2_struct_0(X1)|v11_struct_0(X1)|~l1_msualg_1(X1)|~l3_msualg_1(X3,X1)|~m1_subset_1(X2,u4_struct_0(X1)))).
+cnf(i_0_26, plain, (k1_funct_1(X1,esk4_3(X1,X2,X3))=X3|k10_xtuple_0(X1)!=X2|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_27, plain, (r2_hidden(esk4_3(X1,X2,X3),k9_xtuple_0(X1))|k10_xtuple_0(X1)!=X2|~v1_relat_1(X1)|~v1_funct_1(X1)|~r2_hidden(X3,X2))).
+cnf(i_0_45, plain, (v2_struct_0(X1)|m2_pboole(k8_msualg_1(X1),u4_struct_0(k6_msualg_1(X1)),k3_relat_1(u1_msualg_1(k6_msualg_1(X1)),k6_finseq_2(u1_struct_0(k6_msualg_1(X1)),k7_msualg_1(X1))),k3_relat_1(u2_msualg_1(k6_msualg_1(X1)),k7_msualg_1(X1)))|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1))).
+cnf(i_0_65, plain, (X3=X5|v2_struct_0(X2)|g3_msualg_1(X2,X3,X1)!=g3_msualg_1(X4,X5,X6)|~l1_msualg_1(X2)|~v1_relat_1(X3)|~v1_funct_1(X3)|~v4_relat_1(X3,u1_struct_0(X2))|~v1_partfun1(X3,u1_struct_0(X2))|~m2_pboole(X1,u4_struct_0(X2),k3_relat_1(u1_msualg_1(X2),k6_finseq_2(u1_struct_0(X2),X3)),k3_relat_1(u2_msualg_1(X2),X3)))).
+cnf(i_0_66, plain, (X2=X4|v2_struct_0(X2)|g3_msualg_1(X2,X3,X1)!=g3_msualg_1(X4,X5,X6)|~l1_msualg_1(X2)|~v1_relat_1(X3)|~v1_funct_1(X3)|~v4_relat_1(X3,u1_struct_0(X2))|~v1_partfun1(X3,u1_struct_0(X2))|~m2_pboole(X1,u4_struct_0(X2),k3_relat_1(u1_msualg_1(X2),k6_finseq_2(u1_struct_0(X2),X3)),k3_relat_1(u2_msualg_1(X2),X3)))).
+cnf(i_0_64, plain, (X1=X6|v2_struct_0(X2)|g3_msualg_1(X2,X3,X1)!=g3_msualg_1(X4,X5,X6)|~l1_msualg_1(X2)|~v1_relat_1(X3)|~v1_funct_1(X3)|~v4_relat_1(X3,u1_struct_0(X2))|~v1_partfun1(X3,u1_struct_0(X2))|~m2_pboole(X1,u4_struct_0(X2),k3_relat_1(u1_msualg_1(X2),k6_finseq_2(u1_struct_0(X2),X3)),k3_relat_1(u2_msualg_1(X2),X3)))).
+cnf(i_0_31, plain, (k1_partfun1(k5_numbers,k5_numbers,k5_numbers,k3_finseq_2(k1_tarski(k6_numbers)),k1_unialg_1(X1),k7_finseq_2(k6_numbers))=u1_msualg_1(X2)|v2_struct_0(X1)|v11_struct_0(X2)|k6_msualg_1(X1)!=X2|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~l1_msualg_1(X2)|~v7_struct_0(X2)|~v1_msualg_1(X2)|~v5_msualg_1(X2))).
+cnf(i_0_29, plain, (k6_msualg_1(X1)=X2|v2_struct_0(X1)|v11_struct_0(X2)|k1_tarski(k6_numbers)!=u1_struct_0(X2)|k4_finseq_1(k1_unialg_1(X1))!=u4_struct_0(X2)|k1_margrel1(k5_numbers,k4_finseq_1(k1_unialg_1(X1)),k6_numbers)!=u2_msualg_1(X2)|k1_partfun1(k5_numbers,k5_numbers,k5_numbers,k3_finseq_2(k1_tarski(k6_numbers)),k1_unialg_1(X1),k7_finseq_2(k6_numbers))!=u1_msualg_1(X2)|~v2_unialg_1(X1)|~v3_unialg_1(X1)|~v4_unialg_1(X1)|~l1_unialg_1(X1)|~l1_msualg_1(X2)|~v7_struct_0(X2)|~v1_msualg_1(X2)|~v5_msualg_1(X2))).
+
+

@@ -1,0 +1,51 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_8, negated_conjecture, (v10_lattices(esk1_0))).
+cnf(i_0_7, negated_conjecture, (l3_lattices(esk1_0))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+cnf(i_0_29, plain, (m1_subset_1(esk6_1(X1),X1))).
+cnf(i_0_4, negated_conjecture, (v19_lattices(k6_domain_1(u1_struct_0(esk1_0),esk2_0),esk1_0))).
+cnf(i_0_3, negated_conjecture, (v20_lattices(k6_domain_1(u1_struct_0(esk1_0),esk2_0),esk1_0))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(k6_domain_1(u1_struct_0(esk1_0),esk2_0),k1_zfmisc_1(u1_struct_0(esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_9, negated_conjecture, (~v2_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (~v14_lattices(esk1_0))).
+cnf(i_0_5, negated_conjecture, (~v1_xboole_0(k6_domain_1(u1_struct_0(esk1_0),esk2_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_27, plain, (l2_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_28, plain, (l1_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_15, plain, (v2_struct_0(X1)|v4_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_14, plain, (v2_struct_0(X1)|v5_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_13, plain, (v2_struct_0(X1)|v6_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_12, plain, (v2_struct_0(X1)|v7_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_11, plain, (v2_struct_0(X1)|v8_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_10, plain, (v2_struct_0(X1)|v9_lattices(X1)|~v10_lattices(X1)|~l3_lattices(X1))).
+cnf(i_0_25, plain, (r2_hidden(X3,X1)|X2!=X3|k1_tarski(X2)!=X1)).
+cnf(i_0_26, plain, (X2=X3|k1_tarski(X2)!=X1|~r2_hidden(X3,X1))).
+cnf(i_0_34, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_31, plain, (k6_domain_1(X1,X2)=k1_tarski(X2)|v1_xboole_0(X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_22, plain, (v2_struct_0(X1)|m1_subset_1(esk3_1(X1),u1_struct_0(X1))|~v14_lattices(X1)|~l2_lattices(X1))).
+cnf(i_0_23, plain, (k1_tarski(X2)=X1|esk5_2(X2,X1)=X2|r2_hidden(esk5_2(X2,X1),X1))).
+cnf(i_0_36, plain, (~v1_xboole_0(X1)|~r2_hidden(X3,X2)|~m1_subset_1(X2,k1_zfmisc_1(X1)))).
+cnf(i_0_35, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X3)|~m1_subset_1(X3,k1_zfmisc_1(X2)))).
+cnf(i_0_24, plain, (k1_tarski(X2)=X1|esk5_2(X2,X1)!=X2|~r2_hidden(esk5_2(X2,X1),X1))).
+cnf(i_0_19, plain, (v2_struct_0(X1)|v14_lattices(X1)|m1_subset_1(esk4_2(X1,X2),u1_struct_0(X1))|~l2_lattices(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_20, plain, (k1_lattices(X1,X2,esk3_1(X1))=esk3_1(X1)|v2_struct_0(X1)|~v14_lattices(X1)|~l2_lattices(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_21, plain, (k1_lattices(X1,esk3_1(X1),X2)=esk3_1(X1)|v2_struct_0(X1)|~v14_lattices(X1)|~l2_lattices(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_17, plain, (k3_lattices(X1,X2,X3)=k3_lattices(X1,X3,X2)|v2_struct_0(X1)|~v4_lattices(X1)|~l2_lattices(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_30, plain, (k3_lattices(X1,X2,X3)=k1_lattices(X1,X2,X3)|v2_struct_0(X1)|~v4_lattices(X1)|~l2_lattices(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_18, plain, (v2_struct_0(X1)|v14_lattices(X1)|k1_lattices(X1,X2,esk4_2(X1,X2))!=X2|k1_lattices(X1,esk4_2(X1,X2),X2)!=X2|~l2_lattices(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_32, plain, (v2_struct_0(X1)|v1_xboole_0(X4)|r2_hidden(k3_lattices(X1,X3,X2),X4)|~v10_lattices(X1)|~l3_lattices(X1)|~v19_lattices(X4,X1)|~v20_lattices(X4,X1)|~r2_hidden(X2,X4)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_33, plain, (v2_struct_0(X1)|v1_xboole_0(X4)|r2_hidden(k3_lattices(X1,X2,X3),X4)|~v10_lattices(X1)|~l3_lattices(X1)|~v19_lattices(X4,X1)|~v20_lattices(X4,X1)|~r2_hidden(X2,X4)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1))|~m1_subset_1(X4,k1_zfmisc_1(u1_struct_0(X1))))).
+
+

@@ -1,0 +1,24 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_2, plain, (k2_xboole_0(X1,X2)=k2_xboole_0(X2,X1))).
+cnf(i_0_9, plain, (k6_subset_1(X1,k2_xboole_0(X1,X2))=k1_xboole_0)).
+cnf(i_0_7, plain, (k2_xboole_0(X1,k6_subset_1(X2,X1))=k2_xboole_0(X1,X2))).
+cnf(i_0_8, plain, (k6_subset_1(k6_subset_1(X1,X2),X3)=k6_subset_1(X1,k2_xboole_0(X2,X3)))).
+cnf(i_0_6, plain, (k2_xboole_0(k5_card_3(X1,X2),k5_card_3(X1,X3))=k5_card_3(X1,k2_xboole_0(X2,X3)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r1_tarski(k6_subset_1(k5_card_3(esk2_0,esk1_0),k5_card_3(esk2_0,esk3_0)),k5_card_3(esk2_0,k6_subset_1(esk1_0,esk3_0))))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_3, plain, (k6_subset_1(X1,X2)=k1_xboole_0|~r1_tarski(X1,X2))).
+cnf(i_0_4, plain, (r1_tarski(X1,X2)|k6_subset_1(X1,X2)!=k1_xboole_0)).
+
+

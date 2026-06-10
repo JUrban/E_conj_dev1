@@ -1,0 +1,51 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_12, plain, (v36_algstr_0(k1_complfld))).
+cnf(i_0_16, plain, (v36_algstr_0(k1_complfld))).
+cnf(i_0_26, plain, (v36_algstr_0(k1_complfld))).
+cnf(i_0_11, plain, (l6_algstr_0(k1_complfld))).
+cnf(i_0_28, plain, (v13_algstr_0(k1_complfld))).
+cnf(i_0_27, plain, (v33_algstr_0(k1_complfld))).
+cnf(i_0_25, plain, (v3_group_1(k1_complfld))).
+cnf(i_0_24, plain, (v5_group_1(k1_complfld))).
+cnf(i_0_23, plain, (v3_vectsp_1(k1_complfld))).
+cnf(i_0_22, plain, (v5_vectsp_1(k1_complfld))).
+cnf(i_0_21, plain, (v6_vectsp_1(k1_complfld))).
+cnf(i_0_20, plain, (v2_rlvect_1(k1_complfld))).
+cnf(i_0_19, plain, (v3_rlvect_1(k1_complfld))).
+cnf(i_0_18, plain, (v4_rlvect_1(k1_complfld))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk1_0,u1_struct_0(k1_complfld)))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(k1_complfld)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_17, plain, (~v2_struct_0(k1_complfld))).
+cnf(i_0_29, plain, (~v6_struct_0(k1_complfld))).
+cnf(i_0_1, negated_conjecture, (k5_algstr_0(k1_complfld,k3_rlvect_1(k1_complfld,esk1_0,esk2_0),esk2_0)!=esk1_0)).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_15, plain, (l2_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_14, plain, (l5_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_10, plain, (u1_struct_0(X1)=k2_numbers|k1_complfld!=X1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_9, plain, (u1_algstr_0(X1)=k27_binop_2|k1_complfld!=X1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_8, plain, (u2_algstr_0(X1)=k29_binop_2|k1_complfld!=X1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_7, plain, (k5_struct_0(X1)=k6_complex1|k1_complfld!=X1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_6, plain, (k4_struct_0(X1)=k5_complex1|k1_complfld!=X1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_5, plain, (k1_complfld=X1|u1_struct_0(X1)!=k2_numbers|u1_algstr_0(X1)!=k27_binop_2|u2_algstr_0(X1)!=k29_binop_2|k5_struct_0(X1)!=k6_complex1|k4_struct_0(X1)!=k5_complex1|~v36_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_13, plain, (m1_subset_1(k4_algstr_0(X1,X2),u1_struct_0(X1))|~l2_algstr_0(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_32, plain, (k4_algstr_0(X1,k4_algstr_0(X1,X2))=X2|v2_struct_0(X1)|~l2_algstr_0(X1)|~v13_algstr_0(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_31, plain, (k5_algstr_0(X1,X2,X2)=k4_struct_0(X1)|v2_struct_0(X1)|~l2_algstr_0(X1)|~v13_algstr_0(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_35, plain, (k1_algstr_0(X1,X2,k4_struct_0(X1))=X2|v2_struct_0(X1)|~l2_algstr_0(X1)|~v13_algstr_0(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_34, plain, (k1_algstr_0(X1,k4_struct_0(X1),X2)=X2|v2_struct_0(X1)|~l2_algstr_0(X1)|~v13_algstr_0(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_30, plain, (k5_algstr_0(k1_complfld,X1,k4_algstr_0(k1_complfld,X2))=k3_rlvect_1(k1_complfld,X1,X2)|~m1_subset_1(X2,u1_struct_0(k1_complfld))|~m1_subset_1(X1,u1_struct_0(k1_complfld)))).
+cnf(i_0_4, plain, (k1_algstr_0(X1,X2,k4_algstr_0(X1,X3))=k5_algstr_0(X1,X2,X3)|~l2_algstr_0(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_33, plain, (k1_algstr_0(X1,X2,k5_algstr_0(X1,X3,X4))=k5_algstr_0(X1,k1_algstr_0(X1,X2,X3),X4)|v2_struct_0(X1)|~l2_algstr_0(X1)|~v3_rlvect_1(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+
+

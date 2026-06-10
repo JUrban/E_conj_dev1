@@ -1,0 +1,42 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_3, negated_conjecture, (k3_finseq_1(esk2_0)=k3_finseq_1(esk1_0))).
+cnf(i_0_2, negated_conjecture, (k3_finseq_1(esk3_0)=k3_finseq_1(esk4_0))).
+cnf(i_0_7, negated_conjecture, (m2_finseq_1(esk1_0,k1_numbers))).
+cnf(i_0_6, negated_conjecture, (m2_finseq_1(esk2_0,k1_numbers))).
+cnf(i_0_5, negated_conjecture, (m2_finseq_1(esk3_0,k1_numbers))).
+cnf(i_0_4, negated_conjecture, (m2_finseq_1(esk4_0,k1_numbers))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k23_rvsum_1(k8_finseq_1(k1_numbers,esk1_0,esk3_0),k8_finseq_1(k1_numbers,esk2_0,esk4_0))!=k9_binop_2(k23_rvsum_1(esk1_0,esk2_0),k23_rvsum_1(esk3_0,esk4_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_17, plain, (v1_relat_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_20, plain, (v1_funct_1(X1)|~m2_finseq_1(X1,X2))).
+cnf(i_0_16, plain, (v1_funct_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_19, plain, (v1_finseq_1(X1)|~m2_finseq_1(X1,X2))).
+cnf(i_0_15, plain, (v1_finseq_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_21, plain, (k18_rvsum_1(X1)=k16_rvsum_1(X1)|~m1_finseq_1(X1,k1_numbers))).
+cnf(i_0_8, plain, (v3_valued_0(X1)|~v1_relat_1(X1)|~v5_relat_1(X1,k1_numbers))).
+cnf(i_0_24, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_10, plain, (v5_relat_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_25, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_11, plain, (k23_rvsum_1(X1,X2)=k23_rvsum_1(X2,X1)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_22, plain, (k22_rvsum_1(X1,X2)=k23_rvsum_1(X1,X2)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_18, plain, (m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,X2)))|~m2_finseq_1(X1,X2))).
+cnf(i_0_13, plain, (m2_finseq_1(k14_rvsum_1(X1,X2),k1_numbers)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_12, plain, (k18_rvsum_1(k14_rvsum_1(X1,X2))=k22_rvsum_1(X1,X2)|~v1_relat_1(X2)|~v1_relat_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_27, plain, (k9_binop_2(k16_rvsum_1(X1),k16_rvsum_1(X2))=k16_rvsum_1(k7_finseq_1(X1,X2))|~v1_relat_1(X2)|~v1_relat_1(X1)|~v3_valued_0(X2)|~v3_valued_0(X1)|~v1_funct_1(X2)|~v1_funct_1(X1)|~v1_finseq_1(X2)|~v1_finseq_1(X1))).
+cnf(i_0_23, plain, (k8_finseq_1(X1,X2,X3)=k7_finseq_1(X2,X3)|~m1_finseq_1(X3,X1)|~m1_finseq_1(X2,X1))).
+cnf(i_0_14, plain, (m2_finseq_1(k8_finseq_1(X1,X2,X3),X1)|~m1_finseq_1(X3,X1)|~m1_finseq_1(X2,X1))).
+cnf(i_0_26, plain, (k14_rvsum_1(k8_finseq_1(k1_numbers,X1,X2),k8_finseq_1(k1_numbers,X3,X4))=k8_finseq_1(k1_numbers,k14_rvsum_1(X1,X3),k14_rvsum_1(X2,X4))|k3_finseq_1(X2)!=k3_finseq_1(X4)|k3_finseq_1(X1)!=k3_finseq_1(X3)|~m2_finseq_1(X4,k1_numbers)|~m2_finseq_1(X3,k1_numbers)|~m2_finseq_1(X2,k1_numbers)|~m2_finseq_1(X1,k1_numbers))).
+
+

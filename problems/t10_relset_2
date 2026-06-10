@@ -1,0 +1,27 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_3, negated_conjecture, (v1_relat_1(esk2_0))).
+cnf(i_0_2, negated_conjecture, (v1_relat_1(esk3_0))).
+cnf(i_0_8, plain, (v1_relat_1(k10_finseq_1(X1,X2)))).
+cnf(i_0_7, plain, (v1_funct_1(k10_finseq_1(X1,X2)))).
+cnf(i_0_4, plain, (k10_xtuple_0(k10_finseq_1(X1,X2))=k10_xtuple_0(k10_finseq_1(X2,X1)))).
+cnf(i_0_11, plain, (k3_tarski(k10_xtuple_0(k10_finseq_1(k10_xtuple_0(X1),k10_xtuple_0(X2))))=k10_xtuple_0(k3_tarski(k10_xtuple_0(k10_finseq_1(X1,X2)))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k3_tarski(k10_xtuple_0(k10_finseq_1(k9_relat_1(esk2_0,esk1_0),k9_relat_1(esk3_0,esk1_0))))!=k9_relat_1(k3_tarski(k10_xtuple_0(k10_finseq_1(esk2_0,esk3_0))),esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_10, plain, (k10_xtuple_0(k3_relat_1(X1,X2))=k7_relat_1(X2,k10_xtuple_0(X1))|~v1_relat_1(X2)|~v1_relat_1(X1))).
+cnf(i_0_5, plain, (k7_relat_1(X1,k10_xtuple_0(k10_finseq_1(X2,X2)))=k9_relat_1(X1,X2)|~v1_relat_1(X1))).
+cnf(i_0_6, plain, (v1_relat_1(k3_tarski(k10_xtuple_0(k10_finseq_1(X1,X2))))|~v1_relat_1(X2)|~v1_relat_1(X1))).
+cnf(i_0_13, plain, (k3_tarski(k10_xtuple_0(k10_finseq_1(k3_relat_1(X1,X2),k3_relat_1(X1,X3))))=k3_relat_1(X1,k3_tarski(k10_xtuple_0(k10_finseq_1(X2,X3))))|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_relat_1(X1))).
+
+

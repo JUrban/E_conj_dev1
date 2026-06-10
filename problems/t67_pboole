@@ -1,0 +1,44 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_9, negated_conjecture, (v1_relat_1(esk2_0))).
+cnf(i_0_5, negated_conjecture, (v1_relat_1(esk3_0))).
+cnf(i_0_7, negated_conjecture, (v1_funct_1(esk2_0))).
+cnf(i_0_3, negated_conjecture, (v1_funct_1(esk3_0))).
+cnf(i_0_8, negated_conjecture, (v4_relat_1(esk2_0,esk1_0))).
+cnf(i_0_4, negated_conjecture, (v4_relat_1(esk3_0,esk1_0))).
+cnf(i_0_6, negated_conjecture, (v1_partfun1(esk2_0,esk1_0))).
+cnf(i_0_2, negated_conjecture, (v1_partfun1(esk3_0,esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r6_pboole(esk1_0,k2_pboole(esk1_0,esk2_0,k4_pboole(esk1_0,esk3_0,esk2_0)),k2_pboole(esk1_0,esk2_0,esk3_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_24, plain, (r6_pboole(X2,X3,X1)|X1!=X3|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_25, plain, (X1=X3|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2)|~r6_pboole(X2,X3,X1))).
+cnf(i_0_10, plain, (k2_pboole(X1,X2,X3)=k2_pboole(X1,X3,X2)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v4_relat_1(X3,X1)|~v4_relat_1(X2,X1)|~v1_partfun1(X3,X1)|~v1_partfun1(X2,X1))).
+cnf(i_0_11, plain, (k3_pboole(X1,X2,X3)=k3_pboole(X1,X3,X2)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v4_relat_1(X3,X1)|~v4_relat_1(X2,X1)|~v1_partfun1(X3,X1)|~v1_partfun1(X2,X1))).
+cnf(i_0_23, plain, (v1_relat_1(k4_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_15, plain, (v1_relat_1(k2_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_19, plain, (v1_relat_1(k3_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_21, plain, (v1_funct_1(k4_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_13, plain, (v1_funct_1(k2_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_17, plain, (v1_funct_1(k3_pboole(X2,X3,X1))|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_22, plain, (v4_relat_1(k4_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_14, plain, (v4_relat_1(k2_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_18, plain, (v4_relat_1(k3_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_20, plain, (v1_partfun1(k4_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_12, plain, (v1_partfun1(k2_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_16, plain, (v1_partfun1(k3_pboole(X2,X3,X1),X2)|~v1_relat_1(X3)|~v1_relat_1(X1)|~v1_funct_1(X3)|~v1_funct_1(X1)|~v4_relat_1(X3,X2)|~v4_relat_1(X1,X2)|~v1_partfun1(X3,X2)|~v1_partfun1(X1,X2))).
+cnf(i_0_27, plain, (r6_pboole(X1,k2_pboole(X1,X2,k3_pboole(X1,X2,X3)),X2)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v4_relat_1(X3,X1)|~v4_relat_1(X2,X1)|~v1_partfun1(X3,X1)|~v1_partfun1(X2,X1))).
+cnf(i_0_28, plain, (r6_pboole(X1,k2_pboole(X1,k4_pboole(X1,X2,X3),k3_pboole(X1,X2,X3)),X2)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v4_relat_1(X3,X1)|~v4_relat_1(X2,X1)|~v1_partfun1(X3,X1)|~v1_partfun1(X2,X1))).
+cnf(i_0_26, plain, (r6_pboole(X1,k2_pboole(X1,k2_pboole(X1,X2,X3),X4),k2_pboole(X1,X2,k2_pboole(X1,X3,X4)))|~v1_relat_1(X4)|~v1_relat_1(X3)|~v1_relat_1(X2)|~v1_funct_1(X4)|~v1_funct_1(X3)|~v1_funct_1(X2)|~v4_relat_1(X4,X1)|~v4_relat_1(X3,X1)|~v4_relat_1(X2,X1)|~v1_partfun1(X4,X1)|~v1_partfun1(X3,X1)|~v1_partfun1(X2,X1))).
+
+

@@ -1,0 +1,49 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_6, negated_conjecture, (v2_pre_topc(esk1_0))).
+cnf(i_0_5, negated_conjecture, (l1_pre_topc(esk1_0))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(u1_struct_0(esk1_0))))).
+cnf(i_0_2, negated_conjecture, (r2_hidden(esk3_0,k5_kurato_1(esk1_0,esk2_0)))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_7, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_33, plain, (~v1_xboole_0(X1)|~r2_hidden(X2,X1))).
+cnf(i_0_29, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X2))).
+cnf(i_0_31, plain, (v1_xboole_0(X2)|r2_hidden(X1,X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_27, plain, (k1_tops_1(X1,k1_tops_1(X1,X2))=k1_tops_1(X1,X2)|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_28, plain, (k2_pre_topc(X1,k2_pre_topc(X1,X2))=k2_pre_topc(X1,X2)|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_25, plain, (m1_subset_1(k1_tops_1(X1,X2),k1_zfmisc_1(u1_struct_0(X1)))|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_26, plain, (m1_subset_1(k2_pre_topc(X1,X2),k1_zfmisc_1(u1_struct_0(X1)))|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_1, negated_conjecture, (~r2_hidden(k1_tops_1(esk1_0,esk3_0),k5_kurato_1(esk1_0,esk2_0))|~r2_hidden(k2_pre_topc(esk1_0,esk3_0),k5_kurato_1(esk1_0,esk2_0)))).
+cnf(i_0_30, plain, (k2_pre_topc(X1,k1_tops_1(X1,k2_pre_topc(X1,k1_tops_1(X1,X2))))=k2_pre_topc(X1,k1_tops_1(X1,X2))|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_32, plain, (k1_tops_1(X1,k2_pre_topc(X1,k1_tops_1(X1,k2_pre_topc(X1,X2))))=k1_tops_1(X1,k2_pre_topc(X1,X2))|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_24, plain, (k5_enumset1(X2,k1_tops_1(X1,X2),k2_pre_topc(X1,X2),k1_tops_1(X1,k2_pre_topc(X1,X2)),k2_pre_topc(X1,k1_tops_1(X1,X2)),k2_pre_topc(X1,k1_tops_1(X1,k2_pre_topc(X1,X2))),k1_tops_1(X1,k2_pre_topc(X1,k1_tops_1(X1,X2))))=k5_kurato_1(X1,X2)|v2_struct_0(X1)|~v2_pre_topc(X1)|~l1_pre_topc(X1)|~m1_subset_1(X2,k1_zfmisc_1(u1_struct_0(X1))))).
+cnf(i_0_16, plain, (r2_hidden(X9,X1)|X8!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_17, plain, (r2_hidden(X9,X1)|X7!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_18, plain, (r2_hidden(X9,X1)|X6!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_19, plain, (r2_hidden(X9,X1)|X5!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_20, plain, (r2_hidden(X9,X1)|X4!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_21, plain, (r2_hidden(X9,X1)|X3!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_22, plain, (r2_hidden(X9,X1)|X2!=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1)).
+cnf(i_0_23, plain, (X8=X9|X7=X9|X6=X9|X5=X9|X4=X9|X3=X9|X2=X9|k5_enumset1(X2,X3,X4,X5,X6,X7,X8)!=X1|~r2_hidden(X9,X1))).
+cnf(i_0_9, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X8|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_10, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X7|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_11, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X6|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_12, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X5|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_13, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X4|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_14, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X3|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_15, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)!=X2|~r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+cnf(i_0_8, plain, (k5_enumset1(X2,X3,X4,X5,X6,X7,X8)=X1|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X8|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X7|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X6|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X5|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X4|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X3|esk4_8(X2,X3,X4,X5,X6,X7,X8,X1)=X2|r2_hidden(esk4_8(X2,X3,X4,X5,X6,X7,X8,X1),X1))).
+
+

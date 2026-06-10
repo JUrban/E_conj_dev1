@@ -1,0 +1,37 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_14, negated_conjecture, (v13_algstr_0(esk1_0))).
+cnf(i_0_13, negated_conjecture, (v2_rlvect_1(esk1_0))).
+cnf(i_0_12, negated_conjecture, (v3_rlvect_1(esk1_0))).
+cnf(i_0_11, negated_conjecture, (v4_rlvect_1(esk1_0))).
+cnf(i_0_10, negated_conjecture, (v5_rlvect_1(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v6_rlvect_1(esk1_0))).
+cnf(i_0_8, negated_conjecture, (v7_rlvect_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v8_rlvect_1(esk1_0))).
+cnf(i_0_6, negated_conjecture, (l1_rlvect_1(esk1_0))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0)))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk1_0)))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk4_0,u1_struct_0(esk1_0)))).
+cnf(i_0_2, negated_conjecture, (k1_geomtrap(esk1_0,esk2_0,esk4_0)=k1_geomtrap(esk1_0,esk2_0,esk3_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (esk4_0!=esk3_0)).
+cnf(i_0_15, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_16, plain, (k1_geomtrap(X1,X2,X3)=k1_geomtrap(X1,X3,X2)|v2_struct_0(X1)|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_20, plain, (v2_struct_0(X1)|m1_subset_1(esk5_3(X1,X2,X3),u1_struct_0(X1))|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_19, plain, (k1_geomtrap(X1,X2,esk5_3(X1,X2,X3))=X3|v2_struct_0(X1)|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_18, plain, (k3_rlvect_1(X1,X2,X3)=k3_rlvect_1(X1,X4,X4)|v2_struct_0(X1)|k1_geomtrap(X1,X2,X3)!=X4|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_17, plain, (k1_geomtrap(X1,X2,X3)=X4|v2_struct_0(X1)|k3_rlvect_1(X1,X2,X3)!=k3_rlvect_1(X1,X4,X4)|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_21, plain, (k1_geomtrap(X1,k1_geomtrap(X1,X2,X3),k1_geomtrap(X1,X4,X5))=k1_geomtrap(X1,k1_geomtrap(X1,X2,X4),k1_geomtrap(X1,X3,X5))|v2_struct_0(X1)|~v13_algstr_0(X1)|~v2_rlvect_1(X1)|~v3_rlvect_1(X1)|~v4_rlvect_1(X1)|~v5_rlvect_1(X1)|~v6_rlvect_1(X1)|~v7_rlvect_1(X1)|~v8_rlvect_1(X1)|~l1_rlvect_1(X1)|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+
+

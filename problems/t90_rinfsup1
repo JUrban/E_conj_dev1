@@ -1,0 +1,54 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_5, negated_conjecture, (v1_funct_1(esk1_0))).
+cnf(i_0_2, negated_conjecture, (v1_comseq_2(esk1_0))).
+cnf(i_0_30, plain, (v3_membered(k1_numbers))).
+cnf(i_0_4, negated_conjecture, (v1_funct_2(esk1_0,k5_numbers,k1_numbers))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk1_0,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_29, plain, (~v1_xboole_0(k1_numbers))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_33, plain, (k1_real_1(k1_real_1(X1))=X1|~m1_subset_1(X1,k1_numbers))).
+cnf(i_0_10, plain, (v1_seq_2(X1)|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_9, plain, (v2_seq_2(X1)|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v3_valued_0(X1)|~v1_relat_1(X1))).
+cnf(i_0_27, plain, (v1_funct_1(k30_valued_1(X1))|~v1_funct_1(X1)|~v3_valued_0(X1)|~v1_relat_1(X1)|~v1_seq_2(X1))).
+cnf(i_0_26, plain, (v3_valued_0(k30_valued_1(X1))|~v1_funct_1(X1)|~v3_valued_0(X1)|~v1_relat_1(X1)|~v1_seq_2(X1))).
+cnf(i_0_28, plain, (v1_relat_1(k30_valued_1(X1))|~v1_funct_1(X1)|~v3_valued_0(X1)|~v1_relat_1(X1)|~v1_seq_2(X1))).
+cnf(i_0_25, plain, (v2_seq_2(k30_valued_1(X1))|~v1_funct_1(X1)|~v3_valued_0(X1)|~v1_relat_1(X1)|~v1_seq_2(X1))).
+cnf(i_0_8, plain, (v1_relat_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_6, plain, (v3_valued_0(X1)|~v3_membered(X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_35, plain, (k32_valued_1(X1,X2,X3)=k30_valued_1(X3)|~v1_funct_1(X3)|~v3_membered(X2)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_7, plain, (v1_funct_2(X1,X2,X3)|~v1_partfun1(X1,X2)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_24, plain, (v1_funct_1(k4_rinfsup1(X1))|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_21, plain, (v1_funct_1(k3_rinfsup1(X1))|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_14, plain, (k2_rinfsup1(k4_rinfsup1(X1))=k5_rinfsup1(X1)|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_15, plain, (k1_rinfsup1(k3_rinfsup1(X1))=k6_rinfsup1(X1)|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_40, plain, (v1_comseq_2(k4_rinfsup1(X1))|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_39, plain, (v1_comseq_2(k3_rinfsup1(X1))|~v1_funct_1(X1)|~v1_comseq_2(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_16, plain, (m1_subset_1(k1_rinfsup1(X1),k1_numbers)|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_32, plain, (v1_xboole_0(X3)|v1_funct_1(k30_valued_1(X1))|~v1_funct_1(X1)|~v3_membered(X3)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_18, plain, (v1_funct_1(k32_valued_1(X2,X3,X1))|~v1_funct_1(X1)|~v3_membered(X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_31, plain, (v1_xboole_0(X3)|v1_partfun1(k30_valued_1(X1),X2)|~v1_funct_1(X1)|~v3_membered(X3)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_23, plain, (v1_funct_2(k4_rinfsup1(X1),k5_numbers,k1_numbers)|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_20, plain, (v1_funct_2(k3_rinfsup1(X1),k5_numbers,k1_numbers)|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_22, plain, (m1_subset_1(k4_rinfsup1(X1),k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers)))|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_19, plain, (m1_subset_1(k3_rinfsup1(X1),k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers)))|~v1_funct_1(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_34, plain, (k32_valued_1(X1,X2,k32_valued_1(X1,X2,X3))=X3|~v1_funct_1(X3)|~v3_membered(X2)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_17, plain, (m1_subset_1(k32_valued_1(X2,X3,X1),k1_zfmisc_1(k2_zfmisc_1(X2,k1_numbers)))|~v1_funct_1(X1)|~v3_membered(X3)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_1, negated_conjecture, (k5_rinfsup1(k32_valued_1(k5_numbers,k1_numbers,esk1_0))!=k1_real_1(k6_rinfsup1(esk1_0))|k6_rinfsup1(k32_valued_1(k5_numbers,k1_numbers,esk1_0))!=k1_real_1(k5_rinfsup1(esk1_0)))).
+cnf(i_0_38, plain, (k1_real_1(k1_rinfsup1(k32_valued_1(k5_numbers,k1_numbers,X1)))=k2_rinfsup1(X1)|~v1_funct_1(X1)|~v2_seq_2(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+cnf(i_0_36, plain, (r2_funct_2(X2,X3,X4,X1)|X1!=X4|~v1_funct_1(X4)|~v1_funct_1(X1)|~v1_funct_2(X4,X2,X3)|~v1_funct_2(X1,X2,X3)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_37, plain, (X1=X4|~v1_funct_1(X4)|~v1_funct_1(X1)|~v1_funct_2(X4,X2,X3)|~v1_funct_2(X1,X2,X3)|~r2_funct_2(X2,X3,X4,X1)|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_41, plain, (r2_funct_2(k5_numbers,k1_numbers,k3_rinfsup1(X1),k32_valued_1(k5_numbers,k1_numbers,k4_rinfsup1(k32_valued_1(k5_numbers,k1_numbers,X1))))|~v1_funct_1(X1)|~v2_seq_2(X1)|~v1_funct_2(X1,k5_numbers,k1_numbers)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(k5_numbers,k1_numbers))))).
+
+

@@ -1,0 +1,29 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_2, negated_conjecture, (v3_ordinal1(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k2_ordinal1(k4_classes1(esk1_0))!=esk1_0)).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_13, plain, (k6_classes1(X1)=X1|~v3_ordinal1(X1))).
+cnf(i_0_3, plain, (v3_ordinal1(X1)|~v3_ordinal1(X2)|~m1_subset_1(X1,X2))).
+cnf(i_0_8, plain, (v3_ordinal1(X3)|k2_ordinal1(X2)!=X1|~r2_hidden(X3,X1))).
+cnf(i_0_10, plain, (m1_subset_1(X1,X2)|~r2_hidden(X1,X2))).
+cnf(i_0_9, plain, (r2_hidden(X3,X2)|k2_ordinal1(X2)!=X1|~r2_hidden(X3,X1))).
+cnf(i_0_7, plain, (r2_hidden(X3,X1)|k2_ordinal1(X2)!=X1|~v3_ordinal1(X3)|~r2_hidden(X3,X2))).
+cnf(i_0_11, plain, (r2_hidden(X2,k4_classes1(X1))|~v3_ordinal1(X1)|~r2_hidden(k6_classes1(X2),X1))).
+cnf(i_0_12, plain, (r2_hidden(k6_classes1(X2),X1)|~v3_ordinal1(X1)|~r2_hidden(X2,k4_classes1(X1)))).
+cnf(i_0_4, plain, (k2_ordinal1(X2)=X1|v3_ordinal1(esk2_2(X2,X1))|r2_hidden(esk2_2(X2,X1),X1))).
+cnf(i_0_5, plain, (k2_ordinal1(X2)=X1|r2_hidden(esk2_2(X2,X1),X2)|r2_hidden(esk2_2(X2,X1),X1))).
+cnf(i_0_6, plain, (k2_ordinal1(X2)=X1|~v3_ordinal1(esk2_2(X2,X1))|~r2_hidden(esk2_2(X2,X1),X2)|~r2_hidden(esk2_2(X2,X1),X1))).
+
+

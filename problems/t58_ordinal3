@@ -1,0 +1,40 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_8, plain, (k1_xboole_0=o_0_0_xboole_0)).
+cnf(i_0_5, negated_conjecture, (v3_ordinal1(esk1_0))).
+cnf(i_0_4, negated_conjecture, (v3_ordinal1(esk2_0))).
+cnf(i_0_3, negated_conjecture, (v3_ordinal1(esk3_0))).
+cnf(i_0_2, negated_conjecture, (r1_ordinal1(esk1_0,esk2_0))).
+cnf(i_0_20, plain, (r1_tarski(k1_xboole_0,X1))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (~r1_ordinal1(k5_ordinal3(esk3_0,esk2_0),k5_ordinal3(esk3_0,esk1_0)))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_7, plain, (v1_ordinal1(X1)|~v3_ordinal1(X1))).
+cnf(i_0_6, plain, (v2_ordinal1(X1)|~v3_ordinal1(X1))).
+cnf(i_0_23, plain, (k5_ordinal3(X1,X1)=k1_xboole_0|~v3_ordinal1(X1))).
+cnf(i_0_17, plain, (v3_ordinal1(X1)|~v3_ordinal1(X2)|~r2_hidden(X1,X2))).
+cnf(i_0_13, plain, (v3_ordinal1(k5_ordinal3(X1,X2))|~v3_ordinal1(X2)|~v3_ordinal1(X1))).
+cnf(i_0_24, plain, (~r1_tarski(X1,X2)|~r2_hidden(X2,X1))).
+cnf(i_0_18, plain, (X1=X2|r2_hidden(X2,X1)|r2_hidden(X1,X2)|~v3_ordinal1(X2)|~v3_ordinal1(X1))).
+cnf(i_0_14, plain, (r1_ordinal1(X2,X1)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_tarski(X2,X1))).
+cnf(i_0_15, plain, (r1_tarski(X2,X1)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_ordinal1(X2,X1))).
+cnf(i_0_9, plain, (k5_ordinal3(X1,X2)=X3|r1_ordinal1(X2,X1)|k1_xboole_0!=X3|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1))).
+cnf(i_0_10, plain, (k1_xboole_0=X3|r1_ordinal1(X2,X1)|k5_ordinal3(X1,X2)!=X3|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1))).
+cnf(i_0_22, plain, (k10_ordinal2(X2,k5_ordinal3(X1,X2))=X1|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r2_hidden(X2,X1))).
+cnf(i_0_16, plain, (r2_hidden(X1,X2)|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v1_ordinal1(X1)|~r1_tarski(X1,X3)|~r2_hidden(X3,X2))).
+cnf(i_0_11, plain, (k5_ordinal3(X1,X2)=X3|k10_ordinal2(X2,X3)!=X1|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_ordinal1(X2,X1))).
+cnf(i_0_12, plain, (k10_ordinal2(X2,X3)=X1|k5_ordinal3(X1,X2)!=X3|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_ordinal1(X2,X1))).
+cnf(i_0_21, plain, (r1_ordinal1(k10_ordinal2(X1,X2),k10_ordinal2(X3,X2))|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_ordinal1(X1,X3))).
+cnf(i_0_19, plain, (r1_ordinal1(X1,X2)|~v3_ordinal1(X3)|~v3_ordinal1(X2)|~v3_ordinal1(X1)|~r1_ordinal1(k10_ordinal2(X3,X1),k10_ordinal2(X3,X2)))).
+
+

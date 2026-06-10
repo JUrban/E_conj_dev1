@@ -1,0 +1,47 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_16, negated_conjecture, (v1_funct_1(esk3_0))).
+cnf(i_0_10, negated_conjecture, (v1_funct_1(esk4_0))).
+cnf(i_0_14, negated_conjecture, (v10_valued_0(esk3_0))).
+cnf(i_0_13, negated_conjecture, (v6_supinf_2(esk3_0))).
+cnf(i_0_6, negated_conjecture, (v6_supinf_2(esk4_0))).
+cnf(i_0_3, negated_conjecture, (k1_relset_1(esk1_0,esk4_0)=esk7_0)).
+cnf(i_0_19, negated_conjecture, (v1_prob_1(esk2_0,esk1_0))).
+cnf(i_0_18, negated_conjecture, (v4_prob_1(esk2_0,esk1_0))).
+cnf(i_0_5, negated_conjecture, (r1_xboole_0(esk5_0,esk6_0))).
+cnf(i_0_17, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(k1_zfmisc_1(esk1_0))))).
+cnf(i_0_15, negated_conjecture, (v1_funct_2(esk3_0,esk2_0,k7_numbers))).
+cnf(i_0_12, negated_conjecture, (v4_measure1(esk3_0,esk1_0,esk2_0))).
+cnf(i_0_8, negated_conjecture, (m2_subset_1(esk5_0,k1_zfmisc_1(esk1_0),esk2_0))).
+cnf(i_0_7, negated_conjecture, (m2_subset_1(esk6_0,k1_zfmisc_1(esk1_0),esk2_0))).
+cnf(i_0_4, negated_conjecture, (m2_subset_1(esk7_0,k1_zfmisc_1(esk1_0),esk2_0))).
+cnf(i_0_11, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(k2_zfmisc_1(esk2_0,k7_numbers))))).
+cnf(i_0_9, negated_conjecture, (m1_subset_1(esk4_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,k1_numbers))))).
+cnf(i_0_2, negated_conjecture, (r1_mesfunc6(esk1_0,esk2_0,esk4_0,esk7_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_21, negated_conjecture, (~v1_xboole_0(esk1_0))).
+cnf(i_0_20, negated_conjecture, (~v1_xboole_0(esk2_0))).
+cnf(i_0_1, negated_conjecture, (k3_supinf_2(k1_mesfunc6(esk1_0,esk2_0,esk3_0,k2_partfun1(esk1_0,k1_numbers,esk4_0,esk5_0)),k1_mesfunc6(esk1_0,esk2_0,esk3_0,k2_partfun1(esk1_0,k1_numbers,esk4_0,esk6_0)))!=k1_mesfunc6(esk1_0,esk2_0,esk3_0,k2_partfun1(esk1_0,k1_numbers,esk4_0,k6_prob_1(esk1_0,esk2_0,esk5_0,esk6_0))))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_25, plain, (k1_mesfunc5(X1,X2)=X2|v1_xboole_0(X1)|~v1_funct_1(X2)|~m1_subset_1(X2,k1_zfmisc_1(k2_zfmisc_1(X1,k1_numbers))))).
+cnf(i_0_27, plain, (v1_xboole_0(X2)|v1_funct_1(k1_mesfunc5(X2,X1))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,k1_numbers))))).
+cnf(i_0_26, plain, (v1_xboole_0(X2)|m1_subset_1(k1_mesfunc5(X2,X1),k1_zfmisc_1(k2_zfmisc_1(X2,k7_numbers)))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,k1_numbers))))).
+cnf(i_0_30, plain, (k2_partfun1(X1,X2,X3,X4)=k5_relat_1(X3,X4)|~v1_funct_1(X3)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,X2))))).
+cnf(i_0_29, plain, (v1_funct_1(k2_partfun1(X2,X3,X1,X4))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_28, plain, (m1_subset_1(k2_partfun1(X2,X3,X1,X4),k1_zfmisc_1(k2_zfmisc_1(X2,X3)))|~v1_funct_1(X1)|~m1_subset_1(X1,k1_zfmisc_1(k2_zfmisc_1(X2,X3))))).
+cnf(i_0_23, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|r1_mesfunc1(X1,X2,k1_mesfunc5(X1,X3),X4)|~v1_funct_1(X3)|~v1_prob_1(X2,X1)|~v4_prob_1(X2,X1)|~r1_mesfunc6(X1,X2,X3,X4)|~m2_subset_1(X4,k1_zfmisc_1(X1),X2)|~m1_subset_1(X2,k1_zfmisc_1(k1_zfmisc_1(X1)))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,k1_numbers))))).
+cnf(i_0_22, plain, (v1_xboole_0(X2)|v1_xboole_0(X1)|r1_mesfunc6(X1,X2,X3,X4)|~v1_funct_1(X3)|~v1_prob_1(X2,X1)|~v4_prob_1(X2,X1)|~m2_subset_1(X4,k1_zfmisc_1(X1),X2)|~m1_subset_1(X2,k1_zfmisc_1(k1_zfmisc_1(X1)))|~r1_mesfunc1(X1,X2,k1_mesfunc5(X1,X3),X4)|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X1,k1_numbers))))).
+cnf(i_0_24, plain, (k7_mesfunc5(X1,X2,X3,k1_mesfunc5(X1,X4))=k1_mesfunc6(X1,X2,X3,X4)|v1_xboole_0(X2)|v1_xboole_0(X1)|~v1_funct_1(X4)|~v1_funct_1(X3)|~v10_valued_0(X3)|~v6_supinf_2(X3)|~v1_prob_1(X2,X1)|~v4_prob_1(X2,X1)|~v4_measure1(X3,X1,X2)|~v1_funct_2(X3,X2,k7_numbers)|~m1_subset_1(X2,k1_zfmisc_1(k1_zfmisc_1(X1)))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,k1_numbers)))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,k7_numbers))))).
+cnf(i_0_31, plain, (k3_supinf_2(k7_mesfunc5(X1,X2,X3,k2_partfun1(X1,k7_numbers,X4,X5)),k7_mesfunc5(X1,X2,X3,k2_partfun1(X1,k7_numbers,X4,X6)))=k7_mesfunc5(X1,X2,X3,k2_partfun1(X1,k7_numbers,X4,k6_prob_1(X1,X2,X5,X6)))|v1_xboole_0(X2)|v1_xboole_0(X1)|k1_relset_1(X1,X4)!=X7|~v1_funct_1(X4)|~v1_funct_1(X3)|~v10_valued_0(X3)|~v6_supinf_2(X4)|~v6_supinf_2(X3)|~v1_prob_1(X2,X1)|~v4_prob_1(X2,X1)|~r1_xboole_0(X5,X6)|~v4_measure1(X3,X1,X2)|~v1_funct_2(X3,X2,k7_numbers)|~r1_mesfunc1(X1,X2,X4,X7)|~m2_subset_1(X7,k1_zfmisc_1(X1),X2)|~m2_subset_1(X6,k1_zfmisc_1(X1),X2)|~m2_subset_1(X5,k1_zfmisc_1(X1),X2)|~m1_subset_1(X2,k1_zfmisc_1(k1_zfmisc_1(X1)))|~m1_subset_1(X4,k1_zfmisc_1(k2_zfmisc_1(X1,k7_numbers)))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,k7_numbers))))).
+
+

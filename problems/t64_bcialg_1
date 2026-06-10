@@ -1,0 +1,42 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_11, negated_conjecture, (v3_bcialg_1(esk1_0))).
+cnf(i_0_10, negated_conjecture, (v4_bcialg_1(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v5_bcialg_1(esk1_0))).
+cnf(i_0_8, negated_conjecture, (v7_bcialg_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (l2_bcialg_1(esk1_0))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_12, negated_conjecture, (~v2_struct_0(esk1_0))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_18, plain, (l2_struct_0(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_19, plain, (l1_bcialg_1(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_6, negated_conjecture, (m1_subset_1(esk2_0,u1_struct_0(esk1_0))|~v19_bcialg_1(esk1_0))).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk3_0,u1_struct_0(esk1_0))|~v19_bcialg_1(esk1_0))).
+cnf(i_0_4, negated_conjecture, (m1_subset_1(esk4_0,u1_struct_0(esk1_0))|~v19_bcialg_1(esk1_0))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk5_0,u1_struct_0(esk1_0))|~v19_bcialg_1(esk1_0))).
+cnf(i_0_17, plain, (m1_subset_1(k4_struct_0(X1),u1_struct_0(X1))|~l2_struct_0(X1))).
+cnf(i_0_15, plain, (v2_struct_0(X1)|v5_bcialg_1(X1)|m1_subset_1(esk6_1(X1),u1_struct_0(X1))|~l2_bcialg_1(X1))).
+cnf(i_0_25, plain, (v2_struct_0(X1)|v19_bcialg_1(X1)|m1_subset_1(esk7_1(X1),u1_struct_0(X1))|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_24, plain, (v2_struct_0(X1)|v19_bcialg_1(X1)|m1_subset_1(esk8_1(X1),u1_struct_0(X1))|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_16, plain, (k1_bcialg_1(X1,X2,X2)=k4_struct_0(X1)|v2_struct_0(X1)|~v5_bcialg_1(X1)|~l2_bcialg_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_13, plain, (k1_bcialg_1(X1,k4_struct_0(X1),X2)=k2_bcialg_1(X1,X2)|v2_struct_0(X1)|~l2_bcialg_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_14, plain, (v2_struct_0(X1)|v5_bcialg_1(X1)|k1_bcialg_1(X1,esk6_1(X1),esk6_1(X1))!=k4_struct_0(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_22, plain, (k1_bcialg_1(X1,X2,k4_struct_0(X1))=X2|v2_struct_0(X1)|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1)|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_26, plain, (k1_bcialg_1(X1,k2_bcialg_1(X1,X2),k2_bcialg_1(X1,X3))=k1_bcialg_1(X1,X3,X2)|v2_struct_0(X1)|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1)|~v19_bcialg_1(X1)|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_23, plain, (v2_struct_0(X1)|v19_bcialg_1(X1)|k1_bcialg_1(X1,k2_bcialg_1(X1,esk8_1(X1)),k2_bcialg_1(X1,esk7_1(X1)))!=k1_bcialg_1(X1,esk7_1(X1),esk8_1(X1))|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1))).
+cnf(i_0_1, negated_conjecture, (k1_bcialg_1(esk1_0,k1_bcialg_1(esk1_0,X1,X2),k1_bcialg_1(esk1_0,X3,X4))=k1_bcialg_1(esk1_0,k1_bcialg_1(esk1_0,X1,X3),k1_bcialg_1(esk1_0,X2,X4))|v19_bcialg_1(esk1_0)|~m1_subset_1(X4,u1_struct_0(esk1_0))|~m1_subset_1(X3,u1_struct_0(esk1_0))|~m1_subset_1(X2,u1_struct_0(esk1_0))|~m1_subset_1(X1,u1_struct_0(esk1_0)))).
+cnf(i_0_21, plain, (k1_bcialg_1(X1,k1_bcialg_1(X1,X2,X5),k1_bcialg_1(X1,X4,X3))=k1_bcialg_1(X1,k1_bcialg_1(X1,X3,X5),k1_bcialg_1(X1,X4,X2))|v2_struct_0(X1)|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1)|~v19_bcialg_1(X1)|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_20, plain, (k1_bcialg_1(X1,k1_bcialg_1(X1,X2,X4),k1_bcialg_1(X1,X5,X3))=k1_bcialg_1(X1,k1_bcialg_1(X1,X2,X5),k1_bcialg_1(X1,X4,X3))|v2_struct_0(X1)|~v3_bcialg_1(X1)|~v4_bcialg_1(X1)|~v5_bcialg_1(X1)|~v7_bcialg_1(X1)|~l2_bcialg_1(X1)|~v19_bcialg_1(X1)|~m1_subset_1(X5,u1_struct_0(X1))|~m1_subset_1(X4,u1_struct_0(X1))|~m1_subset_1(X3,u1_struct_0(X1))|~m1_subset_1(X2,u1_struct_0(X1)))).
+cnf(i_0_2, negated_conjecture, (k1_bcialg_1(esk1_0,k1_bcialg_1(esk1_0,esk2_0,esk4_0),k1_bcialg_1(esk1_0,esk3_0,esk5_0))!=k1_bcialg_1(esk1_0,k1_bcialg_1(esk1_0,esk2_0,esk3_0),k1_bcialg_1(esk1_0,esk4_0,esk5_0))|~v19_bcialg_1(esk1_0))).
+
+

@@ -1,0 +1,60 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_39, plain, (v1_xboole_0(k1_xboole_0))).
+cnf(i_0_22, plain, (v13_algstr_0(k2_bspace))).
+cnf(i_0_21, plain, (v33_algstr_0(k2_bspace))).
+cnf(i_0_20, plain, (v3_group_1(k2_bspace))).
+cnf(i_0_19, plain, (v5_group_1(k2_bspace))).
+cnf(i_0_18, plain, (v4_vectsp_1(k2_bspace))).
+cnf(i_0_17, plain, (v5_vectsp_1(k2_bspace))).
+cnf(i_0_16, plain, (v2_rlvect_1(k2_bspace))).
+cnf(i_0_15, plain, (v3_rlvect_1(k2_bspace))).
+cnf(i_0_14, plain, (v4_rlvect_1(k2_bspace))).
+cnf(i_0_13, plain, (l6_algstr_0(k2_bspace))).
+cnf(i_0_2, negated_conjecture, (m1_subset_1(esk2_0,esk1_0))).
+cnf(i_0_25, plain, (m2_finseq_1(k1_xboole_0,X1))).
+cnf(i_0_26, plain, (l1_vectsp_1(k7_bspace(X1),k2_bspace))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_3, negated_conjecture, (~v1_xboole_0(esk1_0))).
+cnf(i_0_24, plain, (~v2_struct_0(k2_bspace))).
+cnf(i_0_23, plain, (~v6_struct_0(k2_bspace))).
+cnf(i_0_27, plain, (~v2_struct_0(k7_bspace(X1)))).
+cnf(i_0_1, negated_conjecture, (k11_bspace(esk1_0,k1_bspace(k7_bspace(esk1_0)),esk2_0)!=k1_bspace(k2_bspace))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_45, plain, (k1_xboole_0=X1|~v1_xboole_0(X1))).
+cnf(i_0_4, plain, (k1_bspace(X1)=k1_xboole_0|~l1_struct_0(X1))).
+cnf(i_0_28, plain, (l1_struct_0(X1)|~l1_algstr_0(X1))).
+cnf(i_0_30, plain, (l1_algstr_0(X1)|~l2_algstr_0(X1))).
+cnf(i_0_33, plain, (l2_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_31, plain, (l2_struct_0(X1)|~l2_algstr_0(X1))).
+cnf(i_0_32, plain, (l5_algstr_0(X1)|~l6_algstr_0(X1))).
+cnf(i_0_40, plain, (v1_xboole_0(X1)|v1_card_1(k1_card_1(X1)))).
+cnf(i_0_38, plain, (v1_xboole_0(k1_card_1(X1))|~v1_xboole_0(X1))).
+cnf(i_0_37, plain, (v1_card_1(k1_card_1(X1))|~v1_xboole_0(X1))).
+cnf(i_0_41, plain, (v1_xboole_0(X1)|~v1_xboole_0(k1_card_1(X1)))).
+cnf(i_0_36, plain, (v1_relat_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_35, plain, (v1_funct_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_34, plain, (v1_finseq_1(X1)|~m1_finseq_1(X1,X2))).
+cnf(i_0_42, plain, (k3_finseq_1(X1)=k1_card_1(X1)|~v1_relat_1(X1)|~v1_funct_1(X1)|~v1_finseq_1(X1))).
+cnf(i_0_29, plain, (l2_algstr_0(X1)|~l1_struct_0(X2)|~l1_vectsp_1(X1,X2))).
+cnf(i_0_43, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_44, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_11, plain, (k3_finseq_1(X2)=k3_finseq_1(X4)|v1_xboole_0(X1)|k11_bspace(X1,X2,X3)!=X4|~m1_subset_1(X3,X1)|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_12, plain, (v1_xboole_0(X1)|m2_finseq_1(k11_bspace(X1,X2,X3),u1_struct_0(k2_bspace))|~m1_subset_1(X3,X1)|~m1_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_10, plain, (k3_bspace(k1_funct_1(X2,X5),X3)=k1_funct_1(X4,X5)|v1_xboole_0(X1)|k11_bspace(X1,X2,X3)!=X4|~v7_ordinal1(X5)|~m1_subset_1(X3,X1)|~r1_xxreal_0(1,X5)|~r1_xxreal_0(X5,k3_finseq_1(X2))|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_9, plain, (k11_bspace(X1,X2,X3)=X4|v1_xboole_0(X1)|v7_ordinal1(esk3_4(X1,X2,X3,X4))|k3_finseq_1(X2)!=k3_finseq_1(X4)|~m1_subset_1(X3,X1)|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_8, plain, (k11_bspace(X1,X2,X3)=X4|v1_xboole_0(X1)|r1_xxreal_0(1,esk3_4(X1,X2,X3,X4))|k3_finseq_1(X2)!=k3_finseq_1(X4)|~m1_subset_1(X3,X1)|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_7, plain, (k11_bspace(X1,X2,X3)=X4|v1_xboole_0(X1)|r1_xxreal_0(esk3_4(X1,X2,X3,X4),k3_finseq_1(X2))|k3_finseq_1(X2)!=k3_finseq_1(X4)|~m1_subset_1(X3,X1)|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+cnf(i_0_6, plain, (k11_bspace(X1,X2,X3)=X4|v1_xboole_0(X1)|k3_finseq_1(X2)!=k3_finseq_1(X4)|k3_bspace(k1_funct_1(X2,esk3_4(X1,X2,X3,X4)),X3)!=k1_funct_1(X4,esk3_4(X1,X2,X3,X4))|~m1_subset_1(X3,X1)|~m2_finseq_1(X4,u1_struct_0(k2_bspace))|~m2_finseq_1(X2,u1_struct_0(k7_bspace(X1))))).
+
+

@@ -1,0 +1,51 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_9, negated_conjecture, (v1_xboole_0(esk2_0))).
+cnf(i_0_6, negated_conjecture, (v1_relat_2(esk3_0))).
+cnf(i_0_5, negated_conjecture, (v4_relat_2(esk3_0))).
+cnf(i_0_4, negated_conjecture, (v8_relat_2(esk3_0))).
+cnf(i_0_23, plain, (v1_xboole_0(esk6_1(X1)))).
+cnf(i_0_22, plain, (v1_finset_1(esk6_1(X1)))).
+cnf(i_0_27, plain, (v1_relat_1(esk6_1(X1)))).
+cnf(i_0_24, plain, (v1_funct_1(esk6_1(X1)))).
+cnf(i_0_21, plain, (v1_finseq_1(esk6_1(X1)))).
+cnf(i_0_7, negated_conjecture, (v1_partfun1(esk3_0,esk1_0))).
+cnf(i_0_2, negated_conjecture, (r3_orders_1(esk3_0,esk2_0))).
+cnf(i_0_8, negated_conjecture, (m1_subset_1(esk2_0,k1_zfmisc_1(esk1_0)))).
+cnf(i_0_26, plain, (v4_relat_1(esk6_1(X1),k5_numbers))).
+cnf(i_0_28, plain, (m1_finseq_1(esk6_1(X1),X1))).
+cnf(i_0_25, plain, (v5_relat_1(esk6_1(X1),X1))).
+cnf(i_0_3, negated_conjecture, (m1_subset_1(esk3_0,k1_zfmisc_1(k2_zfmisc_1(esk1_0,esk1_0))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_1, negated_conjecture, (k7_pre_poly(esk1_0,esk2_0,esk3_0)!=k1_xboole_0)).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_33, plain, (k1_xboole_0=X1|~v1_xboole_0(X1))).
+cnf(i_0_35, plain, (X1=X2|~v1_xboole_0(X2)|~v1_xboole_0(X1))).
+cnf(i_0_19, plain, (v1_xboole_0(k9_xtuple_0(X1))|~v1_xboole_0(X1))).
+cnf(i_0_20, plain, (v1_xboole_0(k10_xtuple_0(X1))|~v1_xboole_0(X1))).
+cnf(i_0_30, plain, (k4_finseq_1(X1)=k9_xtuple_0(X1)|~v1_relat_1(X1)|~v1_funct_1(X1)|~v1_finseq_1(X1))).
+cnf(i_0_34, plain, (~v1_xboole_0(X1)|~r2_hidden(X2,X1))).
+cnf(i_0_31, plain, (m2_finseq_1(X1,X2)|~m1_finseq_1(X1,X2))).
+cnf(i_0_32, plain, (m1_finseq_1(X1,X2)|~m2_finseq_1(X1,X2))).
+cnf(i_0_29, plain, (k2_relset_1(X1,X2)=k10_xtuple_0(X2)|~v1_relat_1(X2)|~v5_relat_1(X2,X1))).
+cnf(i_0_18, plain, (k2_relset_1(X2,X4)=X1|k7_pre_poly(X2,X1,X3)!=X4|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_17, plain, (r1_xxreal_0(X6,X5)|k7_pre_poly(X2,X1,X3)!=X4|k7_partfun1(X2,X4,X5)!=k7_partfun1(X2,X4,X6)|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v7_ordinal1(X6)|~v7_ordinal1(X5)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~r2_hidden(X6,k4_finseq_1(X4))|~r2_hidden(X5,k4_finseq_1(X4))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_15, plain, (k7_pre_poly(X2,X1,X3)=X4|v7_ordinal1(esk4_4(X2,X1,X3,X4))|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_14, plain, (k7_pre_poly(X2,X1,X3)=X4|v7_ordinal1(esk5_4(X2,X1,X3,X4))|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_13, plain, (k7_pre_poly(X2,X1,X3)=X4|r2_hidden(esk4_4(X2,X1,X3,X4),k4_finseq_1(X4))|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_12, plain, (k7_pre_poly(X2,X1,X3)=X4|r2_hidden(esk5_4(X2,X1,X3,X4),k4_finseq_1(X4))|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_16, plain, (r1_xxreal_0(X6,X5)|r2_hidden(k4_tarski(k7_partfun1(X2,X4,X5),k7_partfun1(X2,X4,X6)),X3)|k7_pre_poly(X2,X1,X3)!=X4|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v7_ordinal1(X6)|~v7_ordinal1(X5)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~r2_hidden(X6,k4_finseq_1(X4))|~r2_hidden(X5,k4_finseq_1(X4))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2))))).
+cnf(i_0_11, plain, (k7_pre_poly(X2,X1,X3)=X4|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2)))|~r1_xxreal_0(esk5_4(X2,X1,X3,X4),esk4_4(X2,X1,X3,X4)))).
+cnf(i_0_10, plain, (k7_pre_poly(X2,X1,X3)=X4|k7_partfun1(X2,X4,esk5_4(X2,X1,X3,X4))=k7_partfun1(X2,X4,esk4_4(X2,X1,X3,X4))|k2_relset_1(X2,X4)!=X1|~v1_relat_2(X3)|~v4_relat_2(X3)|~v8_relat_2(X3)|~v1_finset_1(X1)|~v1_partfun1(X3,X2)|~r3_orders_1(X3,X1)|~m2_finseq_1(X4,X2)|~m1_subset_1(X1,k1_zfmisc_1(X2))|~m1_subset_1(X3,k1_zfmisc_1(k2_zfmisc_1(X2,X2)))|~r2_hidden(k4_tarski(k7_partfun1(X2,X4,esk4_4(X2,X1,X3,X4)),k7_partfun1(X2,X4,esk5_4(X2,X1,X3,X4))),X3))).
+
+

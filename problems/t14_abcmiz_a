@@ -1,0 +1,48 @@
+
+# CNFization successful!
+# SZS status Unknown
+# Processed positive unit clauses:
+
+# Processed negative unit clauses:
+
+# Processed non-unit clauses:
+
+# Unprocessed positive unit clauses:
+cnf(i_0_18, plain, (k6_numbers=k1_xboole_0)).
+cnf(i_0_15, plain, (k9_abcmiz_1=k6_numbers)).
+cnf(i_0_10, negated_conjecture, (v1_instalg1(esk1_0))).
+cnf(i_0_9, negated_conjecture, (v1_abcmiz_1(esk1_0))).
+cnf(i_0_8, negated_conjecture, (v3_abcmiz_1(esk1_0))).
+cnf(i_0_7, negated_conjecture, (v1_abcmiz_a(esk1_0))).
+cnf(i_0_6, negated_conjecture, (l1_msualg_1(esk1_0))).
+cnf(i_0_32, plain, (k1_xtuple_0(k4_tarski(X1,X2))=X1)).
+cnf(i_0_31, plain, (k2_xtuple_0(k4_tarski(X1,X2))=X2)).
+cnf(i_0_5, negated_conjecture, (m1_subset_1(esk2_0,k3_card_3(u3_msualg_1(esk1_0,k1_msafree3(esk1_0,k28_abcmiz_1(esk1_0))))))).
+
+# Unprocessed negative unit clauses:
+cnf(i_0_17, plain, (~v1_xboole_0(k2_abcmiz_1))).
+
+# Unprocessed non-unit clauses:
+cnf(i_0_30, plain, (k1_xboole_0=X1|~v1_xboole_0(X1))).
+cnf(i_0_11, plain, (m1_subset_1(X2,X1)|~v1_xboole_0(X2)|~v1_xboole_0(X1))).
+cnf(i_0_12, plain, (v1_xboole_0(X2)|~v1_xboole_0(X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_13, plain, (v1_xboole_0(X1)|m1_subset_1(X2,X1)|~r2_hidden(X2,X1))).
+cnf(i_0_14, plain, (v1_xboole_0(X1)|r2_hidden(X2,X1)|~m1_subset_1(X2,X1))).
+cnf(i_0_2, negated_conjecture, (k1_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=k9_abcmiz_1|k2_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=u1_struct_0(esk1_0))).
+cnf(i_0_1, negated_conjecture, (k1_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=k10_abcmiz_1|k2_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=u1_struct_0(esk1_0))).
+cnf(i_0_28, plain, (m1_abcmiz_1(X2,X1,k14_abcmiz_1(X1))|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~l1_msualg_1(X1)|~r2_hidden(X2,k34_abcmiz_1(X1)))).
+cnf(i_0_16, plain, (m1_abcmiz_1(k35_abcmiz_1(X1,X2),X2,k14_abcmiz_1(X2))|~v1_instalg1(X2)|~v1_abcmiz_1(X2)|~v3_abcmiz_1(X2)|~l1_msualg_1(X2)|~m1_subset_1(X1,k2_abcmiz_1))).
+cnf(i_0_29, plain, (r2_hidden(X2,k34_abcmiz_1(X1))|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~l1_msualg_1(X1)|~m1_abcmiz_1(X2,X1,k14_abcmiz_1(X1)))).
+cnf(i_0_4, negated_conjecture, (k2_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=k8_abcmiz_1|~m1_abcmiz_1(esk2_0,esk1_0,k14_abcmiz_1(esk1_0))|~r2_hidden(k1_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0)),k2_abcmiz_1))).
+cnf(i_0_3, negated_conjecture, (k2_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0))!=u1_struct_0(esk1_0)|~r2_hidden(k1_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0)),k20_abcmiz_1)|~r2_hidden(k1_xtuple_0(k1_funct_1(esk2_0,k1_xboole_0)),u4_struct_0(esk1_0)))).
+cnf(i_0_27, plain, (m1_subset_1(esk3_2(X1,X2),k2_abcmiz_1)|m1_subset_1(esk4_2(X1,X2),u4_struct_0(X1))|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_24, plain, (k35_abcmiz_1(esk3_2(X1,X2),X1)=X2|m1_subset_1(esk4_2(X1,X2),u4_struct_0(X1))|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_21, plain, (k4_tarski(esk3_2(X1,X2),k8_abcmiz_1)=k1_funct_1(X2,k1_xboole_0)|m1_subset_1(esk4_2(X1,X2),u4_struct_0(X1))|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_26, plain, (k4_tarski(esk4_2(X1,X2),u1_struct_0(X1))=k1_funct_1(X2,k1_xboole_0)|m1_subset_1(esk3_2(X1,X2),k2_abcmiz_1)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_23, plain, (k35_abcmiz_1(esk3_2(X1,X2),X1)=X2|k4_tarski(esk4_2(X1,X2),u1_struct_0(X1))=k1_funct_1(X2,k1_xboole_0)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_25, plain, (esk4_2(X1,X2)=k9_abcmiz_1|esk4_2(X1,X2)=k10_abcmiz_1|m1_subset_1(esk3_2(X1,X2),k2_abcmiz_1)|r2_hidden(esk4_2(X1,X2),k20_abcmiz_1)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_22, plain, (esk4_2(X1,X2)=k9_abcmiz_1|esk4_2(X1,X2)=k10_abcmiz_1|k35_abcmiz_1(esk3_2(X1,X2),X1)=X2|r2_hidden(esk4_2(X1,X2),k20_abcmiz_1)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_20, plain, (k4_tarski(esk3_2(X1,X2),k8_abcmiz_1)=k1_funct_1(X2,k1_xboole_0)|k4_tarski(esk4_2(X1,X2),u1_struct_0(X1))=k1_funct_1(X2,k1_xboole_0)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+cnf(i_0_19, plain, (esk4_2(X1,X2)=k9_abcmiz_1|esk4_2(X1,X2)=k10_abcmiz_1|k4_tarski(esk3_2(X1,X2),k8_abcmiz_1)=k1_funct_1(X2,k1_xboole_0)|r2_hidden(esk4_2(X1,X2),k20_abcmiz_1)|~v1_instalg1(X1)|~v1_abcmiz_1(X1)|~v3_abcmiz_1(X1)|~v1_abcmiz_a(X1)|~l1_msualg_1(X1)|~m1_subset_1(X2,k3_card_3(u3_msualg_1(X1,k1_msafree3(X1,k28_abcmiz_1(X1))))))).
+
+
