@@ -100,6 +100,10 @@ def method_stats(results, split_set):
     # This rewards both coverage AND magnitude of speedup
     weighted_score = sum(max(0, 1 - r['ratio']) for r in best_per_prob.values())
 
+    # Hardness-weighted: (1 - ratio) * log(L), prioritizes harder problems
+    hard_score = sum(max(0, 1 - r['ratio']) * math.log(max(r['L_original'], 10))
+                     for r in best_per_prob.values())
+
     return {
         'n_tested': n_tested,
         'n_useful': n_useful,
@@ -108,6 +112,7 @@ def method_stats(results, split_set):
         'avg_ratio': avg_ratio,
         'total_saved': total_saved,
         'weighted_score': weighted_score,
+        'hard_score': hard_score,
     }
 
 
@@ -128,11 +133,41 @@ def print_table(headers, rows, fmt=None):
         print(line)
 
 
-def greedy_cover(method_problems, split_set, method_best_ratios=None, weighted=False):
-    """Greedy set cover. If weighted, pick method that maximizes sum of (1-ratio) for new problems."""
+def greedy_cover(method_problems, split_set, method_best_ratios=None,
+                 baselines=None, mode='plain'):
+    """Greedy set cover with different weighting modes.
+
+    Modes:
+        'plain':    maximize number of new problems per step
+        'weighted': maximize sum of (1 - ratio) for new problems
+        'hard':     maximize sum of (1 - ratio) * log(L) for new problems
+        'saved':    maximize total clauses saved (L - L*ratio) for new problems
+    """
     remaining = {m: s & split_set for m, s in method_problems.items()}
     covered = set()
     order = []
+
+    def score_new(method, new_probs):
+        if mode == 'plain':
+            return len(new_probs)
+        elif mode == 'weighted':
+            return sum(max(0, 1 - method_best_ratios[method].get(p, 1.0))
+                       for p in new_probs)
+        elif mode == 'hard':
+            s = 0
+            for p in new_probs:
+                r = method_best_ratios[method].get(p, 1.0)
+                L = baselines.get(p, 10) if baselines else 10
+                s += max(0, 1 - r) * math.log(max(L, 10))
+            return s
+        elif mode == 'saved':
+            s = 0
+            for p in new_probs:
+                r = method_best_ratios[method].get(p, 1.0)
+                L = baselines.get(p, 0) if baselines else 0
+                s += max(0, L - L * r)
+            return s
+        return len(new_probs)
 
     while remaining:
         best_m = None
@@ -142,10 +177,7 @@ def greedy_cover(method_problems, split_set, method_best_ratios=None, weighted=F
             new_probs = probs - covered
             if not new_probs:
                 continue
-            if weighted and method_best_ratios:
-                val = sum(max(0, 1 - method_best_ratios[m].get(p, 1.0)) for p in new_probs)
-            else:
-                val = len(new_probs)
+            val = score_new(m, new_probs)
             if val > best_val:
                 best_val = val
                 best_m = m
@@ -155,11 +187,11 @@ def greedy_cover(method_problems, split_set, method_best_ratios=None, weighted=F
 
         new = remaining[best_m] - covered
         covered |= new
-        if weighted:
-            score = sum(max(0, 1 - method_best_ratios[best_m].get(p, 1.0)) for p in new)
-            order.append((best_m, len(new), len(covered), f'{score:.1f}'))
-        else:
+        sc = score_new(best_m, new)
+        if mode == 'plain':
             order.append((best_m, len(new), len(covered), ''))
+        else:
+            order.append((best_m, len(new), len(covered), f'{sc:.1f}'))
         del remaining[best_m]
 
     return order
@@ -238,13 +270,14 @@ def main():
                 f"{s['avg_ratio']:.3f}",
                 f"{s['total_saved']:,}",
                 f"{s['weighted_score']:.1f}",
+                f"{s['hard_score']:.1f}",
             ))
 
         print_table(
             ['Method', 'Tested', 'Useful', 'ProblHelp', '%Provable',
-             'AvgRatio', 'ClausesSaved', 'WeightedScore'],
+             'AvgRatio', 'ClausesSaved', 'WScore', 'HardScore'],
             rows,
-            ['<', '>', '>', '>', '>', '>', '>', '>']
+            ['<', '>', '>', '>', '>', '>', '>', '>', '>']
         )
         print()
 
@@ -313,15 +346,27 @@ def main():
 
         # Plain greedy (maximize problems covered)
         print("\n  Plain greedy (maximize new problems per step):")
-        order = greedy_cover(mprobs, split_set)
+        order = greedy_cover(mprobs, split_set, mode='plain')
         for m, new, total, _ in order:
             print(f"    + {m:<30} +{new:>4} new = {total:>4} total")
 
         # Weighted greedy (maximize sum of speedup magnitude)
         print("\n  Weighted greedy (maximize sum of (1-ratio) for new problems):")
-        order = greedy_cover(mprobs, split_set, mbest, weighted=True)
+        order = greedy_cover(mprobs, split_set, mbest, mode='weighted')
         for m, new, total, wscore in order:
-            print(f"    + {m:<30} +{new:>4} new = {total:>4} total  (weighted +{wscore})")
+            print(f"    + {m:<30} +{new:>4} new = {total:>4} total  (w +{wscore})")
+
+        # Hardness-weighted greedy (prioritize harder problems)
+        print("\n  Hardness-weighted greedy ((1-ratio)*log(L), harder problems count more):")
+        order = greedy_cover(mprobs, split_set, mbest, baselines, mode='hard')
+        for m, new, total, wscore in order:
+            print(f"    + {m:<30} +{new:>4} new = {total:>4} total  (hard +{wscore})")
+
+        # Clauses-saved greedy (maximize raw clauses saved)
+        print("\n  Clauses-saved greedy (maximize L - L*ratio for new problems):")
+        order = greedy_cover(mprobs, split_set, mbest, baselines, mode='saved')
+        for m, new, total, wscore in order:
+            print(f"    + {m:<30} +{new:>4} new = {total:>4} total  (saved +{wscore})")
 
         print()
 
@@ -400,30 +445,47 @@ def main():
 
         mnames = list(methods.keys())
 
-        for k in range(1, min(len(mnames) + 1, 6)):
-            best_combo = None
-            best_count = 0
-            best_weighted = 0
+        def combo_scores(combo):
+            """Compute all scores for a method combination."""
+            union = set()
+            for m in combo:
+                union |= mprobs.get(m, set())
+            w, h, sv = 0, 0, 0
+            for p in union:
+                best_r = min(mbest[m].get(p, 1.0) for m in combo)
+                gain = max(0, 1 - best_r)
+                L = baselines.get(p, 10)
+                w += gain
+                h += gain * math.log(max(L, 10))
+                sv += max(0, L - L * best_r)
+            return len(union), w, h, sv
 
-            for combo in combinations(mnames, k):
-                union = set()
-                for m in combo:
-                    union |= mprobs.get(m, set())
-                # Weighted: for each problem, take best ratio across combo methods
-                w = 0
-                for p in union:
-                    best_r = min(mbest[m].get(p, 1.0) for m in combo)
-                    w += max(0, 1 - best_r)
+        # Find best combo by each criterion
+        for criterion, label in [('count', 'By coverage (most problems)'),
+                                  ('hard', 'By hardness (harder problems matter more)'),
+                                  ('saved', 'By clauses saved')]:
+            print(f"\n  --- {label} ---")
+            for k in range(1, min(len(mnames) + 1, 6)):
+                best_combo = None
+                best_key = (-1, -1)
 
-                if len(union) > best_count or (len(union) == best_count and w > best_weighted):
-                    best_count = len(union)
-                    best_weighted = w
-                    best_combo = combo
+                for combo in combinations(mnames, k):
+                    cnt, w, h, sv = combo_scores(combo)
+                    if criterion == 'count':
+                        key = (cnt, w)
+                    elif criterion == 'hard':
+                        key = (h, cnt)
+                    elif criterion == 'saved':
+                        key = (sv, cnt)
+                    if key > best_key:
+                        best_key = key
+                        best_combo = combo
 
-            if best_combo:
-                print(f"\n  Best {k}-method combo: {best_count} problems, "
-                      f"weighted={best_weighted:.1f}")
-                print(f"    {' + '.join(best_combo)}")
+                if best_combo:
+                    cnt, w, h, sv = combo_scores(best_combo)
+                    print(f"  Best {k}: {cnt:>3} problems  w={w:.1f}  "
+                          f"hard={h:.1f}  saved={sv:,.0f}")
+                    print(f"    {' + '.join(best_combo)}")
 
         print()
 
