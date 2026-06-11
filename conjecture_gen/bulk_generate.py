@@ -163,6 +163,12 @@ def main():
                         help='Batch size for generation')
     parser.add_argument('--per_problem', action='store_true',
                         help='Generate per-problem (slower but correct arity constraints)')
+    parser.add_argument('--problem_list', default=None,
+                        help='File with problem names (one per line). If given, '
+                             'only these problems are processed.')
+    parser.add_argument('--rankings_suffix', default='',
+                        help='Suffix for rankings file (e.g. "_part0" -> rankings_part0.tsv). '
+                             'Useful for parallel workers to avoid clobbering.')
 
     args = parser.parse_args()
 
@@ -176,7 +182,14 @@ def main():
     os.makedirs(args.output, exist_ok=True)
 
     # Get problem list
-    problems = sorted(os.listdir(args.problems_dir))
+    if args.problem_list:
+        with open(args.problem_list) as f:
+            problems = [line.strip() for line in f if line.strip()]
+        # Verify they exist
+        problems = [p for p in problems if os.path.exists(os.path.join(args.problems_dir, p))]
+        print(f"Loaded {len(problems)} problems from {args.problem_list}")
+    else:
+        problems = sorted(os.listdir(args.problems_dir))
     if args.max_problems > 0:
         problems = problems[:args.max_problems]
 
@@ -193,7 +206,7 @@ def main():
               f"(max_nodes={args.max_nodes})")
         problems = filtered
 
-    rankings_path = os.path.join(args.output, 'rankings.tsv')
+    rankings_path = os.path.join(args.output, f'rankings{args.rankings_suffix}.tsv')
     total_valid = 0
     total_generated = 0
     t0 = time.time()
