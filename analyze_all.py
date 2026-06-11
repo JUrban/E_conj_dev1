@@ -24,11 +24,25 @@ def load_split(path):
 
 
 def load_baselines(path='eprover_baselines.json'):
+    """Load baselines. Handles both formats:
+    - {problem: int_clauses, ...}
+    - {problem: clauses, ..., "__config__": "...", ...}
+    Also tolerates nested dicts or string values.
+    """
     if not os.path.exists(path):
         return {}
     with open(path) as f:
         raw = json.load(f)
-    return {k: int(v) for k, v in raw.items()}
+    baselines = {}
+    for k, v in raw.items():
+        if k.startswith('__'):
+            continue
+        try:
+            baselines[k] = int(v)
+        except (ValueError, TypeError):
+            # Skip non-integer entries (config strings, nested dicts, etc.)
+            continue
+    return baselines
 
 
 def load_results(tsv_path):
@@ -171,9 +185,6 @@ def main():
     all_set = train_set | val_set | test_set
     baselines = load_baselines()
 
-    # Count provable problems per split
-    provable = {p for p, L in baselines.items() if L > 0}
-
     # Load all methods
     methods = {}
     for d in dirs:
@@ -182,6 +193,18 @@ def main():
             # Short name: strip conjectures_ prefix and common suffixes
             name = d.replace('conjectures_', '').rstrip('/')
             methods[name] = load_results(tsv)
+
+    # If baselines file was empty/missing, reconstruct from L_original in results
+    if not baselines:
+        print("(Reconstructing baselines from eprover_results.tsv L_original values)")
+        for results in methods.values():
+            for r in results:
+                L = r['L_original']
+                if L > 0:
+                    baselines[r['problem']] = L
+
+    # Count provable problems per split
+    provable = {p for p, L in baselines.items() if L > 0}
 
     print(f"Loaded {len(methods)} methods: {', '.join(methods.keys())}")
     print(f"Splits: train={len(train_set)}, val={len(val_set)}, test={len(test_set)}")
