@@ -27,7 +27,8 @@ def load_baselines(path='eprover_baselines.json'):
     if not os.path.exists(path):
         return {}
     with open(path) as f:
-        return json.load(f)
+        raw = json.load(f)
+    return {k: int(v) for k, v in raw.items()}
 
 
 def load_results(tsv_path):
