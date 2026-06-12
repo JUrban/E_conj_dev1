@@ -768,6 +768,14 @@ def main():
 
         # Greedy: repeatedly pick the method+rank increment with best
         # (new problems not yet covered) / (E cost)
+        # Collect best_ratio info keyed by problem across all methods
+        # (for computing weighted/hard scores of covered problems)
+        all_best_ratios = {}  # problem -> best ratio across all methods
+        for name, data in method_rank_data.items():
+            for p, r in data['best_ratio'].items():
+                if p not in all_best_ratios or r < all_best_ratios[p]:
+                    all_best_ratios[p] = r
+
         covered = set()
         allocation = {}  # method -> current top-k
         total_e_calls = 0
@@ -786,14 +794,7 @@ def main():
                     continue
 
                 inc = increments[ptr]
-                # How many genuinely new problems (not covered by prior picks)?
                 new_here = inc['new_probs'] - covered
-                if not new_here:
-                    # Skip this rank (no new problems), but still consume it
-                    # to get to deeper ranks. Cost is included.
-                    # Actually, for efficiency, scan ahead to find next rank
-                    # with new uncovered problems
-                    pass
 
                 n_new = len(new_here)
                 if n_new > 0:
@@ -803,8 +804,7 @@ def main():
                         best_choice = (name, ptr, new_here, inc)
 
             if best_choice is None:
-                # Check if any method still has ranks to consume
-                # (might have ranks with no new problems to skip)
+                # Skip ranks with no new problems
                 advanced = False
                 for name in method_increments:
                     ptr = method_ptr[name]
@@ -818,9 +818,15 @@ def main():
             name, ptr, new_here, inc = best_choice
             covered |= new_here
             total_e_calls += inc['e_cost']
-            # Consume all ranks up to and including this one for the method
             method_ptr[name] = ptr + 1
             allocation[name] = inc['rank']
+
+            # Compute cumulative weighted metrics over covered set
+            cum_w = sum(max(0, 1 - all_best_ratios.get(p, 1.0)) for p in covered)
+            cum_h = sum(max(0, 1 - all_best_ratios.get(p, 1.0)) *
+                        math.log(max(baselines.get(p, 10), 10)) for p in covered)
+            cum_saved = sum(max(0, baselines.get(p, 0) * (1 - all_best_ratios.get(p, 1.0)))
+                           for p in covered)
 
             schedule.append({
                 'method': name,
@@ -829,6 +835,9 @@ def main():
                 'total': len(covered),
                 'e_calls': total_e_calls,
                 'efficiency': len(new_here) / inc['e_cost'],
+                'cum_w': cum_w,
+                'cum_h': cum_h,
+                'cum_saved': cum_saved,
             })
 
             if len(schedule) > 50:  # safety limit
@@ -837,36 +846,40 @@ def main():
         # Print the schedule
         n_provable = len(provable & split_set)
         print(f"\n  Greedy budget schedule (pick method+rank with best new_problems/E_cost):")
-        print(f"  {'Step':>4}  {'Method':<30} {'Top-k':>5}  {'New':>4}  {'Total':>5}  "
-              f"{'%Prov':>6}  {'CumEcalls':>12}  {'Eff(prob/Ecall)':>15}")
-        print(f"  {'-'*95}")
+        print(f"  {'Step':>4}  {'Method':<28} {'Top-k':>5}  {'New':>4}  {'Tot':>4}  "
+              f"{'%Prov':>6}  {'CumEcalls':>10}  {'WScore':>7}  {'HardSc':>7}  {'Saved':>10}")
+        print(f"  {'-'*100}")
 
         for i, s in enumerate(schedule):
             pct = 100 * s['total'] / max(n_provable, 1)
-            eff_str = f"{s['efficiency']:.6f}"
-            print(f"  {i+1:>4}  {s['method']:<30} {s['top_k']:>5}  {s['new']:>4}  "
-                  f"{s['total']:>5}  {pct:>5.1f}%  {s['e_calls']:>12,}  {eff_str:>15}")
+            print(f"  {i+1:>4}  {s['method']:<28} {s['top_k']:>5}  {s['new']:>4}  "
+                  f"{s['total']:>4}  {pct:>5.1f}%  {s['e_calls']:>10,}  "
+                  f"{s['cum_w']:>7.1f}  {s['cum_h']:>7.1f}  {s['cum_saved']:>10,.0f}")
 
         # Summary at standard budgets
         print(f"\n  Summary at standard budgets:")
-        print(f"  {'Budget':>12}  {'Problems':>8}  {'%Provable':>10}  {'Methods used':>50}")
-        print(f"  {'-'*85}")
+        print(f"  {'Budget':>12}  {'Probs':>6}  {'%Prov':>6}  {'WScore':>7}  "
+              f"{'HardSc':>7}  {'Saved':>10}  {'Methods':>40}")
+        print(f"  {'-'*95}")
 
         for budget in [5000, 10000, 20000, 50000, 100000, 200000]:
-            # Find how far we get in the schedule
-            probs = 0
+            last = None
             methods_used = set()
             for s in schedule:
                 if s['e_calls'] <= budget:
-                    probs = s['total']
-                    methods_used.add(f"{s['method']}@{s['top_k']}")
+                    last = s
+                    methods_used.add(f"{s['method'][:12]}@{s['top_k']}")
                 else:
                     break
-            pct = 100 * probs / max(n_provable, 1)
-            mstr = ', '.join(sorted(methods_used)[:5])
-            if len(methods_used) > 5:
-                mstr += f' +{len(methods_used)-5} more'
-            print(f"  {budget:>12,}  {probs:>8}  {pct:>9.1f}%  {mstr:>50}")
+            if last is None:
+                continue
+            pct = 100 * last['total'] / max(n_provable, 1)
+            mstr = ', '.join(sorted(methods_used)[:4])
+            if len(methods_used) > 4:
+                mstr += f' +{len(methods_used)-4}'
+            print(f"  {budget:>12,}  {last['total']:>6}  {pct:>5.1f}%  "
+                  f"{last['cum_w']:>7.1f}  {last['cum_h']:>7.1f}  "
+                  f"{last['cum_saved']:>10,.0f}  {mstr}")
 
         print()
 
