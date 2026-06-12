@@ -676,6 +676,200 @@ def main():
 
         print()
 
+    # ================================================================
+    # 9. BUDGET OPTIMIZER: best strategy for a given E-call budget
+    # ================================================================
+    for split_name, split_set in [('test', test_set)]:
+        print('=' * 90)
+        print(f'BUDGET OPTIMIZER — {split_name}')
+        print(f'Given a total E-call budget, what is the best allocation across methods?')
+        print('=' * 90)
+
+        # Precompute per-method: at each rank cutoff, which NEW problems (and their
+        # best ratios) are found. We need the incremental data.
+        # For each method, build: rank -> set of problems first found at that rank
+        method_rank_data = {}
+        for name in sorted(methods.keys()):
+            results = methods[name]
+            in_split = [r for r in results if r['problem'] in split_set]
+            useful = [r for r in in_split if r['speedup'] and r['ratio'] > 0]
+
+            def get_rank(r):
+                cf = r['conjecture']
+                try:
+                    return int(cf.replace('conjecture_', '').replace('.p', ''))
+                except (ValueError, AttributeError):
+                    return 999
+
+            # Per problem: first useful rank, and best ratio
+            first_rank = {}
+            best_ratio = {}
+            for r in useful:
+                p = r['problem']
+                rank = get_rank(r)
+                if p not in first_rank or rank < first_rank[p]:
+                    first_rank[p] = rank
+                if p not in best_ratio or r['ratio'] < best_ratio[p]:
+                    best_ratio[p] = r['ratio']
+
+            n_tested = len(set(r['problem'] for r in in_split))
+            max_rank = max((get_rank(r) for r in in_split), default=0)
+
+            method_rank_data[name] = {
+                'first_rank': first_rank,
+                'best_ratio': best_ratio,
+                'n_tested': n_tested,
+                'max_rank': max_rank,
+            }
+
+        # Greedy budget allocation:
+        # At each step, pick the (method, top-k increment) that gives the most
+        # new problems per E-call spent.
+        # Each method can be "allocated" a top-k cutoff. Increasing from k to k+1
+        # costs 2*n_tested E calls (one more conjecture per problem, P1+P2).
+        # The gain is however many new problems are first found at rank k+1.
+
+        # Build incremental gains for each method at each rank
+        method_increments = {}  # name -> list of (rank, new_problems, new_weighted, e_cost_increment)
+        for name, data in method_rank_data.items():
+            n_tested = data['n_tested']
+            first_rank = data['first_rank']
+            best_ratio = data['best_ratio']
+            max_rank = data['max_rank']
+            if max_rank == 0:
+                continue
+
+            increments = []
+            for k in range(1, max_rank + 1):
+                # Problems first found at exactly rank k
+                new_probs = [p for p, r in first_rank.items() if r == k]
+                if new_probs:
+                    w = sum(max(0, 1 - best_ratio.get(p, 1.0)) for p in new_probs)
+                    h = sum(max(0, 1 - best_ratio.get(p, 1.0)) * math.log(max(baselines.get(p, 10), 10))
+                            for p in new_probs)
+                    increments.append({
+                        'rank': k,
+                        'new_count': len(new_probs),
+                        'new_probs': set(new_probs),
+                        'weighted': w,
+                        'hard': h,
+                        'e_cost': 2 * n_tested,  # cost to go from k-1 to k
+                    })
+                else:
+                    increments.append({
+                        'rank': k,
+                        'new_count': 0,
+                        'new_probs': set(),
+                        'weighted': 0,
+                        'hard': 0,
+                        'e_cost': 2 * n_tested,
+                    })
+            method_increments[name] = increments
+
+        # Greedy: repeatedly pick the method+rank increment with best
+        # (new problems not yet covered) / (E cost)
+        covered = set()
+        allocation = {}  # method -> current top-k
+        total_e_calls = 0
+        schedule = []
+
+        # Track which increments we've consumed per method
+        method_ptr = {name: 0 for name in method_increments}
+
+        while True:
+            best_choice = None
+            best_efficiency = -1
+
+            for name, increments in method_increments.items():
+                ptr = method_ptr[name]
+                if ptr >= len(increments):
+                    continue
+
+                inc = increments[ptr]
+                # How many genuinely new problems (not covered by prior picks)?
+                new_here = inc['new_probs'] - covered
+                if not new_here:
+                    # Skip this rank (no new problems), but still consume it
+                    # to get to deeper ranks. Cost is included.
+                    # Actually, for efficiency, scan ahead to find next rank
+                    # with new uncovered problems
+                    pass
+
+                n_new = len(new_here)
+                if n_new > 0:
+                    efficiency = n_new / inc['e_cost']
+                    if efficiency > best_efficiency:
+                        best_efficiency = efficiency
+                        best_choice = (name, ptr, new_here, inc)
+
+            if best_choice is None:
+                # Check if any method still has ranks to consume
+                # (might have ranks with no new problems to skip)
+                advanced = False
+                for name in method_increments:
+                    ptr = method_ptr[name]
+                    if ptr < len(method_increments[name]):
+                        method_ptr[name] += 1
+                        advanced = True
+                if not advanced:
+                    break
+                continue
+
+            name, ptr, new_here, inc = best_choice
+            covered |= new_here
+            total_e_calls += inc['e_cost']
+            # Consume all ranks up to and including this one for the method
+            method_ptr[name] = ptr + 1
+            allocation[name] = inc['rank']
+
+            schedule.append({
+                'method': name,
+                'top_k': inc['rank'],
+                'new': len(new_here),
+                'total': len(covered),
+                'e_calls': total_e_calls,
+                'efficiency': len(new_here) / inc['e_cost'],
+            })
+
+            if len(schedule) > 50:  # safety limit
+                break
+
+        # Print the schedule
+        n_provable = len(provable & split_set)
+        print(f"\n  Greedy budget schedule (pick method+rank with best new_problems/E_cost):")
+        print(f"  {'Step':>4}  {'Method':<30} {'Top-k':>5}  {'New':>4}  {'Total':>5}  "
+              f"{'%Prov':>6}  {'CumEcalls':>12}  {'Eff(prob/Ecall)':>15}")
+        print(f"  {'-'*95}")
+
+        for i, s in enumerate(schedule):
+            pct = 100 * s['total'] / max(n_provable, 1)
+            eff_str = f"{s['efficiency']:.6f}"
+            print(f"  {i+1:>4}  {s['method']:<30} {s['top_k']:>5}  {s['new']:>4}  "
+                  f"{s['total']:>5}  {pct:>5.1f}%  {s['e_calls']:>12,}  {eff_str:>15}")
+
+        # Summary at standard budgets
+        print(f"\n  Summary at standard budgets:")
+        print(f"  {'Budget':>12}  {'Problems':>8}  {'%Provable':>10}  {'Methods used':>50}")
+        print(f"  {'-'*85}")
+
+        for budget in [5000, 10000, 20000, 50000, 100000, 200000]:
+            # Find how far we get in the schedule
+            probs = 0
+            methods_used = set()
+            for s in schedule:
+                if s['e_calls'] <= budget:
+                    probs = s['total']
+                    methods_used.add(f"{s['method']}@{s['top_k']}")
+                else:
+                    break
+            pct = 100 * probs / max(n_provable, 1)
+            mstr = ', '.join(sorted(methods_used)[:5])
+            if len(methods_used) > 5:
+                mstr += f' +{len(methods_used)-5} more'
+            print(f"  {budget:>12,}  {probs:>8}  {pct:>9.1f}%  {mstr:>50}")
+
+        print()
+
 
 if __name__ == '__main__':
     main()
