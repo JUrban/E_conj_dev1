@@ -249,11 +249,54 @@ def _eval_one_worker(task):
     problem_name, conj_file, conj_line, conj_text, L_orig, problems_dir, eprover, timeout = task
     problem_path = os.path.join(problems_dir, problem_name)
 
-    p1 = run_eprover(problem_path, conj_line,
-                      eprover=eprover, timeout=timeout)
+    # Run P1 and P2 in parallel using subprocess.Popen
+    import tempfile
+
+    def _prepare_and_run(extra_axioms):
+        """Start eprover as a non-blocking Popen, return (proc, tmp_path)."""
+        try:
+            with open(problem_path) as f:
+                lines = f.readlines()
+        except FileNotFoundError:
+            return None, None
+        content = ''.join(line for line in lines if line.strip().startswith('cnf('))
+        if extra_axioms:
+            content = content + '\n' + extra_axioms + '\n'
+        tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False)
+        tmp.write(content)
+        tmp.close()
+        proc = subprocess.Popen(
+            [eprover, '--auto', '--cpu-limit=' + str(timeout),
+             '-s', '--print-statistics', tmp.name],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        )
+        return proc, tmp.name
+
     neg_clauses = negate_clause(conj_text)
-    p2 = run_eprover(problem_path, neg_clauses,
-                      eprover=eprover, timeout=timeout)
+
+    # Launch both in parallel
+    proc_p1, tmp_p1 = _prepare_and_run(conj_line)
+    proc_p2, tmp_p2 = _prepare_and_run(neg_clauses)
+
+    # Collect results
+    def _collect(proc, tmp_path):
+        if proc is None:
+            return {'status': 'file_not_found', 'processed_clauses': -1}
+        try:
+            stdout, stderr = proc.communicate(timeout=timeout + 5)
+            return parse_eprover_output(stdout + stderr)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
+            return {'status': 'timeout', 'processed_clauses': -1}
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except Exception:
+                pass
+
+    p1 = _collect(proc_p1, tmp_p1)
+    p2 = _collect(proc_p2, tmp_p2)
 
     both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
     ratio = -1.0
@@ -357,8 +400,9 @@ def main():
     parser.add_argument('--max_conjectures_per_problem', type=int, default=5,
                         help='Max conjectures to test per problem')
     parser.add_argument('--output', default=None)
-    parser.add_argument('--workers', type=int, default=8,
-                        help='Parallel E prover processes')
+    parser.add_argument('--workers', type=int, default=32,
+                        help='Parallel evaluation threads (each launches 2 E prover '
+                             'subprocesses in parallel). Use 2-4x CPU cores for short timeouts.')
     parser.add_argument('--baseline_cache', default='eprover_baselines.json',
                         help='Cache file for baseline proof search lengths')
 
