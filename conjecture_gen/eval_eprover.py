@@ -51,30 +51,44 @@ def parse_eprover_output(output: str) -> dict:
     return result
 
 
+def _get_tmpdir():
+    """Get a fast temp directory, preferring /dev/shm for RAM-backed storage."""
+    if os.path.isdir('/dev/shm') and os.access('/dev/shm', os.W_OK):
+        return '/dev/shm'
+    return None  # fall back to system default
+
+
 def run_eprover(problem_file: str, extra_axioms: str = None,
-                eprover: str = 'eprover', timeout: int = 10) -> dict:
+                eprover: str = 'eprover', timeout: int = 10,
+                problem_content: str = None) -> dict:
     """Run E prover on a problem, optionally with extra axioms.
 
     Uses a temp file to combine problem + extra axioms, since E
     works best with file input (not stdin). Strips # comments
     which are not standard TPTP.
+
+    Args:
+        problem_content: pre-loaded CNF content (avoids re-reading the file).
     """
     import tempfile
 
-    try:
-        with open(problem_file) as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        return {'status': 'file_not_found', 'processed_clauses': -1}
-
-    # Keep only cnf() lines (strip # comments and blank lines)
-    content = ''.join(line for line in lines if line.strip().startswith('cnf('))
+    if problem_content is not None:
+        content = problem_content
+    else:
+        try:
+            with open(problem_file) as f:
+                lines = f.readlines()
+        except FileNotFoundError:
+            return {'status': 'file_not_found', 'processed_clauses': -1}
+        content = ''.join(line for line in lines if line.strip().startswith('cnf('))
 
     if extra_axioms:
         content = content + '\n' + extra_axioms + '\n'
 
+    tmpdir = _get_tmpdir()
     try:
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False,
+                                          dir=tmpdir) as tmp:
             tmp.write(content)
             tmp_path = tmp.name
 
@@ -245,75 +259,16 @@ def _run_baseline_worker(args_tuple):
     return problem_name, result
 
 
-def _eval_one_worker(task):
-    problem_name, conj_file, conj_line, conj_text, L_orig, problems_dir, eprover, timeout = task
-    problem_path = os.path.join(problems_dir, problem_name)
+def _run_single_e_job(job):
+    """Run a single E prover call. Used as a unit of work in the job pool.
 
-    # Run P1 and P2 in parallel using subprocess.Popen
-    import tempfile
-
-    def _prepare_and_run(extra_axioms):
-        """Start eprover as a non-blocking Popen, return (proc, tmp_path)."""
-        try:
-            with open(problem_path) as f:
-                lines = f.readlines()
-        except FileNotFoundError:
-            return None, None
-        content = ''.join(line for line in lines if line.strip().startswith('cnf('))
-        if extra_axioms:
-            content = content + '\n' + extra_axioms + '\n'
-        tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False)
-        tmp.write(content)
-        tmp.close()
-        proc = subprocess.Popen(
-            [eprover, '--auto', '--cpu-limit=' + str(timeout),
-             '-s', '--print-statistics', tmp.name],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-        )
-        return proc, tmp.name
-
-    neg_clauses = negate_clause(conj_text)
-
-    # Launch both in parallel
-    proc_p1, tmp_p1 = _prepare_and_run(conj_line)
-    proc_p2, tmp_p2 = _prepare_and_run(neg_clauses)
-
-    # Collect results
-    def _collect(proc, tmp_path):
-        if proc is None:
-            return {'status': 'file_not_found', 'processed_clauses': -1}
-        try:
-            stdout, stderr = proc.communicate(timeout=timeout + 5)
-            return parse_eprover_output(stdout + stderr)
-        except subprocess.TimeoutExpired:
-            proc.kill()
-            proc.wait()
-            return {'status': 'timeout', 'processed_clauses': -1}
-        finally:
-            try:
-                os.unlink(tmp_path)
-            except Exception:
-                pass
-
-    p1 = _collect(proc_p1, tmp_p1)
-    p2 = _collect(proc_p2, tmp_p2)
-
-    both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
-    ratio = -1.0
-    speedup = False
-    if both_proved and L_orig > 0:
-        L1 = p1['processed_clauses']
-        L2 = p2['processed_clauses']
-        if L1 >= 0 and L2 >= 0:
-            ratio = (L1 + L2) / L_orig
-            speedup = ratio < 1.0
-
-    return {
-        'problem': problem_name, 'conj_file': conj_file,
-        'conj_text': conj_text,
-        'p1': p1, 'p2': p2, 'L_orig': L_orig,
-        'ratio': ratio, 'speedup': speedup,
-    }
+    job: (job_id, problem_content, extra_axioms, eprover, timeout)
+    Returns: (job_id, result_dict)
+    """
+    job_id, problem_content, extra_axioms, eprover, timeout = job
+    result = run_eprover(None, extra_axioms, eprover=eprover, timeout=timeout,
+                         problem_content=problem_content)
+    return job_id, result
 
 
 def compute_baselines(problems_dir: str, problem_names: list[str],
@@ -400,9 +355,9 @@ def main():
     parser.add_argument('--max_conjectures_per_problem', type=int, default=5,
                         help='Max conjectures to test per problem')
     parser.add_argument('--output', default=None)
-    parser.add_argument('--workers', type=int, default=32,
-                        help='Parallel evaluation threads (each launches 2 E prover '
-                             'subprocesses in parallel). Use 2-4x CPU cores for short timeouts.')
+    parser.add_argument('--workers', type=int, default=64,
+                        help='Max concurrent E prover processes. Each conjecture needs '
+                             '2 calls (P1+P2), submitted as independent jobs.')
     parser.add_argument('--baseline_cache', default='eprover_baselines.json',
                         help='Cache file for baseline proof search lengths')
 
@@ -434,14 +389,31 @@ def main():
     # Output file
     output_path = args.output or os.path.join(conj_dir, 'eprover_results.tsv')
 
-    # Build all tasks first
-    tasks = []  # (problem_name, conj_file, conj_line, conj_text, L_orig)
+    # Read and cache problem file contents (avoid re-reading per conjecture)
+    problem_contents = {}
     for problem_name in problems:
         problem_path = os.path.join(args.problems, problem_name)
-        if not os.path.exists(problem_path):
+        try:
+            with open(problem_path) as f:
+                lines = f.readlines()
+            problem_contents[problem_name] = ''.join(
+                line for line in lines if line.strip().startswith('cnf('))
+        except FileNotFoundError:
+            pass
+
+    # Build all E prover jobs: each conjecture produces 2 jobs (P1 and P2)
+    # job = (job_id, problem_content, extra_axioms, eprover, timeout)
+    # We track conjecture metadata separately and match by job_id.
+    conj_meta = {}  # conj_id -> {problem, conj_file, conj_text, L_orig}
+    e_jobs = []     # list of (job_id, problem_content, extra_axioms, eprover, timeout)
+
+    conj_id = 0
+    for problem_name in problems:
+        if problem_name not in problem_contents:
             continue
 
         L_orig = orig_stats.get(problem_name, -1)
+        content = problem_contents[problem_name]
         conj_path = os.path.join(conj_dir, problem_name)
         try:
             conj_files = sorted([f for f in os.listdir(conj_path) if f.endswith('.p')])
@@ -451,26 +423,59 @@ def main():
 
         for conj_file in conj_files:
             with open(os.path.join(conj_path, conj_file)) as f:
-                lines = f.readlines()
+                clines = f.readlines()
             conj_line = None
             conj_text = None
-            for line in lines:
-                line = line.strip()
-                if line.startswith('cnf('):
-                    conj_line = line
-                    m = re.match(r'cnf\([^,]+,\s*[^,]+,\s*\((.+)\)\)\.\s*$', line)
+            for cl in clines:
+                cl = cl.strip()
+                if cl.startswith('cnf('):
+                    conj_line = cl
+                    m = re.match(r'cnf\([^,]+,\s*[^,]+,\s*\((.+)\)\)\.\s*$', cl)
                     if m:
                         conj_text = m.group(1)
                     break
             if conj_line and conj_text:
-                tasks.append((problem_name, conj_file, conj_line, conj_text, L_orig,
-                              args.problems, args.eprover, args.timeout))
+                neg_clauses = negate_clause(conj_text)
+                p1_id = f'{conj_id}_p1'
+                p2_id = f'{conj_id}_p2'
+                conj_meta[conj_id] = {
+                    'problem': problem_name, 'conj_file': conj_file,
+                    'conj_text': conj_text, 'L_orig': L_orig,
+                }
+                e_jobs.append((p1_id, content, conj_line, args.eprover, args.timeout))
+                e_jobs.append((p2_id, content, neg_clauses, args.eprover, args.timeout))
+                conj_id += 1
 
-    print(f"  Total tasks: {len(tasks)} (P1+P2 = {len(tasks)*2} prover calls)")
+    n_conjectures = conj_id
+    print(f"  Conjectures: {n_conjectures}, E jobs: {len(e_jobs)} "
+          f"(P1+P2), workers: {args.workers}")
 
-    # Run in parallel
+    # Run all E jobs through a bounded ThreadPoolExecutor
+    # Each job is one E prover call; P1 and P2 run independently
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
+    e_results = {}  # job_id -> result_dict
+    done_jobs = 0
+    t0 = time.time()
+
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = {executor.submit(_run_single_e_job, job): job[0] for job in e_jobs}
+
+        for future in as_completed(futures):
+            try:
+                job_id, result = future.result()
+                e_results[job_id] = result
+            except Exception as e:
+                job_id = futures[future]
+                e_results[job_id] = {'status': f'error:{e}', 'processed_clauses': -1}
+
+            done_jobs += 1
+            if done_jobs % 200 == 0:
+                elapsed = time.time() - t0
+                rate = done_jobs / max(elapsed, 0.1)
+                print(f"  E jobs: {done_jobs}/{len(e_jobs)} ({rate:.1f} jobs/s, {elapsed:.0f}s)")
+
+    # Reassemble per-conjecture results from P1 + P2
     total_tested = 0
     total_p1_proved = 0
     total_p2_proved = 0
@@ -479,39 +484,44 @@ def main():
     speedups = []
     results = []
 
-    t0 = time.time()
+    for cid in range(n_conjectures):
+        meta = conj_meta[cid]
+        p1 = e_results.get(f'{cid}_p1', {'status': 'missing', 'processed_clauses': -1})
+        p2 = e_results.get(f'{cid}_p2', {'status': 'missing', 'processed_clauses': -1})
 
-    with ThreadPoolExecutor(max_workers=args.workers) as executor:
-        futures = {executor.submit(_eval_one_worker, task): task for task in tasks}
+        both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
+        ratio = -1.0
+        speedup = False
+        L_orig = meta['L_orig']
+        if both_proved and L_orig > 0:
+            L1 = p1['processed_clauses']
+            L2 = p2['processed_clauses']
+            if L1 >= 0 and L2 >= 0:
+                ratio = (L1 + L2) / L_orig
+                speedup = ratio < 1.0
 
-        for future in as_completed(futures):
-            try:
-                r = future.result()
-            except Exception as e:
-                print(f"  WORKER ERROR: {e}")
-                import traceback
-                traceback.print_exc()
-                continue
+        r = {
+            'problem': meta['problem'], 'conj_file': meta['conj_file'],
+            'conj_text': meta['conj_text'],
+            'p1': p1, 'p2': p2, 'L_orig': L_orig,
+            'ratio': ratio, 'speedup': speedup,
+        }
+        results.append(r)
+        total_tested += 1
 
-            results.append(r)
-            total_tested += 1
+        if p1['status'] == 'proved':
+            total_p1_proved += 1
+        if p2['status'] == 'proved':
+            total_p2_proved += 1
+        if both_proved:
+            total_both += 1
+        if speedup:
+            total_useful += 1
+            speedups.append(ratio)
 
-            if r['p1']['status'] == 'proved':
-                total_p1_proved += 1
-            if r['p2']['status'] == 'proved':
-                total_p2_proved += 1
-            if r['p1']['status'] == 'proved' and r['p2']['status'] == 'proved':
-                total_both += 1
-            if r['speedup']:
-                total_useful += 1
-                speedups.append(r['ratio'])
-
-            if total_tested % 50 == 0:
-                elapsed = time.time() - t0
-                print(f"  {total_tested}/{len(tasks)}: "
-                      f"p1={total_p1_proved} p2={total_p2_proved} "
-                      f"both={total_both} useful={total_useful} "
-                      f"({elapsed:.0f}s)")
+    elapsed = time.time() - t0
+    print(f"  Completed: {total_tested} conjectures, {len(e_jobs)} E calls in {elapsed:.0f}s "
+          f"({len(e_jobs)/max(elapsed,0.1):.1f} E calls/s)")
 
     # Sort results by problem + conjecture for consistent output
     results.sort(key=lambda r: (r['problem'], r['conj_file']))
