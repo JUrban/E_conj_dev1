@@ -51,61 +51,49 @@ def parse_eprover_output(output: str) -> dict:
     return result
 
 
-def _get_tmpdir():
-    """Get a fast temp directory, preferring /dev/shm for RAM-backed storage."""
-    if os.path.isdir('/dev/shm') and os.access('/dev/shm', os.W_OK):
-        return '/dev/shm'
-    return None  # fall back to system default
+def run_eprover_content(content: str, eprover: str = 'eprover',
+                        timeout: int = 10) -> dict:
+    """Run E prover on TPTP content via stdin. No temp files.
+
+    Args:
+        content: full TPTP problem text (original problem + extra axioms).
+        eprover: path to E prover binary.
+        timeout: CPU time limit in seconds.
+
+    Returns:
+        dict with 'status' and 'processed_clauses'.
+    """
+    try:
+        proc = subprocess.run(
+            [eprover, '--auto', f'--cpu-limit={timeout}',
+             '-s', '--print-statistics', '-'],
+            input=content,
+            capture_output=True, text=True,
+            timeout=timeout + 5,
+        )
+        return parse_eprover_output(proc.stdout + proc.stderr)
+    except subprocess.TimeoutExpired:
+        return {'status': 'timeout', 'processed_clauses': -1}
+    except (FileNotFoundError, OSError) as e:
+        return {'status': f'error:{type(e).__name__}', 'processed_clauses': -1}
 
 
 def run_eprover(problem_file: str, extra_axioms: str = None,
-                eprover: str = 'eprover', timeout: int = 10,
-                problem_content: str = None) -> dict:
-    """Run E prover on a problem, optionally with extra axioms.
+                eprover: str = 'eprover', timeout: int = 10) -> dict:
+    """Run E prover on a problem file, optionally with extra axioms.
 
-    Uses a temp file to combine problem + extra axioms, since E
-    works best with file input (not stdin). Strips # comments
-    which are not standard TPTP.
-
-    Args:
-        problem_content: pre-loaded CNF content (avoids re-reading the file).
+    Convenience wrapper that reads the file and calls run_eprover_content.
     """
-    import tempfile
-
-    if problem_content is not None:
-        content = problem_content
-    else:
-        try:
-            with open(problem_file) as f:
-                lines = f.readlines()
-        except FileNotFoundError:
-            return {'status': 'file_not_found', 'processed_clauses': -1}
-        content = ''.join(line for line in lines if line.strip().startswith('cnf('))
+    try:
+        with open(problem_file) as f:
+            content = f.read()
+    except FileNotFoundError:
+        return {'status': 'file_not_found', 'processed_clauses': -1}
 
     if extra_axioms:
         content = content + '\n' + extra_axioms + '\n'
 
-    tmpdir = _get_tmpdir()
-    try:
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.p', delete=False,
-                                          dir=tmpdir) as tmp:
-            tmp.write(content)
-            tmp_path = tmp.name
-
-        proc = subprocess.run(
-            [eprover, '--auto', '--cpu-limit=' + str(timeout),
-             '-s', '--print-statistics', tmp_path],
-            capture_output=True, text=True,
-            timeout=timeout + 5,
-        )
-        os.unlink(tmp_path)
-        return parse_eprover_output(proc.stdout + proc.stderr)
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
-        try:
-            os.unlink(tmp_path)
-        except Exception:
-            pass
-        return {'status': f'error:{type(e).__name__}', 'processed_clauses': -1}
+    return run_eprover_content(content, eprover=eprover, timeout=timeout)
 
 
 def _negate_clause_regex(clause_text: str) -> str:
@@ -262,12 +250,12 @@ def _run_baseline_worker(args_tuple):
 def _run_single_e_job(job):
     """Run a single E prover call. Used as a unit of work in the job pool.
 
-    job: (job_id, problem_content, extra_axioms, eprover, timeout)
+    job: (job_id, content, eprover, timeout)
+    content is the full TPTP text (base problem + conjecture/negation).
     Returns: (job_id, result_dict)
     """
-    job_id, problem_content, extra_axioms, eprover, timeout = job
-    result = run_eprover(None, extra_axioms, eprover=eprover, timeout=timeout,
-                         problem_content=problem_content)
+    job_id, content, eprover, timeout = job
+    result = run_eprover_content(content, eprover=eprover, timeout=timeout)
     return job_id, result
 
 
@@ -389,23 +377,21 @@ def main():
     # Output file
     output_path = args.output or os.path.join(conj_dir, 'eprover_results.tsv')
 
-    # Read and cache problem file contents (avoid re-reading per conjecture)
+    # Read and cache full problem file contents (read once, reuse for all conjectures)
     problem_contents = {}
     for problem_name in problems:
         problem_path = os.path.join(args.problems, problem_name)
         try:
             with open(problem_path) as f:
-                lines = f.readlines()
-            problem_contents[problem_name] = ''.join(
-                line for line in lines if line.strip().startswith('cnf('))
+                problem_contents[problem_name] = f.read()
         except FileNotFoundError:
             pass
 
     # Build all E prover jobs: each conjecture produces 2 jobs (P1 and P2)
-    # job = (job_id, problem_content, extra_axioms, eprover, timeout)
-    # We track conjecture metadata separately and match by job_id.
+    # job = (job_id, full_content, eprover, timeout)
+    # full_content = base problem + conjecture/negation, piped to E via stdin
     conj_meta = {}  # conj_id -> {problem, conj_file, conj_text, L_orig}
-    e_jobs = []     # list of (job_id, problem_content, extra_axioms, eprover, timeout)
+    e_jobs = []
 
     conj_id = 0
     for problem_name in problems:
@@ -413,7 +399,7 @@ def main():
             continue
 
         L_orig = orig_stats.get(problem_name, -1)
-        content = problem_contents[problem_name]
+        base = problem_contents[problem_name]
         conj_path = os.path.join(conj_dir, problem_name)
         try:
             conj_files = sorted([f for f in os.listdir(conj_path) if f.endswith('.p')])
@@ -436,14 +422,14 @@ def main():
                     break
             if conj_line and conj_text:
                 neg_clauses = negate_clause(conj_text)
-                p1_id = f'{conj_id}_p1'
-                p2_id = f'{conj_id}_p2'
+                p1_content = base + '\n' + conj_line + '\n'
+                p2_content = base + '\n' + neg_clauses + '\n'
                 conj_meta[conj_id] = {
                     'problem': problem_name, 'conj_file': conj_file,
                     'conj_text': conj_text, 'L_orig': L_orig,
                 }
-                e_jobs.append((p1_id, content, conj_line, args.eprover, args.timeout))
-                e_jobs.append((p2_id, content, neg_clauses, args.eprover, args.timeout))
+                e_jobs.append((f'{conj_id}_p1', p1_content, args.eprover, args.timeout))
+                e_jobs.append((f'{conj_id}_p2', p2_content, args.eprover, args.timeout))
                 conj_id += 1
 
     n_conjectures = conj_id
