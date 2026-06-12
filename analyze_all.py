@@ -531,6 +531,151 @@ def main():
 
     print()
 
+    # ================================================================
+    # 7. RANK ANALYSIS: at what conjecture position do useful speedups appear?
+    # ================================================================
+    for split_name, split_set in [('test', test_set), ('train', train_set)]:
+        print('=' * 90)
+        print(f'RANK ANALYSIS — {split_name} (where do useful conjectures appear?)')
+        print('=' * 90)
+
+        for name in sorted(methods.keys()):
+            results = methods[name]
+            in_split = [r for r in results if r['problem'] in split_set]
+            useful = [r for r in in_split if r['speedup'] and r['ratio'] > 0]
+
+            if not useful:
+                continue
+
+            # Extract rank from conjecture filename (conjecture_001.p -> rank 1)
+            def get_rank(r):
+                cf = r['conjecture']
+                try:
+                    # conjecture_NNN.p -> NNN
+                    return int(cf.replace('conjecture_', '').replace('.p', ''))
+                except (ValueError, AttributeError):
+                    return 999
+
+            # Per problem: rank of first useful conjecture, rank of best conjecture
+            prob_first_rank = {}  # problem -> rank of first useful
+            prob_best_rank = {}   # problem -> rank of best ratio conjecture
+            prob_best_ratio = {}  # problem -> best ratio
+            all_useful_ranks = []
+
+            for r in useful:
+                p = r['problem']
+                rank = get_rank(r)
+                all_useful_ranks.append(rank)
+
+                if p not in prob_first_rank or rank < prob_first_rank[p]:
+                    prob_first_rank[p] = rank
+                if p not in prob_best_ratio or r['ratio'] < prob_best_ratio[p]:
+                    prob_best_ratio[p] = r['ratio']
+                    prob_best_rank[p] = rank
+
+            n_problems = len(prob_first_rank)
+            if not all_useful_ranks:
+                continue
+
+            # Max rank tested (from all results, not just useful)
+            max_rank_tested = max(get_rank(r) for r in in_split)
+
+            # Cumulative: how many problems helped if we only evaluate top-k conjectures?
+            print(f"\n  {name} ({n_problems} problems helped, "
+                  f"max rank tested: {max_rank_tested}):")
+
+            cutoffs = [1, 2, 3, 5, 10, 15, 20, 30, 40, 50]
+            cutoffs = [c for c in cutoffs if c <= max_rank_tested + 1]
+
+            print(f"    {'Top-k':>6}  {'ProblHelp':>10}  {'Useful':>7}  "
+                  f"{'Marginal':>9}  {'AvgBestR':>9}")
+            print(f"    {'-'*50}")
+
+            prev_helped = 0
+            for k in cutoffs:
+                # Problems where first useful conjecture has rank <= k
+                helped_at_k = sum(1 for p, r in prob_first_rank.items() if r <= k)
+                # Useful conjectures with rank <= k
+                useful_at_k = sum(1 for r in all_useful_ranks if r <= k)
+                # Marginal problems from k-1 to k
+                marginal = helped_at_k - prev_helped
+                # Average best ratio among problems helped at this cutoff
+                probs_at_k = [p for p, r in prob_first_rank.items() if r <= k]
+                avg_r = sum(prob_best_ratio[p] for p in probs_at_k) / max(len(probs_at_k), 1)
+                # Only show if reachable
+                if helped_at_k > 0 or k <= 5:
+                    print(f"    {k:>6}  {helped_at_k:>10}  {useful_at_k:>7}  "
+                          f"{'+' + str(marginal):>9}  {avg_r:>9.3f}")
+                prev_helped = helped_at_k
+
+            # Rank distribution of first useful conjecture
+            ranks = sorted(prob_first_rank.values())
+            median_rank = ranks[len(ranks) // 2] if ranks else 0
+            mean_rank = sum(ranks) / len(ranks) if ranks else 0
+            print(f"    First useful rank: median={median_rank}, "
+                  f"mean={mean_rank:.1f}, "
+                  f"min={min(ranks)}, max={max(ranks)}")
+
+        print()
+
+    # ================================================================
+    # 8. COST-BENEFIT: E prover calls per new problem helped
+    # ================================================================
+    for split_name, split_set in [('test', test_set)]:
+        print('=' * 90)
+        print(f'COST-BENEFIT — {split_name} (E calls per marginal problem, across methods)')
+        print('=' * 90)
+
+        # For each method: at each rank cutoff, how many E calls (= 2 * rank * n_problems)
+        # vs how many problems helped
+        n_provable = len(provable & split_set)
+
+        print(f"\n  {'Method':<25} {'Top-k':>6} {'Helped':>7} {'%Prov':>6} "
+              f"{'E calls':>10} {'Calls/prob':>10}")
+        print(f"  {'-'*70}")
+
+        for name in sorted(methods.keys()):
+            results = methods[name]
+            in_split = [r for r in results if r['problem'] in split_set]
+            useful = [r for r in in_split if r['speedup'] and r['ratio'] > 0]
+
+            if not useful:
+                continue
+
+            def get_rank(r):
+                cf = r['conjecture']
+                try:
+                    return int(cf.replace('conjecture_', '').replace('.p', ''))
+                except (ValueError, AttributeError):
+                    return 999
+
+            prob_first_rank = {}
+            for r in useful:
+                p = r['problem']
+                rank = get_rank(r)
+                if p not in prob_first_rank or rank < prob_first_rank[p]:
+                    prob_first_rank[p] = rank
+
+            n_problems_tested = len(set(r['problem'] for r in in_split))
+            max_rank = max(get_rank(r) for r in in_split)
+
+            # Show for a few useful cutoffs (deduplicated)
+            seen_k = set()
+            for k in [5, 10, 20, 30, 50, max_rank]:
+                if k > max_rank or k in seen_k:
+                    continue
+                seen_k.add(k)
+                helped = sum(1 for r in prob_first_rank.values() if r <= k)
+                if helped == 0:
+                    continue
+                e_calls = 2 * k * n_problems_tested  # P1+P2 per conjecture
+                cost_per_prob = e_calls / helped
+                pct = 100 * helped / max(n_provable, 1)
+                print(f"  {name:<25} {k:>6} {helped:>7} {pct:>5.1f}% "
+                      f"{e_calls:>10,} {cost_per_prob:>10.0f}")
+
+        print()
+
 
 if __name__ == '__main__':
     main()
