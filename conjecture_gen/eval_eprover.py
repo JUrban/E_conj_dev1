@@ -247,16 +247,42 @@ def _run_baseline_worker(args_tuple):
     return problem_name, result
 
 
-def _run_single_e_job(job):
-    """Run a single E prover call. Used as a unit of work in the job pool.
+def _eval_one_conjecture(task):
+    """Evaluate one conjecture: run P1 and P2 sequentially via stdin.
 
-    job: (job_id, content, eprover, timeout)
-    content is the full TPTP text (base problem + conjecture/negation).
-    Returns: (job_id, result_dict)
+    Builds full E input lazily from shared problem_contents dict.
+    task: (problem_name, conj_file, conj_line, conj_text, L_orig, eprover, timeout)
     """
-    job_id, content, eprover, timeout = job
-    result = run_eprover_content(content, eprover=eprover, timeout=timeout)
-    return job_id, result
+    problem_name, conj_file, conj_line, conj_text, L_orig, eprover, timeout = task
+    base = _problem_contents[problem_name]
+
+    p1 = run_eprover_content(base + '\n' + conj_line + '\n',
+                              eprover=eprover, timeout=timeout)
+
+    neg_clauses = negate_clause(conj_text)
+    p2 = run_eprover_content(base + '\n' + neg_clauses + '\n',
+                              eprover=eprover, timeout=timeout)
+
+    both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
+    ratio = -1.0
+    speedup = False
+    if both_proved and L_orig > 0:
+        L1 = p1['processed_clauses']
+        L2 = p2['processed_clauses']
+        if L1 >= 0 and L2 >= 0:
+            ratio = (L1 + L2) / L_orig
+            speedup = ratio < 1.0
+
+    return {
+        'problem': problem_name, 'conj_file': conj_file,
+        'conj_text': conj_text,
+        'p1': p1, 'p2': p2, 'L_orig': L_orig,
+        'ratio': ratio, 'speedup': speedup,
+    }
+
+
+# Module-level cache, populated in main(), read by worker threads
+_problem_contents = {}
 
 
 def compute_baselines(problems_dir: str, problem_names: list[str],
@@ -377,29 +403,24 @@ def main():
     # Output file
     output_path = args.output or os.path.join(conj_dir, 'eprover_results.tsv')
 
-    # Read and cache full problem file contents (read once, reuse for all conjectures)
-    problem_contents = {}
+    # Cache problem file contents in module-level dict (shared by worker threads)
+    global _problem_contents
+    _problem_contents.clear()
     for problem_name in problems:
         problem_path = os.path.join(args.problems, problem_name)
         try:
             with open(problem_path) as f:
-                problem_contents[problem_name] = f.read()
+                _problem_contents[problem_name] = f.read()
         except FileNotFoundError:
             pass
 
-    # Build all E prover jobs: each conjecture produces 2 jobs (P1 and P2)
-    # job = (job_id, full_content, eprover, timeout)
-    # full_content = base problem + conjecture/negation, piped to E via stdin
-    conj_meta = {}  # conj_id -> {problem, conj_file, conj_text, L_orig}
-    e_jobs = []
-
-    conj_id = 0
+    # Build lightweight task descriptors (no duplicated problem text)
+    tasks = []
     for problem_name in problems:
-        if problem_name not in problem_contents:
+        if problem_name not in _problem_contents:
             continue
 
         L_orig = orig_stats.get(problem_name, -1)
-        base = problem_contents[problem_name]
         conj_path = os.path.join(conj_dir, problem_name)
         try:
             conj_files = sorted([f for f in os.listdir(conj_path) if f.endswith('.p')])
@@ -421,47 +442,16 @@ def main():
                         conj_text = m.group(1)
                     break
             if conj_line and conj_text:
-                neg_clauses = negate_clause(conj_text)
-                p1_content = base + '\n' + conj_line + '\n'
-                p2_content = base + '\n' + neg_clauses + '\n'
-                conj_meta[conj_id] = {
-                    'problem': problem_name, 'conj_file': conj_file,
-                    'conj_text': conj_text, 'L_orig': L_orig,
-                }
-                e_jobs.append((f'{conj_id}_p1', p1_content, args.eprover, args.timeout))
-                e_jobs.append((f'{conj_id}_p2', p2_content, args.eprover, args.timeout))
-                conj_id += 1
+                tasks.append((problem_name, conj_file, conj_line, conj_text, L_orig,
+                              args.eprover, args.timeout))
 
-    n_conjectures = conj_id
-    print(f"  Conjectures: {n_conjectures}, E jobs: {len(e_jobs)} "
-          f"(P1+P2), workers: {args.workers}")
+    print(f"  Conjectures: {len(tasks)} (P1+P2 = {len(tasks)*2} E calls), "
+          f"workers: {args.workers}")
 
-    # Run all E jobs through a bounded ThreadPoolExecutor
-    # Each job is one E prover call; P1 and P2 run independently
+    # Run with ThreadPoolExecutor — each worker runs P1 then P2 sequentially,
+    # building full stdin content lazily from shared _problem_contents.
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
-    e_results = {}  # job_id -> result_dict
-    done_jobs = 0
-    t0 = time.time()
-
-    with ThreadPoolExecutor(max_workers=args.workers) as executor:
-        futures = {executor.submit(_run_single_e_job, job): job[0] for job in e_jobs}
-
-        for future in as_completed(futures):
-            try:
-                job_id, result = future.result()
-                e_results[job_id] = result
-            except Exception as e:
-                job_id = futures[future]
-                e_results[job_id] = {'status': f'error:{e}', 'processed_clauses': -1}
-
-            done_jobs += 1
-            if done_jobs % 200 == 0:
-                elapsed = time.time() - t0
-                rate = done_jobs / max(elapsed, 0.1)
-                print(f"  E jobs: {done_jobs}/{len(e_jobs)} ({rate:.1f} jobs/s, {elapsed:.0f}s)")
-
-    # Reassemble per-conjecture results from P1 + P2
     total_tested = 0
     total_p1_proved = 0
     total_p2_proved = 0
@@ -470,44 +460,41 @@ def main():
     speedups = []
     results = []
 
-    for cid in range(n_conjectures):
-        meta = conj_meta[cid]
-        p1 = e_results.get(f'{cid}_p1', {'status': 'missing', 'processed_clauses': -1})
-        p2 = e_results.get(f'{cid}_p2', {'status': 'missing', 'processed_clauses': -1})
+    t0 = time.time()
 
-        both_proved = (p1['status'] == 'proved' and p2['status'] == 'proved')
-        ratio = -1.0
-        speedup = False
-        L_orig = meta['L_orig']
-        if both_proved and L_orig > 0:
-            L1 = p1['processed_clauses']
-            L2 = p2['processed_clauses']
-            if L1 >= 0 and L2 >= 0:
-                ratio = (L1 + L2) / L_orig
-                speedup = ratio < 1.0
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = {executor.submit(_eval_one_conjecture, task): task for task in tasks}
 
-        r = {
-            'problem': meta['problem'], 'conj_file': meta['conj_file'],
-            'conj_text': meta['conj_text'],
-            'p1': p1, 'p2': p2, 'L_orig': L_orig,
-            'ratio': ratio, 'speedup': speedup,
-        }
-        results.append(r)
-        total_tested += 1
+        for future in as_completed(futures):
+            try:
+                r = future.result()
+            except Exception as e:
+                print(f"  WORKER ERROR: {e}")
+                import traceback
+                traceback.print_exc()
+                continue
 
-        if p1['status'] == 'proved':
-            total_p1_proved += 1
-        if p2['status'] == 'proved':
-            total_p2_proved += 1
-        if both_proved:
-            total_both += 1
-        if speedup:
-            total_useful += 1
-            speedups.append(ratio)
+            results.append(r)
+            total_tested += 1
 
-    elapsed = time.time() - t0
-    print(f"  Completed: {total_tested} conjectures, {len(e_jobs)} E calls in {elapsed:.0f}s "
-          f"({len(e_jobs)/max(elapsed,0.1):.1f} E calls/s)")
+            if r['p1']['status'] == 'proved':
+                total_p1_proved += 1
+            if r['p2']['status'] == 'proved':
+                total_p2_proved += 1
+            if r['p1']['status'] == 'proved' and r['p2']['status'] == 'proved':
+                total_both += 1
+            if r['speedup']:
+                total_useful += 1
+                speedups.append(r['ratio'])
+
+            if total_tested % 100 == 0:
+                elapsed = time.time() - t0
+                rate = total_tested / max(elapsed, 0.1)
+                e_rate = total_tested * 2 / max(elapsed, 0.1)
+                print(f"  {total_tested}/{len(tasks)}: "
+                      f"p1={total_p1_proved} p2={total_p2_proved} "
+                      f"both={total_both} useful={total_useful} "
+                      f"({rate:.1f} conj/s, {e_rate:.1f} E/s, {elapsed:.0f}s)")
 
     # Sort results by problem + conjecture for consistent output
     results.sort(key=lambda r: (r['problem'], r['conj_file']))
