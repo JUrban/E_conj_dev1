@@ -1,0 +1,10 @@
+{
+  "cnf_problems": 57880,
+  "baseline_problems": 34182,
+  "pairs_tested": 2470292,
+  "both_proved": 2281273,
+  "useful": 196199,
+  "problems_with_useful": 3591,
+  "instruction_limit": 25000,
+  "baseline_limit": 50000
+}

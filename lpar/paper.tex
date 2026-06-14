@@ -1,0 +1,307 @@
+\documentclass{easychair}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xspace}
+
+\newcommand{\Eprover}{E\xspace}
+\newcommand{\Vampire}{Vampire\xspace}
+\newcommand{\Mizar}{Mizar\xspace}
+
+\title{Neural Conjecture Generation for Automated Theorem Proving}
+
+\author{
+Josef Urban\inst{1}
+}
+
+\institute{
+Czech Technical University in Prague
+}
+
+\authorrunning{Urban}
+\titlerunning{Neural Conjecture Generation for ATP}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a neural system for generating intermediate lemmas
+(conjectures) that speed up automated theorem provers on large
+mathematical libraries.  Given a first-order problem, a graph neural
+network encoder builds a heterogeneous representation of the clause
+structure, and a Transformer decoder autoregressively generates
+candidate cut formulas.  Using the Gentzen cut rule, each candidate is
+evaluated by checking that both the problem with the lemma and the
+problem with the negated lemma are provable, with proof search savings
+measured by the ratio of combined proof effort to the baseline.  We
+train and evaluate on the \Mizar Mathematical Library, creating
+large-scale datasets with both the \Eprover and \Vampire theorem
+provers.  For \Vampire, we construct a dataset of 196\,199 useful
+training examples from 2.47 million evaluated lemma--problem pairs
+across 34\,182 problems, with proof search reductions of up to $25\times$.
+On \Eprover, an ensemble of model variants helps on 125 out of 187
+provable test problems (66.8\%), with individual speedups exceeding
+$100\times$.  We analyze the complementarity of different model
+configurations and provide a budget-optimal strategy for allocating
+prover evaluation time across methods.
+\end{abstract}
+
+%% ================================================================
+\section{Introduction}
+\label{sec:intro}
+
+%% TODO: Write introduction - motivation, cut rule, related work, contributions
+
+Automated theorem provers (ATPs) such as \Eprover~\cite{Schulz2002}
+and \Vampire~\cite{Kovacs2013} are powerful tools for establishing
+logical validity of first-order conjectures.  However, their
+performance is often limited by the size of the proof search space,
+which can grow exponentially with the number of input clauses.
+
+A classical technique for reducing proof search is the \emph{cut rule}
+(Gentzen, 1935): for any clause~$L$, if $P \cup \{L\}$ is
+unsatisfiable and $P \cup \{\neg L\}$ is unsatisfiable, then $P$
+itself is unsatisfiable.  A well-chosen intermediate lemma~$L$ can
+decompose a hard proof into two easier subproofs, dramatically
+reducing the total search effort.  The challenge is to find such
+lemmas automatically.
+
+We propose a neural approach: a graph neural network (GNN) encodes the
+structure of the input problem, and a Transformer decoder generates
+candidate lemmas autoregressively.  We train the system on examples
+where known lemmas provide proof speedups, and at inference time
+generate diverse candidates that are then verified by the ATP.
+
+Our contributions are:
+\begin{enumerate}
+\item A heterogeneous GNN encoder for CNF problems with five node
+  types and role-aware edge convolutions.
+\item An autoregressive decoder with arity-constrained generation
+  ensuring syntactically valid output.
+\item A large-scale \Vampire training dataset with 196K useful
+  examples from 34K problems.
+\item Comprehensive evaluation showing 66.8\% of provable test
+  problems benefit from generated conjectures, with a budget-optimal
+  allocation strategy across model variants.
+\end{enumerate}
+
+
+%% ================================================================
+\section{Dataset Construction}
+\label{sec:dataset}
+
+We create training data by evaluating intermediate lemmas extracted from
+successful proofs on the \Mizar Mathematical Library (MML)~\cite{Grabowski2010}.
+We describe the two datasets: a smaller one using \Eprover and a larger one
+using \Vampire.
+
+\subsection{Problem Corpus}
+
+The \Mizar Mathematical Library contains over 60\,000 theorems
+formalized in a rich mathematical language.  We export these as
+first-order CNF problems in TPTP format~\cite{Sutcliffe2009}, obtaining
+57\,880 problems.
+
+\subsection{Vampire Dataset}
+\label{sec:vampire-data}
+
+We use \Vampire with neural clause selection~\cite{Suda2025} to solve the
+CNF problems.  Specifically, we run:
+\begin{center}\small
+\texttt{vampire --decode lrs-1002\_3:2\_av=off:bce=on:...}\\
+\texttt{-ncem m3k3kMizChampL17.pt -npcc on -p tptp -i 50000}
+\end{center}
+with a 50 billion instruction limit.  This solves \textbf{34\,182}
+problems (59.1\% of the corpus).
+
+For each solved problem, \Vampire produces proof lemmas---intermediate
+formulas that were useful during the proof search.  On average, each
+problem yields $\sim$72 such lemmas, for a total of approximately 2.47
+million (problem, lemma) pairs.
+
+\paragraph{Cut evaluation.}
+For each pair $(P, L)$ where $P$ is a solved problem and $L$ is a
+proof lemma, we evaluate the cut rule by running \Vampire twice with
+a 25 billion instruction limit:
+\begin{itemize}
+\item $P \cup \{L\}$: the problem augmented with the lemma as an extra axiom,
+\item $P \cup \{\neg L\}$: the problem augmented with the negation of the lemma.
+\end{itemize}
+If both runs succeed, the \emph{speedup ratio} is
+$r = (I_{P \cup L} + I_{P \cup \neg L}) / I_P$,
+where $I_X$ denotes the number of instructions burned by \Vampire on
+input~$X$.  A ratio $r < 1$ indicates that the lemma provides a
+genuine proof search speedup.
+
+\paragraph{Dataset statistics.}
+Table~\ref{tab:vampire-stats} summarizes the resulting dataset.
+Out of 2\,470\,292 evaluated pairs, 2\,281\,273 have both the lemma
+and its negation proved within the 25B instruction limit.  Of these,
+\textbf{196\,199} provide a speedup ($r < 1$), covering 3\,591
+distinct problems.
+
+\begin{table}[t]
+\centering
+\caption{Vampire conjecture dataset statistics.}
+\label{tab:vampire-stats}
+\begin{tabular}{lr}
+\toprule
+CNF problems attempted & 57\,880 \\
+Solved by Vampire (50B instr.) & 34\,182 \\
+(Problem, lemma) pairs evaluated & 2\,470\,292 \\
+Both directions proved (25B instr.) & 2\,281\,273 \\
+Useful speedups ($r < 1$) & 196\,199 \\
+Problems with $\geq 1$ useful lemma & 3\,591 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:ratio-dist} shows the distribution of speedup ratios.
+A substantial fraction of useful examples provide large speedups:
+3\,190 examples (from 164 problems) achieve a ratio $\leq 0.1$,
+corresponding to a $10\times$ or greater reduction in proof search
+effort.  The median useful ratio is approximately 0.7, and the dataset
+contains examples across the full range of speedup magnitudes.
+
+\begin{table}[t]
+\centering
+\caption{Distribution of useful examples by speedup ratio threshold.}
+\label{tab:ratio-dist}
+\begin{tabular}{rrrrr}
+\toprule
+Ratio $\leq$ & Examples & Problems & \% of useful & \% of problems \\
+\midrule
+0.05 &        83 &    10 &  0.0\% &  0.3\% \\
+0.10 &    3\,190 &   164 &  1.6\% &  4.6\% \\
+0.20 &   15\,165 &   553 &  7.7\% & 15.4\% \\
+0.30 &   30\,933 &   955 & 15.8\% & 26.6\% \\
+0.50 &   66\,461 & 1\,645 & 33.9\% & 45.8\% \\
+0.70 &  110\,395 & 2\,366 & 56.3\% & 65.9\% \\
+0.90 &  163\,531 & 3\,156 & 83.3\% & 87.9\% \\
+0.95 &  179\,059 & 3\,371 & 91.3\% & 93.9\% \\
+1.00 &  196\,199 & 3\,591 & 100\% & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Data imbalance.}
+The useful examples are unevenly distributed across problems.  Some
+problems have over 700 useful lemmas (e.g., \texttt{t3\_gate\_2} with
+718), while 143 problems have exactly one.  The mean is 54.6 useful
+lemmas per problem and the median is 35.  Table~\ref{tab:imbalance}
+shows the cumulative distribution.  This imbalance must be addressed
+during training to prevent the model from overfitting to
+heavily-represented problems.  We use per-problem weighting: each
+problem contributes equally to the loss regardless of how many
+training examples it provides.
+
+\begin{table}[t]
+\centering
+\caption{Data imbalance: distribution of useful examples per problem.}
+\label{tab:imbalance}
+\begin{tabular}{rrrr}
+\toprule
+$\leq k$ useful & Problems & Cumul. \% \\
+\midrule
+1   &   143 &  4.0\% \\
+5   &   470 & 13.1\% \\
+10  &   758 & 21.1\% \\
+20  & 1\,231 & 34.3\% \\
+50  & 2\,243 & 62.5\% \\
+100 & 3\,018 & 84.0\% \\
+200 & 3\,480 & 96.9\% \\
+500 & 3\,586 & 99.9\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\subsection{E Prover Dataset}
+\label{sec:eprover-data}
+
+For initial development and comparison, we also create a smaller
+dataset using the \Eprover theorem prover.  From a subset of 3\,161
+CNF problems, we obtain 122\,356 training examples with a
+train/validation/test split of 2\,239/279/279 problems.  The
+evaluation uses processed clauses as the cost metric (rather than
+instructions), with a 10-second wall-clock timeout.
+
+
+%% ================================================================
+\section{Architecture}
+\label{sec:arch}
+
+%% TODO: GNN encoder, Transformer decoder, arity constraints, pointer mechanism
+
+\subsection{Heterogeneous GNN Encoder}
+
+\subsection{Autoregressive Decoder}
+
+\subsection{Arity-Constrained Generation}
+
+\subsection{Model Variants}
+
+
+%% ================================================================
+\section{Training}
+\label{sec:training}
+
+%% TODO: Loss function, per-problem weighting, data augmentation
+
+
+%% ================================================================
+\section{Evaluation}
+\label{sec:eval}
+
+%% TODO: E prover results, Vampire results, complementarity, budget analysis
+
+
+%% ================================================================
+\section{Related Work}
+\label{sec:related}
+
+%% TODO: Cut introduction in ATPs, neural theorem proving, lemma generation
+
+
+%% ================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+%% TODO
+
+
+%% ================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{10}
+
+\bibitem{Schulz2002}
+S.~Schulz.
+\newblock E -- a brainiac theorem prover.
+\newblock {\em AI Communications}, 15(2-3):111--126, 2002.
+
+\bibitem{Kovacs2013}
+L.~Kov{\'a}cs and A.~Voronkov.
+\newblock First-order theorem proving and {V}ampire.
+\newblock In {\em CAV 2013}, LNCS 8044, pp.~1--35, 2013.
+
+\bibitem{Suda2025}
+M.~Suda.
+\newblock Efficient neural clause-selection for {V}ampire.
+\newblock {\em arXiv:2503.07792}, 2025.
+
+\bibitem{Grabowski2010}
+A.~Grabowski, A.~Korni{\l}owicz, and A.~Naumowicz.
+\newblock Mizar in a nutshell.
+\newblock {\em J. Formalized Reasoning}, 3(2):153--245, 2010.
+
+\bibitem{Sutcliffe2009}
+G.~Sutcliffe.
+\newblock The {TPTP} problem library and associated infrastructure.
+\newblock {\em J. Automated Reasoning}, 43(4):337--362, 2009.
+
+\end{thebibliography}
+
+\end{document}

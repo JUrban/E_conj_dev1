@@ -1,0 +1,96 @@
+
+======================================================================
+VAMPIRE CONJECTURE DATASET STATISTICS (v1)
+======================================================================
+
+CNF problems attempted:         57880
+Problems solved by Vampire (50M): 34182
+Proof lemmas generated:         33991
+(problem, lemma) pairs tested:  2470292
+Both P&L and P&~L proved (25M): 2281273
+Useful (ratio < 1.0):           196199
+Problems with useful lemma:     3591
+
+======================================================================
+RATIO DISTRIBUTION (useful examples by speedup threshold)
+======================================================================
+ Threshold   Examples   Problems    %Useful    %Problems
+-------------------------------------------------------
+      0.05         83         10       0.0%         0.3%
+      0.10      3,190        164       1.6%         4.6%
+      0.20     15,165        553       7.7%        15.4%
+      0.30     30,933        955      15.8%        26.6%
+      0.40     48,046      1,304      24.5%        36.3%
+      0.50     66,461      1,645      33.9%        45.8%
+      0.60     87,795      2,008      44.7%        55.9%
+      0.70    110,395      2,366      56.3%        65.9%
+      0.80    135,380      2,783      69.0%        77.5%
+      0.90    163,531      3,156      83.3%        87.9%
+      0.95    179,059      3,371      91.3%        93.9%
+      1.00    196,199      3,591     100.0%       100.0%
+
+======================================================================
+DATA IMBALANCE (useful examples per problem)
+======================================================================
+Mean useful/problem:   54.6
+Median useful/problem: 35
+Min:                   1
+Max:                   718
+
+   Threshold   Problems  Cumulative%
+------------------------------------
+  <=    1              143         4.0%
+  <=    2              248         6.9%
+  <=    5              470        13.1%
+  <=   10              758        21.1%
+  <=   20             1231        34.3%
+  <=   50             2243        62.5%
+  <=  100             3018        84.0%
+  <=  200             3480        96.9%
+  <=  500             3586        99.9%
+  <= 1000             3591       100.0%
+
+Top 20 most represented problems:
+  t3_gate_2                        718 useful lemmas
+  t6_gate_3                        641 useful lemmas
+  t16_prob_3                       635 useful lemmas
+  t13_waybel_5                     612 useful lemmas
+  t16_absvalue                     552 useful lemmas
+  t14_dirort                       490 useful lemmas
+  t64_xboolean                     473 useful lemmas
+  t7_lopban_2                      467 useful lemmas
+  t15_waybel28                     447 useful lemmas
+  t60_limfunc2                     436 useful lemmas
+  l1_group_1                       428 useful lemmas
+  t53_circcmb3                     424 useful lemmas
+  t130_xboolean                    414 useful lemmas
+  l71_anproj_2                     412 useful lemmas
+  t67_bvfunc26                     405 useful lemmas
+  t18_rewrite1                     402 useful lemmas
+  t13_bhsp_3                       396 useful lemmas
+  t45_filter_0                     388 useful lemmas
+  t111_xboolean                    384 useful lemmas
+  t21_isocat_1                     376 useful lemmas
+
+======================================================================
+INSTRUCTION SAVINGS DISTRIBUTION
+======================================================================
+Total instructions saved: 1,446,028,760M
+Mean per useful example:  7,370M
+
+Top 15 biggest savings:
+  l18_metrizts              lemma=f441     saved= 47920M  ratio=0.039  base=49876M
+  l18_metrizts              lemma=f98522   saved= 47774M  ratio=0.042  base=49876M
+  l18_metrizts              lemma=f98420   saved= 47707M  ratio=0.043  base=49876M
+  l18_metrizts              lemma=f98294   saved= 47558M  ratio=0.046  base=49876M
+  l18_metrizts              lemma=f98290   saved= 47542M  ratio=0.047  base=49876M
+  t28_idea_1                lemma=f499     saved= 47540M  ratio=0.044  base=49733M
+  l18_metrizts              lemma=f431     saved= 47430M  ratio=0.049  base=49876M
+  l18_metrizts              lemma=f97364   saved= 47394M  ratio=0.050  base=49876M
+  l18_metrizts              lemma=f430     saved= 47391M  ratio=0.050  base=49876M
+  l18_metrizts              lemma=f1652    saved= 47317M  ratio=0.051  base=49876M
+  l18_metrizts              lemma=f1629    saved= 47276M  ratio=0.052  base=49876M
+  l18_metrizts              lemma=f314     saved= 47225M  ratio=0.053  base=49876M
+  l18_metrizts              lemma=f3278    saved= 47204M  ratio=0.054  base=49876M
+  l18_metrizts              lemma=f97616   saved= 47183M  ratio=0.054  base=49876M
+  l18_metrizts              lemma=f3369    saved= 47182M  ratio=0.054  base=49876M
