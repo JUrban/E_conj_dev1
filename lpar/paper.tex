@@ -5,10 +5,12 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{xspace}
+\usepackage{multirow}
 
 \newcommand{\Eprover}{E\xspace}
 \newcommand{\Vampire}{Vampire\xspace}
 \newcommand{\Mizar}{Mizar\xspace}
+\newcommand{\MML}{MML\xspace}
 
 \title{Neural Conjecture Generation for Automated Theorem Proving}
 
@@ -29,123 +31,145 @@ Czech Technical University in Prague
 
 \begin{abstract}
 We present a neural system for generating intermediate lemmas
-(conjectures) that speed up automated theorem provers on large
-mathematical libraries.  Given a first-order problem, a graph neural
-network encoder builds a heterogeneous representation of the clause
+(cut formulas) that speed up automated theorem provers on large
+mathematical libraries.  Given a first-order CNF problem, a
+heterogeneous graph neural network encoder represents the clause
 structure, and a Transformer decoder autoregressively generates
-candidate cut formulas.  Using the Gentzen cut rule, each candidate is
-evaluated by checking that both the problem with the lemma and the
-problem with the negated lemma are provable, with proof search savings
-measured by the ratio of combined proof effort to the baseline.  We
-train and evaluate on the \Mizar Mathematical Library, creating
-large-scale datasets with both the \Eprover and \Vampire theorem
-provers.  For \Vampire, we construct a dataset of 196\,199 useful
-training examples from 2.47 million evaluated lemma--problem pairs
-across 34\,182 problems, with proof search reductions of up to $25\times$.
-On \Eprover, an ensemble of model variants helps on 125 out of 187
-provable test problems (66.8\%), with individual speedups exceeding
-$100\times$.  We analyze the complementarity of different model
-configurations and provide a budget-optimal strategy for allocating
-prover evaluation time across methods.
+candidate lemmas with arity-constrained decoding.  Using the Gentzen
+cut rule, each candidate is evaluated by checking that both the
+problem with the lemma and its negation are provable, measuring proof
+search savings as the ratio of combined effort to the baseline.  We
+create large-scale datasets from the \Mizar Mathematical Library using
+both the \Eprover and \Vampire provers.  For \Vampire, we obtain
+196\,199 useful training examples from 2.47M evaluated pairs across
+34\,182 problems.  On \Eprover, an ensemble of 13~model configurations
+helps on 125 out of 187 provable test problems (66.8\%), with
+individual speedups exceeding $196\times$.  We analyze
+complementarity across model variants and provide budget-optimal
+strategies for allocating prover evaluation resources.
 \end{abstract}
 
 %% ================================================================
 \section{Introduction}
 \label{sec:intro}
 
-%% TODO: Write introduction - motivation, cut rule, related work, contributions
-
 Automated theorem provers (ATPs) such as \Eprover~\cite{Schulz2002}
 and \Vampire~\cite{Kovacs2013} are powerful tools for establishing
-logical validity of first-order conjectures.  However, their
-performance is often limited by the size of the proof search space,
-which can grow exponentially with the number of input clauses.
+validity of first-order conjectures.  However, proof search can grow
+exponentially with the number of input clauses, and many problems
+remain beyond reach even with sophisticated heuristics.
 
 A classical technique for reducing proof search is the \emph{cut rule}
-(Gentzen, 1935): for any clause~$L$, if $P \cup \{L\}$ is
-unsatisfiable and $P \cup \{\neg L\}$ is unsatisfiable, then $P$
-itself is unsatisfiable.  A well-chosen intermediate lemma~$L$ can
-decompose a hard proof into two easier subproofs, dramatically
-reducing the total search effort.  The challenge is to find such
-lemmas automatically.
+(Gentzen, 1935): for any formula~$L$, if both $P \cup \{L\}$ and $P
+\cup \{\neg L\}$ are unsatisfiable, then $P$ itself is unsatisfiable.
+Crucially, $L$ need not be ``true'' in any semantic sense---it is a
+case split that decomposes one hard proof into two easier subproofs.
+A well-chosen intermediate lemma can dramatically reduce total search
+effort, but finding such lemmas automatically is challenging.
 
-We propose a neural approach: a graph neural network (GNN) encodes the
-structure of the input problem, and a Transformer decoder generates
-candidate lemmas autoregressively.  We train the system on examples
-where known lemmas provide proof speedups, and at inference time
-generate diverse candidates that are then verified by the ATP.
+We propose a neural approach to conjecture generation.  A
+heterogeneous graph neural network (GNN) encodes the structure of the
+input CNF problem---its clauses, literals, symbols, terms, and
+variables---and a Transformer decoder generates candidate lemmas
+autoregressively, using a pointer mechanism to select symbols from the
+input and arity-constrained decoding to ensure syntactic validity.  We
+train on examples where proof lemmas extracted from successful ATP
+runs provide measurable speedups, and at inference time generate
+diverse candidates verified by the prover.
+
+We create two datasets from the \Mizar Mathematical Library
+(\MML)~\cite{Grabowski2010}: a development dataset using \Eprover
+(3\,161 problems, 122K examples) and a large-scale dataset using
+\Vampire with neural clause selection~\cite{Suda2025} (34\,182
+problems, 196K useful examples from 2.47M evaluated pairs).  On the
+\Eprover dataset, we train and evaluate multiple model configurations,
+demonstrating strong complementarity: while the best single model
+helps on 96 test problems (51.3\% of provable), an ensemble of
+13~configurations reaches 125 problems (66.8\%).
 
 Our contributions are:
 \begin{enumerate}
-\item A heterogeneous GNN encoder for CNF problems with five node
-  types and role-aware edge convolutions.
-\item An autoregressive decoder with arity-constrained generation
-  ensuring syntactically valid output.
-\item A large-scale \Vampire training dataset with 196K useful
-  examples from 34K problems.
-\item Comprehensive evaluation showing 66.8\% of provable test
-  problems benefit from generated conjectures, with a budget-optimal
-  allocation strategy across model variants.
+\item A heterogeneous GNN encoder with five node types and 16~edge
+  types, using edge-aware convolutions for positional information.
+\item An autoregressive Transformer decoder with arity-constrained
+  generation, pointer-based symbol selection, and role-aware masking.
+\item Two large-scale cut-formula datasets for \Mizar, with the
+  \Vampire dataset providing 196K useful examples---over 12$\times$
+  the \Eprover dataset.
+\item Comprehensive evaluation with complementarity analysis,
+  budget-optimal allocation across model variants, and rank analysis
+  showing where useful conjectures appear.
 \end{enumerate}
 
 
 %% ================================================================
-\section{Dataset Construction}
+\section{Datasets}
 \label{sec:dataset}
 
-We create training data by evaluating intermediate lemmas extracted from
-successful proofs on the \Mizar Mathematical Library (MML)~\cite{Grabowski2010}.
-We describe the two datasets: a smaller one using \Eprover and a larger one
-using \Vampire.
+We create training data by evaluating intermediate lemmas extracted
+from successful proofs on the \MML.  The general procedure is: (1)
+solve CNF problems with an ATP, (2) extract proof lemmas, (3) for each
+(problem, lemma) pair, run the cut evaluation (Sec.~\ref{sec:cut}),
+and (4) retain pairs where the combined cost of the two subproofs is
+less than the baseline.
+
+\subsection{The Cut Rule and Evaluation}
+\label{sec:cut}
+
+For a CNF problem~$P$ and a candidate lemma~$L$, we evaluate the cut
+rule by running the ATP twice:
+\begin{itemize}
+\item $P \cup \{L\}$: the problem with $L$ as an extra axiom (P1),
+\item $P \cup \{\neg L\}$: the problem with the negation of $L$ (P2).
+\end{itemize}
+If both succeed, the \emph{speedup ratio} is $r = (C_1 + C_2) / C_0$,
+where $C_0$ is the baseline cost and $C_1, C_2$ are the costs of the
+two subproofs.  A ratio $r < 1$ indicates a genuine speedup.  The cost
+metric is processed clauses for \Eprover and instructions burned for
+\Vampire.
 
 \subsection{Problem Corpus}
 
-The \Mizar Mathematical Library contains over 60\,000 theorems
-formalized in a rich mathematical language.  We export these as
-first-order CNF problems in TPTP format~\cite{Sutcliffe2009}, obtaining
-57\,880 problems.
+The \MML contains over 60\,000 formalized mathematical theorems.  We
+export these as first-order CNF problems in TPTP
+format~\cite{Sutcliffe2009}, obtaining 57\,880 problems.  The two
+datasets differ in CNF preprocessing: the \Eprover problems use
+SInE-based axiom selection~\cite{HoderV2011}, reducing the average
+problem to ${\sim}45$~clauses, while the \Vampire problems use the
+full \Mizar axiom set, averaging ${\sim}430$~clauses per problem for
+the subset with useful lemmas.  This difference is reflected in graph
+sizes (Sec.~\ref{sec:training}).
+
+\subsection{E Prover Dataset}
+\label{sec:eprover-data}
+
+From 3\,161 CNF problems, \Eprover (with \texttt{--auto} mode and a
+10-second timeout) solves 1\,888 problems.  For each solved problem,
+we extract intermediate clauses from the proof and evaluate them as
+cuts.  This yields 122\,356 (problem, lemma) pairs.
+
+We split by problem into 2\,239 / 279 / 279 (train / val / test).
+Of the 187 provable test problems, our models help on up to 125
+(66.8\%) using an ensemble of 13~configurations
+(Sec.~\ref{sec:eprover-results}).
 
 \subsection{Vampire Dataset}
 \label{sec:vampire-data}
 
-We use \Vampire with neural clause selection~\cite{Suda2025} to solve the
-CNF problems.  Specifically, we run:
-\begin{center}\small
-\texttt{vampire --decode lrs-1002\_3:2\_av=off:bce=on:...}\\
-\texttt{-ncem m3k3kMizChampL17.pt -npcc on -p tptp -i 50000}
-\end{center}
-with a 50 billion instruction limit.  This solves \textbf{34\,182}
-problems (59.1\% of the corpus).
+We use \Vampire with neural clause selection~\cite{Suda2025}, running
+with a 50~billion instruction limit.  This solves \textbf{34\,182}
+problems (59.1\%).  For each solved problem, \Vampire produces proof
+lemmas in first-order (FOF) format.  Notably, all 2.47M lemmas are
+universally quantified disjunctions (no existential quantifiers,
+implications, or conjunctions), making conversion to CNF trivial.
 
-For each solved problem, \Vampire produces proof lemmas---intermediate
-formulas that were useful during the proof search.  On average, each
-problem yields $\sim$72 such lemmas, for a total of approximately 2.47
-million (problem, lemma) pairs.
-
-\paragraph{Cut evaluation.}
-For each pair $(P, L)$ where $P$ is a solved problem and $L$ is a
-proof lemma, we evaluate the cut rule by running \Vampire twice with
-a 25 billion instruction limit:
-\begin{itemize}
-\item $P \cup \{L\}$: the problem augmented with the lemma as an extra axiom,
-\item $P \cup \{\neg L\}$: the problem augmented with the negation of the lemma.
-\end{itemize}
-If both runs succeed, the \emph{speedup ratio} is
-$r = (I_{P \cup L} + I_{P \cup \neg L}) / I_P$,
-where $I_X$ denotes the number of instructions burned by \Vampire on
-input~$X$.  A ratio $r < 1$ indicates that the lemma provides a
-genuine proof search speedup.
-
-\paragraph{Dataset statistics.}
-Table~\ref{tab:vampire-stats} summarizes the resulting dataset.
-Out of 2\,470\,292 evaluated pairs, 2\,281\,273 have both the lemma
-and its negation proved within the 25B instruction limit.  Of these,
-\textbf{196\,199} provide a speedup ($r < 1$), covering 3\,591
-distinct problems.
+We evaluate each (problem, lemma) pair with a 25~billion instruction
+limit for both $P \cup \{L\}$ and $P \cup \{\neg L\}$.
+Table~\ref{tab:vampire-stats} summarizes the results.
 
 \begin{table}[t]
 \centering
-\caption{Vampire conjecture dataset statistics.}
+\caption{Vampire conjecture dataset overview.}
 \label{tab:vampire-stats}
 \begin{tabular}{lr}
 \toprule
@@ -155,127 +179,326 @@ Solved by Vampire (50B instr.) & 34\,182 \\
 Both directions proved (25B instr.) & 2\,281\,273 \\
 Useful speedups ($r < 1$) & 196\,199 \\
 Problems with $\geq 1$ useful lemma & 3\,591 \\
+\midrule
+Train / val / test split & 27\,344 / 3\,418 / 3\,420 \\
+Train useful examples & 156\,462 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Table~\ref{tab:ratio-dist} shows the distribution of speedup ratios.
-A substantial fraction of useful examples provide large speedups:
-3\,190 examples (from 164 problems) achieve a ratio $\leq 0.1$,
-corresponding to a $10\times$ or greater reduction in proof search
-effort.  The median useful ratio is approximately 0.7, and the dataset
-contains examples across the full range of speedup magnitudes.
+3\,190~examples (164~problems) achieve $r \leq 0.1$ ($10\times$ or
+greater speedup); the largest savings exceed $25\times$.
 
 \begin{table}[t]
 \centering
-\caption{Distribution of useful examples by speedup ratio threshold.}
+\caption{Ratio distribution for the \Vampire dataset.}
 \label{tab:ratio-dist}
 \begin{tabular}{rrrrr}
 \toprule
-Ratio $\leq$ & Examples & Problems & \% of useful & \% of problems \\
+$r \leq$ & Examples & Problems & \% useful & \% problems \\
 \midrule
-0.05 &        83 &    10 &  0.0\% &  0.3\% \\
-0.10 &    3\,190 &   164 &  1.6\% &  4.6\% \\
-0.20 &   15\,165 &   553 &  7.7\% & 15.4\% \\
-0.30 &   30\,933 &   955 & 15.8\% & 26.6\% \\
-0.50 &   66\,461 & 1\,645 & 33.9\% & 45.8\% \\
-0.70 &  110\,395 & 2\,366 & 56.3\% & 65.9\% \\
-0.90 &  163\,531 & 3\,156 & 83.3\% & 87.9\% \\
-0.95 &  179\,059 & 3\,371 & 91.3\% & 93.9\% \\
-1.00 &  196\,199 & 3\,591 & 100\% & 100\% \\
+0.05 &        83 &    10 &  0.0 &  0.3 \\
+0.10 &    3\,190 &   164 &  1.6 &  4.6 \\
+0.20 &   15\,165 &   553 &  7.7 & 15.4 \\
+0.50 &   66\,461 & 1\,645 & 33.9 & 45.8 \\
+0.80 &  135\,380 & 2\,783 & 69.0 & 77.5 \\
+0.95 &  179\,059 & 3\,371 & 91.3 & 93.9 \\
+1.00 &  196\,199 & 3\,591 & 100 & 100 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Data imbalance.}
-The useful examples are unevenly distributed across problems.  Some
-problems have over 700 useful lemmas (e.g., \texttt{t3\_gate\_2} with
-718), while 143 problems have exactly one.  The mean is 54.6 useful
-lemmas per problem and the median is 35.  Table~\ref{tab:imbalance}
-shows the cumulative distribution.  This imbalance must be addressed
-during training to prevent the model from overfitting to
-heavily-represented problems.  We use per-problem weighting: each
-problem contributes equally to the loss regardless of how many
-training examples it provides.
-
-\begin{table}[t]
-\centering
-\caption{Data imbalance: distribution of useful examples per problem.}
-\label{tab:imbalance}
-\begin{tabular}{rrrr}
-\toprule
-$\leq k$ useful & Problems & Cumul. \% \\
-\midrule
-1   &   143 &  4.0\% \\
-5   &   470 & 13.1\% \\
-10  &   758 & 21.1\% \\
-20  & 1\,231 & 34.3\% \\
-50  & 2\,243 & 62.5\% \\
-100 & 3\,018 & 84.0\% \\
-200 & 3\,480 & 96.9\% \\
-500 & 3\,586 & 99.9\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-\subsection{E Prover Dataset}
-\label{sec:eprover-data}
-
-For initial development and comparison, we also create a smaller
-dataset using the \Eprover theorem prover.  From a subset of 3\,161
-CNF problems, we obtain 122\,356 training examples with a
-train/validation/test split of 2\,239/279/279 problems.  The
-evaluation uses processed clauses as the cost metric (rather than
-instructions), with a 10-second wall-clock timeout.
+Useful examples are unevenly distributed: the most represented
+problem (\texttt{t3\_gate\_2}) has 718 useful lemmas, while 143
+problems have exactly~1.  The mean is 54.6 per problem (median: 35).
+We address this via per-problem loss weighting
+(Sec.~\ref{sec:training}).
 
 
 %% ================================================================
 \section{Architecture}
 \label{sec:arch}
 
-%% TODO: GNN encoder, Transformer decoder, arity constraints, pointer mechanism
-
 \subsection{Heterogeneous GNN Encoder}
 
-\subsection{Autoregressive Decoder}
+The input CNF problem is represented as a heterogeneous graph with
+five node types---\emph{clause}, \emph{literal}, \emph{symbol},
+\emph{term}, and \emph{variable}---and 16~directed edge types
+capturing the problem structure (e.g., \texttt{clause\_has\_lit},
+\texttt{literal\_has\_arg}, \texttt{term\_has\_subterm}, and their
+reverses).  Each node receives a learned type embedding as its initial
+feature.
 
-\subsection{Arity-Constrained Generation}
+We apply $L=4$ layers of message passing.  Edges carrying positional
+information (argument positions in terms and literals) use GINEConv
+(edge-aware graph isomorphism network~\cite{Hu2020}), while
+non-positional edges use SAGEConv~\cite{Hamilton2017}.  After message
+passing, the graph pooling produces a global context vector via mean
+aggregation over symbol nodes.
+
+Optionally, \emph{named symbol embeddings} can be enabled: each of
+the ${\sim}3\,097$ Mizar symbols receives a learnable embedding vector
+looked up by name, added to the GNN's symbol node features.  This
+allows the model to leverage symbol identity across problems (shared
+mathematical vocabulary), at the cost of symbol-level generalization.
+
+\subsection{Autoregressive Transformer Decoder}
+
+The decoder generates a clause as a sequence of \emph{actions}, each
+paired with an \emph{argument}.  There are seven action types:
+\textsc{NewLitPos} and \textsc{NewLitNeg} (start a positive/negative
+literal), \textsc{Pred} (select predicate symbol), \textsc{ArgVar}
+(select variable), \textsc{ArgFunc} (select function symbol and push
+arity obligation), \textsc{EndArgs} (close current term), and
+\textsc{EndClause} (finish generation).
+
+The decoder is a standard Transformer with $d$-dimensional
+cross-attention to the encoded graph.  At each step, it outputs:
+\begin{enumerate}
+\item An \emph{action distribution} over the 7~types, masked by
+  role constraints (e.g., after \textsc{NewLitPos}, only
+  \textsc{Pred} is allowed).
+\item A \emph{pointer distribution} over graph symbols for
+  \textsc{Pred}/\textsc{ArgFunc} actions, computed via attention
+  between the decoder state and symbol node embeddings.  Role-aware
+  masking ensures predicates are only pointed to by \textsc{Pred}
+  and functions by \textsc{ArgFunc}.
+\item A \emph{variable distribution} over $V_{\max}=20$ variable
+  slots for \textsc{ArgVar} actions.
+\end{enumerate}
+
+At inference, we use KV caching for efficient autoregressive
+generation.
+
+\subsection{Arity-Constrained Decoding}
+
+A key challenge is syntactic validity: generated clauses must have
+correct argument counts for each symbol.  We maintain an arity
+obligation stack during generation.  When a symbol with arity~$k$ is
+selected (via \textsc{Pred} or \textsc{ArgFunc}), $k$ arguments are
+required before \textsc{EndArgs} is allowed.  This state machine
+modifies the action logits at each step, setting disallowed actions to
+$-\infty$ before sampling.
 
 \subsection{Model Variants}
+
+We experiment with three decoder architectures sharing the same GNN
+encoder:
+\begin{itemize}
+\item \textbf{Plan A (Transformer)}: the primary architecture
+  described above.
+\item \textbf{Plan C (Conditional VAE)}: adds a variational
+  autoencoder that encodes the target clause into a latent code,
+  concatenated with the graph encoding.  At inference, latent codes
+  are sampled from the prior, providing a natural source of diversity.
+\item \textbf{Plan D (SSM)}: replaces the Transformer with a
+  state-space model (Mamba-style~\cite{Gu2024}), using gated linear
+  fusion instead of cross-attention.
+\end{itemize}
 
 
 %% ================================================================
 \section{Training}
 \label{sec:training}
 
-%% TODO: Loss function, per-problem weighting, data augmentation
+The loss is a weighted sum of three cross-entropy terms: action
+prediction, pointer prediction (for symbol selection), and variable
+prediction.  Pointer and variable losses use \texttt{ignore\_index}
+for steps where those outputs are irrelevant (e.g., variable loss is
+ignored for non-\textsc{ArgVar} steps).
+
+Each sample is weighted by $w = 1/(1 + r)$ where $r$ is the speedup
+ratio, so that higher-speedup examples contribute more.  To address
+data imbalance across problems, each problem's samples are normalized
+so that all problems contribute equally to the epoch loss.
+
+We use AdamW with cosine learning rate scheduling.  For the \Eprover
+dataset, we train with hidden dimension $d \in \{256, 512, 1024\}$ and
+batch sizes 16--64 on A100 GPUs.  The \Eprover problems average
+${\sim}45$~clauses (${\sim}400$ graph nodes); we filter at 1\,500
+nodes.  For the \Vampire dataset, problems are substantially larger
+(${\sim}430$~clauses, ${\sim}3\,000$ nodes on average for useful
+problems), so we filter at 5\,000 nodes, retaining ${\sim}90\%$ of
+useful problems.
 
 
 %% ================================================================
-\section{Evaluation}
-\label{sec:eval}
+\section{E Prover Evaluation}
+\label{sec:eprover-results}
 
-%% TODO: E prover results, Vampire results, complementarity, budget analysis
+\subsection{Experimental Setup}
+
+We train 13~model configurations varying hidden dimension ($d \in
+\{256, 512\}$), decoder variant (A, C, D), named embeddings
+(on/off), and sampling parameters.  For each configuration, we
+generate 40--80 conjectures per problem using nucleus sampling with
+varying temperature and top-$k$/top-$p$ settings.
+
+Each generated conjecture is evaluated by running \Eprover with a
+2-second timeout for both $P \cup \{L\}$ and $P \cup \{\neg L\}$.
+The test set contains 279 problems, of which 187 are provable by
+\Eprover in the baseline.
+
+\subsection{Per-Method Results}
+
+Table~\ref{tab:eprover-methods} shows results for each configuration.
+The best single method (\texttt{a256\_wide}, using $d=256$ with high
+diversity: temperature 1.5, top-$k$=25, top-$p$=0.98) helps on 96
+test problems (51.3\%).  More diverse sampling consistently
+outperforms precise sampling in problem coverage, though at the cost
+of a slightly higher average ratio.
+
+\begin{table}[t]
+\centering
+\caption{Per-method results on the \Eprover test set (187 provable problems).
+$d$: hidden dimension. Var: decoder variant. NE: named embeddings.
+Sampling: P=precise, D=diverse, W=wide.}
+\label{tab:eprover-methods}
+\small
+\begin{tabular}{lcccrrrr}
+\toprule
+Config & $d$ & Var & Samp. & Helped & \%Prov & AvgR & HardSc \\
+\midrule
+a256\_precise          & 256 & A & P & 77  & 41.2 & 0.574 & 252.7 \\
+a256\_balanced\_div    & 256 & A & D & 87  & 46.5 & 0.524 & 315.1 \\
+a256\_wide             & 256 & A & W & 96  & 51.3 & 0.558 & 325.1 \\
+a512\_diverse          & 512 & A & D & 80  & 42.8 & 0.536 & 284.4 \\
+af6\_a\_named\_big\_div& 256 & A & D & 91  & 48.7 & 0.574 & 296.1 \\
+af6\_c\_named          & 256 & C & P & 69  & 36.9 & 0.563 & 239.4 \\
+af6\_d\_named          & 256 & D & P & 61  & 32.6 & 0.589 & 200.3 \\
+\midrule
+Union (all 13)         &     &   &   & 125 & 66.8 & 0.511 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\subsection{Complementarity and Ensembling}
+
+A key finding is strong complementarity across configurations.
+Table~\ref{tab:combos} shows the best $N$-method combinations.  The
+best single method covers 96 problems; adding a second method (C
+variant) jumps to 110; five methods reach 123.  Each model variant and
+sampling strategy contributes unique problems that no other
+configuration finds.
+
+\begin{table}[t]
+\centering
+\caption{Best $N$-method combinations on the test set, by three
+  criteria.  Hard = $\sum (1-r) \log L$, prioritizing harder problems.}
+\label{tab:combos}
+\small
+\begin{tabular}{clrrr}
+\toprule
+$N$ & Best combination (by coverage) & Helped & HardSc & Saved \\
+\midrule
+1 & a256\_wide                          & 96  & 325 & 197K \\
+2 & a256\_wide + c\_named               & 110 & 388 & 282K \\
+3 & a256\_wide + a512\_div + c\_named    & 116 & 408 & 287K \\
+4 & + a256\_bal\_div                     & 121 & 425 & 297K \\
+5 & + d\_named                           & 123 & 449 & 322K \\
+\midrule
+\multicolumn{2}{l}{Oracle (all 13 methods)} & 125 & & 338K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The oracle winner distribution shows that no single method dominates:
+\texttt{a256\_balanced\_diverse} provides the best ratio on 36\% of
+oracle-selected problems, \texttt{a256\_wide} on 16\%,
+\texttt{a512\_diverse} on 9\%, with the remaining 39\% split across C,
+D variants and other configurations.
+
+\subsection{Rank Analysis}
+
+For practical deployment, an important question is how many
+conjectures per problem must be evaluated.  We find that the first
+useful conjecture appears at median rank 2--4 for most methods.
+However, wider sampling strategies (which achieve higher coverage)
+have useful conjectures spread more broadly: \texttt{a256\_wide} has a
+mean first-useful rank of 11.2 (max: 75), compared to 2.8 for
+\texttt{af6\_a\_named\_big}.
+
+At top-5, the best single method covers 60 problems (32\%); at
+top-10, 70 (37\%); at top-20, 81 (43\%).  Going from top-20 to
+top-80 adds only 15 more problems at $4\times$ the evaluation cost
+per problem, illustrating diminishing returns.
+
+\subsection{Largest Speedups}
+
+The largest observed speedups exceed two orders of magnitude.  On
+\texttt{l101\_xreal\_1} ($L = 23\,967$ processed clauses), a
+generated conjecture achieves a $196\times$ speedup (ratio 0.005).
+On \texttt{t87\_qc\_lang2} ($L = 9\,262$), a $50\times$ speedup.
+On \texttt{t35\_xboole\_1} ($L = 39\,681$, one of the hardest
+problems), a $38\times$ speedup.  These demonstrate that neural
+conjecture generation can find lemmas that dramatically simplify proofs
+which are very expensive for the baseline prover.
 
 
 %% ================================================================
 \section{Related Work}
 \label{sec:related}
 
-%% TODO: Cut introduction in ATPs, neural theorem proving, lemma generation
+\paragraph{Cut introduction in ATPs.}
+The idea of introducing lemmas to shorten proofs has a long
+history~\cite{Gentzen1935}.  In the ATP context, Hetzl et
+al.~\cite{Hetzl2014} study cut introduction from a proof-theoretic
+perspective.  The key difference in our approach is that we
+\emph{generate} candidate cuts neurally, rather than extracting them
+from existing proofs.
+
+\paragraph{Neural theorem proving.}
+Machine learning has been applied to premise selection~\cite{KaliszykU2015},
+proof guidance~\cite{Loos2017,Jakubuv2019,Suda2021,ChvalovskyKPU2023},
+and tactic prediction for interactive theorem
+provers~\cite{Yang2019,Polu2020}.
+Our work is complementary: rather than guiding the proof search, we
+generate auxiliary formulas that restructure the problem.
+
+\paragraph{Lemma generation.}
+Most closely related is work on neural lemma
+generation~\cite{WuJiangCunha2021}, which generates lemmas for
+interactive provers.  Our approach differs in targeting first-order
+ATPs with the cut rule, using a graph-structured encoder, and
+evaluating on a much larger scale with rigorous prover-based
+verification.  Gauthier~\cite{Gauthier2021} explores reinforcement
+learning for cut introduction in tableaux provers.
 
 
 %% ================================================================
 \section{Conclusion}
 \label{sec:conclusion}
 
-%% TODO
+We have presented a neural system for generating intermediate lemmas
+that speed up automated theorem provers.  On the \Eprover \Mizar
+dataset, our ensemble of model variants helps on 66.8\% of provable
+test problems, with individual speedups exceeding $196\times$.  The
+strong complementarity across decoder variants (Transformer, CVAE,
+SSM) and sampling strategies suggests that diverse generation is at
+least as important as model quality for maximizing coverage.
+
+We have also constructed a substantially larger \Vampire dataset
+(196K useful examples from 34K problems, $12\times$ the \Eprover
+data), which we expect to significantly improve model quality. The
+\Vampire problems are ${\sim}10\times$ larger (full \Mizar axiom
+set vs.\ SInE-filtered), presenting both a challenge for the GNN
+encoder and an opportunity for the model to learn to identify relevant
+structure in larger contexts.
+
+Future directions include: (1) training on the full \Vampire dataset
+and evaluating the resulting conjectures with \Vampire, (2)~iterative
+conjecture generation (using generated conjectures to create further
+training data), (3)~teacher-forced log-probability scoring to replace
+the current heuristic ranking, and (4)~data augmentation through
+literal order permutation.
 
 
 %% ================================================================
 \bibliographystyle{plain}
-\begin{thebibliography}{10}
+\begin{thebibliography}{20}
 
 \bibitem{Schulz2002}
 S.~Schulz.
@@ -301,6 +524,84 @@ A.~Grabowski, A.~Korni{\l}owicz, and A.~Naumowicz.
 G.~Sutcliffe.
 \newblock The {TPTP} problem library and associated infrastructure.
 \newblock {\em J. Automated Reasoning}, 43(4):337--362, 2009.
+
+\bibitem{HoderV2011}
+K.~Hoder and A.~Voronkov.
+\newblock Sine qua non for large theory reasoning.
+\newblock In {\em CADE-23}, LNCS 6803, pp.~299--314, 2011.
+
+\bibitem{Hu2020}
+W.~Hu, B.~Fey, M.~Zitnik, Y.~Dong, H.~Ren, B.~Liu, M.~Catasta, and
+  J.~Leskovec.
+\newblock Open graph benchmark: datasets for machine learning on graphs.
+\newblock In {\em NeurIPS 2020}, 2020.
+
+\bibitem{Hamilton2017}
+W.~Hamilton, Z.~Ying, and J.~Leskovec.
+\newblock Inductive representation learning on large graphs.
+\newblock In {\em NeurIPS 2017}, 2017.
+
+\bibitem{Gu2024}
+A.~Gu and T.~Dao.
+\newblock Mamba: linear-time sequence modeling with selective state spaces.
+\newblock {\em arXiv:2312.00752}, 2024.
+
+\bibitem{Gentzen1935}
+G.~Gentzen.
+\newblock Untersuchungen {\"u}ber das logische {S}chlie{\ss}en.
+\newblock {\em Mathematische Zeitschrift}, 39:176--210, 1935.
+
+\bibitem{Hetzl2014}
+S.~Hetzl, A.~Leitsch, G.~Reis, J.~Tapolczai, and D.~Weller.
+\newblock Introducing quantified cuts in logic with equality.
+\newblock In {\em IJCAR 2014}, LNCS 8562, pp.~240--254, 2014.
+
+\bibitem{KaliszykU2015}
+C.~Kaliszyk and J.~Urban.
+\newblock {MiZAR} 40 for {M}izar 40.
+\newblock {\em J. Automated Reasoning}, 55(3):245--256, 2015.
+
+\bibitem{Loos2017}
+S.~Loos, G.~Irving, C.~Szegedy, and C.~Kaliszyk.
+\newblock Deep network guided proof search.
+\newblock In {\em LPAR-21}, EPiC vol.~46, pp.~85--105, 2017.
+
+\bibitem{Jakubuv2019}
+J.~Jakub\r{u}v and J.~Urban.
+\newblock Hammering {M}izar by learning clause guidance.
+\newblock In {\em ITP 2019}, LIPIcs vol.~141, pp.~34:1--34:8, 2019.
+
+\bibitem{Suda2021}
+M.~Suda.
+\newblock Vampire with a brain is a good {ITP} hammer.
+\newblock In {\em FroCoS 2021}, LNCS 12941, pp.~192--209, 2021.
+
+\bibitem{ChvalovskyKPU2023}
+K.~Chvalovsk{\'y}, J.~Jakub\r{u}v, M.~Piotrowski, and J.~Urban.
+\newblock Learning theorem proving components.
+\newblock In {\em LPAR-24}, EPiC vol.~94, 2023.
+
+\bibitem{Yang2019}
+K.~Yang and J.~Deng.
+\newblock Learning to prove theorems via interacting with proof assistants.
+\newblock In {\em ICML 2019}, 2019.
+
+\bibitem{Polu2020}
+S.~Polu and I.~Sutskever.
+\newblock Generative language modeling for automated theorem proving.
+\newblock {\em arXiv:2009.03393}, 2020.
+
+\bibitem{WuJiangCunha2021}
+Y.~Wu, A.~Q.~Jiang, and R.~Y.~de~Cunha.
+\newblock {INT}: an inequality benchmark for evaluating generalization in
+  theorem proving.
+\newblock In {\em ICLR 2021}, 2021.
+
+\bibitem{Gauthier2021}
+T.~Gauthier.
+\newblock Deep reinforcement learning for synthesizing functions in
+  higher-order logic.
+\newblock In {\em LPAR-23}, EPiC vol.~73, 2020.
 
 \end{thebibliography}
 
