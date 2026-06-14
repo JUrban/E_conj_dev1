@@ -45,10 +45,10 @@ echo ""
 export PYTHONUNBUFFERED=1
 
 CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.train_variant \
-    --variant a \
+    --variant $VARIANT \
     --problems_dir v1/cnf \
-    --lemmas_file v1/lemmas \
-    --statistics_file v1/statistics_eformat \
+    --lemmas_file v1/lemmas_useful \
+    --statistics_file v1/statistics_useful \
     --cache_dir v1/cache \
     --train_split v1/train_problems.txt \
     --val_split v1/val_problems.txt \
