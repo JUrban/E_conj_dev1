@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
 """
-Convert Vampire FOF lemmas to CNF format and create unified lemmas/statistics files
-compatible with the existing ConjectureDataset pipeline.
+Convert Vampire FOF lemmas to CNF and create lemmas_useful + statistics_useful
+files for training. Self-contained: reads raw data files directly.
 
-Input:
-  v1/cnf_vout1/          - per-problem FOF lemma files
-  v1/statistics.tsv      - computed statistics with ratios
+Input (raw Vampire output):
+  v1/00cnfburnedV50k      - baseline proof instructions (50M limit)
+  v1/00vconj_out_res1     - P & L results (25M limit)
+  v1/00vconj_outn_res1    - P & ~L results (25M limit)
+  v1/cnf_vout1/           - per-problem FOF lemma files
 
 Output:
-  v1/lemmas              - one CNF lemma per line: ./problem/problem__lemma_id cnf(...)
-  v1/statistics_eformat  - E-prover-compatible statistics format
+  v1/lemmas_useful        - useful CNF lemmas (ratio < 1), one per line
+  v1/statistics_useful    - statistics for useful pairs, E-compatible format
 
-The FOF lemmas are all universally-quantified disjunctions (no existentials,
-implications, or conjunctions), so conversion to CNF is trivial:
-strip the fof() wrapper and quantifiers, emit as cnf().
+Usage:
+  python3 v1/preprocess_lemmas.py
 """
 
 import os
 import re
-import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASELINE_FILE = os.path.join(SCRIPT_DIR, '00cnfburnedV50k')
+PL_FILE = os.path.join(SCRIPT_DIR, '00vconj_out_res1')
+PNL_FILE = os.path.join(SCRIPT_DIR, '00vconj_outn_res1')
+LEMMA_DIR = os.path.join(SCRIPT_DIR, 'cnf_vout1')
+LIMIT = 25000  # 25M instruction limit for P&L and P&~L
 
 
 def fof_to_cnf(fof_line):
@@ -31,29 +36,25 @@ def fof_to_cnf(fof_line):
 
     Returns (lemma_id, cnf_line) or None on parse failure.
     """
-    # Extract: fof(NAME, ROLE, FORMULA).
     m = re.match(r'fof\((\w+)\s*,\s*(\w+)\s*,\s*\((.+)\)\s*\)\s*\.', fof_line.strip())
     if not m:
-        # Try without outer parens
         m = re.match(r'fof\((\w+)\s*,\s*(\w+)\s*,\s*(.+)\s*\)\s*\.', fof_line.strip())
         if not m:
             return None
 
     name, role, formula = m.group(1), m.group(2), m.group(3).strip()
 
-    # Strip universal quantifiers: ! [X0] : ! [X1] : ... body
+    # Strip universal quantifiers
     body = formula
     while True:
-        # Match: ! [Vars] : rest
         qm = re.match(r'\s*!\s*\[([^\]]*)\]\s*:\s*(.+)', body, re.DOTALL)
         if qm:
             body = qm.group(2).strip()
         else:
             break
 
-    # Strip outer parens if present
+    # Strip balanced outer parens
     if body.startswith('(') and body.endswith(')'):
-        # Check balanced
         depth = 0
         balanced = True
         for i, c in enumerate(body):
@@ -72,42 +73,71 @@ def fof_to_cnf(fof_line):
 
 
 def main():
-    lemma_dir = os.path.join(SCRIPT_DIR, 'cnf_vout1')
-    stats_file = os.path.join(SCRIPT_DIR, 'statistics.tsv')
-
-    # Load statistics to know which (problem, lemma) pairs exist
-    print("Loading statistics...")
-    stats = {}  # (problem, lemma_id) -> ratio
-    stats_detail = {}  # (problem, lemma_id) -> (i_pl, i_pnl, i_base)
-    with open(stats_file) as f:
-        header = f.readline()
+    # Step 1: Parse baseline
+    print("Step 1/4: Loading baseline...")
+    baseline = {}
+    with open(BASELINE_FILE) as f:
         for line in f:
-            parts = line.strip().split('\t')
-            if len(parts) >= 10:
-                prob, lemma = parts[0], parts[1]
-                i_base, i_pl, i_pnl = int(parts[2]), int(parts[3]), int(parts[4])
-                ratio = float(parts[8])
-                stats[(prob, lemma)] = ratio
-                stats_detail[(prob, lemma)] = (i_pl, i_pnl, i_base)
-    print(f"  {len(stats)} entries")
+            m = re.match(r'^([^:]+):% Instructions burned: (\d+)', line)
+            if m:
+                baseline[m.group(1)] = int(m.group(2))
+    print(f"  {len(baseline)} problems")
 
-    # Get set of problems that have stats entries
-    stats_problems = set(k[0] for k in stats.keys())
+    # Step 2: Parse P&L and P&~L results
+    print("Step 2/4: Loading P&L results...")
+    pl = {}
+    with open(PL_FILE) as f:
+        for line in f:
+            m = re.match(r'\./(?:.+/)?(.+?)__(.+?)\.gz:% Instructions burned: (\d+)', line)
+            if m:
+                pl[(m.group(1), m.group(2))] = int(m.group(3))
+    print(f"  {len(pl)} entries")
 
-    # Convert FOF lemmas to CNF and write useful-only files
+    print("Step 3/4: Loading P&~L results...")
+    pnl = {}
+    with open(PNL_FILE) as f:
+        for line in f:
+            m = re.match(r'\./(?:.+/)?(.+?)__(.+?)\.gz:% Instructions burned: (\d+)', line)
+            if m:
+                pnl[(m.group(1), m.group(2))] = int(m.group(3))
+    print(f"  {len(pnl)} entries")
+
+    # Step 3: Compute useful pairs
+    common = set(pl.keys()) & set(pnl.keys())
+    print(f"  Common pairs: {len(common)}")
+
+    useful = {}  # (problem, lemma_id) -> (ratio, i_pl, i_pnl, i_base)
+    for prob, lemma in common:
+        i_pl = pl[(prob, lemma)]
+        i_pnl = pnl[(prob, lemma)]
+        if i_pl > LIMIT or i_pnl > LIMIT:
+            continue
+        i_base = baseline.get(prob)
+        if i_base is None or i_base <= 0:
+            continue
+        ratio = (i_pl + i_pnl) / i_base
+        if 0 < ratio < 1.0:
+            useful[(prob, lemma)] = (ratio, i_pl, i_pnl, i_base)
+
+    print(f"  Useful pairs (0 < ratio < 1): {len(useful)}")
+    useful_problems = set(k[0] for k in useful.keys())
+    print(f"  Useful problems: {len(useful_problems)}")
+
+    # Step 4: Convert FOF lemmas to CNF for useful pairs only
+    print("Step 4/4: Converting FOF lemmas to CNF...")
     lemmas_path = os.path.join(SCRIPT_DIR, 'lemmas_useful')
     statistics_path = os.path.join(SCRIPT_DIR, 'statistics_useful')
 
-    n_converted = 0
+    n_written = 0
     n_failed = 0
-    n_matched = 0
 
-    problems = sorted(os.listdir(lemma_dir))
-    print(f"Processing {len(problems)} problem lemma files...")
-
+    problems = sorted(os.listdir(LEMMA_DIR))
     with open(lemmas_path, 'w') as lf, open(statistics_path, 'w') as sf:
         for pi, prob_name in enumerate(problems):
-            prob_path = os.path.join(lemma_dir, prob_name)
+            if prob_name not in useful_problems:
+                continue
+
+            prob_path = os.path.join(LEMMA_DIR, prob_name)
             if not os.path.isfile(prob_path):
                 continue
 
@@ -123,35 +153,29 @@ def main():
                         continue
 
                     lemma_id, cnf_line = result
-                    n_converted += 1
-
-                    # Only write useful entries (0 < ratio < 1)
                     key = (prob_name, lemma_id)
-                    if key in stats:
-                        ratio = stats[key]
-                        if 0 < ratio < 1.0:
-                            # Lemma in parse_lemma_line format:
-                            # ./problem/lemma_id: cnf(...)
-                            lf.write(f"./{prob_name}/{lemma_id}: {cnf_line}\n")
+                    if key not in useful:
+                        continue
 
-                            # Statistics in E-format:
-                            # ratio:problem:cut_id:L1:L2:L1+L2:# label :L
-                            i_pl = stats_detail.get(key, (0, 0, 0))[0]
-                            i_pnl = stats_detail.get(key, (0, 0, 0))[1]
-                            i_base = stats_detail.get(key, (0, 0, 0))[2]
-                            sf.write(f"{ratio:.6f}:{prob_name}:{lemma_id}:"
-                                     f"{i_pl}:{i_pnl}:{i_pl+i_pnl}:"
-                                     f"# Instructions :{i_base}\n")
-                            n_matched += 1
+                    ratio, i_pl, i_pnl, i_base = useful[key]
+
+                    # Lemma format: ./problem/lemma_id: cnf(...)
+                    lf.write(f"./{prob_name}/{lemma_id}: {cnf_line}\n")
+
+                    # Statistics E-format:
+                    # ratio:problem:cut_id:L1:L2:L1+L2:# label :L
+                    sf.write(f"{ratio:.6f}:{prob_name}:{lemma_id}:"
+                             f"{i_pl}:{i_pnl}:{i_pl+i_pnl}:"
+                             f"# Instructions :{i_base}\n")
+                    n_written += 1
 
             if (pi + 1) % 5000 == 0:
-                print(f"  {pi+1}/{len(problems)}: {n_converted} converted, "
-                      f"{n_matched} matched, {n_failed} failed")
+                print(f"  {pi+1}/{len(problems)}: {n_written} written, "
+                      f"{n_failed} failed")
 
     print(f"\nDone:")
-    print(f"  Converted: {n_converted}")
-    print(f"  Failed:    {n_failed}")
-    print(f"  Matched stats: {n_matched}")
+    print(f"  Written: {n_written}")
+    print(f"  Failed:  {n_failed}")
     print(f"  Wrote: {lemmas_path}")
     print(f"  Wrote: {statistics_path}")
 
