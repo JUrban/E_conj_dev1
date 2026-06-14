@@ -94,9 +94,9 @@ def main():
     # Get set of problems that have stats entries
     stats_problems = set(k[0] for k in stats.keys())
 
-    # Convert FOF lemmas to CNF and write unified lemmas file
-    lemmas_path = os.path.join(SCRIPT_DIR, 'lemmas')
-    statistics_path = os.path.join(SCRIPT_DIR, 'statistics_eformat')
+    # Convert FOF lemmas to CNF and write useful-only files
+    lemmas_path = os.path.join(SCRIPT_DIR, 'lemmas_useful')
+    statistics_path = os.path.join(SCRIPT_DIR, 'statistics_useful')
 
     n_converted = 0
     n_failed = 0
@@ -125,23 +125,24 @@ def main():
                     lemma_id, cnf_line = result
                     n_converted += 1
 
-                    # Write in the format expected by parse_lemma_line:
-                    # ./problem/lemma_id: cnf(...)
-                    lf.write(f"./{prob_name}/{lemma_id}: {cnf_line}\n")
-
-                    # Write statistics in E-format:
-                    # ratio:problem:cut_id:L1:L2:L1+L2:# Processed clauses :L
+                    # Only write useful entries (0 < ratio < 1)
                     key = (prob_name, lemma_id)
                     if key in stats:
                         ratio = stats[key]
-                        # We use instruction counts; store in the L1/L2/L fields
-                        i_pl = stats_detail.get(key, (0, 0, 0))[0]
-                        i_pnl = stats_detail.get(key, (0, 0, 0))[1]
-                        i_base = stats_detail.get(key, (0, 0, 0))[2]
-                        sf.write(f"{ratio:.6f}:{prob_name}:{lemma_id}:"
-                                 f"{i_pl}:{i_pnl}:{i_pl+i_pnl}:"
-                                 f"# Instructions :{i_base}\n")
-                        n_matched += 1
+                        if 0 < ratio < 1.0:
+                            # Lemma in parse_lemma_line format:
+                            # ./problem/lemma_id: cnf(...)
+                            lf.write(f"./{prob_name}/{lemma_id}: {cnf_line}\n")
+
+                            # Statistics in E-format:
+                            # ratio:problem:cut_id:L1:L2:L1+L2:# label :L
+                            i_pl = stats_detail.get(key, (0, 0, 0))[0]
+                            i_pnl = stats_detail.get(key, (0, 0, 0))[1]
+                            i_base = stats_detail.get(key, (0, 0, 0))[2]
+                            sf.write(f"{ratio:.6f}:{prob_name}:{lemma_id}:"
+                                     f"{i_pl}:{i_pnl}:{i_pl+i_pnl}:"
+                                     f"# Instructions :{i_base}\n")
+                            n_matched += 1
 
             if (pi + 1) % 5000 == 0:
                 print(f"  {pi+1}/{len(problems)}: {n_converted} converted, "
