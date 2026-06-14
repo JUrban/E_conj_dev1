@@ -98,14 +98,18 @@ def train(args):
     train_ds = ConjectureDataset(
         problems_dir=args.problems_dir, lemmas_file=args.lemmas_file,
         statistics_file=args.statistics_file, cache_dir=args.cache_dir,
-        max_ratio=args.max_ratio, split='train',
+        max_ratio=args.max_ratio,
+        split='train' if not args.train_split else 'all',
+        split_file=args.train_split,
         max_samples=args.max_samples, max_nodes=args.max_nodes,
         symbol_vocab=symbol_vocab,
     )
     val_ds = ConjectureDataset(
         problems_dir=args.problems_dir, lemmas_file=args.lemmas_file,
         statistics_file=args.statistics_file, cache_dir=args.cache_dir,
-        max_ratio=args.max_ratio, split='val',
+        max_ratio=args.max_ratio,
+        split='val' if not args.val_split else 'all',
+        split_file=args.val_split,
         max_samples=args.max_samples // 4 if args.max_samples > 0 else 0,
         max_nodes=args.max_nodes,
         symbol_vocab=symbol_vocab,
@@ -259,6 +263,10 @@ def main():
     p.add_argument('--lemmas_file', default='lemmas')
     p.add_argument('--statistics_file', default='statistics')
     p.add_argument('--cache_dir', default='cache')
+    p.add_argument('--train_split', default=None,
+                   help='File listing train problem names (one per line)')
+    p.add_argument('--val_split', default=None,
+                   help='File listing val problem names (one per line)')
     p.add_argument('--save_dir', default=None)
     p.add_argument('--resume', default=None,
                    help='Resume from checkpoint dir (e.g., checkpoints_d)')

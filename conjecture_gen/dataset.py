@@ -34,6 +34,7 @@ class ConjectureDataset(Dataset):
         max_ratio: float = 1.0,
         min_ratio: float = 0.0,
         split: str = 'all',  # 'train', 'val', 'test', or 'all'
+        split_file: str = None,  # path to file listing problem names for this split
         val_frac: float = 0.1,
         test_frac: float = 0.1,
         seed: int = 42,
@@ -107,24 +108,33 @@ class ConjectureDataset(Dataset):
                       f"large problems ({before - len(self.samples)} samples)")
 
         # Split by problem (not by sample!) for proper evaluation
-        all_problems = sorted(self.problem_names)
-        rng = torch.Generator().manual_seed(seed)
-        perm = torch.randperm(len(all_problems), generator=rng).tolist()
-        n_val = int(len(all_problems) * val_frac)
-        n_test = int(len(all_problems) * test_frac)
+        if split_file is not None:
+            # Use external split file (one problem name per line)
+            with open(split_file) as f:
+                keep = set(line.strip() for line in f if line.strip())
+            # Intersect with available problems
+            keep = keep & set(self.problem_names)
+        elif split != 'all':
+            all_problems = sorted(self.problem_names)
+            rng = torch.Generator().manual_seed(seed)
+            perm = torch.randperm(len(all_problems), generator=rng).tolist()
+            n_val = int(len(all_problems) * val_frac)
+            n_test = int(len(all_problems) * test_frac)
 
-        test_problems = set(all_problems[perm[i]] for i in range(n_test))
-        val_problems = set(all_problems[perm[i]] for i in range(n_test, n_test + n_val))
-        train_problems = set(all_problems) - test_problems - val_problems
+            test_problems = set(all_problems[perm[i]] for i in range(n_test))
+            val_problems = set(all_problems[perm[i]] for i in range(n_test, n_test + n_val))
+            train_problems = set(all_problems) - test_problems - val_problems
 
-        if split == 'train':
-            keep = train_problems
-        elif split == 'val':
-            keep = val_problems
-        elif split == 'test':
-            keep = test_problems
+            if split == 'train':
+                keep = train_problems
+            elif split == 'val':
+                keep = val_problems
+            elif split == 'test':
+                keep = test_problems
+            else:
+                keep = set(all_problems)
         else:
-            keep = set(all_problems)
+            keep = set(self.problem_names)
 
         self.samples = [s for s in self.samples if s['problem'] in keep]
         if max_samples > 0 and len(self.samples) > max_samples:
