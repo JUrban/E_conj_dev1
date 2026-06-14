@@ -18,6 +18,7 @@ shift 2 2>/dev/null || shift $#
 EXTRA="$*"
 VARIANT="a"
 NAMED=""
+prev=""
 
 # Extract --variant and --named_embeddings from EXTRA if present
 for arg in $EXTRA; do
