@@ -233,6 +233,12 @@ def train(args):
         else:
             print(f"WARNING: --resume {args.resume} but no best_model.pt found, starting fresh")
 
+    # Mixed precision training (AMP) — ~1.5-2x faster on A100
+    scaler = None
+    if device.type == 'cuda' and args.amp:
+        scaler = torch.cuda.amp.GradScaler()
+        print("Using mixed precision (AMP)")
+
     for epoch in range(start_epoch, start_epoch + args.epochs):
         if hasattr(train_loader, 'batch_sampler') and hasattr(train_loader.batch_sampler, 'set_epoch'):
             train_loader.batch_sampler.set_epoch(epoch)
@@ -245,17 +251,26 @@ def train(args):
             try:
                 batch = batch.to(device)
                 optimizer.zero_grad()
-                output = model(batch)
-                losses = loss_fn(output, batch)
-                losses['total'].backward()
-                nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
-                optimizer.step()
+                if scaler is not None:
+                    with torch.cuda.amp.autocast():
+                        output = model(batch)
+                        losses = loss_fn(output, batch)
+                    scaler.scale(losses['total']).backward()
+                    scaler.unscale_(optimizer)
+                    nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    output = model(batch)
+                    losses = loss_fn(output, batch)
+                    losses['total'].backward()
+                    nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+                    optimizer.step()
 
                 for k in epoch_losses:
                     epoch_losses[k] += losses[k] if isinstance(losses[k], float) else losses[k].item()
                 n_batches += 1
             except torch.cuda.OutOfMemoryError:
-                # Skip oversized batches, free memory, continue training
                 torch.cuda.empty_cache()
                 print(f"  [{epoch}] batch {batch_idx+1}: CUDA OOM, skipped", flush=True)
                 continue
@@ -277,8 +292,13 @@ def train(args):
                 if n_val >= 50:
                     break
                 batch = batch.to(device)
-                output = model(batch)
-                losses = loss_fn(output, batch)
+                if scaler is not None:
+                    with torch.cuda.amp.autocast():
+                        output = model(batch)
+                        losses = loss_fn(output, batch)
+                else:
+                    output = model(batch)
+                    losses = loss_fn(output, batch)
                 for k in val_losses:
                     val_losses[k] += losses[k] if isinstance(losses[k], float) else losses[k].item()
                 n_val += 1
@@ -343,6 +363,8 @@ def main():
     p.add_argument('--max_ratio', type=float, default=0.5)
     p.add_argument('--no_precompute', action='store_true',
                    help='Disable precomputing all samples into RAM (needed for large datasets)')
+    p.add_argument('--amp', action='store_true',
+                   help='Use mixed precision training (fp16) for ~1.5-2x GPU speedup')
     p.add_argument('--max_batch_nodes', type=int, default=50000,
                    help='Max total graph nodes per batch (size-aware batching)')
     p.add_argument('--max_samples', type=int, default=200)
