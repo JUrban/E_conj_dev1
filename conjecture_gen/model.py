@@ -446,7 +446,8 @@ class PointerTreeDecoder(nn.Module):
         if max_n == 0:
             max_n = 1
 
-        padded = torch.zeros(batch_size, max_n, self.hidden_dim, device=device)
+        padded = torch.zeros(batch_size, max_n, self.hidden_dim,
+                             device=device, dtype=embeds.dtype)
         mask = torch.zeros(batch_size, max_n, dtype=torch.bool, device=device)
 
         sorted_idx = torch.argsort(batch_assign, stable=True)
