@@ -82,21 +82,17 @@ def main():
             skipped_no_premise += 1
             continue
 
-        # Build problem file
+        # Build problem file (pure FOF, no comments/metadata)
         problem_path = os.path.join(output_dir, f'{theorem}.p')
         with open(problem_path, 'w') as f:
-            f.write(f"% Problem: {theorem}\n")
-            f.write(f"% Premises: {len(premises)}\n\n")
-
             # Write premises as axioms (they already have role=axiom)
             for prem in premises:
                 f.write(statements[prem] + '\n')
 
             # Write theorem as conjecture (change role from axiom to conjecture)
             thm_stmt = statements[theorem]
-            # Replace first occurrence of ', axiom,' with ', conjecture,'
             conj_stmt = thm_stmt.replace(', axiom,', ', conjecture,', 1)
-            f.write('\n' + conj_stmt + '\n')
+            f.write(conj_stmt + '\n')
 
         created += 1
         if created % 10000 == 0:

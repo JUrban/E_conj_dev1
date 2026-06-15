@@ -131,16 +131,57 @@ metric is processed clauses for \Eprover and instructions burned for
 \subsection{Problem Corpus}
 
 The \MML contains over 60\,000 formalized mathematical theorems.  We
-export these as first-order CNF problems in TPTP
-format~\cite{Sutcliffe2009}, obtaining 57\,880 problems.  The two
-datasets differ in problem size: the \Eprover problems were minimized
-after solving (retaining only the axioms used in the proof), reducing
-the average problem to ${\sim}45$~clauses.  This is useful for
-initial method development but unrealistic for deployment.
-The \Vampire problems use the full \Mizar axiom set,
-averaging ${\sim}430$~clauses per problem for the subset with useful
-lemmas, providing a more realistic evaluation setting.
-This difference is reflected in graph sizes (Sec.~\ref{sec:training}).
+export these as first-order problems in TPTP
+format~\cite{Sutcliffe2009}.  Three problem versions are used, differing
+in premise selection:
+
+\begin{enumerate}
+\item \textbf{Post-proof minimized (E prover dataset):}
+  Each problem contains only the axioms that were used in a successful
+  proof, yielding very small problems (${\sim}45$~clauses on average).
+  Useful for initial method development but unrealistic for deployment,
+  since the ``right'' premises are not known in advance.
+
+\item \textbf{Full axiom set (Vampire dataset):}
+  The 57\,880 CNF problems include the full \Mizar background theory,
+  averaging ${\sim}430$~clauses.  This is a more realistic but
+  computationally demanding setting.
+
+\item \textbf{Premise-selected (Mizar60 dataset):}
+  Using the Mizar60 premise selection data~\cite{KaliszykU2015}, we
+  construct 55\,832 FOF problems where each theorem is paired with
+  its minimum sufficient premise set (the smallest set of axioms from
+  which the theorem was proved).  These problems have a median of
+  13~premises (mean 25.4, range 0--478), providing a middle ground:
+  the problems are realistically sized for ATP evaluation while
+  being much smaller than the full axiom set.
+  Table~\ref{tab:premise-dist} shows the premise count distribution.
+\end{enumerate}
+
+\begin{table}[t]
+\centering
+\caption{Distribution of premise counts in the Mizar60 FOF problems.}
+\label{tab:premise-dist}
+\small
+\begin{tabular}{rrrr}
+\toprule
+$\leq k$ premises & Problems & Cumul.\ \% \\
+\midrule
+2   &  4\,214 &  7.5\% \\
+5   & 12\,496 & 22.4\% \\
+10  & 24\,019 & 43.0\% \\
+20  & 36\,672 & 65.7\% \\
+50  & 47\,889 & 85.8\% \\
+100 & 53\,476 & 95.8\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The premise-selected problems are particularly useful for conjecture
+evaluation: a generated lemma can be tested as a cut formula on
+realistically-sized problems without the computational burden of the
+full axiom set.  These three problem versions allow us to study
+conjecture generation across a spectrum of premise selection quality.
 
 \subsection{E Prover Dataset}
 \label{sec:eprover-data}
