@@ -134,9 +134,12 @@ def train(args):
 
     if device.type == 'cuda':
         if args.no_precompute:
-            # Disk-cache only: precompute to disk but don't load into RAM
-            train_ds.precompute(load_into_ram=False)
-            val_ds.precompute(load_into_ram=False)
+            # Warm the graph cache: load all unique problem graphs into RAM.
+            # Much smaller than full precompute (~2-3K graphs vs 138K samples).
+            print("Warming graph cache...")
+            for pname in sorted(set(s['problem'] for s in train_ds.samples)):
+                train_ds._get_problem_graph(pname)
+            print(f"  {len(train_ds._graph_cache)} graphs in RAM")
         else:
             train_ds.precompute(load_into_ram=True)
             val_ds.precompute(load_into_ram=True)

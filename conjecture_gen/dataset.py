@@ -242,19 +242,27 @@ class ConjectureDataset(Dataset):
         print(f"  Found {len(self.samples)} samples across "
               f"{len(self.problem_names)} problems")
 
+    # In-memory graph cache: holds all unique problem graphs.
+    # With ~2-3K problems at ~1MB each = 2-3GB, fits easily in RAM.
+    _graph_cache = {}
+
     def _get_problem_graph(self, problem_name: str) -> HeteroData:
-        """Load or build the problem graph."""
+        """Load or build the problem graph. Cached in RAM."""
+        if problem_name in self._graph_cache:
+            return self._graph_cache[problem_name]
+
         suffix = '_named' if self.symbol_vocab else ''
         cache_path = os.path.join(self.cache_dir, f'graph_{problem_name}{suffix}.pt')
         if os.path.exists(cache_path):
-            return torch.load(cache_path, weights_only=False)
+            graph = torch.load(cache_path, weights_only=False)
+        else:
+            # Parse and build
+            problem_path = os.path.join(self.problems_dir, problem_name)
+            clauses = parse_problem_file(problem_path)
+            graph = clauses_to_graph(clauses, vocab=self.symbol_vocab)
+            torch.save(graph, cache_path)
 
-        # Parse and build
-        problem_path = os.path.join(self.problems_dir, problem_name)
-        clauses = parse_problem_file(problem_path)
-        graph = clauses_to_graph(clauses, vocab=self.symbol_vocab)
-
-        torch.save(graph, cache_path)
+        self._graph_cache[problem_name] = graph
         return graph
 
     def _get_lemma_clause(self, problem_name: str, cut_id: str):
