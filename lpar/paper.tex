@@ -270,7 +270,10 @@ that the premise-selected problems retain the essential difficulty
 while being much smaller.
 
 For each solved problem, \Vampire produces proof lemmas in
-first-order (FOF) format.  All lemmas are universally quantified
+first-order (FOF) format.  The lemmas are normalized using
+\texttt{tptp4X}~\cite{Sutcliffe2009} (with \texttt{-u machine}
+output mode, filtering to FOF statements and removing file
+references).  All resulting lemmas are universally quantified
 disjunctions (no existential quantifiers, implications, or
 conjunctions), making conversion to CNF trivial.
 
