@@ -172,18 +172,29 @@ class ConjectureDataset(Dataset):
                 if s is not None:
                     stats[(s['problem'], s['cut_id'])] = s['ratio']
 
-        # 2. Parse lemmas
-        print("  Parsing lemmas...")
-        lemmas = {}  # (problem, cut_id) -> Clause
+        # 2. Scan lemma file for available (problem, lemma_id) keys.
+        # Only check existence here — full clause parsing is deferred to
+        # _get_lemma_clause (called lazily per sample). This avoids holding
+        # 196K+ parsed clause objects in memory during index construction.
+        print("  Scanning lemma keys...")
+        lemma_keys = set()
         with open(lemmas_file) as f:
             for line in f:
-                result = parse_lemma_line(line)
-                if result is not None:
-                    problem, lemma_id, clause = result
-                    lemmas[(problem, lemma_id)] = clause
+                # Fast key extraction without full clause parsing:
+                # format is "./problem/lemma_id: cnf(...)"
+                line = line.strip()
+                if not line:
+                    continue
+                colon_idx = line.find(': cnf(')
+                if colon_idx == -1:
+                    continue
+                path_part = line[:colon_idx]
+                parts = path_part.split('/')
+                if len(parts) >= 3:
+                    lemma_keys.add((parts[-2], parts[-1]))
 
         # 3. Build samples
-        print("  Building samples...")
+        print(f"  Building samples ({len(stats)} stats, {len(lemma_keys)} lemma keys)...")
         self.samples = []
         self.problem_names = set()
 
@@ -191,7 +202,7 @@ class ConjectureDataset(Dataset):
             # Store ALL samples regardless of ratio — ratio filtering is
             # applied after loading the index so the cached index.pt is not
             # permanently limited by the first run's ratio range.
-            if (problem, cut_id) not in lemmas:
+            if (problem, cut_id) not in lemma_keys:
                 continue
 
             self.problem_names.add(problem)
