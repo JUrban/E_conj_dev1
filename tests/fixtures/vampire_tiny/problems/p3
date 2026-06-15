@@ -1,0 +1,9 @@
+# Tiny test problem p3 (finseq_1-style)
+cnf(c1, plain, (v1_finseq_1(k9_finseq_1(X1)))).
+cnf(c2, plain, (v1_relat_1(k9_finseq_1(X1)))).
+cnf(c3, plain, (v1_funct_1(k9_finseq_1(X1)))).
+cnf(c4, plain, (k1_funct_1(k9_finseq_1(X1),k5_numbers) = X1)).
+cnf(c5, plain, (r2_hidden(X1,k2_relat_1(X2)) | ~v1_relat_1(X2) | ~r2_hidden(X1,k1_funct_1(X2,X3)))).
+cnf(c6, negated_conjecture, (~v1_finseq_1(k12_finseq_1(esk5_0,esk6_0)))).
+cnf(c7, plain, (v1_finseq_1(k12_finseq_1(X1,X2)) | v1_xboole_0(X1) | ~m1_subset_1(X2,X1))).
+cnf(c8, negated_conjecture, (~v1_xboole_0(esk5_0))).

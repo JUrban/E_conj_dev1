@@ -1,0 +1,6 @@
+./p1/f1: cnf(f1,plain,(v1_xboole_0(X1) | ~r2_hidden(X1,k1_xboole_0))).
+./p1/f2: cnf(f2,plain,(r2_hidden(esk1_0,k1_xboole_0) | r1_tarski(k1_xboole_0,esk1_0))).
+./p2/f3: cnf(f3,plain,(m1_subset_1(X1,k1_zfmisc_1(X2)) | ~r1_tarski(X1,X2))).
+./p2/f4: cnf(f4,plain,(r1_tarski(esk3_0,esk4_0) | v1_xboole_0(esk3_0))).
+./p3/f5: cnf(f5,plain,(v1_finseq_1(k9_finseq_1(X1)) | v1_xboole_0(X1))).
+./p3/f6: cnf(f6,plain,(v1_finseq_1(k12_finseq_1(X1,X2)) | v1_xboole_0(X1))).

@@ -1,0 +1,7 @@
+# Tiny test problem p1 (xboole_0-style)
+cnf(c1, plain, (r2_hidden(X1,k1_xboole_0) | ~v1_xboole_0(X1))).
+cnf(c2, plain, (v1_xboole_0(k1_xboole_0))).
+cnf(c3, plain, (~r2_hidden(esk1_0,k1_xboole_0))).
+cnf(c4, plain, (r1_tarski(X1,X2) | ~r2_hidden(esk2_2(X1,X2),X2))).
+cnf(c5, plain, (r1_tarski(X1,X2) | r2_hidden(esk2_2(X1,X2),X1))).
+cnf(c6, negated_conjecture, (~r1_tarski(k1_xboole_0,esk1_0))).
