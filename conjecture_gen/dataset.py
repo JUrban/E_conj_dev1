@@ -48,6 +48,28 @@ class ConjectureDataset(Dataset):
         self.min_ratio = min_ratio
         self.symbol_vocab = symbol_vocab
 
+        # Pre-index lemma file: group raw lines by problem name.
+        # Stores only strings (not parsed clauses) — ~100MB for 196K lines.
+        # Avoids repeated full-file scans in _get_lemma_clause.
+        self._lemma_index = {}  # {problem: {lemma_id: raw_line}}
+        print(f"Indexing lemma file...")
+        with open(lemmas_file) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                colon_idx = line.find(': cnf(')
+                if colon_idx == -1:
+                    continue
+                parts = line[:colon_idx].split('/')
+                if len(parts) >= 3:
+                    prob, lid = parts[-2], parts[-1]
+                    if prob not in self._lemma_index:
+                        self._lemma_index[prob] = {}
+                    self._lemma_index[prob][lid] = line
+        print(f"  Indexed {sum(len(v) for v in self._lemma_index.values())} "
+              f"lemmas for {len(self._lemma_index)} problems")
+
         if cache_dir is None:
             cache_dir = os.path.join(os.path.dirname(problems_dir), 'cache')
         self.cache_dir = cache_dir
@@ -236,9 +258,10 @@ class ConjectureDataset(Dataset):
         return graph
 
     def _get_lemma_clause(self, problem_name: str, cut_id: str):
-        """Re-parse a specific lemma from the lemmas file.
+        """Parse a specific lemma for a problem.
 
-        For efficiency, we cache per-problem lemma dicts.
+        Uses a pre-built in-memory index for fast lookup, falling back
+        to scanning the file if the index isn't available.
         """
         cache_path = os.path.join(
             self.cache_dir, f'lemmas_{problem_name}.pt'
@@ -247,18 +270,26 @@ class ConjectureDataset(Dataset):
             lemma_dict = torch.load(cache_path, weights_only=False)
             return lemma_dict.get(cut_id)
 
-        # Parse all lemmas for this problem and cache
+        # Build lemma dict for this problem from the indexed data
         lemma_dict = {}
-        lemma_file = self.lemmas_file
-        prefix = f'./{problem_name}/'
-        with open(lemma_file) as f:
-            for line in f:
-                if not line.startswith(prefix):
-                    continue
+        if hasattr(self, '_lemma_index') and problem_name in self._lemma_index:
+            # Use pre-built index: {problem: {lemma_id: line}}
+            for lid, line in self._lemma_index[problem_name].items():
                 result = parse_lemma_line(line)
                 if result is not None:
-                    _, lid, clause = result
+                    _, _, clause = result
                     lemma_dict[lid] = clause
+        else:
+            # Fallback: scan the file (slow but works)
+            prefix = f'./{problem_name}/'
+            with open(self.lemmas_file) as f:
+                for line in f:
+                    if not line.startswith(prefix):
+                        continue
+                    result = parse_lemma_line(line)
+                    if result is not None:
+                        _, lid, clause = result
+                        lemma_dict[lid] = clause
 
         torch.save(lemma_dict, cache_path)
         return lemma_dict.get(cut_id)
