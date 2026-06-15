@@ -352,6 +352,45 @@ class ConjectureDataset(Dataset):
     _encoding_stats_accum = {'exact_hits': 0, 'role_fallback_hits': 0,
                              'name_fallback_hits': 0, 'unk_hits': 0, 'count': 0}
 
+    def precompute_targets(self):
+        """Pre-encode all target sequences. ~14MB for 138K samples, ~70s.
+
+        After this, __getitem__ skips encode_conjecture() and lemma parsing.
+        Must be called after graph cache is warmed.
+        """
+        print(f"Pre-encoding {len(self.samples)} target sequences...")
+        self._targets = []
+        n_fail = 0
+        for idx, sample in enumerate(self.samples):
+            problem_name = sample['problem']
+            cut_id = sample['cut_id']
+            ratio = sample['ratio']
+
+            graph = self._get_problem_graph(problem_name)
+            clause = self._get_lemma_clause(problem_name, cut_id)
+            if clause is None:
+                n_fail += 1
+                self._targets.append(None)
+                continue
+
+            target_seq = encode_conjecture(
+                clause, graph.symbol_names,
+                symbol_is_pred=getattr(graph, 'symbol_is_pred', None),
+                symbol_arities=getattr(graph, 'symbol_arities', None),
+                strict=False,
+            )
+            weight = 1.0 / (1.0 + ratio)
+            self._targets.append({
+                'actions': torch.tensor([a for a, _ in target_seq], dtype=torch.long),
+                'arguments': torch.tensor([arg for _, arg in target_seq], dtype=torch.long),
+                'length': len(target_seq),
+                'weight': weight,
+                'num_symbols': len(graph.symbol_names),
+            })
+            if (idx + 1) % 10000 == 0:
+                print(f"  encoded {idx+1}/{len(self.samples)}...")
+        print(f"  Done ({n_fail} failures)")
+
     def _build_item(self, idx):
         """Build a single sample (used by both __getitem__ and precompute)."""
         sample = self.samples[idx]
@@ -360,6 +399,18 @@ class ConjectureDataset(Dataset):
         ratio = sample['ratio']
 
         graph = self._get_problem_graph(problem_name)
+
+        # Use pre-encoded targets if available
+        if hasattr(self, '_targets') and self._targets and self._targets[idx] is not None:
+            t = self._targets[idx]
+            graph = graph.clone()
+            graph.target_actions = t['actions']
+            graph.target_arguments = t['arguments']
+            graph.target_length = torch.tensor(t['length'], dtype=torch.long)
+            graph.quality_weight = torch.tensor(t['weight'], dtype=torch.float)
+            graph.ratio = torch.tensor(ratio, dtype=torch.float)
+            graph.num_symbols = torch.tensor(t['num_symbols'], dtype=torch.long)
+            return graph
 
         clause = self._get_lemma_clause(problem_name, cut_id)
         if clause is None:
@@ -398,7 +449,7 @@ class ConjectureDataset(Dataset):
             path = os.path.join(self._precomp_dir, f'sample_{idx}.pt')
             if os.path.exists(path):
                 return torch.load(path, weights_only=False)
-        # Fallback: build from scratch
+        # Build from cached graph + pre-encoded target (fast)
         return self._build_item(idx)
 
 

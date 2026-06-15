@@ -134,9 +134,18 @@ def train(args):
 
     if device.type == 'cuda':
         if args.no_precompute:
-            # Lazy mode: graphs and lemmas cache on first access.
-            # No upfront warming to avoid memory spikes.
-            print("Lazy loading mode: graphs/lemmas cached on first access")
+            # Warm graph cache + pre-encode targets for fast __getitem__
+            print("Warming graph cache...")
+            for pi, pname in enumerate(sorted(set(s['problem'] for s in train_ds.samples))):
+                train_ds._get_problem_graph(pname)
+                if (pi + 1) % 500 == 0:
+                    print(f"  {pi+1} graphs loaded...")
+            for pname in sorted(set(s['problem'] for s in val_ds.samples)):
+                val_ds._get_problem_graph(pname)
+            print(f"  {len(train_ds._graph_cache)} graphs in RAM")
+            # Pre-encode targets (~70s, ~14MB)
+            train_ds.precompute_targets()
+            val_ds.precompute_targets()
         else:
             train_ds.precompute(load_into_ram=True)
             val_ds.precompute(load_into_ram=True)
@@ -152,15 +161,18 @@ def train(args):
                                               shuffle=True)
         val_sampler = SizeAwareBatchSampler(val_ds, max_total_nodes=max_total,
                                             shuffle=False)
+        # Use num_workers for parallel graph.clone() — fork-based workers
+        # share the parent's _graph_cache and _targets via copy-on-write.
+        loader_nw = min(nw, 2) if nw > 0 else 2
         train_loader = DataLoader(
             train_ds, batch_sampler=train_sampler,
-            collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            collate_fn=collate_fn, num_workers=loader_nw,
+            pin_memory=False, persistent_workers=True,
         )
         val_loader = DataLoader(
             val_ds, batch_sampler=val_sampler,
-            collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            collate_fn=collate_fn, num_workers=loader_nw,
+            pin_memory=False, persistent_workers=True,
         )
     else:
         train_loader = DataLoader(
