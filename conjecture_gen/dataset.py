@@ -244,7 +244,12 @@ class ConjectureDataset(Dataset):
 
     # In-memory graph cache: holds all unique problem graphs.
     # With ~2-3K problems at ~1MB each = 2-3GB, fits easily in RAM.
+    # Class-level so train/val datasets share it (same symbol_vocab required).
     _graph_cache = {}
+
+    # In-memory lemma cache: parsed clause dicts per problem.
+    # ~2-3K problems × ~50 lemmas × ~1KB = ~128MB.
+    _lemma_cache = {}
 
     def _get_problem_graph(self, problem_name: str) -> HeteroData:
         """Load or build the problem graph. Cached in RAM."""
@@ -256,7 +261,6 @@ class ConjectureDataset(Dataset):
         if os.path.exists(cache_path):
             graph = torch.load(cache_path, weights_only=False)
         else:
-            # Parse and build
             problem_path = os.path.join(self.problems_dir, problem_name)
             clauses = parse_problem_file(problem_path)
             graph = clauses_to_graph(clauses, vocab=self.symbol_vocab)
@@ -266,29 +270,26 @@ class ConjectureDataset(Dataset):
         return graph
 
     def _get_lemma_clause(self, problem_name: str, cut_id: str):
-        """Parse a specific lemma for a problem.
+        """Get a parsed lemma clause. Cached in RAM per problem."""
+        if problem_name in self._lemma_cache:
+            return self._lemma_cache[problem_name].get(cut_id)
 
-        Uses a pre-built in-memory index for fast lookup, falling back
-        to scanning the file if the index isn't available.
-        """
-        cache_path = os.path.join(
-            self.cache_dir, f'lemmas_{problem_name}.pt'
-        )
+        # Build lemma dict for this problem
+        lemma_dict = {}
+
+        # Try disk cache first
+        cache_path = os.path.join(self.cache_dir, f'lemmas_{problem_name}.pt')
         if os.path.exists(cache_path):
             lemma_dict = torch.load(cache_path, weights_only=False)
-            return lemma_dict.get(cut_id)
-
-        # Build lemma dict for this problem from the indexed data
-        lemma_dict = {}
-        if hasattr(self, '_lemma_index') and problem_name in self._lemma_index:
-            # Use pre-built index: {problem: {lemma_id: line}}
+        elif hasattr(self, '_lemma_index') and problem_name in self._lemma_index:
             for lid, line in self._lemma_index[problem_name].items():
                 result = parse_lemma_line(line)
                 if result is not None:
                     _, _, clause = result
                     lemma_dict[lid] = clause
+            torch.save(lemma_dict, cache_path)
         else:
-            # Fallback: scan the file (slow but works)
+            # Fallback: scan the file
             prefix = f'./{problem_name}/'
             with open(self.lemmas_file) as f:
                 for line in f:
@@ -298,8 +299,9 @@ class ConjectureDataset(Dataset):
                     if result is not None:
                         _, lid, clause = result
                         lemma_dict[lid] = clause
+            torch.save(lemma_dict, cache_path)
 
-        torch.save(lemma_dict, cache_path)
+        self._lemma_cache[problem_name] = lemma_dict
         return lemma_dict.get(cut_id)
 
     def precompute(self, load_into_ram=True):
