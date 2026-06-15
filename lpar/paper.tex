@@ -205,11 +205,35 @@ $\leq k$ clauses & Problems & Cumul.\ \% \\
 \end{tabular}
 \end{table}
 
-We evaluate \Vampire with neural clause selection~\cite{Suda2025} on
-a random sample of 1\,000 CNF problems (50 billion instruction limit).
-With the neural guidance network, \Vampire solves 602 problems
-(60.2\%); without it, 567 (56.7\%)---an improvement of 35~problems
-(6.2\%).  All subsequent \Vampire experiments use the neural network.
+We evaluate \Vampire on the same random sample of 1\,000 CNF problems
+under several configurations (Table~\ref{tab:vampire-configs}).
+For conjecture generation, we use a single non-AVATAR strategy with
+neural clause selection~\cite{Suda2025}, which produces clean
+proof lemmas suitable for cut evaluation (AVATAR and portfolio
+strategies produce fragmented proofs that are harder to extract
+lemmas from).
+
+\begin{table}[t]
+\centering
+\caption{\Vampire results on 1\,000 random Mizar60 CNF problems.}
+\label{tab:vampire-configs}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Configuration & Limit & Solved & \% \\
+\midrule
+CASC portfolio (non-neural) & 10s & 667 & 66.7 \\
+Single strategy, no neural & 50B instr.\ & 567 & 56.7 \\
+Single strategy + neural & 50B instr.\ & 602 & 60.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The CASC portfolio is strongest overall (667 problems), but uses
+AVATAR and multiple strategies, making proof lemma extraction
+impractical.  The single strategy with neural guidance solves 602
+problems with clean proofs.  All subsequent \Vampire conjecture
+experiments use this configuration.
 
 The premise-selected problems are particularly useful for conjecture
 evaluation: a generated lemma can be tested as a cut formula on
