@@ -92,11 +92,13 @@ class ConjectureDataset(Dataset):
         if rebuild:
             print("Building dataset index (first time)...")
             self._build_index(problems_dir, lemmas_file, statistics_file)
+            tmp = index_path + f".tmp.{os.getpid()}"
             torch.save({
                 'schema': CACHE_SCHEMA_VERSION,
                 'samples': self.samples,
                 'problem_names': self.problem_names,
-            }, index_path)
+            }, tmp)
+            os.replace(tmp, index_path)
 
         # Apply ratio filter
         before_ratio = len(self.samples)
@@ -117,7 +119,9 @@ class ConjectureDataset(Dataset):
             else:
                 print(f"Computing problem graph sizes (first time)...")
                 problem_sizes = self._compute_problem_sizes(problems_dir)
-                torch.save(problem_sizes, size_cache_path)
+                tmp = size_cache_path + f".tmp.{os.getpid()}"
+                torch.save(problem_sizes, tmp)
+                os.replace(tmp, size_cache_path)
 
             big_problems = {
                 p for p, sz in problem_sizes.items() if sz > max_nodes
@@ -264,7 +268,9 @@ class ConjectureDataset(Dataset):
             problem_path = os.path.join(self.problems_dir, problem_name)
             clauses = parse_problem_file(problem_path)
             graph = clauses_to_graph(clauses, vocab=self.symbol_vocab)
-            torch.save(graph, cache_path)
+            tmp = cache_path + f".tmp.{os.getpid()}"
+            torch.save(graph, tmp)
+            os.replace(tmp, cache_path)
 
         self._graph_cache[problem_name] = graph
         return graph
@@ -287,7 +293,9 @@ class ConjectureDataset(Dataset):
                 if result is not None:
                     _, _, clause = result
                     lemma_dict[lid] = clause
-            torch.save(lemma_dict, cache_path)
+            tmp = cache_path + f".tmp.{os.getpid()}"
+            torch.save(lemma_dict, tmp)
+            os.replace(tmp, cache_path)
         else:
             # Fallback: scan the file
             prefix = f'./{problem_name}/'
@@ -299,7 +307,9 @@ class ConjectureDataset(Dataset):
                     if result is not None:
                         _, lid, clause = result
                         lemma_dict[lid] = clause
-            torch.save(lemma_dict, cache_path)
+            tmp = cache_path + f".tmp.{os.getpid()}"
+            torch.save(lemma_dict, tmp)
+            os.replace(tmp, cache_path)
 
         self._lemma_cache[problem_name] = lemma_dict
         return lemma_dict.get(cut_id)
@@ -337,7 +347,9 @@ class ConjectureDataset(Dataset):
                 if done % 5000 == 0:
                     print(f"  precomputed {done}/{n}...")
         print(f"  Saving to {cache_path}...")
-        torch.save(self._inmemory, cache_path)
+        tmp = cache_path + f".tmp.{os.getpid()}"
+        torch.save(self._inmemory, tmp)
+        os.replace(tmp, cache_path)
         print(f"  All {len(self._inmemory)} samples in RAM.")
 
     def __len__(self):

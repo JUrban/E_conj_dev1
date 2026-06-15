@@ -209,6 +209,10 @@ def train(args):
 
     # Resume from checkpoint if requested
     if args.resume:
+        import sys
+        if '--resume' in sys.argv:
+            print("Note: --resume loads weights only (no optimizer/scheduler state). "
+                  "This is equivalent to --init_from.")
         ckpt_path = os.path.join(args.resume, 'best_model.pt')
         if os.path.exists(ckpt_path):
             from conjecture_gen.checkpoints import load_checkpoint
@@ -245,6 +249,7 @@ def train(args):
         model.train()
         epoch_losses = {'total': 0, 'action': 0, 'pointer': 0, 'variable': 0}
         n_batches = 0
+        oom_skips = 0
         t0 = time.time()
 
         for batch_idx, batch in enumerate(train_loader):
@@ -272,12 +277,22 @@ def train(args):
                 n_batches += 1
             except torch.cuda.OutOfMemoryError:
                 torch.cuda.empty_cache()
-                print(f"  [{epoch}] batch {batch_idx+1}: CUDA OOM, skipped", flush=True)
+                oom_skips += 1
+                print(f"  [{epoch}] batch {batch_idx+1}: CUDA OOM, skipped "
+                      f"({oom_skips}/{args.max_oom_skips})", flush=True)
+                if oom_skips > args.max_oom_skips:
+                    raise RuntimeError(
+                        f"Exceeded --max_oom_skips={args.max_oom_skips} in epoch {epoch} "
+                        f"({oom_skips} OOM skips). Reduce batch size or --max_batch_nodes."
+                    )
                 continue
 
             if (batch_idx + 1) % args.log_every == 0:
                 print(f"  [{epoch}] batch {batch_idx+1}/{len(train_loader)} "
                       f"loss={epoch_losses['total']/n_batches:.4f} ({time.time()-t0:.0f}s)", flush=True)
+
+        if oom_skips > 0:
+            print(f"  [{epoch}] OOM skips this epoch: {oom_skips}", flush=True)
 
         scheduler.step()
         for k in epoch_losses:
@@ -347,8 +362,10 @@ def main():
     p.add_argument('--val_split', default=None,
                    help='File listing val problem names (one per line)')
     p.add_argument('--save_dir', default=None)
-    p.add_argument('--resume', default=None,
-                   help='Resume from checkpoint dir (e.g., checkpoints_d)')
+    p.add_argument('--resume', '--init_from', default=None, dest='resume',
+                   help='Load weights from checkpoint dir (e.g., checkpoints_d). '
+                        'Loads model weights only — optimizer/scheduler state is NOT restored. '
+                        '--init_from is the preferred name; --resume is kept as an alias.')
     p.add_argument('--named_embeddings', action='store_true',
                    help='Use learnable name embeddings for Mizar symbols')
     p.add_argument('--hidden_dim', type=int, default=64)
@@ -367,6 +384,8 @@ def main():
                    help='Use mixed precision training (fp16) for ~1.5-2x GPU speedup')
     p.add_argument('--max_batch_nodes', type=int, default=50000,
                    help='Max total graph nodes per batch (size-aware batching)')
+    p.add_argument('--max_oom_skips', type=int, default=50,
+                   help='Max CUDA OOM skips per epoch before aborting (default: 50)')
     p.add_argument('--max_samples', type=int, default=200)
     p.add_argument('--max_nodes', type=int, default=0)
     p.add_argument('--log_every', type=int, default=10)

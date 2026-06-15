@@ -65,7 +65,9 @@ def build_vocab(problems_dir: str, cache_path: str = None,
           f"({len(vocab)-1} Mizar + UNK, min_count={min_count})")
 
     if cache_path:
-        torch.save(vocab, cache_path)
+        tmp = cache_path + f".tmp.{os.getpid()}"
+        torch.save(vocab, tmp)
+        os.replace(tmp, cache_path)
 
     return vocab
 
