@@ -331,14 +331,27 @@ ratio, so that higher-speedup examples contribute more.  To address
 data imbalance across problems, each problem's samples are normalized
 so that all problems contribute equally to the epoch loss.
 
+\paragraph{Ratio threshold for training.}
+An additional filtering parameter is $r_{\max}$: examples with ratio
+above this threshold are excluded from training.  Using $r_{\max} =
+0.5$ (only $\geq 2\times$ speedups) yields 66K examples from 1\,645
+problems for the \Vampire dataset---a cleaner training signal but
+fewer problems for generalization.  Using $r_{\max} = 1.0$ (all
+useful examples) yields 196K examples from 3\,591 problems.  We use
+$r_{\max} = 1.0$ with the quality weighting handling the distinction:
+the loss on a marginal $r = 0.95$ example is weighted at $w = 0.51$
+vs.\ $w = 0.91$ for a strong $r = 0.1$ example, so the model focuses
+on high-quality cuts without sacrificing problem coverage.
+
 We use AdamW with cosine learning rate scheduling.  For the \Eprover
 dataset, we train with hidden dimension $d \in \{256, 512, 1024\}$ and
 batch sizes 16--64 on A100 GPUs.  The \Eprover problems average
 ${\sim}45$~clauses (${\sim}400$ graph nodes); we filter at 1\,500
 nodes.  For the \Vampire dataset, problems are substantially larger
 (${\sim}430$~clauses, ${\sim}3\,000$ nodes on average for useful
-problems), so we filter at 5\,000 nodes, retaining ${\sim}90\%$ of
-useful problems.
+problems) due to the full \Mizar axiom set being included (vs.\
+SInE-filtered axioms for \Eprover), so we filter at 5\,000 nodes,
+retaining ${\sim}90\%$ of useful problems.
 
 
 %% ================================================================
@@ -347,11 +360,12 @@ useful problems.
 
 \subsection{Experimental Setup}
 
-We train 13~model configurations varying hidden dimension ($d \in
-\{256, 512\}$), decoder variant (A, C, D), named embeddings
-(on/off), and sampling parameters.  For each configuration, we
-generate 40--80 conjectures per problem using nucleus sampling with
-varying temperature and top-$k$/top-$p$ settings.
+We train 15~model configurations varying hidden dimension ($d \in
+\{256, 512, 1024\}$), decoder variant (A, C, D), named symbol
+embeddings (on/off), and sampling parameters.  For each configuration,
+we generate 40--80 conjectures per problem using nucleus sampling with
+varying temperature ($T \in \{1.0, 1.2, 1.5\}$), top-$k$ ($\in
+\{10, 15, 25\}$), and top-$p$ ($\in \{0.9, 0.95, 0.98\}$).
 
 Each generated conjecture is evaluated by running \Eprover with a
 2-second timeout for both $P \cup \{L\}$ and $P \cup \{\neg L\}$.
@@ -360,33 +374,42 @@ The test set contains 279 problems, of which 187 are provable by
 
 \subsection{Per-Method Results}
 
-Table~\ref{tab:eprover-methods} shows results for each configuration.
-The best single method (\texttt{a256\_wide}, using $d=256$ with high
-diversity: temperature 1.5, top-$k$=25, top-$p$=0.98) helps on 96
-test problems (51.3\%).  More diverse sampling consistently
-outperforms precise sampling in problem coverage, though at the cost
-of a slightly higher average ratio.
+Table~\ref{tab:eprover-methods} shows results for selected
+configurations.  The best single method (\texttt{a256\_wide}, $d=256$
+with wide diversity: $T{=}1.5$, top-$k{=}25$, top-$p{=}0.98$) helps
+on 96 test problems (51.3\%).  Wider/more diverse sampling
+consistently outperforms precise sampling in problem coverage, though
+at a slightly higher average ratio.  Interestingly, the $d{=}1024$
+model does not outperform $d{=}256$: while it produces
+higher-quality individual conjectures (lower average ratio), it covers
+fewer problems.  The $d{=}256$ model's advantage comes from faster
+iteration and greater diversity at the same compute budget.
 
 \begin{table}[t]
 \centering
-\caption{Per-method results on the \Eprover test set (187 provable problems).
-$d$: hidden dimension. Var: decoder variant. NE: named embeddings.
-Sampling: P=precise, D=diverse, W=wide.}
+\caption{Selected per-method results on the \Eprover test set (187
+  provable problems).  $d$: hidden dim.  Var: decoder variant
+  (A=Transformer, C=CVAE, D=SSM).  Samp: P=precise, D=diverse,
+  W=wide.  NE: named embeddings.  HardSc:
+  $\sum(1{-}r)\log L$.}
 \label{tab:eprover-methods}
 \small
-\begin{tabular}{lcccrrrr}
+\begin{tabular}{lcccrrrrr}
 \toprule
-Config & $d$ & Var & Samp. & Helped & \%Prov & AvgR & HardSc \\
+Config & $d$ & Var & Samp & NE & Help & \% & AvgR & HardSc \\
 \midrule
-a256\_precise          & 256 & A & P & 77  & 41.2 & 0.574 & 252.7 \\
-a256\_balanced\_div    & 256 & A & D & 87  & 46.5 & 0.524 & 315.1 \\
-a256\_wide             & 256 & A & W & 96  & 51.3 & 0.558 & 325.1 \\
-a512\_diverse          & 512 & A & D & 80  & 42.8 & 0.536 & 284.4 \\
-af6\_a\_named\_big\_div& 256 & A & D & 91  & 48.7 & 0.574 & 296.1 \\
-af6\_c\_named          & 256 & C & P & 69  & 36.9 & 0.563 & 239.4 \\
-af6\_d\_named          & 256 & D & P & 61  & 32.6 & 0.589 & 200.3 \\
+a1024\_diverse         & 1024& A & D &\checkmark& 67  & 35.8 & 0.530 & 241.7 \\
+a256\_precise          & 256 & A & P &   & 77  & 41.2 & 0.574 & 252.7 \\
+a256\_bal\_diverse     & 256 & A & D &   & 87  & 46.5 & 0.524 & 315.1 \\
+af6\_a\_big\_diverse   & 256 & A & D &\checkmark& 91  & 48.7 & 0.574 & 296.1 \\
+\textbf{a256\_wide}    & 256 & A & W &   & \textbf{96} & \textbf{51.3} & 0.558 & 325.1 \\
+a512\_diverse          & 512 & A & D &   & 80  & 42.8 & 0.536 & 284.4 \\
+af6\_a\_named          & 256 & A & D &\checkmark& 77  & 41.2 & 0.579 & 247.8 \\
+af6\_c\_named          & 256 & C & D &\checkmark& 78  & 41.7 & 0.597 & 238.3 \\
+af6\_d\_named          & 256 & D & D &\checkmark& 72  & 38.5 & 0.612 & 214.2 \\
+master\_a              & 256 & A & D &\checkmark& 62  & 33.2 & 0.615 & 181.6 \\
 \midrule
-Union (all 13)         &     &   &   & 125 & 66.8 & 0.511 & \\
+\textbf{Union (all 15)}&     &   &   &   &\textbf{127}&\textbf{67.9}& 0.530 & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -396,15 +419,16 @@ Union (all 13)         &     &   &   & 125 & 66.8 & 0.511 & \\
 
 A key finding is strong complementarity across configurations.
 Table~\ref{tab:combos} shows the best $N$-method combinations.  The
-best single method covers 96 problems; adding a second method (C
-variant) jumps to 110; five methods reach 123.  Each model variant and
-sampling strategy contributes unique problems that no other
-configuration finds.
+best single method covers 96 problems; adding a second method jumps to
+106; five methods reach 123.  The full union of 15~methods covers 127
+problems (67.9\%).  Each decoder variant and sampling strategy
+contributes unique problems found by no other method.
 
 \begin{table}[t]
 \centering
-\caption{Best $N$-method combinations on the test set, by three
-  criteria.  Hard = $\sum (1-r) \log L$, prioritizing harder problems.}
+\caption{Best $N$-method combinations on the test set.
+  HardSc = $\sum (1{-}r)\log L$, prioritizing harder problems.
+  Saved = total baseline clauses saved.}
 \label{tab:combos}
 \small
 \begin{tabular}{clrrr}
@@ -412,47 +436,93 @@ configuration finds.
 $N$ & Best combination (by coverage) & Helped & HardSc & Saved \\
 \midrule
 1 & a256\_wide                          & 96  & 325 & 197K \\
-2 & a256\_wide + c\_named               & 110 & 388 & 282K \\
-3 & a256\_wide + a512\_div + c\_named    & 116 & 408 & 287K \\
-4 & + a256\_bal\_div                     & 121 & 425 & 297K \\
-5 & + d\_named                           & 123 & 449 & 322K \\
+2 & a256\_wide + d\_named               & 106 & 367 & 218K \\
+3 & + a\_named\_big                     & 113 & 407 & 286K \\
+4 & + a256\_bal\_diverse                 & 119 & 419 & 287K \\
+5 & + af6\_a\_named                      & 123 & 430 & 292K \\
 \midrule
-\multicolumn{2}{l}{Oracle (all 13 methods)} & 125 & & 338K \\
+\multicolumn{2}{l}{Oracle (all 15 methods)} & 127 & & 301K \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The oracle winner distribution shows that no single method dominates:
-\texttt{a256\_balanced\_diverse} provides the best ratio on 36\% of
-oracle-selected problems, \texttt{a256\_wide} on 16\%,
-\texttt{a512\_diverse} on 9\%, with the remaining 39\% split across C,
-D variants and other configurations.
+The oracle winner distribution (Table~\ref{tab:oracle}) reveals that
+every model contributes: the $d{=}1024$ model provides the best
+ratio on 20.5\% of oracle-selected problems despite having the lowest
+individual coverage, demonstrating that larger models excel at
+\emph{quality} while smaller models excel at \emph{diversity}.
 
-\subsection{Rank Analysis}
+\begin{table}[t]
+\centering
+\caption{Oracle winner distribution: which method provides the best
+  speedup ratio for each of the 127 test problems with useful conjectures.}
+\label{tab:oracle}
+\small
+\begin{tabular}{lr|lr}
+\toprule
+Method & \% wins & Method & \% wins \\
+\midrule
+a1024\_diverse & 20.5 & af6\_a\_named & 5.5 \\
+a256\_bal\_diverse & 14.2 & af6\_a\_named\_big & 5.5 \\
+a256\_wide & 14.2 & af6\_a\_big\_diverse & 4.7 \\
+af6\_d\_named & 9.4 & others (5 methods) & 10.3 \\
+af6\_c\_named & 8.7 & master\_a & 7.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-For practical deployment, an important question is how many
-conjectures per problem must be evaluated.  We find that the first
-useful conjecture appears at median rank 2--4 for most methods.
-However, wider sampling strategies (which achieve higher coverage)
-have useful conjectures spread more broadly: \texttt{a256\_wide} has a
-mean first-useful rank of 11.2 (max: 75), compared to 2.8 for
-\texttt{af6\_a\_named\_big}.
+\subsection{Rank Analysis and Budget Optimization}
 
-At top-5, the best single method covers 60 problems (32\%); at
-top-10, 70 (37\%); at top-20, 81 (43\%).  Going from top-20 to
-top-80 adds only 15 more problems at $4\times$ the evaluation cost
-per problem, illustrating diminishing returns.
+For practical deployment, we analyze how many conjectures per problem
+must be evaluated.  The first useful conjecture appears at median
+rank~2--5 across methods, but wider sampling strategies spread useful
+conjectures more broadly: \texttt{a256\_wide} has mean first-useful
+rank 11.2 (max: 75), compared to 2.8 for \texttt{af6\_a\_named\_big}.
+Table~\ref{tab:rank} shows the cumulative coverage at standard
+cutoffs.
+
+\begin{table}[t]
+\centering
+\caption{Problems helped at different per-problem conjecture cutoffs
+  (top-$k$) for three representative methods.}
+\label{tab:rank}
+\small
+\begin{tabular}{r|rrr|rrr}
+\toprule
+ & \multicolumn{3}{c|}{Test problems helped}
+ & \multicolumn{3}{c}{AvgBestRatio} \\
+Top-$k$ & a256\_wide & a1024\_div & a\_big & a256\_wide & a1024\_div & a\_big \\
+\midrule
+1  &  20 &  31 &  35 & 0.378 & 0.433 & 0.490 \\
+5  &  54 &  53 &  63 & 0.439 & 0.478 & 0.536 \\
+10 &  70 &  60 &  75 & 0.503 & 0.498 & 0.551 \\
+20 &  81 &  65 &  -- & 0.518 & 0.529 & -- \\
+50 &  90 &  67 &  -- & 0.551 & 0.530 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We also compute a greedy budget allocation: given a fixed number of
+total \Eprover calls, which methods should be evaluated and to what
+depth?  The greedy schedule first picks methods with the highest
+ratio of new problems per evaluation cost, then goes deeper into
+high-coverage methods.  At 5\,000 E~calls (evaluating top-1 from
+several methods), 55 problems are covered; at 20\,000 calls, 92
+problems; the full 127 requires ${\sim}50\,000$ calls.
 
 \subsection{Largest Speedups}
 
 The largest observed speedups exceed two orders of magnitude.  On
 \texttt{l101\_xreal\_1} ($L = 23\,967$ processed clauses), a
-generated conjecture achieves a $196\times$ speedup (ratio 0.005).
-On \texttt{t87\_qc\_lang2} ($L = 9\,262$), a $50\times$ speedup.
-On \texttt{t35\_xboole\_1} ($L = 39\,681$, one of the hardest
-problems), a $38\times$ speedup.  These demonstrate that neural
-conjecture generation can find lemmas that dramatically simplify proofs
-which are very expensive for the baseline prover.
+generated conjecture achieves a \textbf{196$\times$} speedup (ratio
+0.005).  On \texttt{t87\_qc\_lang2} ($L = 9\,262$), a
+\textbf{50$\times$} speedup.  On \texttt{t35\_xboole\_1}
+($L = 39\,681$, one of the hardest problems), a \textbf{38$\times$}
+speedup.  On the training set, the largest is $101\times$ on
+\texttt{t42\_series\_3} ($L = 32\,791$).  These demonstrate that
+neural conjecture generation can find cut formulas that dramatically
+reduce proof search in problems that are very expensive for the
+baseline prover.
 
 
 %% ================================================================
