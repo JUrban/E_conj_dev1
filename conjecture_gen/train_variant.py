@@ -132,9 +132,14 @@ def train(args):
         symbol_vocab=symbol_vocab,
     )
 
-    if device.type == 'cuda' and not args.no_precompute:
-        train_ds.precompute()
-        val_ds.precompute()
+    if device.type == 'cuda':
+        if args.no_precompute:
+            # Disk-cache only: precompute to disk but don't load into RAM
+            train_ds.precompute(load_into_ram=False)
+            val_ds.precompute(load_into_ram=False)
+        else:
+            train_ds.precompute(load_into_ram=True)
+            val_ds.precompute(load_into_ram=True)
 
     use_cuda = device.type == 'cuda'
     nw = args.num_workers
