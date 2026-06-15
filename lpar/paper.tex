@@ -345,15 +345,70 @@ the loss on a marginal $r = 0.95$ example is weighted at $w = 0.51$
 vs.\ $w = 0.91$ for a strong $r = 0.1$ example, so the model focuses
 on high-quality cuts without sacrificing problem coverage.
 
-We use AdamW with cosine learning rate scheduling.  For the \Eprover
-dataset, we train with hidden dimension $d \in \{256, 512, 1024\}$ and
-batch sizes 16--64 on A100 GPUs.  The \Eprover problems average
-${\sim}45$~clauses (${\sim}400$ graph nodes); we filter at 1\,500
-nodes.  For the \Vampire dataset, problems are substantially larger
-(${\sim}430$~clauses, ${\sim}3\,000$ nodes on average for useful
-problems) since they include the full \Mizar axiom set (vs.\
-post-proof minimized axioms for \Eprover), so we filter at 5\,000
-nodes, retaining ${\sim}90\%$ of useful problems.
+We use AdamW with cosine learning rate scheduling and mixed precision
+training (AMP with \texttt{float16} on A100 GPUs) for ${\sim}1.5\times$
+GPU throughput.
+
+\paragraph{Graph size filtering.}
+For the \Eprover dataset, problems average ${\sim}45$~clauses
+(${\sim}400$ graph nodes) using post-proof minimized axiom sets; we
+filter at 1\,500 nodes.  The \Vampire dataset includes the full
+\Mizar axiom set, yielding much larger problems (${\sim}430$~clauses,
+${\sim}3\,000$ nodes on average).  Table~\ref{tab:nodefilter} shows
+the tradeoff between graph size limit and dataset coverage.
+
+\begin{table}[t]
+\centering
+\caption{Effect of maximum graph node filter on the \Vampire dataset.
+  Percentages relative to the 3\,591 problems with useful lemmas.}
+\label{tab:nodefilter}
+\small
+\begin{tabular}{rrrr}
+\toprule
+Max nodes & Problems & \% kept & Approx.\ samples \\
+\midrule
+1\,500 &    654 &  18\% & ${\sim}35$K \\
+2\,000 &  1\,123 &  31\% & ${\sim}61$K \\
+3\,000 &  2\,262 &  63\% & ${\sim}101$K \\
+5\,000 &  3\,216 &  90\% & ${\sim}139$K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We use a 3\,000-node limit for \Vampire training, balancing coverage
+(63\% of useful problems, ${\sim}101$K training samples) against
+computational cost.  The largest \Vampire graphs (3\,000--5\,000
+nodes) cause GPU memory spikes under fixed-size batching due to the
+heterogeneous GNN's per-edge-type convolutions (4~layers $\times$
+16~edge types = 64 convolution operations per forward pass).
+
+\paragraph{Size-aware batching.}
+To handle the high variance in graph sizes (100--3\,000 nodes), we
+replace fixed sample-count batching with a \emph{size-aware batch
+sampler} that caps the total node count per batch (default:
+100\,000).  Samples are sorted by graph size and greedily packed: a
+batch of small graphs may contain 100+ samples, while a batch of
+large graphs may contain only 10.  This bounds peak GPU memory
+regardless of the graph size distribution.  The training loss uses
+weighted mean reduction (dividing by total token count, not batch
+size), making it invariant to variable batch sizes.
+
+\paragraph{Scalable data loading.}
+The \Vampire dataset's 101K training samples with graphs averaging
+${\sim}2\,000$ nodes present a data-loading challenge.  Full
+precomputation of all sample graphs into RAM requires ${\sim}15$GB
+and ${\sim}10$ minutes (parallelized across 8 threads).  The
+precomputed data is saved as a single file for instant loading on
+subsequent runs.  During training, each \texttt{\_\_getitem\_\_} call
+clones a cached graph and attaches pre-encoded target tensors;
+multiple DataLoader workers (4 processes) overlap this CPU work with
+GPU computation, achieving $>90\%$ GPU utilization on A100.
+
+\paragraph{Training configurations.}
+For \Eprover, we train with $d \in \{128, 256, 512, 1024\}$.
+For the initial \Vampire experiments, we use $d = 128$ (4M
+parameters) to validate the pipeline, with plans to scale to
+$d = 256$ once the data path is verified.
 
 
 %% ================================================================
