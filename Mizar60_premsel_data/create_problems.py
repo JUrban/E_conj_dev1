@@ -83,7 +83,7 @@ def main():
             continue
 
         # Build problem file (pure FOF, no comments/metadata)
-        problem_path = os.path.join(output_dir, f'{theorem}.p')
+        problem_path = os.path.join(output_dir, theorem)
         with open(problem_path, 'w') as f:
             # Write premises as axioms (they already have role=axiom)
             for prem in premises:
