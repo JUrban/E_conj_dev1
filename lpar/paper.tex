@@ -177,6 +177,40 @@ $\leq k$ premises & Problems & Cumul.\ \% \\
 \end{tabular}
 \end{table}
 
+The FOF problems are clausified using \Eprover's CNF transformation,
+yielding 55\,832 CNF problems with a median of 34~clauses (mean 61.1,
+range 1--5\,295).  Table~\ref{tab:cnf-dist} shows the clause count
+distribution.  These problems are significantly smaller than the
+full-axiom \Vampire CNFs (${\sim}430$~clauses) but larger and more
+realistic than the post-proof minimized \Eprover problems
+(${\sim}45$~clauses).
+
+\begin{table}[t]
+\centering
+\caption{Clause count distribution for the Mizar60 CNF problems
+  (after clausification of the premise-selected FOF problems).}
+\label{tab:cnf-dist}
+\small
+\begin{tabular}{rrr}
+\toprule
+$\leq k$ clauses & Problems & Cumul.\ \% \\
+\midrule
+10  &  4\,296 &  7.7\% \\
+20  & 14\,974 & 26.8\% \\
+50  & 36\,656 & 65.7\% \\
+100 & 47\,174 & 84.5\% \\
+200 & 53\,211 & 95.3\% \\
+500 & 55\,552 & 99.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We evaluate \Vampire with neural clause selection~\cite{Suda2025} on
+a random sample of 1\,000 CNF problems (50 billion instruction limit).
+With the neural guidance network, \Vampire solves 602 problems
+(60.2\%); without it, 567 (56.7\%)---an improvement of 35~problems
+(6.2\%).  All subsequent \Vampire experiments use the neural network.
+
 The premise-selected problems are particularly useful for conjecture
 evaluation: a generated lemma can be tested as a cut formula on
 realistically-sized problems without the computational burden of the
