@@ -121,7 +121,7 @@ for arg in $EXTRA_ARGS; do
         skip_next=false
         continue
     fi
-    if [ "$arg" = "--problem_list_file" ]; then
+    if [ "$arg" = "--problem_list_file" ] || [ "$arg" = "--max_nodes" ]; then
         skip_next=true
         continue
     fi
@@ -133,13 +133,21 @@ for f in "$SPLIT_DIR"/part_*; do
     part=$(basename "$f")
     LOG="$OUTPUT/worker_${part}.log"
 
+    # When using --problem_list_file, pass the user's max_nodes to workers
+    # (for per-problem graph size filtering). Otherwise use 999999 since
+    # the script already filtered the list.
+    WORKER_MAX_NODES=999999
+    if [ -n "$PROBLEM_LIST_FILE" ]; then
+        WORKER_MAX_NODES=$MAX_NODES
+    fi
+
     CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.bulk_generate \
         --model "$MODEL" \
         --output "$OUTPUT" \
         --problems_dir "$PROBLEMS_DIR" \
         --problem_list "$f" \
         --rankings_suffix "_${part}" \
-        --max_nodes 999999 \
+        --max_nodes $WORKER_MAX_NODES \
         $CLEAN_ARGS \
         > "$LOG" 2>&1 &
 
