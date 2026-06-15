@@ -76,17 +76,21 @@ class ConjectureDataset(Dataset):
             }, index_path)
 
         # Apply ratio filter
+        before_ratio = len(self.samples)
         self.samples = [
             s for s in self.samples
             if min_ratio <= s['ratio'] <= max_ratio
         ]
         self.problem_names = sorted(set(s['problem'] for s in self.samples))
+        print(f"Ratio filter [{min_ratio},{max_ratio}]: {before_ratio} -> "
+              f"{len(self.samples)} samples, {len(self.problem_names)} problems")
 
         # Filter out problems with too-large graphs (prevents GPU OOM)
         if max_nodes > 0:
             size_cache_path = os.path.join(cache_dir, 'problem_sizes.pt')
             if os.path.exists(size_cache_path):
                 problem_sizes = torch.load(size_cache_path, weights_only=False)
+                print(f"Loaded cached problem sizes: {len(problem_sizes)} entries")
             else:
                 print(f"Computing problem graph sizes (first time)...")
                 problem_sizes = self._compute_problem_sizes(problems_dir)
