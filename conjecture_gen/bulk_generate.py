@@ -76,6 +76,44 @@ def score_sequence(model, data, sequence, variant='a'):
     return heuristic_score
 
 
+def _write_problem_results(problem_name, results, model, output_dir, rankings_f):
+    """Write conjecture files and rankings for one problem immediately."""
+    # Deduplicate
+    seen = set()
+    conjectures = []
+    for decoded, seq in results:
+        if decoded not in seen:
+            seen.add(decoded)
+            check = validate_clause_text(decoded)
+            is_valid = check['valid']
+            heuristic_score = score_sequence(model, None, seq)
+            conjectures.append({
+                'text': decoded, 'heuristic_score': heuristic_score,
+                'valid': is_valid, 'n_tokens': len(seq),
+            })
+
+    conjectures.sort(key=lambda x: (x['valid'], x['heuristic_score']), reverse=True)
+
+    if conjectures:
+        prob_dir = os.path.join(output_dir, problem_name)
+        os.makedirs(prob_dir, exist_ok=True)
+
+        for ci, conj in enumerate(conjectures):
+            tptp_path = os.path.join(prob_dir, f'conjecture_{ci+1:03d}.p')
+            with open(tptp_path, 'w') as f:
+                f.write(f"% Generated conjecture for {problem_name}\n")
+                f.write(f"% Heuristic score: {conj['heuristic_score']:.4f}, "
+                        f"Valid: {conj['valid']}, "
+                        f"Tokens: {conj['n_tokens']}\n")
+                f.write(f"cnf(gen_{ci+1:03d}, axiom, ({conj['text']})).\n")
+
+            rankings_f.write(
+                f"{problem_name}\t{ci+1}\t{conj['heuristic_score']:.4f}\t"
+                f"{conj['valid']}\t{conj['n_tokens']}\t{conj['text']}\n"
+            )
+        rankings_f.flush()
+
+
 def generate_for_problem(model, problem_path, n=20, temperature=1.0,
                          top_k=10, top_p=0.9, device=None,
                          batch_gen=8, symbol_vocab=None, max_steps=80):
@@ -213,8 +251,13 @@ def main():
 
     all_results = {p: [] for p in problems}
 
+    # Open rankings file for incremental writing
+    rankings_f = open(rankings_path, 'w')
+    rankings_f.write("problem\trank\theuristic_score\tvalid\tn_tokens\tclause\n")
+
     if args.per_problem:
         # Per-problem generation: correct arity constraints, slower
+        # Writes files incrementally after each problem.
         print(f"Generating per-problem (n={args.n}, batch_gen={args.batch_gen})...")
         for pi, problem_name in enumerate(problems):
             problem_path = os.path.join(args.problems_dir, problem_name)
@@ -228,10 +271,20 @@ def main():
             for c in conjectures:
                 all_results[problem_name].append((c['text'], c.get('sequence', [])))
 
+            # Write this problem's results immediately
+            _write_problem_results(
+                problem_name, all_results[problem_name], model,
+                args.output, rankings_f)
+            n_conj = len(all_results[problem_name])
+            total_generated += n_conj
+            total_valid += sum(1 for t, _ in all_results[problem_name]
+                               if validate_clause_text(t)['valid'])
+            # Free memory
+            all_results[problem_name] = []
+
             if (pi + 1) % 100 == 0:
-                n_total = sum(len(v) for v in all_results.values())
                 elapsed = time.time() - t0
-                print(f"  {pi+1}/{len(problems)}: {n_total} conjectures ({elapsed:.0f}s)")
+                print(f"  {pi+1}/{len(problems)}: {total_generated} conjectures ({elapsed:.0f}s)")
     else:
         # Batched multi-problem generation: fast but no arity constraints
         print(f"Loading problem graphs...")
@@ -280,50 +333,16 @@ def main():
             elapsed = time.time() - t0
             print(f"  Attempt {attempt+1}/{args.n}: {n_total} total conjectures ({elapsed:.0f}s)")
 
-    # Deduplicate, validate, rank, save
-    with open(rankings_path, 'w') as rankings_f:
-        rankings_f.write("problem\trank\theuristic_score\tvalid\tn_tokens\tclause\n")
-
+    # For non-per_problem mode: deduplicate, validate, rank, save at the end
+    if not args.per_problem:
         for pi, problem_name in enumerate(problems):
-            results = all_results.get(problem_name, [])
+            _write_problem_results(
+                problem_name, all_results[problem_name], model,
+                args.output, rankings_f)
+            n_conj = len(all_results[problem_name])
+            total_generated += n_conj
 
-            # Deduplicate
-            seen = set()
-            conjectures = []
-            for decoded, seq in results:
-                if decoded not in seen:
-                    seen.add(decoded)
-                    check = validate_clause_text(decoded)
-                    is_valid = check['valid']
-                    heuristic_score = score_sequence(model, None, seq)
-                    conjectures.append({
-                        'text': decoded, 'heuristic_score': heuristic_score,
-                        'valid': is_valid, 'n_tokens': len(seq),
-                    })
-
-            conjectures.sort(key=lambda x: (x['valid'], x['heuristic_score']), reverse=True)
-
-            if conjectures:
-                prob_dir = os.path.join(args.output, problem_name)
-                os.makedirs(prob_dir, exist_ok=True)
-
-                for ci, conj in enumerate(conjectures):
-                    tptp_path = os.path.join(prob_dir, f'conjecture_{ci+1:03d}.p')
-                    with open(tptp_path, 'w') as f:
-                        f.write(f"% Generated conjecture for {problem_name}\n")
-                        f.write(f"% Heuristic score: {conj['heuristic_score']:.4f}, "
-                                f"Valid: {conj['valid']}, "
-                                f"Tokens: {conj['n_tokens']}\n")
-                        f.write(f"cnf(gen_{ci+1:03d}, axiom, ({conj['text']})).\n")
-
-                    rankings_f.write(
-                        f"{problem_name}\t{ci+1}\t{conj['heuristic_score']:.4f}\t"
-                        f"{conj['valid']}\t{conj['n_tokens']}\t{conj['text']}\n"
-                    )
-
-                    if conj['valid']:
-                        total_valid += 1
-                    total_generated += 1
+    rankings_f.close()
 
     elapsed = time.time() - t0
     print(f"\nDone: {len(problems)} problems, "
