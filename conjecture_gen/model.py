@@ -55,7 +55,11 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
     device = actions.device
     hidden_dim = unk_sym_embed.shape[0]
 
-    arg_emb = torch.zeros(B, T, hidden_dim, device=device, dtype=symbol_embeds.dtype)
+    # Use fp32 for accumulation — explicitly cast projections to match.
+    # PyG convolutions may output fp32 even under autocast, while nn.Linear
+    # projections output fp16. We cast projection outputs to arg_emb's dtype
+    # to avoid index-put dtype mismatches.
+    arg_emb = torch.zeros(B, T, hidden_dim, device=device)
 
     # Symbol pointer args (PRED or ARG_FUNC)
     ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
@@ -68,7 +72,7 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
         sym_vecs = symbol_embeds[batch_indices, safe_idx]
         # For out-of-range indices, use learned UNK embedding
         sym_vecs[~in_range] = unk_sym_embed.to(sym_vecs.dtype)
-        arg_emb[ptr_mask] = arg_sym_proj(sym_vecs)
+        arg_emb[ptr_mask] = arg_sym_proj(sym_vecs).to(arg_emb.dtype)
 
     # Variable args
     var_mask = actions == ARG_VAR
@@ -79,7 +83,7 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
         var_vecs = var_slot_embed(safe_slots)
         # For out-of-range variable slots, use learned UNK embedding
         var_vecs[~in_range] = unk_var_embed.to(var_vecs.dtype)
-        arg_emb[var_mask] = var_vecs
+        arg_emb[var_mask] = var_vecs.to(arg_emb.dtype)
 
     return arg_emb
 
@@ -446,8 +450,7 @@ class PointerTreeDecoder(nn.Module):
         if max_n == 0:
             max_n = 1
 
-        padded = torch.zeros(batch_size, max_n, self.hidden_dim,
-                             device=device, dtype=embeds.dtype)
+        padded = torch.zeros(batch_size, max_n, self.hidden_dim, device=device)
         mask = torch.zeros(batch_size, max_n, dtype=torch.bool, device=device)
 
         sorted_idx = torch.argsort(batch_assign, stable=True)
@@ -458,7 +461,7 @@ class PointerTreeDecoder(nn.Module):
             sample_mask = sorted_batch == i
             n = sample_mask.sum().item()
             if n > 0:
-                padded[i, :n] = sorted_embeds[sample_mask]
+                padded[i, :n] = sorted_embeds[sample_mask].to(padded.dtype)
                 mask[i, :n] = True
 
         return padded, mask

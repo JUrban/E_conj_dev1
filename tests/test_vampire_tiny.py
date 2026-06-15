@@ -223,3 +223,41 @@ def test_lemma_index_shared(cache_dir):
     # Total lemma count should be 6 (2 per problem)
     total = sum(len(v) for v in train_ds._lemma_str_index.values())
     assert total == 6, f"Expected 6 lemmas in index, got {total}"
+
+
+# -----------------------------------------------------------------------
+# 6. AMP forward pass (dtype safety)
+# -----------------------------------------------------------------------
+
+def test_amp_forward_pass(cache_dir):
+    """Model forward pass works under torch.cuda.amp.autocast (or CPU equivalent)."""
+    from conjecture_gen.train import collate_fn, compute_loss
+    from conjecture_gen.train_variant import get_model_and_loss
+    import argparse
+
+    ds = _make_train_ds(cache_dir)
+    ds.precompute()
+
+    # Build a small batch
+    items = [ds[i] for i in range(len(ds))]
+    batch = collate_fn(items)
+
+    # Build model
+    args = argparse.Namespace(
+        hidden_dim=32, num_gnn_layers=2, max_vars=10,
+        vocab_size=0, named_embeddings=False,
+    )
+    model, loss_fn = get_model_and_loss('a', args)
+
+    # Test WITHOUT autocast (baseline)
+    model.train()
+    output = model(batch)
+    losses = loss_fn(output, batch)
+    assert torch.isfinite(losses['total']), "Non-finite loss without AMP"
+
+    # Test WITH autocast (the AMP path)
+    device_type = 'cuda' if torch.cuda.is_available() else 'cpu'
+    with torch.amp.autocast(device_type=device_type):
+        output_amp = model(batch)
+        losses_amp = loss_fn(output_amp, batch)
+    assert torch.isfinite(losses_amp['total']), f"Non-finite loss with AMP: {losses_amp['total']}"
