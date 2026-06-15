@@ -307,16 +307,26 @@ class ConjectureDataset(Dataset):
     def precompute(self, load_into_ram=True):
         """Precompute all samples into RAM for zero-overhead __getitem__.
 
-        Builds all samples directly in memory. No disk files needed.
-        Requires sufficient RAM (~8GB for 138K samples).
+        First run builds all samples and saves as a single .pt file (~8GB).
+        Subsequent runs load the file directly (~1-2 min vs ~30 min build).
         """
-        print(f"Precomputing {len(self.samples)} samples into RAM...")
+        cache_path = os.path.join(self.cache_dir,
+                                   f'precomputed_{len(self.samples)}.pt')
+        if os.path.exists(cache_path):
+            print(f"Loading {len(self.samples)} precomputed samples from {cache_path}...")
+            self._inmemory = torch.load(cache_path, weights_only=False)
+            print(f"  Loaded {len(self._inmemory)} samples into RAM.")
+            return
+
+        print(f"Precomputing {len(self.samples)} samples (first time)...")
         self._inmemory = []
         for idx in range(len(self.samples)):
             item = self._build_item(idx)
             self._inmemory.append(item)
             if (idx + 1) % 2000 == 0:
                 print(f"  precomputed {idx+1}/{len(self.samples)}...")
+        print(f"  Saving to {cache_path}...")
+        torch.save(self._inmemory, cache_path)
         print(f"  All {len(self._inmemory)} samples in RAM.")
 
     def __len__(self):
