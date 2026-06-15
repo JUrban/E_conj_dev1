@@ -55,7 +55,7 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
     device = actions.device
     hidden_dim = unk_sym_embed.shape[0]
 
-    arg_emb = torch.zeros(B, T, hidden_dim, device=device)
+    arg_emb = torch.zeros(B, T, hidden_dim, device=device, dtype=symbol_embeds.dtype)
 
     # Symbol pointer args (PRED or ARG_FUNC)
     ptr_mask = (actions == PRED) | (actions == ARG_FUNC)
@@ -67,7 +67,7 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
         batch_indices = torch.arange(B, device=device).unsqueeze(1).expand_as(actions)[ptr_mask]
         sym_vecs = symbol_embeds[batch_indices, safe_idx]
         # For out-of-range indices, use learned UNK embedding
-        sym_vecs[~in_range] = unk_sym_embed
+        sym_vecs[~in_range] = unk_sym_embed.to(sym_vecs.dtype)
         arg_emb[ptr_mask] = arg_sym_proj(sym_vecs)
 
     # Variable args
@@ -78,7 +78,7 @@ def build_arg_embeddings(actions: torch.Tensor, arguments: torch.Tensor,
         safe_slots = raw_slots.clamp(0, max_vars - 1)
         var_vecs = var_slot_embed(safe_slots)
         # For out-of-range variable slots, use learned UNK embedding
-        var_vecs[~in_range] = unk_var_embed
+        var_vecs[~in_range] = unk_var_embed.to(var_vecs.dtype)
         arg_emb[var_mask] = var_vecs
 
     return arg_emb
