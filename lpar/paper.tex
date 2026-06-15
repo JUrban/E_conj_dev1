@@ -133,12 +133,14 @@ metric is processed clauses for \Eprover and instructions burned for
 The \MML contains over 60\,000 formalized mathematical theorems.  We
 export these as first-order CNF problems in TPTP
 format~\cite{Sutcliffe2009}, obtaining 57\,880 problems.  The two
-datasets differ in CNF preprocessing: the \Eprover problems use
-SInE-based axiom selection~\cite{HoderV2011}, reducing the average
-problem to ${\sim}45$~clauses, while the \Vampire problems use the
-full \Mizar axiom set, averaging ${\sim}430$~clauses per problem for
-the subset with useful lemmas.  This difference is reflected in graph
-sizes (Sec.~\ref{sec:training}).
+datasets differ in problem size: the \Eprover problems were minimized
+after solving (retaining only the axioms used in the proof), reducing
+the average problem to ${\sim}45$~clauses.  This is useful for
+initial method development but unrealistic for deployment.
+The \Vampire problems use the full \Mizar axiom set,
+averaging ${\sim}430$~clauses per problem for the subset with useful
+lemmas, providing a more realistic evaluation setting.
+This difference is reflected in graph sizes (Sec.~\ref{sec:training}).
 
 \subsection{E Prover Dataset}
 \label{sec:eprover-data}
@@ -349,9 +351,9 @@ batch sizes 16--64 on A100 GPUs.  The \Eprover problems average
 ${\sim}45$~clauses (${\sim}400$ graph nodes); we filter at 1\,500
 nodes.  For the \Vampire dataset, problems are substantially larger
 (${\sim}430$~clauses, ${\sim}3\,000$ nodes on average for useful
-problems) due to the full \Mizar axiom set being included (vs.\
-SInE-filtered axioms for \Eprover), so we filter at 5\,000 nodes,
-retaining ${\sim}90\%$ of useful problems.
+problems) since they include the full \Mizar axiom set (vs.\
+post-proof minimized axioms for \Eprover), so we filter at 5\,000
+nodes, retaining ${\sim}90\%$ of useful problems.
 
 
 %% ================================================================
@@ -570,8 +572,8 @@ least as important as model quality for maximizing coverage.
 We have also constructed a substantially larger \Vampire dataset
 (196K useful examples from 34K problems, $12\times$ the \Eprover
 data), which we expect to significantly improve model quality. The
-\Vampire problems are ${\sim}10\times$ larger (full \Mizar axiom
-set vs.\ SInE-filtered), presenting both a challenge for the GNN
+\Vampire problems are ${\sim}10\times$ larger (full axiom
+set vs.\ post-proof minimized), presenting both a challenge for the GNN
 encoder and an opportunity for the model to learn to identify relevant
 structure in larger contexts.
 
@@ -611,11 +613,6 @@ A.~Grabowski, A.~Korni{\l}owicz, and A.~Naumowicz.
 G.~Sutcliffe.
 \newblock The {TPTP} problem library and associated infrastructure.
 \newblock {\em J. Automated Reasoning}, 43(4):337--362, 2009.
-
-\bibitem{HoderV2011}
-K.~Hoder and A.~Voronkov.
-\newblock Sine qua non for large theory reasoning.
-\newblock In {\em CADE-23}, LNCS 6803, pp.~299--314, 2011.
 
 \bibitem{Hu2020}
 W.~Hu, B.~Fey, M.~Zitnik, Y.~Dong, H.~Ren, B.~Liu, M.~Catasta, and
