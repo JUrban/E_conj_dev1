@@ -107,20 +107,27 @@ def compute_loss(model_output, batch, pad_value=-1):
     }
 
 
+# Target attribute names that we handle manually (pad+stack)
+# instead of letting PyG concatenate them.
+_TARGET_ATTRS = ('target_actions', 'target_arguments', 'target_length',
+                 'quality_weight', 'ratio', 'num_symbols')
+
+
 def collate_fn(batch_list):
     """Custom collate: pad target sequences and batch graphs.
 
     We handle target tensors manually (stack into 2D) because PyG's
     Batch.from_data_list concatenates 1D tensors instead of stacking.
-    Clones items to avoid mutating the in-memory dataset cache.
+
+    To avoid expensive .clone() on every item, we tell PyG to exclude
+    the target attributes during batching, then stack them ourselves.
     """
     from torch_geometric.data import Batch
 
     # Find max target length in this batch
     max_len = max(item.target_length.item() for item in batch_list)
-    batch_size = len(batch_list)
 
-    # Extract and pad targets before batching
+    # Extract and pad targets
     all_actions = []
     all_arguments = []
     all_lengths = []
@@ -128,10 +135,7 @@ def collate_fn(batch_list):
     all_ratios = []
     all_num_symbols = []
 
-    # Clone items so we don't mutate the dataset's in-memory cache
-    cloned = [item.clone() for item in batch_list]
-
-    for item in cloned:
+    for item in batch_list:
         cur_len = item.target_actions.shape[0]
         pad_len = max_len - cur_len
         all_actions.append(F.pad(item.target_actions, (0, pad_len), value=END_CLAUSE))
@@ -141,18 +145,10 @@ def collate_fn(batch_list):
         all_ratios.append(item.ratio)
         all_num_symbols.append(item.num_symbols)
 
-        # Remove these from the clone so PyG doesn't try to batch them
-        del item.target_actions
-        del item.target_arguments
-        del item.target_length
-        del item.quality_weight
-        del item.ratio
-        del item.num_symbols
+    # Batch graphs, excluding target attrs to avoid PyG concatenating them
+    batch = Batch.from_data_list(batch_list, exclude_keys=list(_TARGET_ATTRS))
 
-    # Batch the graphs (using clones, not originals)
-    batch = Batch.from_data_list(cloned)
-
-    # Re-attach properly stacked targets
+    # Attach properly stacked targets
     batch.target_actions = torch.stack(all_actions)         # (B, T)
     batch.target_arguments = torch.stack(all_arguments)     # (B, T)
     batch.target_length = torch.stack(all_lengths)          # (B,)
