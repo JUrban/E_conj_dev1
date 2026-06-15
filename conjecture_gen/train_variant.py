@@ -132,7 +132,7 @@ def train(args):
         symbol_vocab=symbol_vocab,
     )
 
-    if device.type == 'cuda':
+    if device.type == 'cuda' and not args.no_precompute:
         train_ds.precompute()
         val_ds.precompute()
 
@@ -299,6 +299,8 @@ def main():
     p.add_argument('--grad_clip', type=float, default=1.0)
     p.add_argument('--epochs', type=int, default=5)
     p.add_argument('--max_ratio', type=float, default=0.5)
+    p.add_argument('--no_precompute', action='store_true',
+                   help='Disable precomputing all samples into RAM (needed for large datasets)')
     p.add_argument('--max_samples', type=int, default=200)
     p.add_argument('--max_nodes', type=int, default=0)
     p.add_argument('--log_every', type=int, default=10)
