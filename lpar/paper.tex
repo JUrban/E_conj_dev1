@@ -260,20 +260,29 @@ Of the 187 provable test problems, our models help on up to 125
 \subsection{Vampire Dataset}
 \label{sec:vampire-data}
 
-We use \Vampire with neural clause selection~\cite{Suda2025}, running
-with a 50~billion instruction limit.  This solves \textbf{34\,182}
-problems (59.1\%).  For each solved problem, \Vampire produces proof
-lemmas in first-order (FOF) format.  Notably, all 2.47M lemmas are
-universally quantified disjunctions (no existential quantifiers,
-implications, or conjunctions), making conversion to CNF trivial.
+We run \Vampire with neural clause selection~\cite{Suda2025} on
+the premise-selected Mizar60 CNF problems using a single non-AVATAR
+strategy with a 50~billion instruction limit (approximately 58
+minutes of wall-clock time on 64 cores).  Out of 55\,832 problems,
+\Vampire solves \textbf{34\,080} (61.0\%).  This is comparable to
+the 34\,182 solved on the full-axiom CNF corpus (59.1\%), confirming
+that the premise-selected problems retain the essential difficulty
+while being much smaller.
+
+For each solved problem, \Vampire produces proof lemmas in
+first-order (FOF) format.  All lemmas are universally quantified
+disjunctions (no existential quantifiers, implications, or
+conjunctions), making conversion to CNF trivial.
 
 We evaluate each (problem, lemma) pair with a 25~billion instruction
 limit for both $P \cup \{L\}$ and $P \cup \{\neg L\}$.
-Table~\ref{tab:vampire-stats} summarizes the results.
+Table~\ref{tab:vampire-stats} summarizes the results from
+the full-axiom corpus (the premise-selected cut evaluation is
+ongoing).
 
 \begin{table}[t]
 \centering
-\caption{Vampire conjecture dataset overview.}
+\caption{Vampire conjecture dataset overview (full-axiom corpus).}
 \label{tab:vampire-stats}
 \begin{tabular}{lr}
 \toprule
