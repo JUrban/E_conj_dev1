@@ -305,45 +305,19 @@ class ConjectureDataset(Dataset):
         return lemma_dict.get(cut_id)
 
     def precompute(self, load_into_ram=True):
-        """Precompute all samples to disk, optionally load into RAM.
+        """Precompute all samples into RAM for zero-overhead __getitem__.
 
-        First call builds disk cache. If load_into_ram=True, loads
-        everything into memory (fast but needs ~N*3MB RAM).
-        If False, __getitem__ loads individual files from disk (slower
-        but constant memory).
+        Builds all samples directly in memory. No disk files needed.
+        Requires sufficient RAM (~8GB for 138K samples).
         """
-        precomp_dir = os.path.join(self.cache_dir, 'precomputed')
-        os.makedirs(precomp_dir, exist_ok=True)
-        self._precomp_dir = precomp_dir
-
-        # Build disk cache if needed
-        marker = os.path.join(precomp_dir, f'done_{len(self.samples)}.marker')
-        if not os.path.exists(marker):
-            print(f"Precomputing {len(self.samples)} samples to disk...")
-            for idx in range(len(self.samples)):
-                out_path = os.path.join(precomp_dir, f'sample_{idx}.pt')
-                if not os.path.exists(out_path):
-                    item = self._build_item(idx)
-                    torch.save(item, out_path)
-                if (idx + 1) % 2000 == 0:
-                    print(f"  precomputed {idx+1}/{len(self.samples)}...")
-            with open(marker, 'w') as f:
-                f.write('done')
-            print(f"  Disk cache complete.")
-
-        if load_into_ram:
-            # Load everything into RAM (fast access, high memory)
-            print(f"Loading {len(self.samples)} precomputed samples into RAM...")
-            self._inmemory = []
-            for idx in range(len(self.samples)):
-                path = os.path.join(precomp_dir, f'sample_{idx}.pt')
-                self._inmemory.append(torch.load(path, weights_only=False))
-                if (idx + 1) % 2000 == 0:
-                    print(f"  loaded {idx+1}/{len(self.samples)}...")
-            print(f"  All {len(self._inmemory)} samples in RAM.")
-        else:
-            print(f"Disk-cached mode: {len(self.samples)} samples on disk, "
-                  f"loading per-sample in __getitem__.")
+        print(f"Precomputing {len(self.samples)} samples into RAM...")
+        self._inmemory = []
+        for idx in range(len(self.samples)):
+            item = self._build_item(idx)
+            self._inmemory.append(item)
+            if (idx + 1) % 2000 == 0:
+                print(f"  precomputed {idx+1}/{len(self.samples)}...")
+        print(f"  All {len(self._inmemory)} samples in RAM.")
 
     def __len__(self):
         return len(self.samples)
@@ -444,12 +418,7 @@ class ConjectureDataset(Dataset):
         # Must clone to prevent .to(device) from mutating the cache
         if hasattr(self, '_inmemory') and self._inmemory:
             return self._inmemory[idx].clone()
-        # Use disk cache if available (medium speed, no RAM bloat)
-        if hasattr(self, '_precomp_dir') and self._precomp_dir:
-            path = os.path.join(self._precomp_dir, f'sample_{idx}.pt')
-            if os.path.exists(path):
-                return torch.load(path, weights_only=False)
-        # Build from cached graph + pre-encoded target (fast)
+        # Fallback: build on the fly
         return self._build_item(idx)
 
 
