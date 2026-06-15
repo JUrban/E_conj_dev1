@@ -113,6 +113,21 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export PYTHONUNBUFFERED=1
 
+# Strip --problem_list_file and its value from EXTRA_ARGS (handled by this script)
+CLEAN_ARGS=""
+skip_next=false
+for arg in $EXTRA_ARGS; do
+    if $skip_next; then
+        skip_next=false
+        continue
+    fi
+    if [ "$arg" = "--problem_list_file" ]; then
+        skip_next=true
+        continue
+    fi
+    CLEAN_ARGS="$CLEAN_ARGS $arg"
+done
+
 echo "Launching $N_PARTS workers on GPU $GPU_ID..."
 for f in "$SPLIT_DIR"/part_*; do
     part=$(basename "$f")
@@ -125,7 +140,7 @@ for f in "$SPLIT_DIR"/part_*; do
         --problem_list "$f" \
         --rankings_suffix "_${part}" \
         --max_nodes 999999 \
-        $EXTRA_ARGS \
+        $CLEAN_ARGS \
         > "$LOG" 2>&1 &
 
     PID=$!
