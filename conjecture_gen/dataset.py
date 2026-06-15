@@ -49,26 +49,27 @@ class ConjectureDataset(Dataset):
         self.symbol_vocab = symbol_vocab
 
         # Pre-index lemma file: group raw lines by problem name.
-        # Stores only strings (not parsed clauses) — ~100MB for 196K lines.
-        # Avoids repeated full-file scans in _get_lemma_clause.
-        self._lemma_index = {}  # {problem: {lemma_id: raw_line}}
-        print(f"Indexing lemma file...")
-        with open(lemmas_file) as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                colon_idx = line.find(': cnf(')
-                if colon_idx == -1:
-                    continue
-                parts = line[:colon_idx].split('/')
-                if len(parts) >= 3:
-                    prob, lid = parts[-2], parts[-1]
-                    if prob not in self._lemma_index:
-                        self._lemma_index[prob] = {}
-                    self._lemma_index[prob][lid] = line
-        print(f"  Indexed {sum(len(v) for v in self._lemma_index.values())} "
-              f"lemmas for {len(self._lemma_index)} problems")
+        # Class-level so second dataset (val) reuses the index.
+        if not ConjectureDataset._lemma_str_index:
+            print(f"Indexing lemma file...")
+            with open(lemmas_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    colon_idx = line.find(': cnf(')
+                    if colon_idx == -1:
+                        continue
+                    parts = line[:colon_idx].split('/')
+                    if len(parts) >= 3:
+                        prob, lid = parts[-2], parts[-1]
+                        if prob not in ConjectureDataset._lemma_str_index:
+                            ConjectureDataset._lemma_str_index[prob] = {}
+                        ConjectureDataset._lemma_str_index[prob][lid] = line
+            print(f"  Indexed {sum(len(v) for v in ConjectureDataset._lemma_str_index.values())} "
+                  f"lemmas for {len(ConjectureDataset._lemma_str_index)} problems")
+        else:
+            print(f"Reusing lemma index ({len(ConjectureDataset._lemma_str_index)} problems)")
 
         if cache_dir is None:
             cache_dir = os.path.join(os.path.dirname(problems_dir), 'cache')
@@ -242,14 +243,10 @@ class ConjectureDataset(Dataset):
         print(f"  Found {len(self.samples)} samples across "
               f"{len(self.problem_names)} problems")
 
-    # In-memory graph cache: holds all unique problem graphs.
-    # With ~2-3K problems at ~1MB each = 2-3GB, fits easily in RAM.
-    # Class-level so train/val datasets share it (same symbol_vocab required).
-    _graph_cache = {}
-
-    # In-memory lemma cache: parsed clause dicts per problem.
-    # ~2-3K problems × ~50 lemmas × ~1KB = ~128MB.
-    _lemma_cache = {}
+    # Class-level caches shared across train/val instances:
+    _graph_cache = {}       # problem_name -> HeteroData (~2-3GB)
+    _lemma_cache = {}       # problem_name -> {lemma_id: Clause} (~128MB)
+    _lemma_str_index = {}   # problem_name -> {lemma_id: raw_line} (~94MB)
 
     def _get_problem_graph(self, problem_name: str) -> HeteroData:
         """Load or build the problem graph. Cached in RAM."""
@@ -281,8 +278,8 @@ class ConjectureDataset(Dataset):
         cache_path = os.path.join(self.cache_dir, f'lemmas_{problem_name}.pt')
         if os.path.exists(cache_path):
             lemma_dict = torch.load(cache_path, weights_only=False)
-        elif hasattr(self, '_lemma_index') and problem_name in self._lemma_index:
-            for lid, line in self._lemma_index[problem_name].items():
+        elif problem_name in self._lemma_str_index:
+            for lid, line in self._lemma_str_index[problem_name].items():
                 result = parse_lemma_line(line)
                 if result is not None:
                     _, _, clause = result

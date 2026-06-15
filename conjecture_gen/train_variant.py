@@ -134,12 +134,9 @@ def train(args):
 
     if device.type == 'cuda':
         if args.no_precompute:
-            # Warm the graph cache: load all unique problem graphs into RAM.
-            # Much smaller than full precompute (~2-3K graphs vs 138K samples).
-            print("Warming graph cache...")
-            for pname in sorted(set(s['problem'] for s in train_ds.samples)):
-                train_ds._get_problem_graph(pname)
-            print(f"  {len(train_ds._graph_cache)} graphs in RAM")
+            # Lazy mode: graphs and lemmas cache on first access.
+            # No upfront warming to avoid memory spikes.
+            print("Lazy loading mode: graphs/lemmas cached on first access")
         else:
             train_ds.precompute(load_into_ram=True)
             val_ds.precompute(load_into_ram=True)
