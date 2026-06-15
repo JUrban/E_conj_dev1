@@ -90,7 +90,21 @@ def train(args):
     if getattr(args, 'named_embeddings', False):
         from conjecture_gen.symbol_vocab import build_vocab
         vocab_cache = os.path.join(args.cache_dir, 'symbol_vocab.pt')
-        symbol_vocab = build_vocab(args.problems_dir, cache_path=vocab_cache)
+        # If split files are given, only scan those problems (much faster)
+        prob_list = None
+        if args.train_split or args.val_split:
+            prob_list = set()
+            for sf in [args.train_split, args.val_split]:
+                if sf and os.path.exists(sf):
+                    with open(sf) as f:
+                        prob_list |= set(line.strip() for line in f if line.strip())
+            # Only keep problems that actually exist in problems_dir
+            prob_list = [p for p in sorted(prob_list)
+                         if os.path.exists(os.path.join(args.problems_dir, p))]
+            print(f"Scanning {len(prob_list)} problems for symbol vocab "
+                  f"(not all {len(os.listdir(args.problems_dir))})")
+        symbol_vocab = build_vocab(args.problems_dir, cache_path=vocab_cache,
+                                   problem_list=prob_list)
         args.vocab_size = len(symbol_vocab)
         print(f"Named embeddings: vocab_size={args.vocab_size}")
 

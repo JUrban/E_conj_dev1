@@ -18,8 +18,15 @@ def is_skolem(name: str) -> bool:
 
 
 def build_vocab(problems_dir: str, cache_path: str = None,
-                min_count: int = 2) -> dict[str, int]:
-    """Build vocabulary from all problem files.
+                min_count: int = 2,
+                problem_list: list[str] = None) -> dict[str, int]:
+    """Build vocabulary from problem files.
+
+    Args:
+        problems_dir: directory containing CNF problem files
+        cache_path: optional path to cache the vocab
+        min_count: minimum frequency to include a symbol
+        problem_list: if given, only scan these problems (not the full dir)
 
     Returns dict mapping symbol_name -> vocab_index.
     Index 0 is reserved for UNK (Skolem symbols and rare Mizar symbols).
@@ -30,8 +37,12 @@ def build_vocab(problems_dir: str, cache_path: str = None,
     from conjecture_gen.tptp_parser import parse_problem_file
     from conjecture_gen.graph_builder import clauses_to_graph
 
+    if problem_list is None:
+        all_files = sorted(os.listdir(problems_dir))
+    else:
+        all_files = sorted(problem_list)
+
     counts = {}
-    all_files = sorted(os.listdir(problems_dir))
     print(f"Building symbol vocab from {len(all_files)} problem files...")
     for fi, fname in enumerate(all_files):
         try:
