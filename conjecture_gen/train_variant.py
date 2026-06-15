@@ -211,17 +211,23 @@ def train(args):
         t0 = time.time()
 
         for batch_idx, batch in enumerate(train_loader):
-            batch = batch.to(device)
-            optimizer.zero_grad()
-            output = model(batch)
-            losses = loss_fn(output, batch)
-            losses['total'].backward()
-            nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
-            optimizer.step()
+            try:
+                batch = batch.to(device)
+                optimizer.zero_grad()
+                output = model(batch)
+                losses = loss_fn(output, batch)
+                losses['total'].backward()
+                nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+                optimizer.step()
 
-            for k in epoch_losses:
-                epoch_losses[k] += losses[k] if isinstance(losses[k], float) else losses[k].item()
-            n_batches += 1
+                for k in epoch_losses:
+                    epoch_losses[k] += losses[k] if isinstance(losses[k], float) else losses[k].item()
+                n_batches += 1
+            except torch.cuda.OutOfMemoryError:
+                # Skip oversized batches, free memory, continue training
+                torch.cuda.empty_cache()
+                print(f"  [{epoch}] batch {batch_idx+1}: CUDA OOM, skipped", flush=True)
+                continue
 
             if (batch_idx + 1) % args.log_every == 0:
                 print(f"  [{epoch}] batch {batch_idx+1}/{len(train_loader)} "
