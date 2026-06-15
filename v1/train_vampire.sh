@@ -55,6 +55,7 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.train_variant \
     --val_split v1/val_problems.txt \
     --hidden_dim $HIDDEN \
     --max_nodes 5000 \
+    --max_ratio 1.0 \
     --max_samples 0 \
     --epochs 200 \
     --lr 2e-4 \
