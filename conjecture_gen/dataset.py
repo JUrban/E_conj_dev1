@@ -318,13 +318,24 @@ class ConjectureDataset(Dataset):
             print(f"  Loaded {len(self._inmemory)} samples into RAM.")
             return
 
-        print(f"Precomputing {len(self.samples)} samples (first time)...")
-        self._inmemory = []
-        for idx in range(len(self.samples)):
-            item = self._build_item(idx)
-            self._inmemory.append(item)
-            if (idx + 1) % 2000 == 0:
-                print(f"  precomputed {idx+1}/{len(self.samples)}...")
+        # Parallel precompute using threads (graph.clone releases GIL)
+        import concurrent.futures
+        n_workers = min(os.cpu_count() or 1, 8)
+        n = len(self.samples)
+        print(f"Precomputing {n} samples ({n_workers} threads)...")
+
+        self._inmemory = [None] * n
+
+        def build_one(idx):
+            return idx, self._build_item(idx)
+
+        done = 0
+        with concurrent.futures.ThreadPoolExecutor(max_workers=n_workers) as pool:
+            for idx, item in pool.map(build_one, range(n)):
+                self._inmemory[idx] = item
+                done += 1
+                if done % 5000 == 0:
+                    print(f"  precomputed {done}/{n}...")
         print(f"  Saving to {cache_path}...")
         torch.save(self._inmemory, cache_path)
         print(f"  All {len(self._inmemory)} samples in RAM.")
