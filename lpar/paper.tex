@@ -238,11 +238,24 @@ non-positional edges use SAGEConv~\cite{Hamilton2017}.  After message
 passing, the graph pooling produces a global context vector via mean
 aggregation over symbol nodes.
 
-Optionally, \emph{named symbol embeddings} can be enabled: each of
-the ${\sim}3\,097$ Mizar symbols receives a learnable embedding vector
-looked up by name, added to the GNN's symbol node features.  This
-allows the model to leverage symbol identity across problems (shared
-mathematical vocabulary), at the cost of symbol-level generalization.
+\paragraph{Symbol-independent design.}
+A crucial design choice is that the model is fundamentally
+\emph{symbol-independent}: generated clauses are constructed by
+\emph{pointing} to symbol nodes in the input graph (see below), not
+by selecting from a fixed output vocabulary.  This means the model can
+generate conjectures for problems containing symbols it has never seen
+during training---the GNN encodes each symbol's structural role
+(arity, predicate vs.\ function, which clauses and terms it appears
+in) regardless of its name.
+
+Optionally, \emph{named symbol embeddings} add a learnable vector per
+known Mizar symbol name (${\sim}3\,097$ symbols), summed into the
+GNN's symbol node features before message passing.  This allows the
+model to recognize recurring symbols across problems (e.g., ``this is
+\texttt{r2\_hidden}, which typically behaves like set membership'').
+Unknown symbols simply receive a shared UNK embedding and still
+function correctly through the pointer mechanism and GNN-propagated
+structural features.
 
 \subsection{Autoregressive Transformer Decoder}
 
@@ -255,14 +268,18 @@ arity obligation), \textsc{EndArgs} (close current term), and
 \textsc{EndClause} (finish generation).
 
 The decoder is a standard Transformer with $d$-dimensional
-cross-attention to the encoded graph.  At each step, it outputs:
+cross-attention to the encoded graph.  At each step, it produces
+three outputs:
 \begin{enumerate}
 \item An \emph{action distribution} over the 7~types, masked by
   role constraints (e.g., after \textsc{NewLitPos}, only
   \textsc{Pred} is allowed).
-\item A \emph{pointer distribution} over graph symbols for
-  \textsc{Pred}/\textsc{ArgFunc} actions, computed via attention
-  between the decoder state and symbol node embeddings.  Role-aware
+\item A \emph{pointer distribution} over the input graph's symbol
+  nodes for \textsc{Pred}/\textsc{ArgFunc} actions, computed via
+  dot-product attention between the decoder state and the GNN's
+  symbol node embeddings.  This is the key mechanism enabling
+  symbol independence: the model selects symbols by their
+  \emph{learned graph representations}, not by name.  Role-aware
   masking ensures predicates are only pointed to by \textsc{Pred}
   and functions by \textsc{ArgFunc}.
 \item A \emph{variable distribution} over $V_{\max}=20$ variable
