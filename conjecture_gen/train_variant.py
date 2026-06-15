@@ -86,6 +86,7 @@ def train(args):
         torch.cuda.manual_seed_all(seed)
 
     # Build symbol vocab if using named embeddings
+    os.makedirs(args.cache_dir, exist_ok=True)
     symbol_vocab = None
     if getattr(args, 'named_embeddings', False):
         from conjecture_gen.symbol_vocab import build_vocab
