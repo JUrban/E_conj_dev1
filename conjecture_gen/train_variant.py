@@ -143,16 +143,36 @@ def train(args):
 
     use_cuda = device.type == 'cuda'
     nw = args.num_workers
-    train_loader = DataLoader(
-        train_ds, batch_size=args.batch_size, shuffle=True,
-        collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=False,
-    )
-    val_loader = DataLoader(
-        val_ds, batch_size=args.batch_size, shuffle=False,
-        collate_fn=collate_fn, num_workers=nw,
-        pin_memory=False, persistent_workers=False,
-    )
+    if args.no_precompute and hasattr(train_ds, '_problem_sizes'):
+        # Size-aware batching: cap total nodes per batch to avoid VRAM spikes
+        from conjecture_gen.batch_by_size import SizeAwareBatchSampler
+        max_total = args.max_batch_nodes
+        print(f"Size-aware batching: max_total_nodes={max_total}")
+        train_sampler = SizeAwareBatchSampler(train_ds, max_total_nodes=max_total,
+                                              shuffle=True)
+        val_sampler = SizeAwareBatchSampler(val_ds, max_total_nodes=max_total,
+                                            shuffle=False)
+        train_loader = DataLoader(
+            train_ds, batch_sampler=train_sampler,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
+        )
+        val_loader = DataLoader(
+            val_ds, batch_sampler=val_sampler,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
+        )
+    else:
+        train_loader = DataLoader(
+            train_ds, batch_size=args.batch_size, shuffle=True,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
+        )
+        val_loader = DataLoader(
+            val_ds, batch_size=args.batch_size, shuffle=False,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
+        )
 
     if args.variant in ('b', 'e'):
         import warnings
@@ -205,6 +225,8 @@ def train(args):
             print(f"WARNING: --resume {args.resume} but no best_model.pt found, starting fresh")
 
     for epoch in range(start_epoch, start_epoch + args.epochs):
+        if hasattr(train_loader, 'batch_sampler') and hasattr(train_loader.batch_sampler, 'set_epoch'):
+            train_loader.batch_sampler.set_epoch(epoch)
         model.train()
         epoch_losses = {'total': 0, 'action': 0, 'pointer': 0, 'variable': 0}
         n_batches = 0
@@ -312,6 +334,8 @@ def main():
     p.add_argument('--max_ratio', type=float, default=0.5)
     p.add_argument('--no_precompute', action='store_true',
                    help='Disable precomputing all samples into RAM (needed for large datasets)')
+    p.add_argument('--max_batch_nodes', type=int, default=50000,
+                   help='Max total graph nodes per batch (size-aware batching)')
     p.add_argument('--max_samples', type=int, default=200)
     p.add_argument('--max_nodes', type=int, default=0)
     p.add_argument('--log_every', type=int, default=10)

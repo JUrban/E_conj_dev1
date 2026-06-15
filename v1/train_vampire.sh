@@ -57,6 +57,7 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.train_variant \
     --max_nodes 5000 \
     --max_ratio 1.0 \
     --no_precompute \
+    --max_batch_nodes 50000 \
     --max_samples 0 \
     --epochs 200 \
     --lr 1e-4 \

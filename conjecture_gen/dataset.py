@@ -122,6 +122,9 @@ class ConjectureDataset(Dataset):
             big_problems = {
                 p for p, sz in problem_sizes.items() if sz > max_nodes
             }
+            # Store sizes for batch sampler
+            self._problem_sizes = problem_sizes
+
             if big_problems:
                 before = len(self.samples)
                 self.samples = [
