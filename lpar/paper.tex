@@ -220,10 +220,13 @@ conjecture generation across a spectrum of premise selection quality.
 \subsection{E Prover Dataset}
 \label{sec:eprover-data}
 
-From 3\,161 CNF problems, \Eprover (with \texttt{--auto} mode and a
-10-second timeout) solves 1\,888 problems.  For each solved problem,
-we extract intermediate clauses from the proof and evaluate them as
-cuts.  This yields 122\,356 (problem, lemma) pairs.
+We use \Eprover version 2.6 (Floral Guranse)~\cite{Schulz2002} with
+\texttt{--auto} mode and a 10-second wall-clock timeout on post-proof
+minimized CNF problems.  From 3\,161 problems, \Eprover solves 1\,888.
+For each solved problem, we extract intermediate clauses from the proof
+and evaluate them as cuts using the same prover and timeout.  The cut
+evaluation runs on 64 parallel workers.
+This yields 122\,356 (problem, lemma) pairs.
 
 We split by problem into 2\,239 / 279 / 279 (train / val / test).
 Of the 187 provable test problems, our models help on up to 125
@@ -508,10 +511,11 @@ we generate 40--80 conjectures per problem using nucleus sampling with
 varying temperature ($T \in \{1.0, 1.2, 1.5\}$), top-$k$ ($\in
 \{10, 15, 25\}$), and top-$p$ ($\in \{0.9, 0.95, 0.98\}$).
 
-Each generated conjecture is evaluated by running \Eprover with a
-2-second timeout for both $P \cup \{L\}$ and $P \cup \{\neg L\}$.
+Each generated conjecture is evaluated by running \Eprover 2.6 with a
+2-second timeout for both $P \cup \{L\}$ and $P \cup \{\neg L\}$,
+using 64 parallel workers.
 The test set contains 279 problems, of which 187 are provable by
-\Eprover in the baseline.
+\Eprover in the baseline (10-second timeout).
 
 \subsection{Per-Method Results}
 
