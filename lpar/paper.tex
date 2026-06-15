@@ -397,18 +397,27 @@ size), making it invariant to variable batch sizes.
 The \Vampire dataset's 101K training samples with graphs averaging
 ${\sim}2\,000$ nodes present a data-loading challenge.  Full
 precomputation of all sample graphs into RAM requires ${\sim}15$GB
-and ${\sim}10$ minutes (parallelized across 8 threads).  The
-precomputed data is saved as a single file for instant loading on
-subsequent runs.  During training, each \texttt{\_\_getitem\_\_} call
-clones a cached graph and attaches pre-encoded target tensors;
-multiple DataLoader workers (4 processes) overlap this CPU work with
-GPU computation, achieving $>90\%$ GPU utilization on A100.
+and is parallelized across 8 threads (${\sim}10$ minutes on first
+run).  The precomputed data is saved as a single file for instant
+loading on subsequent runs (${\sim}2$ minutes).
+
+During training, the custom collation function uses PyG's
+\texttt{exclude\_keys} mechanism to batch graph structures without
+copying per-sample target tensors, avoiding the overhead of
+deep-cloning large heterogeneous graphs.  Target sequences are
+extracted, padded, and stacked separately.  Multiple persistent
+DataLoader workers (8 processes) overlap the remaining CPU work
+(graph collation, tensor concatenation) with GPU computation.  With
+these optimizations and mixed-precision training, we achieve
+${\sim}60$--$90\%$ GPU utilization on A100, at ${\sim}7$ minutes
+per epoch for the 101K-sample \Vampire training set.
 
 \paragraph{Training configurations.}
-For \Eprover, we train with $d \in \{128, 256, 512, 1024\}$.
+For \Eprover, we train with $d \in \{128, 256, 512, 1024\}$,
+batch sizes 16--64, and up to 200 epochs.
 For the initial \Vampire experiments, we use $d = 128$ (4M
-parameters) to validate the pipeline, with plans to scale to
-$d = 256$ once the data path is verified.
+parameters) with mixed-precision training (AMP) on A100 GPUs.
+We plan to scale to $d = 256$ once the data pipeline is validated.
 
 
 %% ================================================================
