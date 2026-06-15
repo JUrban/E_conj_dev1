@@ -161,18 +161,15 @@ def train(args):
                                               shuffle=True)
         val_sampler = SizeAwareBatchSampler(val_ds, max_total_nodes=max_total,
                                             shuffle=False)
-        # Use num_workers for parallel graph.clone() — fork-based workers
-        # share the parent's _graph_cache and _targets via copy-on-write.
-        loader_nw = min(nw, 2) if nw > 0 else 2
         train_loader = DataLoader(
             train_ds, batch_sampler=train_sampler,
-            collate_fn=collate_fn, num_workers=loader_nw,
-            pin_memory=False, persistent_workers=True,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
         )
         val_loader = DataLoader(
             val_ds, batch_sampler=val_sampler,
-            collate_fn=collate_fn, num_workers=loader_nw,
-            pin_memory=False, persistent_workers=True,
+            collate_fn=collate_fn, num_workers=nw,
+            pin_memory=False, persistent_workers=False,
         )
     else:
         train_loader = DataLoader(
