@@ -90,16 +90,18 @@ def train(args):
     if getattr(args, 'named_embeddings', False):
         from conjecture_gen.symbol_vocab import build_vocab
         vocab_cache = os.path.join(args.cache_dir, 'symbol_vocab.pt')
-        # If split files are given, only scan those problems (much faster)
+        # Only scan problems that have training data (much faster than all files)
         prob_list = None
-        if args.train_split or args.val_split:
-            prob_list = set()
-            for sf in [args.train_split, args.val_split]:
-                if sf and os.path.exists(sf):
-                    with open(sf) as f:
-                        prob_list |= set(line.strip() for line in f if line.strip())
-            # Only keep problems that actually exist in problems_dir
-            prob_list = [p for p in sorted(prob_list)
+        if args.train_split:
+            from conjecture_gen.tptp_parser import parse_statistics_line
+            # Get problems that appear in the statistics file
+            stats_probs = set()
+            with open(args.statistics_file) as f:
+                for line in f:
+                    s = parse_statistics_line(line)
+                    if s:
+                        stats_probs.add(s['problem'])
+            prob_list = [p for p in sorted(stats_probs)
                          if os.path.exists(os.path.join(args.problems_dir, p))]
             print(f"Scanning {len(prob_list)} problems for symbol vocab "
                   f"(not all {len(os.listdir(args.problems_dir))})")
