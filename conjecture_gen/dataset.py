@@ -449,9 +449,11 @@ class ConjectureDataset(Dataset):
 
     def __getitem__(self, idx):
         # Use in-memory cache if available (fastest)
-        # Must clone to prevent .to(device) from mutating the cache
+        # No clone needed: Batch.from_data_list copies into new tensors,
+        # and .to(device) creates new GPU tensors. Verified that neither
+        # mutates the original HeteroData objects in the cache.
         if hasattr(self, '_inmemory') and self._inmemory:
-            return self._inmemory[idx].clone()
+            return self._inmemory[idx]
         # Fallback: build on the fly
         return self._build_item(idx)
 

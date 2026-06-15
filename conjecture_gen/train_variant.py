@@ -161,26 +161,28 @@ def train(args):
                                               shuffle=True)
         val_sampler = SizeAwareBatchSampler(val_ds, max_total_nodes=max_total,
                                             shuffle=False)
+        pw = nw > 0  # persistent workers avoid re-fork overhead
         train_loader = DataLoader(
             train_ds, batch_sampler=train_sampler,
             collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            pin_memory=False, persistent_workers=pw,
         )
         val_loader = DataLoader(
             val_ds, batch_sampler=val_sampler,
             collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            pin_memory=False, persistent_workers=pw,
         )
     else:
+        pw = nw > 0
         train_loader = DataLoader(
             train_ds, batch_size=args.batch_size, shuffle=True,
             collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            pin_memory=False, persistent_workers=pw,
         )
         val_loader = DataLoader(
             val_ds, batch_size=args.batch_size, shuffle=False,
             collate_fn=collate_fn, num_workers=nw,
-            pin_memory=False, persistent_workers=False,
+            pin_memory=False, persistent_workers=pw,
         )
 
     if args.variant in ('b', 'e'):
