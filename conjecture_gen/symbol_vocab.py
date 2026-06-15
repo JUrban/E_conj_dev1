@@ -31,11 +31,18 @@ def build_vocab(problems_dir: str, cache_path: str = None,
     from conjecture_gen.graph_builder import clauses_to_graph
 
     counts = {}
-    for fname in sorted(os.listdir(problems_dir)):
-        g = clauses_to_graph(parse_problem_file(os.path.join(problems_dir, fname)))
-        for name in g.symbol_names:
-            if not is_skolem(name):
-                counts[name] = counts.get(name, 0) + 1
+    all_files = sorted(os.listdir(problems_dir))
+    print(f"Building symbol vocab from {len(all_files)} problem files...")
+    for fi, fname in enumerate(all_files):
+        try:
+            g = clauses_to_graph(parse_problem_file(os.path.join(problems_dir, fname)))
+            for name in g.symbol_names:
+                if not is_skolem(name):
+                    counts[name] = counts.get(name, 0) + 1
+        except Exception:
+            pass
+        if (fi + 1) % 1000 == 0:
+            print(f"  {fi+1}/{len(all_files)} files, {len(counts)} symbols...")
 
     # Build vocab: index 0 = UNK, then sorted by frequency
     vocab = {'<UNK>': 0}
