@@ -26,13 +26,15 @@ shift 4 2>/dev/null || shift $#
 EXTRA_ARGS="$*"
 PROBLEMS_DIR="problems"
 MAX_NODES=1500
+PROBLEM_LIST_FILE=""
 
-# Extract --problems_dir and --max_nodes from extra args if present
+# Extract --problems_dir, --max_nodes, --problem_list_file from extra args
 prev=""
 for i in "$@"; do
     case "$prev" in
         --problems_dir) PROBLEMS_DIR="$i" ;;
         --max_nodes) MAX_NODES="$i" ;;
+        --problem_list_file) PROBLEM_LIST_FILE="$i" ;;
     esac
     prev="$i"
 done
@@ -51,9 +53,13 @@ echo ""
 SPLIT_DIR=$(mktemp -d /tmp/par_gen_splits.XXXXXX)
 trap "rm -rf $SPLIT_DIR" EXIT
 
-# Get full problem list, filter by max_nodes (done once to avoid repeating in each worker)
-echo "Building problem list (max_nodes=$MAX_NODES)..."
-python3 -c "
+# Get problem list: from file or by scanning + filtering
+if [ -n "$PROBLEM_LIST_FILE" ]; then
+    echo "Using problem list from $PROBLEM_LIST_FILE..."
+    cp "$PROBLEM_LIST_FILE" "$SPLIT_DIR/all_problems.txt"
+else
+    echo "Building problem list (max_nodes=$MAX_NODES)..."
+    python3 -c "
 import os, sys
 sys.path.insert(0, '.')
 from conjecture_gen.tptp_parser import parse_problem_file
@@ -77,6 +83,7 @@ print(f'Filtered: {len(filtered)}/{len(problems)} problems', file=sys.stderr)
 for p in filtered:
     print(p)
 " > "$SPLIT_DIR/all_problems.txt"
+fi
 
 TOTAL=$(wc -l < "$SPLIT_DIR/all_problems.txt")
 echo "Total problems after filtering: $TOTAL"
