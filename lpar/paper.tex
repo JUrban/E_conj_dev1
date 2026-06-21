@@ -726,11 +726,16 @@ setting).  For each problem, the model generates 42 conjectures
 with diverse sampling ($T{=}1.2$, top-$k{=}15$, top-$p{=}0.95$),
 producing 517\,435 conjectures with 98.9\% syntactic validity.
 
-Conjectures are evaluated using \Vampire with AVATAR splitting,
-which tests both $P \cup \{L\}$ and $P \cup \{\neg L\}$
-simultaneously by treating $L$ as a claim formula.  This halves
-the evaluation cost compared to separate P1/P2 runs.  The
-instruction limit is 100\,000M (with a 30-second timeout).
+Conjectures are evaluated using \Vampire with AVATAR
+splitting~\cite{Kovacs2013}, which tests both $P \cup \{L\}$ and
+$P \cup \{\neg L\}$ simultaneously by treating $L$ as a claim
+formula.  This halves the evaluation cost compared to separate
+P1/P2 runs.  \Vampire uses a neural guidance model trained for
+AVATAR on the minimized 55K Mizar60 problems; notably, this
+AVATAR-guided baseline (without any generated conjectures) already
+solves additional hard problems that the non-AVATAR single strategy
+could not.  The instruction limit is 100\,000M (with a 30-second
+timeout).
 
 \subsection{Results}
 
