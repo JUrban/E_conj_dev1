@@ -814,9 +814,12 @@ ratio.
 \paragraph{Fine-tuning from E checkpoint.}
 Initializing from the \Eprover-trained weights and fine-tuning on
 the transfer data produces much better initial val loss (1.76 at
-epoch~1 vs.\ 3.49 from scratch) because the model retains
-structural knowledge of clause patterns.  However, overfitting
-still occurs due to the small dataset.
+epoch~1 vs.\ 3.49 from scratch) and reaches a best val of 1.26 at
+epoch~17 (vs.\ 1.87 at epoch~31 from scratch).  The model retains
+structural knowledge of clause patterns from \Eprover training.
+However, overfitting still occurs: by epoch~120 the gap between
+train (0.82) and val (1.27) is significant, and val loss starts
+rising after epoch~117.
 
 \paragraph{Combined E + transfer data.}
 The most effective strategy combines the original \Eprover training
@@ -848,8 +851,8 @@ patterns learned from the transfer evaluation.
 Strategy & Train examples & Best val & Best epoch & Overfit? \\
 \midrule
 Scratch (v2 only)    & 19K & 1.87 & 31 & $\dagger$ severe \\
-Init from E (v2 only)& 19K & 1.76 &  1 & $\dagger$ moderate \\
-Combined (E + v2)    & 59K & TBD  &    & expected: mild \\
+Init from E (v2 only)& 19K & 1.26 &  17 & $\dagger$ moderate \\
+Combined (E + v2)    & 46K & TBD  &    & expected: mild \\
 \bottomrule
 \end{tabular}
 \end{table}
