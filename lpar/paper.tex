@@ -46,7 +46,7 @@ both the \Eprover and \Vampire provers.  For \Vampire, we obtain
 helps on 127 out of 187 provable test problems (67.9\%), with
 individual speedups exceeding $196\times$.  Most notably,
 conjectures trained on \Eprover data transfer to \Vampire, helping
-solve \textbf{637 previously unsolved} \Mizar problems and speeding
+solve \textbf{644 previously unsolved} \Mizar problems and speeding
 up 1\,599 others by up to $118\times$.
 \end{abstract}
 
@@ -504,7 +504,7 @@ Epoch & Train & Val & Gap \\
 \end{table}
 
 Remarkably, the heavily overfit $d{=}256$ model still generated
-conjectures that helped \Vampire solve 637 previously unsolved
+conjectures that helped \Vampire solve 644 previously unsolved
 problems (Sec.~\ref{sec:transfer}).  This suggests that even
 overfit models memorize useful structural patterns of cut formulas
 from the training distribution, and that these patterns transfer
@@ -796,31 +796,34 @@ Table~\ref{tab:transfer} summarizes the transfer results.
 \label{tab:transfer}
 \begin{tabular}{lr}
 \toprule
-Problems evaluated & ${\sim}$11\,900 \\
-Conjectures generated & 517\,435 \\
+Problems evaluated & 11\,881 \\
+Conjectures generated (42 per problem) & 517\,435 \\
 Validity rate & 98.9\% \\
 \midrule
-Problems with $\geq 10\%$ speedup ($r \leq 0.9$) & 2\,236 \\
-\quad of which previously unsolved & 637 \\
-\quad of which speedup on solved & 1\,599 \\
-Useful conjecture instances & 24\,025 \\
+Baseline solved (Avatar+neural, no conj.) & 4\,326 \\
+Baseline unsolved & 7\,555 \\
 \midrule
-Mean useful conjectures per helped problem & 10.7 \\
-Mean ratio (solved problems) & 0.610 \\
-Median ratio (solved problems) & 0.683 \\
-Median first useful conjecture rank & 3 \\
+Newly solved with conjectures & 644 \\
+Total solved (baseline + newly solved) & 4\,970 \\
+Problems with $\geq 10\%$ speedup ($r \leq 0.9$) & 2\,236 \\
+Useful conjecture instances & 24\,025 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The results demonstrate strong cross-prover transfer:
 
+\paragraph{Baseline.}
+Without any generated conjectures, \Vampire with Avatar splitting
+and neural clause guidance solves 4\,326 out of 11\,881 evaluated
+problems (36.4\%) within the 100\,000M instruction limit.
+
 \paragraph{Newly solved problems.}
-\textbf{637 previously unsolved problems} are now solved by \Vampire
-when augmented with generated conjectures.  These problems could not
-be proved within the 100\,000M instruction limit without the
-conjecture, but the Avatar splitting with the generated claim formula
-enables the proof.
+With generated conjectures, \textbf{644 previously unsolved problems}
+are additionally solved, bringing the total to 4\,970 (41.8\%)---a
+relative improvement of 14.9\%.  These problems could not be proved
+within the instruction limit without the conjecture, but the Avatar
+splitting with the generated claim formula enables the proof.
 
 \paragraph{Speedups on solved problems.}
 For the 1\,599 already-solved problems that benefit, the mean ratio
@@ -950,7 +953,7 @@ that speed up automated theorem provers.
 
 The most striking result is \textbf{cross-prover transfer}: a model
 trained exclusively on \Eprover proof lemmas generates conjectures
-that help \Vampire solve \textbf{637 previously unsolved problems}
+that help \Vampire solve \textbf{644 previously unsolved problems}
 and speed up 1\,599 others, with speedups exceeding $118\times$.
 This suggests that useful cut formulas have structural properties
 that generalize across provers.
