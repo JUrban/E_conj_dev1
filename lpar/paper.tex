@@ -68,15 +68,28 @@ case split that decomposes one hard proof into two easier subproofs.
 A well-chosen intermediate lemma can dramatically reduce total search
 effort, but finding such lemmas automatically is challenging.
 
-We propose a neural approach to conjecture generation.  A
-heterogeneous graph neural network (GNN) encodes the structure of the
-input CNF problem---its clauses, literals, symbols, terms, and
-variables---and a Transformer decoder generates candidate lemmas
-autoregressively, using a pointer mechanism to select symbols from the
-input and arity-constrained decoding to ensure syntactic validity.  We
-train on examples where proof lemmas extracted from successful ATP
-runs provide measurable speedups, and at inference time generate
-diverse candidates verified by the prover.
+Urban~\cite{Urban2019} proposed using machine learning to generate
+such cut formulas for ATPs, creating a dataset of useful proof lemmas
+from the \Mizar Mathematical Library by evaluating which intermediate
+clauses from successful \Eprover proofs reduce the proof search when
+reintroduced as cuts.  The key insight is that proof-derived lemmas
+provide a natural training signal: given a problem~$P$ and a lemma~$L$
+from its proof, if the combined cost of proving $P \cup \{L\}$ and
+$P \cup \{\neg L\}$ is less than the cost of proving~$P$ alone, then
+$L$ is a useful cut formula.  This yields a supervised learning
+problem: given a problem, generate lemmas that look like the useful
+cuts.
+
+Building on this idea, we develop a neural architecture for
+conjecture generation.  A heterogeneous graph neural network (GNN)
+encodes the structure of the input CNF problem---its clauses,
+literals, symbols, terms, and variables---and a Transformer decoder
+generates candidate lemmas autoregressively, using a pointer mechanism
+to select symbols from the input and arity-constrained decoding to
+ensure syntactic validity.  At inference time, we generate diverse
+candidates and verify them with the prover, either via separate
+P1/P2 evaluation or via \Vampire's AVATAR claim mechanism
+(Sec.~\ref{sec:avatar}) which handles both directions simultaneously.
 
 We create two datasets from the \Mizar Mathematical Library
 (\MML)~\cite{Grabowski2010}: a development dataset using \Eprover
@@ -1018,12 +1031,14 @@ Our work is complementary: rather than guiding the proof search, we
 generate auxiliary formulas that restructure the problem.
 
 \paragraph{Lemma generation.}
-Most closely related is work on neural lemma
-generation~\cite{WuJiangCunha2021}, which generates lemmas for
-interactive provers.  Our approach differs in targeting first-order
-ATPs with the cut rule, using a graph-structured encoder, and
-evaluating on a much larger scale with rigorous prover-based
-verification.  Gauthier~\cite{Gauthier2021} explores reinforcement
+Urban~\cite{Urban2019} introduced the idea of neural conjecture
+generation for first-order ATPs, creating the first datasets of
+useful proof lemmas from the \Mizar library and proposing the
+cut-based evaluation framework.  The present work extends this
+with a graph neural network architecture, arity-constrained
+decoding, cross-prover transfer, and iterative retraining.
+Wu et al.~\cite{WuJiangCunha2021} generate lemmas for interactive
+provers, while Gauthier~\cite{Gauthier2021} explores reinforcement
 learning for cut introduction in tableaux provers.
 
 
@@ -1093,6 +1108,11 @@ S.~H.~Einarsd{\'o}ttir, M.~Hajd{\'u}, M.~Johansson, N.~Smallbone,
   and M.~Suda.
 \newblock Lemma discovery and strategies for automated induction.
 \newblock In {\em IJCAR 2024}, LNCS 14739, pp.~214--232, 2024.
+
+\bibitem{Urban2019}
+J.~Urban.
+\newblock First neural conjecturing datasets and experiments.
+\newblock In {\em AITP 2019}, 2019.
 
 \bibitem{Grabowski2010}
 A.~Grabowski, A.~Korni{\l}owicz, and A.~Naumowicz.
