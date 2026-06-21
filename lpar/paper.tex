@@ -471,11 +471,43 @@ the validation set to silently load training samples.  This produced
 artificially low validation losses (training data evaluated with
 dropout disabled).  The bug was discovered during the Vampire
 scaling work and confirmed by comparing cached validation samples
-against freshly computed ones.  All validation losses reported in
-this paper use the corrected per-split caching.  The \Eprover
-test-set evaluations (prover-based speedup measurements) are
-unaffected, as they use the prover's own evaluation, not the model's
-validation loss.
+against freshly computed ones.
+
+With corrected validation, the \Eprover $d{=}128$ training curve
+(Table~\ref{tab:eprover-valloss}) reveals severe overfitting: the
+best validation loss is 2.43 at epoch~22, rising to 3.85 by
+epoch~100.  The previously reported validation loss of 0.35 at
+epoch~99 was the contaminated (training data) measurement.
+
+\begin{table}[t]
+\centering
+\caption{Corrected \Eprover training curve ($d{=}128$, named embeddings,
+  $r_{\max}{=}0.5$). The model used for conjecture generation
+  (epoch~100) was heavily overfit.}
+\label{tab:eprover-valloss}
+\small
+\begin{tabular}{rrrrr}
+\toprule
+Epoch & Train & Val & Gap \\
+\midrule
+1   & 4.49 & 3.90 & $-0.59$ \\
+5   & 2.72 & 3.04 & 0.32 \\
+10  & 2.10 & 2.66 & 0.55 \\
+\textbf{22} & \textbf{1.39} & \textbf{2.43} & \textbf{1.04} \\
+50  & 0.77 & 2.95 & 2.18 \\
+100 & 0.45 & 3.85 & 3.40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Remarkably, the epoch-100 model (val loss 3.85) still generated
+conjectures that helped \Vampire solve 637 previously unsolved
+problems (Sec.~\ref{sec:transfer}).  This suggests that even heavily
+overfit models memorize useful structural patterns of cut formulas
+from the training distribution, and that these patterns transfer
+across provers.  The \Eprover test-set evaluations (prover-based
+speedup measurements) are unaffected by the validation bug, as they
+use the prover's own evaluation, not the model's validation loss.
 
 \paragraph{Graph size filtering.}
 For the \Eprover dataset, problems average ${\sim}45$~clauses
