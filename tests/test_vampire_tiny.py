@@ -261,3 +261,41 @@ def test_amp_forward_pass(cache_dir):
         output_amp = model(batch)
         losses_amp = loss_fn(output_amp, batch)
     assert torch.isfinite(losses_amp['total']), f"Non-finite loss with AMP: {losses_amp['total']}"
+
+
+# -----------------------------------------------------------------------
+# 7. Train/val precompute separation (regression test for cache contamination)
+# -----------------------------------------------------------------------
+
+def test_precompute_train_val_separation(cache_dir):
+    """Train and val precomputed samples must be independent.
+
+    Regression test: the old precompute saved train and val samples to
+    the same directory with the same filenames (sample_0.pt, etc.),
+    causing val to silently load train samples. This made val loss
+    artificially low (train data with dropout disabled).
+    """
+    train_ds = _make_train_ds(cache_dir)
+    val_ds = _make_val_ds(cache_dir)
+
+    train_ds.precompute()
+    val_ds.precompute()
+
+    # Both must have _inmemory populated
+    assert len(train_ds._inmemory) > 0
+    assert len(val_ds._inmemory) > 0
+
+    # Build fresh val items (not from cache) and compare
+    for i in range(len(val_ds)):
+        cached_item = val_ds._inmemory[i]
+        fresh_item = val_ds._build_item(i)
+        assert torch.equal(cached_item.target_actions, fresh_item.target_actions), \
+            f"Val sample {i}: cached actions differ from fresh build! " \
+            f"Possible train/val cache contamination."
+
+    # Also verify train and val samples are different
+    if len(train_ds._inmemory) > 0 and len(val_ds._inmemory) > 0:
+        train_actions = train_ds._inmemory[0].target_actions
+        val_actions = val_ds._inmemory[0].target_actions
+        # They CAN be equal by coincidence, but usually aren't
+        # The key test is the fresh-build comparison above
