@@ -226,7 +226,21 @@ def train(args):
             sd = ckpt['model_state_dict']
             sd = {k.replace('decoder.transformer_decoder.layers.', 'decoder.dec_layers.'): v
                   for k, v in sd.items()}
-            model.load_state_dict(sd, strict=False)
+            # Filter out keys with shape mismatch (e.g., name_embed with
+            # different vocab size between E and Vampire datasets)
+            model_sd = model.state_dict()
+            compatible_sd = {}
+            skipped = []
+            for k, v in sd.items():
+                if k in model_sd and model_sd[k].shape == v.shape:
+                    compatible_sd[k] = v
+                elif k in model_sd:
+                    skipped.append(f"{k}: ckpt {v.shape} vs model {model_sd[k].shape}")
+            if skipped:
+                print(f"Skipped {len(skipped)} keys with shape mismatch:")
+                for s in skipped[:5]:
+                    print(f"  {s}")
+            model.load_state_dict(compatible_sd, strict=False)
             best_val_loss = ckpt.get('val_loss', float('inf'))
             start_epoch = ckpt.get('epoch', 0) + 1
             print(f"Resumed from {ckpt_path}: epoch {start_epoch-1}, "
