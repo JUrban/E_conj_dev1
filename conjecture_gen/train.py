@@ -127,8 +127,9 @@ def collate_fn(batch_list):
     all_ratios = []
     all_num_symbols = []
 
-    # Clone items so we don't mutate the dataset's in-memory cache
-    cloned = [item.clone() for item in batch_list]
+    # Clone items and ensure CPU (PyG Batch.from_data_list can pick up
+    # the CUDA device from prior training operations on some PyG versions)
+    cloned = [item.clone().cpu() for item in batch_list]
 
     for item in cloned:
         cur_len = item.target_actions.shape[0]
