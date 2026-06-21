@@ -464,6 +464,19 @@ We use AdamW with cosine learning rate scheduling and mixed precision
 training (AMP with \texttt{float16} on A100 GPUs) for ${\sim}1.5\times$
 GPU throughput.
 
+\paragraph{Validation methodology.}
+An early version of the precompute cache used shared filenames for
+train and validation samples (\texttt{sample\_0.pt}, etc.), causing
+the validation set to silently load training samples.  This produced
+artificially low validation losses (training data evaluated with
+dropout disabled).  The bug was discovered during the Vampire
+scaling work and confirmed by comparing cached validation samples
+against freshly computed ones.  All validation losses reported in
+this paper use the corrected per-split caching.  The \Eprover
+test-set evaluations (prover-based speedup measurements) are
+unaffected, as they use the prover's own evaluation, not the model's
+validation loss.
+
 \paragraph{Graph size filtering.}
 For the \Eprover dataset, problems average ${\sim}45$~clauses
 (${\sim}400$ graph nodes) using post-proof minimized axiom sets; we
