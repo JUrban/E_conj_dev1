@@ -42,11 +42,12 @@ search savings as the ratio of combined effort to the baseline.  We
 create large-scale datasets from the \Mizar Mathematical Library using
 both the \Eprover and \Vampire provers.  For \Vampire, we obtain
 196\,199 useful training examples from 2.47M evaluated pairs across
-34\,182 problems.  On \Eprover, an ensemble of 13~model configurations
-helps on 125 out of 187 provable test problems (66.8\%), with
-individual speedups exceeding $196\times$.  We analyze
-complementarity across model variants and provide budget-optimal
-strategies for allocating prover evaluation resources.
+34\,182 problems.  On \Eprover, an ensemble of 15~model configurations
+helps on 127 out of 187 provable test problems (67.9\%), with
+individual speedups exceeding $196\times$.  Most notably,
+conjectures trained on \Eprover data transfer to \Vampire, helping
+solve \textbf{637 previously unsolved} \Mizar problems and speeding
+up 1\,599 others by up to $118\times$.
 \end{abstract}
 
 %% ================================================================
@@ -707,6 +708,98 @@ baseline prover.
 
 
 %% ================================================================
+\section{Cross-Prover Transfer: E-Trained Conjectures for Vampire}
+\label{sec:transfer}
+
+A key question is whether conjectures learned from one prover's
+proof lemmas transfer to another prover.  We test this by applying
+the \Eprover-trained model (\texttt{af6\_a\_named\_big}, $d=256$,
+named embeddings) to generate conjectures for the Mizar60
+premise-selected CNF problems, and evaluating them with \Vampire.
+
+\subsection{Experimental Setup}
+
+We select 11\,900 problems for generation: all 14\,328 unsolved
+problems plus 3\,614 hard solved problems ($\geq 2000$M instructions),
+filtered to $\leq 1500$ graph nodes (matching the \Eprover training
+setting).  For each problem, the model generates 42 conjectures
+with diverse sampling ($T{=}1.2$, top-$k{=}15$, top-$p{=}0.95$),
+producing 517\,435 conjectures with 98.9\% syntactic validity.
+
+Conjectures are evaluated using \Vampire with AVATAR splitting,
+which tests both $P \cup \{L\}$ and $P \cup \{\neg L\}$
+simultaneously by treating $L$ as a claim formula.  This halves
+the evaluation cost compared to separate P1/P2 runs.  The
+instruction limit is 100\,000M (with a 30-second timeout).
+
+\subsection{Results}
+
+Table~\ref{tab:transfer} summarizes the transfer results.
+
+\begin{table}[t]
+\centering
+\caption{Cross-prover transfer: \Eprover-trained conjectures
+  evaluated with \Vampire on Mizar60 problems.}
+\label{tab:transfer}
+\begin{tabular}{lr}
+\toprule
+Problems evaluated & ${\sim}$11\,900 \\
+Conjectures generated & 517\,435 \\
+Validity rate & 98.9\% \\
+\midrule
+Problems with $\geq 10\%$ speedup ($r \leq 0.9$) & 2\,236 \\
+\quad of which previously unsolved & 637 \\
+\quad of which speedup on solved & 1\,599 \\
+Useful conjecture instances & 24\,025 \\
+\midrule
+Mean useful conjectures per helped problem & 10.7 \\
+Mean ratio (solved problems) & 0.610 \\
+Median ratio (solved problems) & 0.683 \\
+Median first useful conjecture rank & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The results demonstrate strong cross-prover transfer:
+
+\paragraph{Newly solved problems.}
+\textbf{637 previously unsolved problems} are now solved by \Vampire
+when augmented with generated conjectures.  These problems could not
+be proved within the 100\,000M instruction limit without the
+conjecture, but the Avatar splitting with the generated claim formula
+enables the proof.
+
+\paragraph{Speedups on solved problems.}
+For the 1\,599 already-solved problems that benefit, the mean ratio
+is 0.610 (39\% reduction in proof search effort) and the median is
+0.683.  The largest speedup exceeds $118\times$: \texttt{t1\_diff\_3}
+is solved in 844M instructions with the conjecture vs.\ 100\,000M+
+baseline.
+
+\paragraph{Rank distribution.}
+The first useful conjecture appears at median rank 3 (mean 7.6),
+confirming that even a small number of generated conjectures per
+problem is effective.  The useful conjectures are distributed
+roughly uniformly across ranks 1--42, suggesting that diverse
+sampling contributes at every position.
+
+\paragraph{Discussion.}
+The cross-prover transfer is notable because the model was trained
+exclusively on \Eprover proof lemmas from post-proof minimized
+problems, yet produces useful conjectures for \Vampire on
+premise-selected problems with different clause structure and size.
+The symbol-independent pointer mechanism (Sec.~\ref{sec:arch})
+enables this transfer: the model learns structural patterns of
+useful cut formulas, not prover-specific heuristics.
+
+The 24\,025 useful examples from this evaluation also provide
+training data for the next iteration of the conjecture generation
+loop: train on \Eprover data $\to$ generate for \Vampire $\to$
+evaluate $\to$ retrain on combined data $\to$ generate better
+conjectures.
+
+
+%% ================================================================
 \section{Related Work}
 \label{sec:related}
 
@@ -741,7 +834,16 @@ learning for cut introduction in tableaux provers.
 \label{sec:conclusion}
 
 We have presented a neural system for generating intermediate lemmas
-that speed up automated theorem provers.  On the \Eprover \Mizar
+that speed up automated theorem provers.
+
+The most striking result is \textbf{cross-prover transfer}: a model
+trained exclusively on \Eprover proof lemmas generates conjectures
+that help \Vampire solve \textbf{637 previously unsolved problems}
+and speed up 1\,599 others, with speedups exceeding $118\times$.
+This suggests that useful cut formulas have structural properties
+that generalize across provers.
+
+On the \Eprover \Mizar
 dataset, our ensemble of model variants helps on 66.8\% of provable
 test problems, with individual speedups exceeding $196\times$.  The
 strong complementarity across decoder variants (Transformer, CVAE,
