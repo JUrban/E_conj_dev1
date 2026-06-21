@@ -68,8 +68,12 @@ case split that decomposes one hard proof into two easier subproofs.
 A well-chosen intermediate lemma can dramatically reduce total search
 effort, but finding such lemmas automatically is challenging.
 
-Urban~\cite{Urban2020} proposed using machine learning to generate
-such cut formulas for ATPs, creating a dataset of useful proof lemmas
+Goertzel and Urban~\cite{Urban2019} proposed measuring the usefulness
+of proof lemmas as cuts and classifying them using graph neural networks,
+creating the first dataset of 3\,161 CNF problems with proof shortening
+ratios.  Urban and Jakub\r{u}v~\cite{Urban2020} then proposed using
+the Transformer architecture (GPT-2) to \emph{generate} such formulas,
+creating several datasets of useful proof lemmas
 from the \Mizar Mathematical Library by evaluating which intermediate
 clauses from successful \Eprover proofs reduce the proof search when
 reintroduced as cuts.  The key insight is that proof-derived lemmas
@@ -1031,10 +1035,12 @@ Our work is complementary: rather than guiding the proof search, we
 generate auxiliary formulas that restructure the problem.
 
 \paragraph{Lemma generation.}
-Urban~\cite{Urban2020} introduced the idea of neural conjecture
-generation for first-order ATPs, creating the first datasets of
-useful proof lemmas from the \Mizar library and proposing the
-cut-based evaluation framework.  The present work extends this
+Goertzel and Urban~\cite{Urban2019} introduced the proof shortening
+ratio for measuring lemma usefulness and explored graph neural
+networks for classifying proof clauses as good or bad cuts.
+Urban and Jakub\r{u}v~\cite{Urban2020} then used GPT-2 to
+\emph{generate} conjectures from several \Mizar-based datasets,
+including tokenized TPTP proofs and premise sequences.  The present work extends this
 with a graph neural network architecture, arity-constrained
 decoding, cross-prover transfer, and iterative retraining.
 Wu et al.~\cite{WuJiangCunha2021} generate lemmas for interactive
@@ -1108,6 +1114,11 @@ S.~H.~Einarsd{\'o}ttir, M.~Hajd{\'u}, M.~Johansson, N.~Smallbone,
   and M.~Suda.
 \newblock Lemma discovery and strategies for automated induction.
 \newblock In {\em IJCAR 2024}, LNCS 14739, pp.~214--232, 2024.
+
+\bibitem{Urban2019}
+Z.~Goertzel and J.~Urban.
+\newblock Usefulness of lemmas via graph neural networks.
+\newblock In {\em AITP 2019}, 2019.
 
 \bibitem{Urban2020}
 J.~Urban and J.~Jakub\r{u}v.
