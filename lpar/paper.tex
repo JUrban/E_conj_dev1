@@ -129,6 +129,56 @@ two subproofs.  A ratio $r < 1$ indicates a genuine speedup.  The cost
 metric is processed clauses for \Eprover and instructions burned for
 \Vampire.
 
+\subsection{Speculative Lemma Use via AVATAR Claims}
+\label{sec:avatar}
+
+A key challenge in using generated conjectures is that each lemma~$L$
+must itself be proved from the problem's axioms before it can be
+soundly used.  Running two separate proofs ($P \cup \{L\}$ and
+$P \cup \{\neg L\}$) doubles the evaluation cost.
+\Vampire's AVATAR architecture~\cite{Kovacs2013,Voronkov2014}
+provides an elegant solution through \emph{claim
+formulas}~\cite{Einarsdottir2024}.
+
+AVATAR maintains a propositional abstraction layer that tracks
+which clauses depend on which splitting assumptions.  When a
+candidate lemma~$L$ is introduced as a \emph{claim}, \Vampire
+internally creates a fresh propositional symbol~$p$ and adds the
+equivalence $p \leftrightarrow L$ as an axiom.  After clausification,
+AVATAR recognizes $p$ and $\neg p$ as complementary components and
+explores two scenarios in an interleaved fashion:
+\begin{itemize}
+\item Under assumption~$p$: the prover works with $L$ as an axiom,
+  attempting to prove the main conjecture using the lemma.
+\item Under assumption~$\neg p$: the prover works with $\neg L$,
+  effectively trying to prove the lemma itself.
+\end{itemize}
+The underlying SAT solver orchestrates which scenario to explore,
+and declares the proof complete when both directions have been
+resolved.  Cyclic reasoning is automatically avoided because $p$
+and $\neg p$ are treated as mutually exclusive assumptions.
+
+This mechanism has three practical advantages for our setting:
+\begin{enumerate}
+\item \textbf{Single proof attempt:} Both $P \cup \{L\}$ and
+  $P \cup \{\neg L\}$ are handled in one \Vampire invocation,
+  halving the evaluation cost.
+\item \textbf{Shared work:} Clauses derived independently of
+  the claim (from axioms alone) are reused across both scenarios,
+  avoiding redundant computation.
+\item \textbf{Multiple claims:} Several generated conjectures can
+  be introduced as claims simultaneously, allowing AVATAR to
+  explore the power set of lemma combinations.  The SAT solver
+  finds which subset suffices.
+\end{enumerate}
+
+In our experiments (Sec.~\ref{sec:transfer}), we introduce each
+generated conjecture as a claim formula, allowing \Vampire to
+speculatively use it while simultaneously verifying it.  This is
+implemented via the TPTP \texttt{claim} role, requiring no
+modification to \Vampire beyond the existing parser
+support~\cite{Einarsdottir2024}.
+
 \subsection{Problem Corpus}
 
 The \MML contains over 60\,000 formalized mathematical theorems.  We
@@ -1032,6 +1082,17 @@ L.~Kov{\'a}cs and A.~Voronkov.
 M.~Suda.
 \newblock Efficient neural clause-selection for {V}ampire.
 \newblock {\em arXiv:2503.07792}, 2025.
+
+\bibitem{Voronkov2014}
+A.~Voronkov.
+\newblock {AVATAR}: The architecture for first-order theorem provers.
+\newblock In {\em CAV 2014}, LNCS 8559, pp.~696--710, 2014.
+
+\bibitem{Einarsdottir2024}
+S.~H.~Einarsd{\'o}ttir, M.~Hajd{\'u}, M.~Johansson, N.~Smallbone,
+  and M.~Suda.
+\newblock Lemma discovery and strategies for automated induction.
+\newblock In {\em IJCAR 2024}, LNCS 14739, pp.~214--232, 2024.
 
 \bibitem{Grabowski2010}
 A.~Grabowski, A.~Korni{\l}owicz, and A.~Naumowicz.
