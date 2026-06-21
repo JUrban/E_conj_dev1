@@ -348,6 +348,13 @@ def train(args):
         print(f"Epoch {epoch}/{args.epochs} ({elapsed:.0f}s) "
               f"train={epoch_losses['total']:.4f} val={val_losses['total']:.4f}")
 
+        # Always save latest model (for low-train-loss experiments)
+        torch.save({
+            'epoch': epoch, 'model_state_dict': model.state_dict(),
+            'val_loss': val_losses['total'],
+            'args': vars(args), 'variant': args.variant,
+        }, os.path.join(save_dir, 'last_model.pt'))
+
         if val_losses['total'] < best_val_loss:
             best_val_loss = val_losses['total']
             torch.save({
