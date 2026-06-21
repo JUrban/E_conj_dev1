@@ -241,15 +241,23 @@ def train(args):
                 for s in skipped[:5]:
                     print(f"  {s}")
             model.load_state_dict(compatible_sd, strict=False)
-            best_val_loss = ckpt.get('val_loss', float('inf'))
-            start_epoch = ckpt.get('epoch', 0) + 1
-            print(f"Resumed from {ckpt_path}: epoch {start_epoch-1}, "
-                  f"val_loss={best_val_loss:.4f}")
-            # Load history if available
-            hist_path = os.path.join(args.resume, 'history.json')
-            if os.path.exists(hist_path):
-                with open(hist_path) as f:
-                    history = json.load(f)
+            # If any keys were skipped (shape mismatch), this is cross-dataset
+            # init, not a true resume. Reset best_val_loss and epoch counter
+            # so the checkpoint can actually be saved.
+            if skipped:
+                print(f"Cross-dataset init: resetting best_val_loss and epoch counter")
+                # Don't load old best_val_loss or epoch — they're from a
+                # different dataset and would prevent saving checkpoints.
+            else:
+                best_val_loss = ckpt.get('val_loss', float('inf'))
+                start_epoch = ckpt.get('epoch', 0) + 1
+                # Load history if available
+                hist_path = os.path.join(args.resume, 'history.json')
+                if os.path.exists(hist_path):
+                    with open(hist_path) as f:
+                        history = json.load(f)
+            print(f"Loaded weights from {ckpt_path} (epoch {ckpt.get('epoch', '?')}, "
+                  f"orig val_loss={ckpt.get('val_loss', '?'):.4f})")
         else:
             print(f"WARNING: --resume {args.resume} but no best_model.pt found, starting fresh")
 
