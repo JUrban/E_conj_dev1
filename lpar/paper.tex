@@ -46,8 +46,8 @@ both the \Eprover and \Vampire provers.  For \Vampire, we obtain
 helps on 127 out of 187 provable test problems (67.9\%), with
 individual speedups exceeding $196\times$.  Most notably,
 conjectures trained on \Eprover data transfer to \Vampire, helping
-solve \textbf{644 previously unsolved} \Mizar problems and speeding
-up 1\,599 others by up to $118\times$.
+prove \textbf{582 previously unsolved} \Mizar problems (442 of which
+were never solved by any ATP) and speed up 2\,236 others.
 \end{abstract}
 
 %% ================================================================
@@ -504,8 +504,9 @@ Epoch & Train & Val & Gap \\
 \end{table}
 
 Remarkably, the heavily overfit $d{=}256$ model still generated
-conjectures that helped \Vampire solve 644 previously unsolved
-problems (Sec.~\ref{sec:transfer}).  This suggests that even
+conjectures that helped \Vampire prove 582 previously unsolved
+problems, 442 of which were never solved by any ATP
+(Sec.~\ref{sec:transfer}).  This suggests that even
 overfit models memorize useful structural patterns of cut formulas
 from the training distribution, and that these patterns transfer
 across provers.  The \Eprover test-set evaluations (prover-based
@@ -800,13 +801,14 @@ Problems evaluated & 11\,881 \\
 Conjectures generated (42 per problem) & 517\,435 \\
 Validity rate & 98.9\% \\
 \midrule
-Baseline solved (Avatar+neural, no conj.) & 4\,326 \\
-Baseline unsolved & 7\,555 \\
+Baseline proved (Avatar+neural, no conj.) & 3\,738 \\
+\quad of which hard (minsub) & 620 \\
+Baseline unproved & 8\,143 \\
 \midrule
-Newly solved with conjectures & 644 \\
-Total solved (baseline + newly solved) & 4\,970 \\
+Newly proved with conjectures & 582 \\
+\quad of which hard (minsub) & 442 \\
+Total proved (baseline + new) & 4\,320 \\
 Problems with $\geq 10\%$ speedup ($r \leq 0.9$) & 2\,236 \\
-Useful conjecture instances & 24\,025 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -815,18 +817,19 @@ The results demonstrate strong cross-prover transfer:
 
 \paragraph{Baseline.}
 Without any generated conjectures, \Vampire with Avatar splitting
-and neural clause guidance solves 4\,326 out of 11\,881 evaluated
-problems (36.4\%) within the 100\,000M instruction limit.
+and a neural clause guidance model (trained on the minimized Mizar60
+problems) proves 3\,738 out of 11\,881 evaluated problems (31.5\%)
+within the 100\,000M instruction limit.  Of these, 620 are from the
+``minsub'' set of hard problems never previously solved by any ATP.
 
-\paragraph{Newly solved problems.}
-With generated conjectures, \textbf{644 previously unsolved problems}
-are additionally solved, bringing the total to 4\,970 (41.8\%)---a
-relative improvement of 14.9\%.  Of these 644, \textbf{508} (79\%)
-come from the ``minsub'' set of problems that were never previously
-solved by any automated theorem prover.  The remaining 136 are
-problems that the single-strategy \Vampire could solve (with higher
-instruction limits or different settings) but the Avatar+neural
-baseline could not within the 100\,000M limit.
+\paragraph{Newly proved problems.}
+With generated conjectures, \textbf{582 previously unproved problems}
+are additionally solved, bringing the total to 4\,320 (36.4\%)---a
+relative improvement of 15.6\%.  Of these 582, \textbf{442} (76\%)
+come from the minsub set, increasing the number of hard problems
+solved from 620 to 1\,062---a 71\% improvement on the hardest
+problems.  The total number of minsub problems proved (baseline +
+conjectures) thus nearly doubles.
 
 \paragraph{Speedups on solved problems.}
 For the 1\,599 already-solved problems that benefit, the mean ratio
@@ -956,8 +959,8 @@ that speed up automated theorem provers.
 
 The most striking result is \textbf{cross-prover transfer}: a model
 trained exclusively on \Eprover proof lemmas generates conjectures
-that help \Vampire solve \textbf{644 previously unsolved problems}
-and speed up 1\,599 others, with speedups exceeding $118\times$.
+that help \Vampire prove \textbf{582 previously unsolved problems}
+(442 never solved by any ATP) and speed up 2\,236 others.
 This suggests that useful cut formulas have structural properties
 that generalize across provers.
 
