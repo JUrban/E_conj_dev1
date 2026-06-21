@@ -819,11 +819,22 @@ structural knowledge of clause patterns.  However, overfitting
 still occurs due to the small dataset.
 
 \paragraph{Combined E + transfer data.}
-The most effective strategy combines the original \Eprover data
-(35K examples at $r \leq 0.9$) with the transfer data (24K
-examples), yielding 59K balanced training examples across 4\,027
-problems.  This provides sufficient data for $d{=}256$ training
-without severe overfitting, while incorporating the Vampire-specific
+The most effective strategy combines the original \Eprover training
+data with the \Vampire transfer data.  The \Eprover data contains
+122K (problem, lemma) pairs from 3\,161 post-proof minimized
+problems; filtered at $r \leq 0.9$, this yields 35K high-quality
+examples.  The transfer data contributes 24K examples from 2\,236
+premise-selected problems.  Since 191 problem names overlap between
+the two corpora (same \Mizar theorems, different premise sets), we
+prefix the transfer problem names to keep them distinct.
+A combined symlink directory provides a unified \texttt{problems\_dir}
+pointing to both the \Eprover and Mizar60 CNF problem files.
+
+The resulting dataset has 59K training examples across 3\,902
+problems (after ${\leq}1500$ node filtering) and 5\,598 validation
+examples across 492 problems---roughly balanced between the two
+data sources.  This provides sufficient data for $d{=}256$ training
+without severe overfitting, while incorporating the \Vampire-specific
 patterns learned from the transfer evaluation.
 
 \begin{table}[t]
