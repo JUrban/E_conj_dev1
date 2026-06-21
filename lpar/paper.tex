@@ -821,9 +821,12 @@ problems (36.4\%) within the 100\,000M instruction limit.
 \paragraph{Newly solved problems.}
 With generated conjectures, \textbf{644 previously unsolved problems}
 are additionally solved, bringing the total to 4\,970 (41.8\%)---a
-relative improvement of 14.9\%.  These problems could not be proved
-within the instruction limit without the conjecture, but the Avatar
-splitting with the generated claim formula enables the proof.
+relative improvement of 14.9\%.  Of these 644, \textbf{508} (79\%)
+come from the ``minsub'' set of problems that were never previously
+solved by any automated theorem prover.  The remaining 136 are
+problems that the single-strategy \Vampire could solve (with higher
+instruction limits or different settings) but the Avatar+neural
+baseline could not within the 100\,000M limit.
 
 \paragraph{Speedups on solved problems.}
 For the 1\,599 already-solved problems that benefit, the mean ratio
