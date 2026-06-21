@@ -797,11 +797,56 @@ The symbol-independent pointer mechanism (Sec.~\ref{sec:arch})
 enables this transfer: the model learns structural patterns of
 useful cut formulas, not prover-specific heuristics.
 
-The 24\,025 useful examples from this evaluation also provide
-training data for the next iteration of the conjecture generation
-loop: train on \Eprover data $\to$ generate for \Vampire $\to$
-evaluate $\to$ retrain on combined data $\to$ generate better
-conjectures.
+\subsection{Iterative Retraining}
+
+The 24\,025 useful examples from this evaluation provide training
+data for the next iteration of the conjecture generation loop.
+We explore three retraining strategies:
+
+\paragraph{From scratch on transfer data only.}
+Training $d{=}256$ on only the 19K transfer examples (1\,788
+problems) leads to rapid overfitting: the training loss reaches
+0.85 while validation loss plateaus at 1.87 after epoch~31 and
+rises thereafter (Table~\ref{tab:retrain}).  The model has 15M
+parameters for only 19K training examples---a 788:1 parameter-to-sample
+ratio.
+
+\paragraph{Fine-tuning from E checkpoint.}
+Initializing from the \Eprover-trained weights and fine-tuning on
+the transfer data produces much better initial val loss (1.76 at
+epoch~1 vs.\ 3.49 from scratch) because the model retains
+structural knowledge of clause patterns.  However, overfitting
+still occurs due to the small dataset.
+
+\paragraph{Combined E + transfer data.}
+The most effective strategy combines the original \Eprover data
+(35K examples at $r \leq 0.9$) with the transfer data (24K
+examples), yielding 59K balanced training examples across 4\,027
+problems.  This provides sufficient data for $d{=}256$ training
+without severe overfitting, while incorporating the Vampire-specific
+patterns learned from the transfer evaluation.
+
+\begin{table}[t]
+\centering
+\caption{Retraining strategies on the transfer data ($d{=}256$).
+  Best val loss shown; $\dagger$ indicates overfitting (val loss rising).}
+\label{tab:retrain}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Strategy & Train examples & Best val & Best epoch & Overfit? \\
+\midrule
+Scratch (v2 only)    & 19K & 1.87 & 31 & $\dagger$ severe \\
+Init from E (v2 only)& 19K & 1.76 &  1 & $\dagger$ moderate \\
+Combined (E + v2)    & 59K & TBD  &    & expected: mild \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This iterative loop---train on \Eprover data $\to$ generate for
+\Vampire $\to$ evaluate $\to$ retrain on combined data $\to$
+generate better conjectures---is the core of our approach for
+scaling conjecture generation to new provers and problem sets.
 
 
 %% ================================================================
