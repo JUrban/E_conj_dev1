@@ -392,9 +392,9 @@ $k$ & \texttt{a256\_wide} & \texttt{a1024} & \texttt{a\_big}
 
 The central experiment asks whether cut patterns learned from one
 prover are useful to another.  We take an \Eprover-trained $d=256$
-model with named symbol embeddings and generate 42 conjectures for each
+model with named symbol embeddings and generate at most 50 conjectures for each
 of 11,881 hard or previously unsolved Mizar60 problems, producing
-517,435 conjectures with 98.9\% syntactic validity.  These conjectures
+517,435 conjectures with 98.9\% syntactic validity.  The top 42 conjectures
 are given to \Vampire as AVATAR claims, so each can be used only if its
 proof obligation is also closed.
 
