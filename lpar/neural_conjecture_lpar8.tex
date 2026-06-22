@@ -57,8 +57,8 @@ problems, while an ensemble helps 127 (67.9\%), with speedups up to
 $196\times$.  We also show that a cut generator trained on the \Eprover data transfers
 to \Vampire: when using AVATAR \emph{claims} as cuts \Vampire proves
 % 582 previously unsolved \Mizar problems, including
-442 hard \Mizar problems unsolved by Vampire or E before, and speeds up 2,236 further
-problems.\footnote{The development of the neural architectures and the paper writing has used Claude Code and Codex in multiple human-supervised sessions. The experiments and evaluations were conducted by humans.}
+492 hard \Mizar problems unsolved by Vampire or E before, and speeds up 2,236 further
+problems. In combination with trained Deepire and Vampire's CASC mode, the learning/conjecturing/portfolio methods discussed here prove 1228 \Mizar problems unsolved by Vampire or E before.\footnote{The development of the neural architectures and the paper writing has used Claude Code and Codex in multiple human-supervised sessions. The experiments and evaluations were conducted by humans.}
 \end{abstract}
 
 \section{Introduction}
@@ -108,14 +108,16 @@ The code is developed online at our public repository.\footnote{\url{https://git
 % generated conjectures, ATP command lines, logs, and scripts to recreate
 % the tables are available at: \ArtifactURL.
 
-Our main contributions are as follows.  First, we give a
-symbol-independent graph-to-clause architecture for first-order cut
-formula generation.  Second, we construct much larger cut datasets than
-previous work, including 196K useful \Vampire examples.  Third, we give
-a prover-level evaluation rather than a purely syntactic or likelihood
-metric.  Finally, we show strong cross-prover transfer: a model trained
-from \Eprover proof lemmas helps \Vampire solve hundreds of additional
-\Mizar problems.
+Our main contributions are as follows.  We develop, train and evaluate with E several
+symbol-independent graph-to-clause architectures for first-order cut
+formula generation.
+% Second, we construct much larger cut datasets than
+% previous work, including 196K useful \Vampire examples.  Third, we give
+% a prover-level evaluation rather than a purely syntactic or likelihood metric.
+We then train Deepire on the relevant Mizar problems and prove without conjecturing 620 hard problems previously unsloved by E and Vampire.
+Finally, we generate conjectures in two iterations of training and evaluation
+and show that when added as AVATAR claims they help \Vampire solve hundreds of additional
+hard \Mizar problems.
 
 \section{Learning Cuts from Proofs}
 \label{sec:cuts}
@@ -450,21 +452,21 @@ overfits quickly.  Initializing from the \Eprover checkpoint is much
 better, and the best validation loss is obtained by mixing the original
 \Eprover cuts with the new \Vampire cuts (59K combined examples).
 The resulting $d{=}256$ model generates 235,089 second-iteration
-conjectures (16 per problem) for the same 11,881 problems with
+conjectures (at most 20 per problem) for the same 11,881 problems with
 99.3\% syntactic validity.
 
 \Vampire evaluation of the second iteration (Table~\ref{tab:iter2})
-shows continued improvement.  With only 16 conjectures from a model
-trained on its own verified outputs, the second iteration adds 50
+shows continued improvement.  With 20 conjectures from a model
+trained on its own verified outputs, the second iteration adds 59
 new hard problems beyond the first, bringing the cumulative total
-to \textbf{1,112}---an 80\% increase over the baseline of 620.
+to \textbf{1,121}---an 81\% increase over the baseline of 620.
 
 For comparison, \Vampire's CASC portfolio mode (30-second limit,
 multiple strategies with AVATAR) solves 3,262 problems on the same
 benchmark, of which only 289 are hard---less than half the 620
 solved by the single trained Deepire~2.0 strategy.  Adding CASC to the
 conjecturing results is complementary: the full union reaches
-4,499 problems solved and \textbf{1,221 hard problems}, roughly
+4,507 problems solved and \textbf{1,228 hard problems}, roughly
 doubling the baseline.
 
 \begin{table}[t]
@@ -481,8 +483,8 @@ Configuration & Total & Hard \\
 Deepire AVATAR+neural (no conj.)      & 3,738 & 620 \\
 \midrule
 + 1st iter.\ conj.\ (42, E-only)      & 4,320 & 1,062 \\
-+ 2nd iter.\ conj.\ (16, combined)     & 4,379 & 1,112 \\
-+ CASC portfolio                        & \textbf{4,499} & \textbf{1,221} \\
++ 2nd iter.\ conj.\ (20, combined)     & 4,389 & 1,121 \\
++ CASC portfolio                        & \textbf{4,507} & \textbf{1,228} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -538,7 +540,7 @@ logic with equality has been studied by Hetzl et al.~\cite{Hetzl2014}.
 Our work differs by generating cuts from a neural model and then
 checking them by ATP proof search.  Machine learning for ATPs has most
 often focused on premise selection~\cite{KaliszykU2015} and proof or
-clause guidance~\cite{Loos2017,Jakubuv2019,Suda2021,Chvalovsky2023}.
+clause guidance~\cite{KaliszykUrban2015FEMaLeCoP,JakubuvUrban2017ENIGMA,Loos2017,Jakubuv2019,Suda2021,RawsonReger2021lazyCoP,Chvalovsky2023}.
 Those methods choose what to search next; our method changes the shape
 of the problem by adding verified auxiliary formulas.  The closest
 antecedents are the cut-usefulness classifier of Goertzel and
@@ -562,7 +564,7 @@ On \Vampire, conjectures learned from \Eprover proof lemmas prove
 % problems to 492,
 nearly doubling the baseline of 620 hard problems
 solved by the trained neural \Vampire strategy.  Combined with \Vampire's CASC portfolio, the full union
-reaches 1,221 hard problems.  These results suggest that learned cut formulas capture
+reaches 1,228 hard problems.  These results suggest that learned cut formulas capture
 reusable structure in mathematical proofs and that iterative
 generation--evaluation loops can progressively expand the reach of
 automated theorem provers.
@@ -630,6 +632,14 @@ J. Urban and J. Jakub\r{u}v.
 \newblock First neural conjecturing datasets and experiments.
 \newblock In \emph{CICM 2020}, LNCS 12236, pp. 315--323, 2020.
 
+\bibitem{KaliszykUrban2015FEMaLeCoP}
+C.~Kaliszyk and J.~Urban.
+\newblock FEMaLeCoP: Fairly efficient machine learning connection prover.
+\newblock In M.~Davis, A.~Fehnker, A.~McIver, and A.~Voronkov, editors,
+{\em Logic for Programming, Artificial Intelligence, and Reasoning
+(LPAR-20 2015)},
+volume 9450 of {\em Lecture Notes in Computer Science},
+pages 88--96. Springer, 2015.
 
 \bibitem{Grabowski2010}
 A. Grabowski, A. Korni{\l}owicz, and A. Naumowicz.
@@ -645,6 +655,14 @@ G. Sutcliffe.
 C. Kaliszyk and J. Urban.
 \newblock MizAR 40 for Mizar 40.
 \newblock \emph{J. Automated Reasoning}, 55(3):245--256, 2015.
+
+\bibitem{JakubuvUrban2017ENIGMA}
+J.~Jakub\r{u}v and J.~Urban.
+\newblock ENIGMA: Efficient learning-based inference guiding machine.
+\newblock In H.~Geuvers, M.~England, O.~Hasan, F.~Rabe, and O.~Teschke, editors,
+{\em Intelligent Computer Mathematics (CICM 2017)},
+Lecture Notes in Computer Science, vol.~10383,
+pages 292--302. Springer, 2017.
 
 \bibitem{Loos2017}
 S. Loos, G. Irving, C. Szegedy, and C. Kaliszyk.
@@ -680,6 +698,15 @@ W. Hu, B. Liu, J. Gomes, M. Zitnik, P. Liang, V. Pande, and J. Leskovec.
 W. Hamilton, Z. Ying, and J. Leskovec.
 \newblock Inductive representation learning on large graphs.
 \newblock In \emph{NeurIPS 2017}, 2017.
+
+\bibitem{RawsonReger2021lazyCoP}
+M.~Rawson and G.~Reger.
+\newblock lazyCoP: Lazy paramodulation meets neurally guided search.
+\newblock In A.~Das and S.~Negri, editors,
+{\em Automated Reasoning with Analytic Tableaux and Related Methods
+(TABLEAUX 2021)},
+Lecture Notes in Computer Science, vol.~12842,
+pages 187--199. Springer, 2021.
 
 
 \bibitem{Gu2023}
