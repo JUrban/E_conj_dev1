@@ -6,6 +6,8 @@
 \usepackage{xspace}
 \usepackage{multirow}
 \usepackage{url}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \newcommand{\Eprover}{E\xspace}
 \newcommand{\Vampire}{Vampire\xspace}
@@ -460,6 +462,44 @@ shows continued improvement.  With 20 conjectures from a model
 trained on its own verified outputs, the second iteration adds 59
 new hard problems beyond the first, bringing the cumulative total
 to \textbf{1,121}---an 81\% increase over the baseline of 620.
+Figure~\ref{fig:iter2rank} shows the number of hard problems solved
+per conjecture rank: even rank~20 still solves 356 hard problems,
+confirming that diverse sampling contributes throughout.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=7pt,
+    width=\columnwidth,
+    height=4.5cm,
+    xlabel={Conjecture rank},
+    ylabel={Hard problems solved},
+    ymin=300, ymax=600,
+    xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20},
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    xlabel style={font=\small},
+    ylabel style={font=\small},
+    nodes near coords=,
+    every node near coord/.append style={font=\tiny,rotate=90,anchor=west},
+]
+\addplot[fill=blue!60] coordinates {
+    (1,555) (2,558) (3,544) (4,553) (5,536)
+    (6,547) (7,518) (8,540) (9,522) (10,536)
+    (11,532) (12,521) (13,490) (14,514) (15,506)
+    (16,504) (17,483) (18,468) (19,442) (20,356)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Hard (minsub) problems solved per conjecture rank in the
+  second iteration.  The baseline (no conjectures) solves 620.
+  Each rank independently solves 356--558 hard problems; useful
+  conjectures appear throughout, with a gradual decline for
+  lower-ranked candidates.}
+\label{fig:iter2rank}
+\end{figure}
 
 For comparison, \Vampire's CASC portfolio mode (30-second limit,
 multiple strategies with AVATAR) solves 3,262 problems on the same
