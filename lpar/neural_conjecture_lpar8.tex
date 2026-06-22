@@ -310,25 +310,25 @@ $50\times$ on \texttt{t87\_qc\_lang2} and $38\times$ on
 \begin{table}[t]
 \centering
 \caption{Selected \Eprover results on 187 baseline-proved test
-problems.  $d$: hidden dimension.  NE: named \Mizar symbol
-embeddings.  Sampling: $T$ is temperature, $k$/p are top-$k$ and
-top-$p$ nucleus parameters.  AvgR is the best observed cut ratio
+problems.  All configurations use named \Mizar symbol embeddings.
+$d$: hidden dimension.  Sampling: $T$ is temperature, $k$/p are
+top-$k$/top-$p$ nucleus parameters.  AvgR is the best cut ratio
 averaged over helped problems; lower is better.}
 \label{tab:e}
 \small
-\begin{tabular}{lcccrrrr}
+\begin{tabular}{lccrrrr}
 \toprule
-Decoder & $d$ & NE & Sampling & Helped & \% & AvgR \\
+Decoder & $d$ & Sampling & Helped & \% & AvgR \\
 \midrule
-Transformer & 256 &      & $T$=1.5, $k$=25, p=.98 (wide)    & 96 & 51.3 & 0.558 \\
-Transformer & 256 & \checkmark & $T$=1.2, $k$=15, p=.95 (diverse) & 91 & 48.7 & 0.574 \\
-Transformer & 256 &      & $T$=1.2, $k$=15, p=.95 (diverse)  & 87 & 46.5 & 0.524 \\
-Transformer & 512 &      & $T$=1.2, $k$=15, p=.95 (diverse)  & 80 & 42.8 & 0.536 \\
-CVAE        & 256 & \checkmark & $T$=1.2, $k$=15, p=.95            & 78 & 41.7 & 0.597 \\
-SSM         & 256 & \checkmark & $T$=1.2, $k$=15, p=.95            & 72 & 38.5 & 0.612 \\
-Transformer & 1024& \checkmark & $T$=1.2, $k$=15, p=.95 (diverse)  & 67 & 35.8 & 0.530 \\
+Transformer & 256  & $T$=1.5, $k$=25, p=.98 (wide)    & 96 & 51.3 & 0.558 \\
+Transformer & 256  & $T$=1.2, $k$=15, p=.95 (diverse)  & 91 & 48.7 & 0.574 \\
+Transformer & 256  & $T$=1.2, $k$=15, p=.95 (balanced)  & 87 & 46.5 & 0.524 \\
+Transformer & 512  & $T$=1.2, $k$=15, p=.95 (diverse)  & 80 & 42.8 & 0.536 \\
+CVAE        & 256  & $T$=1.2, $k$=15, p=.95             & 78 & 41.7 & 0.597 \\
+SSM         & 256  & $T$=1.2, $k$=15, p=.95             & 72 & 38.5 & 0.612 \\
+Transformer & 1024 & $T$=1.2, $k$=15, p=.95 (diverse)  & 67 & 35.8 & 0.530 \\
 \midrule
-\multicolumn{4}{l}{Union of all 15 configurations} & 127 & 67.9 & 0.530 \\
+\multicolumn{3}{l}{Union of all 15 configurations} & 127 & 67.9 & 0.530 \\
 \bottomrule
 \end{tabular}
 \end{table}
