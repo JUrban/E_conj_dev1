@@ -310,23 +310,25 @@ $50\times$ on \texttt{t87\_qc\_lang2} and $38\times$ on
 \begin{table}[t]
 \centering
 \caption{Selected \Eprover results on 187 baseline-proved test
-problems.  AvgR is the best observed cut ratio averaged over helped
-problems; lower is better.}
+problems.  $d$: hidden dimension.  NE: named \Mizar symbol
+embeddings.  Sampling: $T$ is temperature, $k$/p are top-$k$ and
+top-$p$ nucleus parameters.  AvgR is the best observed cut ratio
+averaged over helped problems; lower is better.}
 \label{tab:e}
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{lcccrrrr}
 \toprule
-Configuration & Decoder & Helped & \% & AvgR \\
+Decoder & $d$ & NE & Sampling & Helped & \% & AvgR \\
 \midrule
-\texttt{a256\_wide}       & Transformer & 96 & 51.3 & 0.558 \\
-\texttt{af6\_a\_big\_diverse} & Transformer & 91 & 48.7 & 0.574 \\
-\texttt{a256\_bal\_diverse} & Transformer & 87 & 46.5 & 0.524 \\
-\texttt{a512\_diverse}    & Transformer & 80 & 42.8 & 0.536 \\
-\texttt{af6\_c\_named}    & CVAE        & 78 & 41.7 & 0.597 \\
-\texttt{af6\_d\_named}    & SSM         & 72 & 38.5 & 0.612 \\
-\texttt{a1024\_diverse}   & Transformer & 67 & 35.8 & 0.530 \\
+Transformer & 256 &      & $T$=1.5, $k$=25, p=.98 (wide)    & 96 & 51.3 & 0.558 \\
+Transformer & 256 & \checkmark & $T$=1.2, $k$=15, p=.95 (diverse) & 91 & 48.7 & 0.574 \\
+Transformer & 256 &      & $T$=1.2, $k$=15, p=.95 (diverse)  & 87 & 46.5 & 0.524 \\
+Transformer & 512 &      & $T$=1.2, $k$=15, p=.95 (diverse)  & 80 & 42.8 & 0.536 \\
+CVAE        & 256 & \checkmark & $T$=1.2, $k$=15, p=.95            & 78 & 41.7 & 0.597 \\
+SSM         & 256 & \checkmark & $T$=1.2, $k$=15, p=.95            & 72 & 38.5 & 0.612 \\
+Transformer & 1024& \checkmark & $T$=1.2, $k$=15, p=.95 (diverse)  & 67 & 35.8 & 0.530 \\
 \midrule
-Union of all 15 & mixed & 127 & 67.9 & 0.530 \\
+\multicolumn{4}{l}{Union of all 15 configurations} & 127 & 67.9 & 0.530 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -443,7 +445,7 @@ new premise selections.
 \paragraph{Closing the loop.}
 The successful \Vampire claims yield 24,025 additional useful examples.
 We use them to test whether conjecture generation can become an
-iterative data-production loop.  Training from scratch on these examples
+iterative prove-learn feedback loop.  Training from scratch on these examples
 overfits quickly.  Initializing from the \Eprover checkpoint is much
 better, and the best validation loss is obtained by mixing the original
 \Eprover cuts with the new \Vampire cuts (59K combined examples).
@@ -460,7 +462,7 @@ to \textbf{1,112}---an 80\% increase over the baseline of 620.
 For comparison, \Vampire's CASC portfolio mode (30-second limit,
 multiple strategies with AVATAR) solves 3,262 problems on the same
 benchmark, of which only 289 are hard---less than half the 620
-solved by the single Deepire~2.0 strategy.  Adding CASC to the
+solved by the single trained Deepire~2.0 strategy.  Adding CASC to the
 conjecturing results is complementary: the full union reaches
 4,499 problems solved and \textbf{1,221 hard problems}, roughly
 doubling the baseline.
@@ -491,7 +493,7 @@ Deepire AVATAR+neural (no conj.)      & 3,738 & 620 \\
 The experiments support three practical lessons.  First, neural cut
 generation should be evaluated by downstream proof search, not by
 language-model likelihood.  Many well-formed lemmas are irrelevant, and
-some low-probability samples create dramatic speedups.  Second,
+some low-probability samples create large speedups.  Second,
 generation diversity is a feature rather than noise: the strongest
 \Eprover result is an ensemble, and useful \Vampire claims appear
 throughout the sampled list.  Third, speculative proving is a natural
@@ -515,18 +517,18 @@ can be scheduled greedily, but the current system still relies on ATP
 checking as the final ranker.  A learned utility model, trained on the
 same cut-ratio labels, is the most direct way to reduce wasted calls.
 
-\paragraph{Artifact design.}
-The reviewer artifact is organized around executable claims rather than
-around the neural code alone.  It contains: (i) the exact train/validation/test
-problem splits; (ii) the generated clauses, including invalid and duplicate
-samples; (iii) ATP command lines and resource limits; (iv) raw success and
-failure logs; and (v) table-building scripts that recompute all counts from
-logs.  This matters because the final theorem-proving claims are not
-properties of the neural model in isolation.  They are properties of the
-closed loop consisting of sampler, syntactic checker, ATP invocation, timeout
-policy and result parser.  The artifact therefore exposes each stage and makes
-it possible to rerun smaller slices of the evaluation on a workstation while
-also documenting the large cluster runs.
+% \paragraph{Artifact design.}
+% The reviewer artifact is organized around executable claims rather than
+% around the neural code alone.  It contains: (i) the exact train/validation/test
+% problem splits; (ii) the generated clauses, including invalid and duplicate
+% samples; (iii) ATP command lines and resource limits; (iv) raw success and
+% failure logs; and (v) table-building scripts that recompute all counts from
+% logs.  This matters because the final theorem-proving claims are not
+% properties of the neural model in isolation.  They are properties of the
+% closed loop consisting of sampler, syntactic checker, ATP invocation, timeout
+% policy and result parser.  The artifact therefore exposes each stage and makes
+% it possible to rerun smaller slices of the evaluation on a workstation while
+% also documenting the large cluster runs.
 
 \section{Related Work}
 
@@ -542,7 +544,7 @@ of the problem by adding verified auxiliary formulas.  The closest
 antecedents are the cut-usefulness classifier of Goertzel and
 Urban~\cite{Urban2019} and the first neural conjecturing datasets of
 Urban and Jakub\r{u}v~\cite{Urban2020}; the present system adds a
-symbol-pointer graph generator, arity-constrained decoding, large-scale
+symbol-pointer graph generator in the spirit of \cite{PiepenbrockUrbanKorovinOlsakHeskesJanota2025}, arity-constrained decoding, large-scale
 \Vampire cut data and cross-prover transfer.
 
 \section{Conclusion}
@@ -553,10 +555,13 @@ speculative but soundly verified: a lemma counts only if the ATP
 proves both sides of the cut.  On \Eprover, ensembles help 67.9\%
 of baseline-proved test problems with speedups up to $196\times$.
 On \Vampire, conjectures learned from \Eprover proof lemmas prove
-582 additional hard \Mizar problems; a second iteration using
-combined training data brings the total of newly proved hard
-problems to 492, nearly doubling the baseline of 620 hard problems
-solved.  Combined with \Vampire's CASC portfolio, the full union
+% 582
+492 additional hard \Mizar problems (when run as claims under a trained neural Avatar),
+% a second iteration using
+% combined training data brings the total of newly proved hard
+% problems to 492,
+nearly doubling the baseline of 620 hard problems
+solved by the trained neural \Vampire strategy.  Combined with \Vampire's CASC portfolio, the full union
 reaches 1,221 hard problems.  These results suggest that learned cut formulas capture
 reusable structure in mathematical proofs and that iterative
 generation--evaluation loops can progressively expand the reach of
