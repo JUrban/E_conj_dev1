@@ -14,32 +14,43 @@
 \newcommand{\MML}{MML\xspace}
 \newcommand{\ArtifactURL}{\textbf{[artifact URL to be inserted before submission]}}
 
-\title{Neural Cut Formula Generation for Automated Theorem Proving}
+\title{Neural Conjecturing for Saturation Theorem Provers}
 
-\author{Josef Urban\inst{1}}
+\author{
+Karel Chvalovsk{\'y}\inst{1}
+\and
+Martin Suda\inst{1}
+\and
+Josef Urban\inst{1,2}
+}
 
-\institute{Czech Technical University in Prague}
+\institute{
+Czech Technical University in Prague
+\and
+AI4REASON and University of Gothenburg
+}
 
-\authorrunning{Urban}
-\titlerunning{Neural Cut Formula Generation for ATP}
+\authorrunning{Chvalovsk{\'y}, Suda, Urban}
+\titlerunning{Neural Conjecturing for Saturation Theorem Provers}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We describe a tool for generating intermediate lemmas, used as cut
-formulas, that restructure first-order proof search.  Given a CNF
-problem, a heterogeneous graph neural network encodes clauses,
-literals, terms, variables and symbols; an autoregressive decoder then
-samples candidate lemmas by pointing to symbols in the input and by
-obeying arity constraints during decoding.  Candidate lemmas are not
-trusted: they are accepted only when an ATP proves both sides of the
-cut, i.e. the problem extended with the lemma and with its negation.
-This gives a sound evaluation loop and a supervised learning signal.
-From the \Mizar Mathematical Library~\cite{Grabowski2010} we build datasets with both
-\Eprover and \Vampire; the \Vampire dataset contains 196,199 useful
-cut examples from 2.47M evaluated proof-lemma pairs.  On the \Eprover
-test set, the best single configuration helps 96 of 187 baseline-proved
+We present a system for generating intermediate lemmas, used as cut
+formulas, that restructure first-order proof search in saturation-based
+theorem provers.  Given a CNF problem, a heterogeneous graph neural
+network encodes clauses, literals, terms, variables and symbols; an
+autoregressive decoder then samples candidate lemmas by pointing to
+symbols in the input and by obeying arity constraints during decoding.
+Candidate lemmas are not trusted: they are accepted only when an ATP
+proves both sides of the cut, i.e.\ the problem extended with the
+lemma and with its negation.  This gives a sound evaluation loop and a
+supervised learning signal.  From the \Mizar Mathematical
+Library~\cite{Grabowski2010} we build datasets with both \Eprover and
+\Vampire; the \Vampire dataset contains 196,199 useful cut examples
+from 2.47M evaluated proof-lemma pairs.  On the \Eprover test set,
+the best single configuration helps 96 of 187 baseline-proved
 problems, while an ensemble helps 127 (67.9\%), with speedups up to
 $196\times$.  More importantly, an \Eprover-trained generator transfers
 to \Vampire: with speculative AVATAR claims it proves 582 previously
@@ -60,16 +71,16 @@ $P\cup\{\neg L\}$.  If both are unsatisfiable, then $P$ is
 unsatisfiable.  The formula $L$ need not be a user-interesting theorem;
 it only has to expose a useful case split.
 
-This paper treats cut discovery as a tool-building problem.  We train a
+This paper presents a system for automated cut discovery.  We train a
 neural generator on proof lemmas that have been independently measured
 to shorten proof search, then use the ATP itself as a checker and
-scheduler for generated candidates.  The resulting system is attractive
+scheduler for generated candidates.  The approach is attractive
 for theorem proving because the learned part is entirely speculative:
 a bad conjecture may waste time, but cannot make the prover unsound.
 The most useful generated conjectures can also be stored as proof-search
 hints or as new training examples.
 
-The tool pipeline is:
+The pipeline is:
 \begin{enumerate}\itemsep0pt
 \item solve library problems and extract proof lemmas;
 \item evaluate each lemma as a cut and keep only speedups;
@@ -77,9 +88,9 @@ The tool pipeline is:
 \item sample diverse conjectures for new problems; and
 \item verify them by ATP calls, or in \Vampire by AVATAR claim formulas.
 \end{enumerate}
-The artifact for reviewers will contain code, trained checkpoints,
+The code, trained checkpoints,
 generated conjectures, ATP command lines, logs, and scripts to recreate
-the tables: \ArtifactURL.
+the tables are available at: \ArtifactURL.
 
 Our main contributions are as follows.  First, we give a
 symbol-independent graph-to-clause architecture for first-order cut
@@ -227,7 +238,7 @@ state-space decoder variants inspired by selective state-space models~\cite{Gu20
 embeddings and sampling temperature.  Generation uses nucleus sampling
 with role masks and removes duplicate clauses before ATP evaluation.
 
-\paragraph{Engineering for a tool.}
+\paragraph{Engineering.}
 The implementation has two performance bottlenecks: graph construction
 and batching.  For the \Vampire data, a single problem may produce
 thousands of graph nodes, and the heterogeneous GNN applies a separate
@@ -421,7 +432,7 @@ better, and the best validation loss is obtained by mixing the original
 235,089 second-iteration conjectures for the same 11,881 problems with
 99.3\% syntactic validity.  We do not count this as a main result until
 its full prover evaluation is complete, but the experiment shows that
-the tool already produces reusable training data from its own verified
+the system already produces reusable training data from its own verified
 successes.
 
 \section{Discussion and Threats to Validity}
@@ -450,7 +461,7 @@ A second threat is budget accounting.  A generated lemma can be
 impressively fast once it is known, but a deployment must pay for all
 failed candidates as well.  Our rank analysis partially addresses this
 by showing that useful cuts often appear early and that model ensembles
-can be scheduled greedily, but the current tool still relies on ATP
+can be scheduled greedily, but the current system still relies on ATP
 checking as the final ranker.  A learned utility model, trained on the
 same cut-ratio labels, is the most direct way to reduce wasted calls.
 
@@ -486,8 +497,8 @@ symbol-pointer graph generator, arity-constrained decoding, large-scale
 
 \section{Conclusion}
 
-We presented a neural tool for generating cut formulas for automated
-theorem proving.  The generated formulas are speculative but soundly
+We presented a neural system for generating cut formulas for
+saturation-based theorem provers.  The generated formulas are speculative but soundly
 verified: a lemma counts only if the ATP proves both sides of the cut.
 On \Eprover, ensembles help 67.9\% of baseline-proved test problems and
 produce speedups up to $196\times$.  On \Vampire, conjectures learned
