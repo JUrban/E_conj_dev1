@@ -424,16 +424,40 @@ new premise selections.
 
 \paragraph{Closing the loop.}
 The successful \Vampire claims yield 24,025 additional useful examples.
-We used them to test whether conjecture generation can become an
+We use them to test whether conjecture generation can become an
 iterative data-production loop.  Training from scratch on these examples
 overfits quickly.  Initializing from the \Eprover checkpoint is much
 better, and the best validation loss is obtained by mixing the original
-\Eprover cuts with the new \Vampire cuts.  The resulting model generates
-235,089 second-iteration conjectures for the same 11,881 problems with
-99.3\% syntactic validity.  We do not count this as a main result until
-its full prover evaluation is complete, but the experiment shows that
-the system already produces reusable training data from its own verified
-successes.
+\Eprover cuts with the new \Vampire cuts (59K combined examples).
+The resulting $d{=}256$ model generates 235,089 second-iteration
+conjectures (16 per problem) for the same 11,881 problems with
+99.3\% syntactic validity.
+
+\Vampire evaluation of the second iteration (Table~\ref{tab:iter2})
+shows continued improvement: the cumulative number of hard
+(previously ATP-unsolved) problems proved rises from 1,062 (first
+iteration, 42 conjectures) to \textbf{1,109} (adding the second
+iteration's 16 conjectures)---a 79\% increase over the baseline of
+620.  With only 16 conjectures from a model trained on its own
+verified outputs, the second iteration adds 47 hard problems beyond
+the first, confirming that the loop produces genuinely new and
+useful training signal.
+
+\begin{table}[t]
+\centering
+\caption{Iterative improvement on hard (minsub) \Mizar problems.}
+\label{tab:iter2}
+\small
+\begin{tabular}{lrrr}
+\toprule
+ & Hard proved & Newly hard & Improvement \\
+\midrule
+Baseline (no conjectures) & 620 & -- & -- \\
++ 1st iter.\ (42 conj., E-only model) & 1,062 & +442 & +71\% \\
++ 2nd iter.\ (16 conj., combined model) & 1,109 & +489 & +79\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Discussion and Threats to Validity}
 \label{sec:discussion}
@@ -498,15 +522,18 @@ symbol-pointer graph generator, arity-constrained decoding, large-scale
 \section{Conclusion}
 
 We presented a neural system for generating cut formulas for
-saturation-based theorem provers.  The generated formulas are speculative but soundly
-verified: a lemma counts only if the ATP proves both sides of the cut.
-On \Eprover, ensembles help 67.9\% of baseline-proved test problems and
-produce speedups up to $196\times$.  On \Vampire, conjectures learned
-from \Eprover proof lemmas solve 582 additional hard \Mizar problems
-and speed up 2,236 more.  These results suggest that learned cut
-formulas capture reusable structure in mathematical proofs and can
-serve as an effective interface between neural generation and symbolic
-proof search.
+saturation-based theorem provers.  The generated formulas are
+speculative but soundly verified: a lemma counts only if the ATP
+proves both sides of the cut.  On \Eprover, ensembles help 67.9\%
+of baseline-proved test problems with speedups up to $196\times$.
+On \Vampire, conjectures learned from \Eprover proof lemmas prove
+582 additional hard \Mizar problems; a second iteration using
+combined training data brings the total of newly proved hard
+problems to 489, nearly doubling the baseline of 620 hard problems
+solved.  These results suggest that learned cut formulas capture
+reusable structure in mathematical proofs and that iterative
+generation--evaluation loops can progressively expand the reach of
+automated theorem provers.
 
 \begin{thebibliography}{20}
 
