@@ -117,11 +117,22 @@ several generated claims to compete in the same search.
 \paragraph{Datasets.}
 The \Eprover development data uses 3,161 post-proof-minimized \Mizar
 CNF problems exported in TPTP style~\cite{Sutcliffe2009}: \Eprover solves 1,888 and produces 122,356 evaluated
-(problem, lemma) pairs.  The larger \Vampire data uses the full-axiom
-corpus with neural clause selection~\cite{Suda2025}: \Vampire solves 34,182 of 57,880 attempted CNF problems, from
+(problem, lemma) pairs.  The larger \Vampire data uses the Deepire~2.0 system~\cite{Suda2025},
+which trains GNN-based clause selection inside \Vampire by an
+iterative train/eval loop.  A non-AVATAR strategy was first obtained
+by hill climbing on a subset of the Mizar40 corpus (3,000 problems,
+3,000M instruction limit) and then used with Deepire to train clause
+guidance on all 57,880 Mizar40 CNF problems (16,000M limit, 18
+iterations, solving 40.5\%$\to$57.7\%).  We use this model to extract
+proof lemmas.  For the AVATAR-based evaluation of generated
+conjectures, a separate Deepire model was trained with AVATAR enabled,
+first on a random half of Mizar40 (20 iterations,
+42.1\%$\to$62.0\%), and then on the premise-selected Mizar60 corpus
+(22 iterations, 60.1\%$\to$70.6\% on 27,916 problems).  The
+non-AVATAR model solves 34,182 of 57,880 full-axiom problems, from
 which 2.47M proof-lemma pairs are evaluated; 196,199 are useful cuts
 and 3,591 problems have at least one useful lemma.  We also evaluate on
-a premise-selected Mizar60 corpus of 55,832 problems, whose median CNF
+the premise-selected Mizar60 corpus of 55,832 problems, whose median CNF
 size is 34 clauses after clausification, giving a more realistic middle
 ground between post-proof minimized and full-axiom problems.
 Table~\ref{tab:data} summarizes the main corpora.  The useful
@@ -231,8 +242,9 @@ All reported successes are prover-verified.  The generator proposes
 formulas, but a result is counted only when the corresponding ATP proof
 succeeds.  For \Eprover, we test each generated $L$ by two independent
 2-second runs for $P\cup\{L\}$ and $P\cup\{\neg L\}$.  For \Vampire,
-we use AVATAR claims with neural clause guidance~\cite{Suda2025} and a 100,000M
-instruction limit plus a 30-second wall-clock limit.
+we use AVATAR claims with the Deepire~2.0 AVATAR-trained clause
+guidance model and a 100,000M instruction limit plus a 30-second
+wall-clock limit.
 
 \paragraph{Protocol details.}
 The baseline for a problem is always measured without generated
