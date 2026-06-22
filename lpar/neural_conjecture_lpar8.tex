@@ -59,16 +59,28 @@ ATP in our comparison, and speeds up 2,236 further problems.
 
 \section{Introduction}
 
-Large-theory automated theorem proving is still dominated by search.
-Modern provers such as \Eprover~\cite{Schulz2002} and
-\Vampire~\cite{Kovacs2013} combine many sophisticated heuristics, yet a
-single unfortunate proof-search trajectory may spend millions of
-inferences before finding a short refutation.  The classical cut rule
-suggests a different intervention: introduce a formula $L$ that splits
-a hard problem $P$ into two easier subproblems, $P\cup\{L\}$ and
-$P\cup\{\neg L\}$.  If both are unsatisfiable, then $P$ is
-unsatisfiable.  The formula $L$ need not be a user-interesting theorem;
-it only has to expose a useful case split.
+Conjecturing---the creation of useful intermediate statements---is a
+core mathematical ability that complements proof search.  Humans
+routinely decompose hard problems into lemmas, and the ability to
+propose good lemmas is often what separates a feasible proof from an
+intractable search.  Automated conjecturing has been studied since
+Lenat's AM~\cite{Lenat1977}, with systems such as Fajtlowicz's
+Graffiti~\cite{Fajtlowicz1988} and Colton's HR~\cite{Colton2002}
+exploring theory formation via heuristics or controlled enumeration.
+More recently, Urban and Jakub\r{u}v~\cite{Urban2020} proposed using
+neural sequence models to generate conjectures over large formal
+libraries.
+
+In the context of saturation-based theorem proving, conjecturing takes
+a specific form: the classical cut rule.  A formula~$L$ splits a hard
+problem~$P$ into two subproblems, $P\cup\{L\}$ and $P\cup\{\neg L\}$.
+If both are unsatisfiable, then $P$ is unsatisfiable.  Modern provers
+such as \Eprover~\cite{Schulz2002} and \Vampire~\cite{Kovacs2013}
+combine many sophisticated search heuristics, yet a single unfortunate
+trajectory may spend millions of inferences before finding a short
+refutation.  A well-chosen cut can bypass such bottlenecks entirely.
+The formula~$L$ need not be a user-interesting theorem; it only has to
+expose a useful case split.
 
 This paper presents a system for automated cut discovery.  We train a
 neural generator on proof lemmas that have been independently measured
@@ -566,6 +578,21 @@ A. Voronkov.
 G. Gentzen.
 \newblock Untersuchungen {\"u}ber das logische Schlie{\ss}en.
 \newblock \emph{Mathematische Zeitschrift}, 39:176--210, 1935.
+
+\bibitem{Lenat1977}
+D.~B. Lenat.
+\newblock Automated theory formation in mathematics.
+\newblock In \emph{IJCAI 1977}, pp. 833--842, 1977.
+
+\bibitem{Fajtlowicz1988}
+S. Fajtlowicz.
+\newblock On conjectures of {G}raffiti.
+\newblock \emph{Discrete Mathematics}, 72(1--3):113--118, 1988.
+
+\bibitem{Colton2002}
+S. Colton.
+\newblock Automated Theory Formation in Pure Mathematics.
+\newblock Springer, 2002.
 
 \bibitem{Hetzl2014}
 S. Hetzl, A. Leitsch, G. Reis, J. Tapolczai, and D. Weller.
