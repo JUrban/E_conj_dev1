@@ -93,6 +93,11 @@ from \Eprover proof lemmas helps \Vampire solve hundreds of additional
 \section{Learning Cuts from Proofs}
 \label{sec:cuts}
 
+The framework for measuring lemma usefulness as proof shortening was
+introduced by Goertzel and Urban~\cite{Urban2019}, who created the
+first dataset of 3,161 \Mizar CNF problems with cut ratios and
+explored GNN-based lemma classification.\footnote{The original
+  dataset and code: \url{https://github.com/JUrban/E_conj}}
 For a problem $P$ and candidate lemma $L$, let $C_0$ be the baseline
 cost of proving $P$, and let $C_1,C_2$ be the costs of proving
 $P\cup\{L\}$ and $P\cup\{\neg L\}$.  We define the cut ratio
@@ -218,7 +223,7 @@ variable prediction, ignoring irrelevant outputs at each step.  Samples
 are weighted by $1/(1+r)$ so that stronger speedups matter more, and
 per-problem normalization prevents a few lemma-rich theorems from
 dominating training.  We train Transformer, conditional-VAE and
-state-space decoder variants inspired by selective state-space models~\cite{Gu2024}, varying dimension, named-symbol
+state-space decoder variants inspired by selective state-space models~\cite{Gu2023}, varying dimension, named-symbol
 embeddings and sampling temperature.  Generation uses nucleus sampling
 with role masks and removes duplicate clauses before ATP evaluation.
 
@@ -507,7 +512,7 @@ L. Kov{\'a}cs and A. Voronkov.
 
 \bibitem{Suda2025}
 M. Suda.
-\newblock Efficient neural clause-selection for Vampire.
+\newblock Efficient Neural Clause-Selection Reinforcement.
 \newblock \emph{arXiv:2503.07792}, 2025.
 
 \bibitem{Einarsdottir2024}
@@ -553,7 +558,7 @@ G. Sutcliffe.
 
 \bibitem{KaliszykU2015}
 C. Kaliszyk and J. Urban.
-\newblock MiZAR 40 for Mizar 40.
+\newblock MizAR 40 for Mizar 40.
 \newblock \emph{J. Automated Reasoning}, 55(3):245--256, 2015.
 
 \bibitem{Loos2017}
@@ -572,12 +577,12 @@ M. Suda.
 \newblock In \emph{FroCoS 2021}, LNCS 12941, pp. 192--209, 2021.
 
 \bibitem{Chvalovsky2023}
-K. Chvalovsk{\'y}, J. Jakub\r{u}v, M. Piotrowski, and J. Urban.
-\newblock Learning theorem proving components.
-\newblock In \emph{LPAR-24}, EPiC vol. 94, 2023.
+K. Chvalovsk{\'y}, K. Korovin, J. Piepenbrock, and J. Urban.
+\newblock Guiding an Instantiation Prover with Graph Neural Networks.
+\newblock In \emph{LPAR-24}, EPiC vol. 94, pp.~112--123, 2023.
 
 \bibitem{Hu2020}
-W. Hu, B. Fey, M. Zitnik, Y. Dong, H. Ren, B. Liu, M. Catasta, and J. Leskovec.
+W. Hu, M. Fey, M. Zitnik, Y. Dong, H. Ren, B. Liu, M. Catasta, and J. Leskovec.
 \newblock Open graph benchmark: datasets for machine learning on graphs.
 \newblock In \emph{NeurIPS 2020}, 2020.
 
@@ -587,10 +592,10 @@ W. Hamilton, Z. Ying, and J. Leskovec.
 \newblock In \emph{NeurIPS 2017}, 2017.
 
 
-\bibitem{Gu2024}
+\bibitem{Gu2023}
 A. Gu and T. Dao.
 \newblock Mamba: linear-time sequence modeling with selective state spaces.
-\newblock \emph{arXiv:2312.00752}, 2024.
+\newblock \emph{arXiv:2312.00752}, 2023.
 
 \end{thebibliography}
 
