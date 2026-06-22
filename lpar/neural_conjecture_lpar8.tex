@@ -1,0 +1,583 @@
+\documentclass{easychair}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+\newcommand{\Eprover}{E\xspace}
+\newcommand{\Vampire}{Vampire\xspace}
+\newcommand{\Mizar}{Mizar\xspace}
+\newcommand{\MML}{MML\xspace}
+\newcommand{\ArtifactURL}{\textbf{[artifact URL to be inserted before submission]}}
+
+\title{Neural Cut Formula Generation for Automated Theorem Proving}
+
+\author{Josef Urban\inst{1}}
+
+\institute{Czech Technical University in Prague}
+
+\authorrunning{Urban}
+\titlerunning{Neural Cut Formula Generation for ATP}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We describe a tool for generating intermediate lemmas, used as cut
+formulas, that restructure first-order proof search.  Given a CNF
+problem, a heterogeneous graph neural network encodes clauses,
+literals, terms, variables and symbols; an autoregressive decoder then
+samples candidate lemmas by pointing to symbols in the input and by
+obeying arity constraints during decoding.  Candidate lemmas are not
+trusted: they are accepted only when an ATP proves both sides of the
+cut, i.e. the problem extended with the lemma and with its negation.
+This gives a sound evaluation loop and a supervised learning signal.
+From the \Mizar Mathematical Library~\cite{Grabowski2010} we build datasets with both
+\Eprover and \Vampire; the \Vampire dataset contains 196,199 useful
+cut examples from 2.47M evaluated proof-lemma pairs.  On the \Eprover
+test set, the best single configuration helps 96 of 187 baseline-proved
+problems, while an ensemble helps 127 (67.9\%), with speedups up to
+$196\times$.  More importantly, an \Eprover-trained generator transfers
+to \Vampire: with speculative AVATAR claims it proves 582 previously
+unsolved \Mizar problems, including 442 that had not been solved by any
+ATP in our comparison, and speeds up 2,236 further problems.
+\end{abstract}
+
+\section{Introduction}
+
+Large-theory automated theorem proving is still dominated by search.
+Modern provers such as \Eprover~\cite{Schulz2002} and
+\Vampire~\cite{Kovacs2013} combine many sophisticated heuristics, yet a
+single unfortunate proof-search trajectory may spend millions of
+inferences before finding a short refutation.  The classical cut rule
+suggests a different intervention: introduce a formula $L$ that splits
+a hard problem $P$ into two easier subproblems, $P\cup\{L\}$ and
+$P\cup\{\neg L\}$.  If both are unsatisfiable, then $P$ is
+unsatisfiable.  The formula $L$ need not be a user-interesting theorem;
+it only has to expose a useful case split.
+
+This paper treats cut discovery as a tool-building problem.  We train a
+neural generator on proof lemmas that have been independently measured
+to shorten proof search, then use the ATP itself as a checker and
+scheduler for generated candidates.  The resulting system is attractive
+for theorem proving because the learned part is entirely speculative:
+a bad conjecture may waste time, but cannot make the prover unsound.
+The most useful generated conjectures can also be stored as proof-search
+hints or as new training examples.
+
+The tool pipeline is:
+\begin{enumerate}\itemsep0pt
+\item solve library problems and extract proof lemmas;
+\item evaluate each lemma as a cut and keep only speedups;
+\item train a graph-to-clause neural generator on the useful cuts;
+\item sample diverse conjectures for new problems; and
+\item verify them by ATP calls, or in \Vampire by AVATAR claim formulas.
+\end{enumerate}
+The artifact for reviewers will contain code, trained checkpoints,
+generated conjectures, ATP command lines, logs, and scripts to recreate
+the tables: \ArtifactURL.
+
+Our main contributions are as follows.  First, we give a
+symbol-independent graph-to-clause architecture for first-order cut
+formula generation.  Second, we construct much larger cut datasets than
+previous work, including 196K useful \Vampire examples.  Third, we give
+a prover-level evaluation rather than a purely syntactic or likelihood
+metric.  Finally, we show strong cross-prover transfer: a model trained
+from \Eprover proof lemmas helps \Vampire solve hundreds of additional
+\Mizar problems.
+
+\section{Learning Cuts from Proofs}
+\label{sec:cuts}
+
+For a problem $P$ and candidate lemma $L$, let $C_0$ be the baseline
+cost of proving $P$, and let $C_1,C_2$ be the costs of proving
+$P\cup\{L\}$ and $P\cup\{\neg L\}$.  We define the cut ratio
+\[
+        r(L,P) = \frac{C_1+C_2}{C_0}.
+\]
+A pair is useful when both subproofs succeed and $r<1$.  The cost is
+processed clauses for \Eprover and burned instructions for \Vampire.
+This is the key supervision signal: useful cuts are not labeled by
+humans, but by measured search reduction in a sound proof experiment.
+
+\paragraph{AVATAR claims.}
+Running two separate proofs is expensive.  \Vampire's AVATAR
+architecture~\cite{Voronkov2014} can instead introduce $L$ through the TPTP claim role~\cite{Einarsdottir2024}.
+Its SAT layer creates complementary assumptions corresponding to $L$
+and $\neg L$, interleaves the two branches, and shares clauses derived
+without the claim.  A proof is complete only when the use of $L$ and
+the proof of $L$ have both been discharged.  This lets us test generated
+conjectures speculatively in a single \Vampire run, and also permits
+several generated claims to compete in the same search.
+
+\paragraph{Datasets.}
+The \Eprover development data uses 3,161 post-proof-minimized \Mizar
+CNF problems exported in TPTP style~\cite{Sutcliffe2009}: \Eprover solves 1,888 and produces 122,356 evaluated
+(problem, lemma) pairs.  The larger \Vampire data uses the full-axiom
+corpus with neural clause selection~\cite{Suda2025}: \Vampire solves 34,182 of 57,880 attempted CNF problems, from
+which 2.47M proof-lemma pairs are evaluated; 196,199 are useful cuts
+and 3,591 problems have at least one useful lemma.  We also evaluate on
+a premise-selected Mizar60 corpus of 55,832 problems, whose median CNF
+size is 34 clauses after clausification, giving a more realistic middle
+ground between post-proof minimized and full-axiom problems.
+Table~\ref{tab:data} summarizes the main corpora.  The useful
+cuts are highly skewed in quality: on the \Vampire corpus, 66,461
+examples give at least a $2\times$ speedup and 3,190 give at least a
+$10\times$ speedup.  We keep all useful examples during training, but
+the loss weighting makes the high-speedup tail more influential.
+
+\begin{table}[t]
+\centering
+\caption{Data and evaluation corpora.  Useful means both cut branches
+prove and $r<1$.}
+\label{tab:data}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Corpus & Problems & Solved & Evaluated pairs & Useful cuts \\
+\midrule
+\Eprover minimized CNF & 3,161 & 1,888 & 122,356 & training/eval set \\
+\Vampire full-axiom CNF & 57,880 & 34,182 & 2,470,292 & 196,199 \\
+Mizar60 premise-selected CNF & 55,832 & 34,080 & ongoing & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Quality of the 196,199 useful \Vampire cut examples.}
+\label{tab:ratios}
+\small
+\begin{tabular}{rrrrr}
+\toprule
+$r \leq$ & Examples & Problems & \% examples & \% problems \\
+\midrule
+0.10 & 3,190 & 164 & 1.6 & 4.6 \\
+0.20 & 15,165 & 553 & 7.7 & 15.4 \\
+0.50 & 66,461 & 1,645 & 33.9 & 45.8 \\
+0.80 & 135,380 & 2,783 & 69.0 & 77.5 \\
+0.95 & 179,059 & 3,371 & 91.3 & 93.9 \\
+1.00 & 196,199 & 3,591 & 100.0 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The Generator}
+\label{sec:generator}
+
+\paragraph{Problem graph.}
+The input CNF is represented as a heterogeneous graph with five node
+types: clause, literal, term, variable, and symbol.  Sixteen directed
+edge types encode containment and syntax, including clause-to-literal,
+literal-to-argument, term-to-subterm and reverse edges.  Four message
+passing layers are applied.  Positional edges use edge-aware GINE
+convolutions~\cite{Hu2020}; the remaining edges use GraphSAGE-style
+aggregation~\cite{Hamilton2017}.  The final symbol-node embeddings are
+both the memory over which the decoder attends and the objects to which
+it may point.
+
+\paragraph{Why point to symbols?}
+The generator does not emit symbol names from a fixed vocabulary.
+Predicates and functions are selected by a pointer distribution over
+symbol nodes in the current problem.  Thus the model can be applied to
+problems containing symbols not seen in training: it relies on arity,
+role, and occurrence structure rather than on names alone.  Optional
+named \Mizar embeddings are added for recurring symbols, but unknown
+symbols still remain generatable through their graph embeddings.
+
+\paragraph{Decoder and syntax constraints.}
+A Transformer decoder generates a clause as actions:
+\textsc{NewLitPos}, \textsc{NewLitNeg}, \textsc{Pred},
+\textsc{ArgVar}, \textsc{ArgFunc}, \textsc{EndArgs}, and
+\textsc{EndClause}.  At each step it predicts an action, a symbol
+pointer when the action needs a predicate or function, and a variable
+slot when the action needs a variable.  Role masks prevent predicates
+from being used as functions and conversely.  An arity stack records
+how many arguments remain open; actions inconsistent with the stack are
+masked to $-\infty$ before sampling.  This simple state machine is
+responsible for the high syntactic validity in the experiments.
+
+\paragraph{Training and variants.}
+The loss is the sum of cross-entropies for action, symbol pointer and
+variable prediction, ignoring irrelevant outputs at each step.  Samples
+are weighted by $1/(1+r)$ so that stronger speedups matter more, and
+per-problem normalization prevents a few lemma-rich theorems from
+dominating training.  We train Transformer, conditional-VAE and
+state-space decoder variants inspired by selective state-space models~\cite{Gu2024}, varying dimension, named-symbol
+embeddings and sampling temperature.  Generation uses nucleus sampling
+with role masks and removes duplicate clauses before ATP evaluation.
+
+\paragraph{Engineering for a tool.}
+The implementation has two performance bottlenecks: graph construction
+and batching.  For the \Vampire data, a single problem may produce
+thousands of graph nodes, and the heterogeneous GNN applies a separate
+convolution per edge type.  We therefore precompute graph samples,
+cache them in a compact tensor format, and batch by a total-node budget
+rather than by a fixed sample count.  A batch of small problems may
+contain more than 100 samples, while a batch of large problems may
+contain only a few; the loss is normalized by token count, so the
+objective is invariant to this packing.  Persistent data-loader workers
+and mixed precision keep the A100 GPUs saturated enough for experiments
+at the 100K-sample scale.
+
+\section{Experiments}
+\label{sec:experiments}
+
+All reported successes are prover-verified.  The generator proposes
+formulas, but a result is counted only when the corresponding ATP proof
+succeeds.  For \Eprover, we test each generated $L$ by two independent
+2-second runs for $P\cup\{L\}$ and $P\cup\{\neg L\}$.  For \Vampire,
+we use AVATAR claims with neural clause guidance~\cite{Suda2025} and a 100,000M
+instruction limit plus a 30-second wall-clock limit.
+
+\paragraph{Protocol details.}
+The baseline for a problem is always measured without generated
+conjectures, using the same prover family and resource accounting as
+in the corresponding experiment.  A generated conjecture is discarded
+before proving if it is syntactically invalid, uses symbols with
+incorrect roles, exceeds the arity-state limits, or duplicates an
+earlier sample modulo printing.  For solved baseline problems we report
+speedup ratios; for unsolved baseline problems we report newly proved
+problems.  This separates two benefits that are often conflated: cuts
+can either make an existing proof cheaper, or move a problem from
+unsolved to solved within a fixed budget.  All aggregate counts are by
+problem, not by lemma, so a problem with many useful conjectures is
+counted once.
+
+\subsection{E Prover Results}
+
+The \Eprover test split contains 279 problems, of which 187 are solved
+by the 10-second baseline.  We train 15 configurations and generate
+40--80 conjectures per problem using nucleus sampling.  Table~\ref{tab:e}
+shows selected results.  The best single configuration helps 96 of the
+187 baseline-solved problems (51.3\%).  The union of all configurations
+helps 127 problems (67.9\%), showing that diversity across models and
+sampling regimes is essential.  The best individual speedup is
+$196\times$ on \texttt{l101\_xreal\_1}; other large speedups include
+$50\times$ on \texttt{t87\_qc\_lang2} and $38\times$ on
+\texttt{t35\_xboole\_1}.
+
+\begin{table}[t]
+\centering
+\caption{Selected \Eprover results on 187 baseline-proved test
+problems.  AvgR is the best observed cut ratio averaged over helped
+problems; lower is better.}
+\label{tab:e}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Configuration & Decoder & Helped & \% & AvgR \\
+\midrule
+\texttt{a256\_wide}       & Transformer & 96 & 51.3 & 0.558 \\
+\texttt{af6\_a\_big\_diverse} & Transformer & 91 & 48.7 & 0.574 \\
+\texttt{a256\_bal\_diverse} & Transformer & 87 & 46.5 & 0.524 \\
+\texttt{a512\_diverse}    & Transformer & 80 & 42.8 & 0.536 \\
+\texttt{af6\_c\_named}    & CVAE        & 78 & 41.7 & 0.597 \\
+\texttt{af6\_d\_named}    & SSM         & 72 & 38.5 & 0.612 \\
+\texttt{a1024\_diverse}   & Transformer & 67 & 35.8 & 0.530 \\
+\midrule
+Union of all 15 & mixed & 127 & 67.9 & 0.530 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The useful conjectures usually occur early.  Across representative
+models, the median rank of the first useful conjecture is between 2
+and 5; evaluating only the first five conjectures already recovers a
+large fraction of helped problems.  Wider sampling has worse average
+rank but better total coverage, which suggests a practical two-phase
+strategy: run a cheap top-$k$ filter across several diverse models, and
+spend the remaining ATP budget on configurations whose first successes
+are complementary.  Table~\ref{tab:ensemble} shows the effect: the best
+single model covers 96 problems, but five carefully chosen methods
+cover 123, very close to the 127-problem oracle over all 15 methods.
+
+\begin{table}[t]
+\centering
+\caption{Complementarity on the \Eprover test set.  ``Saved'' is total
+baseline processed clauses saved by the best cut for each helped
+problem.}
+\label{tab:ensemble}
+\small
+\begin{tabular}{clrr}
+\toprule
+$N$ & Best combination by coverage & Helped & Saved \\
+\midrule
+1 & \texttt{a256\_wide} & 96 & 197K \\
+2 & + \texttt{d\_named} & 106 & 218K \\
+3 & + \texttt{a\_named\_big} & 113 & 286K \\
+4 & + \texttt{a256\_bal\_diverse} & 119 & 287K \\
+5 & + \texttt{af6\_a\_named} & 123 & 292K \\
+\midrule
+15 & oracle union & 127 & 301K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Effect of evaluating only the top-$k$ conjectures for three
+representative \Eprover models.}
+\label{tab:rank}
+\small
+\begin{tabular}{r|rrr|rrr}
+\toprule
+ & \multicolumn{3}{c|}{Problems helped}
+ & \multicolumn{3}{c}{Avg. best ratio} \\
+$k$ & \texttt{a256\_wide} & \texttt{a1024} & \texttt{a\_big}
+    & \texttt{a256\_wide} & \texttt{a1024} & \texttt{a\_big} \\
+\midrule
+1  & 20 & 31 & 35 & 0.378 & 0.433 & 0.490 \\
+5  & 54 & 53 & 63 & 0.439 & 0.478 & 0.536 \\
+10 & 70 & 60 & 75 & 0.503 & 0.498 & 0.551 \\
+20 & 81 & 65 & -- & 0.518 & 0.529 & -- \\
+50 & 90 & 67 & -- & 0.551 & 0.530 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-Prover Transfer to Vampire}
+
+The central experiment asks whether cut patterns learned from one
+prover are useful to another.  We take an \Eprover-trained $d=256$
+model with named symbol embeddings and generate 42 conjectures for each
+of 11,881 hard or previously unsolved Mizar60 problems, producing
+517,435 conjectures with 98.9\% syntactic validity.  These conjectures
+are given to \Vampire as AVATAR claims, so each can be used only if its
+proof obligation is also closed.
+
+\begin{table}[t]
+\centering
+\caption{Cross-prover transfer: \Eprover-trained conjectures evaluated
+with \Vampire on hard and unsolved Mizar60 problems.}
+\label{tab:vampire}
+\small
+\begin{tabular}{lr}
+\toprule
+Problems evaluated & 11,881 \\
+Generated conjectures & 517,435 \\
+Syntactically valid conjectures & 98.9\% \\
+\midrule
+Baseline proved by \Vampire, no conjectures & 3,738 \\
+Previously unproved, solved with conjectures & 582 \\
+\quad of which never solved by any ATP in our comparison & 442 \\
+Total proved with baseline plus conjectures & 4,320 \\
+Problems with at least 10\% speedup & 2,236 \\
+Mean ratio on already-solved helped problems & 0.610 \\
+Median rank of first useful conjecture & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:vampire} gives the results.  Without generated
+conjectures, the AVATAR-guided \Vampire baseline proves 3,738 of the
+11,881 problems.  The generated conjectures prove 582 additional
+problems, a 15.6\% relative increase over the baseline.  The effect is
+concentrated on the hardest part of the benchmark: 442 of the newly
+proved problems are from the set not solved by any ATP configuration in
+our comparison.  Among already solved problems, 2,236 obtain at least a
+10\% search reduction; the mean ratio for the helped solved subset is
+0.610, and the largest observed improvement exceeds $118\times$.
+
+This transfer is nontrivial.  The generator was trained on \Eprover
+proof lemmas from post-proof minimized problems, but it helps \Vampire
+on premise-selected problems with different clauses, guidance and proof
+search.  The most plausible explanation is that the model has learned
+structural templates for useful case splits rather than prover-specific
+syntactic artifacts.  The pointer architecture is important here: a
+fixed vocabulary generator would be much less robust to new symbols and
+new premise selections.
+
+\paragraph{Closing the loop.}
+The successful \Vampire claims yield 24,025 additional useful examples.
+We used them to test whether conjecture generation can become an
+iterative data-production loop.  Training from scratch on these examples
+overfits quickly.  Initializing from the \Eprover checkpoint is much
+better, and the best validation loss is obtained by mixing the original
+\Eprover cuts with the new \Vampire cuts.  The resulting model generates
+235,089 second-iteration conjectures for the same 11,881 problems with
+99.3\% syntactic validity.  We do not count this as a main result until
+its full prover evaluation is complete, but the experiment shows that
+the tool already produces reusable training data from its own verified
+successes.
+
+\section{Discussion and Threats to Validity}
+\label{sec:discussion}
+
+The experiments support three practical lessons.  First, neural cut
+generation should be evaluated by downstream proof search, not by
+language-model likelihood.  Many well-formed lemmas are irrelevant, and
+some low-probability samples create dramatic speedups.  Second,
+generation diversity is a feature rather than noise: the strongest
+\Eprover result is an ensemble, and useful \Vampire claims appear
+throughout the sampled list.  Third, speculative proving is a natural
+interface between learning and ATPs: \Vampire claims let the prover
+benefit from a conjecture while simultaneously checking it.
+
+The main threats are cost and selection bias.  Cut evaluation is
+expensive, so the datasets inherit the behavior of the prover
+configurations used to mine lemmas.  The \Eprover data is small and
+post-proof minimized, while the full \Vampire data is larger but harder
+to train on because of graph size.  We mitigate these issues with
+per-problem weighting, size-aware batching and cross-prover evaluation,
+but final generality should be tested on more libraries and on fresh
+ATP strategies.
+
+A second threat is budget accounting.  A generated lemma can be
+impressively fast once it is known, but a deployment must pay for all
+failed candidates as well.  Our rank analysis partially addresses this
+by showing that useful cuts often appear early and that model ensembles
+can be scheduled greedily, but the current tool still relies on ATP
+checking as the final ranker.  A learned utility model, trained on the
+same cut-ratio labels, is the most direct way to reduce wasted calls.
+
+\paragraph{Artifact design.}
+The reviewer artifact is organized around executable claims rather than
+around the neural code alone.  It contains: (i) the exact train/validation/test
+problem splits; (ii) the generated clauses, including invalid and duplicate
+samples; (iii) ATP command lines and resource limits; (iv) raw success and
+failure logs; and (v) table-building scripts that recompute all counts from
+logs.  This matters because the final theorem-proving claims are not
+properties of the neural model in isolation.  They are properties of the
+closed loop consisting of sampler, syntactic checker, ATP invocation, timeout
+policy and result parser.  The artifact therefore exposes each stage and makes
+it possible to rerun smaller slices of the evaluation on a workstation while
+also documenting the large cluster runs.
+
+\section{Related Work}
+
+Cut introduction has a long proof-theoretic history beginning with
+Gentzen~\cite{Gentzen1935}; automated cut introduction for first-order
+logic with equality has been studied by Hetzl et al.~\cite{Hetzl2014}.
+Our work differs by generating cuts from a neural model and then
+checking them by ATP proof search.  Machine learning for ATPs has most
+often focused on premise selection~\cite{KaliszykU2015} and proof or
+clause guidance~\cite{Loos2017,Jakubuv2019,Suda2021,Chvalovsky2023}.
+Those methods choose what to search next; our method changes the shape
+of the problem by adding verified auxiliary formulas.  The closest
+antecedents are the cut-usefulness classifier of Goertzel and
+Urban~\cite{Urban2019} and the first neural conjecturing datasets of
+Urban and Jakub\r{u}v~\cite{Urban2020}; the present system adds a
+symbol-pointer graph generator, arity-constrained decoding, large-scale
+\Vampire cut data and cross-prover transfer.
+
+\section{Conclusion}
+
+We presented a neural tool for generating cut formulas for automated
+theorem proving.  The generated formulas are speculative but soundly
+verified: a lemma counts only if the ATP proves both sides of the cut.
+On \Eprover, ensembles help 67.9\% of baseline-proved test problems and
+produce speedups up to $196\times$.  On \Vampire, conjectures learned
+from \Eprover proof lemmas solve 582 additional hard \Mizar problems
+and speed up 2,236 more.  These results suggest that learned cut
+formulas capture reusable structure in mathematical proofs and can
+serve as an effective interface between neural generation and symbolic
+proof search.
+
+\begin{thebibliography}{20}
+
+\bibitem{Schulz2002}
+S. Schulz.
+\newblock E -- a brainiac theorem prover.
+\newblock \emph{AI Communications}, 15(2--3):111--126, 2002.
+
+\bibitem{Kovacs2013}
+L. Kov{\'a}cs and A. Voronkov.
+\newblock First-order theorem proving and Vampire.
+\newblock In \emph{CAV 2013}, LNCS 8044, pp. 1--35, 2013.
+
+
+\bibitem{Suda2025}
+M. Suda.
+\newblock Efficient neural clause-selection for Vampire.
+\newblock \emph{arXiv:2503.07792}, 2025.
+
+\bibitem{Einarsdottir2024}
+S.~H. Einarsd{\'o}ttir, M. Hajd{\'u}, M. Johansson, N. Smallbone, and M. Suda.
+\newblock Lemma discovery and strategies for automated induction.
+\newblock In \emph{IJCAR 2024}, LNCS 14739, pp. 214--232, 2024.
+
+\bibitem{Voronkov2014}
+A. Voronkov.
+\newblock AVATAR: The architecture for first-order theorem provers.
+\newblock In \emph{CAV 2014}, LNCS 8559, pp. 696--710, 2014.
+
+\bibitem{Gentzen1935}
+G. Gentzen.
+\newblock Untersuchungen {\"u}ber das logische Schlie{\ss}en.
+\newblock \emph{Mathematische Zeitschrift}, 39:176--210, 1935.
+
+\bibitem{Hetzl2014}
+S. Hetzl, A. Leitsch, G. Reis, J. Tapolczai, and D. Weller.
+\newblock Introducing quantified cuts in logic with equality.
+\newblock In \emph{IJCAR 2014}, LNCS 8562, pp. 240--254, 2014.
+
+\bibitem{Urban2019}
+Z. Goertzel and J. Urban.
+\newblock Usefulness of lemmas via graph neural networks.
+\newblock In \emph{AITP 2019}, 2019.
+
+\bibitem{Urban2020}
+J. Urban and J. Jakub\r{u}v.
+\newblock First neural conjecturing datasets and experiments.
+\newblock In \emph{CICM 2020}, LNCS 12236, pp. 315--323, 2020.
+
+
+\bibitem{Grabowski2010}
+A. Grabowski, A. Korni{\l}owicz, and A. Naumowicz.
+\newblock Mizar in a nutshell.
+\newblock \emph{J. Formalized Reasoning}, 3(2):153--245, 2010.
+
+\bibitem{Sutcliffe2009}
+G. Sutcliffe.
+\newblock The TPTP problem library and associated infrastructure.
+\newblock \emph{J. Automated Reasoning}, 43(4):337--362, 2009.
+
+\bibitem{KaliszykU2015}
+C. Kaliszyk and J. Urban.
+\newblock MiZAR 40 for Mizar 40.
+\newblock \emph{J. Automated Reasoning}, 55(3):245--256, 2015.
+
+\bibitem{Loos2017}
+S. Loos, G. Irving, C. Szegedy, and C. Kaliszyk.
+\newblock Deep network guided proof search.
+\newblock In \emph{LPAR-21}, EPiC vol. 46, pp. 85--105, 2017.
+
+\bibitem{Jakubuv2019}
+J. Jakub\r{u}v and J. Urban.
+\newblock Hammering Mizar by learning clause guidance.
+\newblock In \emph{ITP 2019}, LIPIcs vol. 141, pp. 34:1--34:8, 2019.
+
+\bibitem{Suda2021}
+M. Suda.
+\newblock Vampire with a brain is a good ITP hammer.
+\newblock In \emph{FroCoS 2021}, LNCS 12941, pp. 192--209, 2021.
+
+\bibitem{Chvalovsky2023}
+K. Chvalovsk{\'y}, J. Jakub\r{u}v, M. Piotrowski, and J. Urban.
+\newblock Learning theorem proving components.
+\newblock In \emph{LPAR-24}, EPiC vol. 94, 2023.
+
+\bibitem{Hu2020}
+W. Hu, B. Fey, M. Zitnik, Y. Dong, H. Ren, B. Liu, M. Catasta, and J. Leskovec.
+\newblock Open graph benchmark: datasets for machine learning on graphs.
+\newblock In \emph{NeurIPS 2020}, 2020.
+
+\bibitem{Hamilton2017}
+W. Hamilton, Z. Ying, and J. Leskovec.
+\newblock Inductive representation learning on large graphs.
+\newblock In \emph{NeurIPS 2017}, 2017.
+
+
+\bibitem{Gu2024}
+A. Gu and T. Dao.
+\newblock Mamba: linear-time sequence modeling with selective state spaces.
+\newblock \emph{arXiv:2312.00752}, 2024.
+
+\end{thebibliography}
+
+\end{document}
