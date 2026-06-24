@@ -37,6 +37,17 @@ def _mp_warm_one_problem(prob):
     return prob, graph, lemma_dict
 
 
+def _mp_size_one_problem(pname):
+    """Build graph, cache to disk, and return node count."""
+    ds = _precompute_dataset_ref
+    try:
+        graph = ds._get_problem_graph(pname)
+        total = sum(graph[nt].x.shape[0] for nt in graph.node_types)
+        return pname, total, graph
+    except Exception:
+        return pname, 999999, None
+
+
 class ConjectureDataset(Dataset):
     """Dataset of (problem_graph, target_sequence, quality_weight) triples.
 
@@ -194,23 +205,39 @@ class ConjectureDataset(Dataset):
         print(f"Split '{split}': {len(keep)} problems, {len(self.samples)} samples")
 
     def _compute_problem_sizes(self, problems_dir: str) -> dict[str, int]:
-        """Count total graph nodes per problem (for filtering large ones)."""
-        from conjecture_gen.graph_builder import clauses_to_graph
-        sizes = {}
+        """Count total graph nodes per problem (for filtering large ones).
+
+        Uses multiprocessing and caches graphs to disk while sizing them.
+        """
+        import multiprocessing as mp
+        import time
+
         unique_problems = sorted(set(s['problem'] for s in self.samples))
-        for i, pname in enumerate(unique_problems):
-            path = os.path.join(problems_dir, pname)
-            try:
-                clauses = parse_problem_file(path)
-                graph = clauses_to_graph(clauses)
-                total = sum(
-                    graph[nt].x.shape[0] for nt in graph.node_types
-                )
+        n = len(unique_problems)
+        n_workers = min(mp.cpu_count() or 1, 32)
+        print(f"  Sizing {n} problems ({n_workers} processes)...")
+
+        global _precompute_dataset_ref
+        _precompute_dataset_ref = self
+
+        sizes = {}
+        t0 = time.time()
+        done = 0
+        with mp.Pool(n_workers) as pool:
+            for pname, total, graph in pool.imap_unordered(
+                    _mp_size_one_problem, unique_problems, chunksize=50):
                 sizes[pname] = total
-            except Exception:
-                sizes[pname] = 999999  # mark as large on error
-            if (i + 1) % 500 == 0:
-                print(f"  sized {i+1}/{len(unique_problems)} problems...")
+                # Cache graph in RAM and on disk
+                if graph is not None and pname not in self._graph_cache:
+                    self._graph_cache[pname] = graph
+                done += 1
+                if done % 2000 == 0:
+                    elapsed = time.time() - t0
+                    rate = done / elapsed
+                    eta = (n - done) / rate
+                    print(f"  sized {done}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
+        _precompute_dataset_ref = None
+        print(f"  Sized {n} problems in {time.time()-t0:.0f}s")
         return sizes
 
     def _build_index(self, problems_dir, lemmas_file, statistics_file):
