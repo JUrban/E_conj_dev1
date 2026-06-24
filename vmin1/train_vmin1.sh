@@ -34,8 +34,8 @@ for arg in $EXTRA; do
     prev="$arg"
 done
 
-SAVE_DIR="checkpoints_vmin1_${VARIANT}${NAMED}_${HIDDEN}${INIT_TAG}"
-LOG="train_vmin1_${VARIANT}${NAMED}_${HIDDEN}${INIT_TAG}.log"
+SAVE_DIR="checkpoints_vmin1_${VARIANT}_${HIDDEN}${INIT_TAG}"
+LOG="train_vmin1_${VARIANT}_${HIDDEN}${INIT_TAG}.log"
 
 echo "=== vmin1 Combined Training ==="
 echo "GPU:        $GPU_ID"
