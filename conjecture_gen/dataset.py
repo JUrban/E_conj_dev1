@@ -413,34 +413,32 @@ class ConjectureDataset(Dataset):
 
         self.precompute_targets()
 
-        # Phase 3: assemble final samples (serial — graph.clone() is fast
-        # with pre-encoded targets, and avoids shared memory exhaustion)
+        # For small datasets, assemble all samples into RAM + save to disk.
+        # For large datasets (>200K), skip assembly — __getitem__ will
+        # do graph.clone() on the fly using the RAM graph cache + pre-encoded
+        # targets. This uses ~20GB (graphs) instead of ~100GB (all samples).
         n = len(self.samples)
-        print(f"Assembling {n} samples...")
-        t0 = time.time()
-        self._inmemory = [None] * n
-        for idx in range(n):
-            self._inmemory[idx] = self._build_item(idx)
-            if (idx + 1) % 50000 == 0:
-                elapsed = time.time() - t0
-                rate = (idx + 1) / elapsed
-                eta = (n - idx - 1) / rate
-                print(f"  assembled {idx+1}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
-
-        _precompute_dataset_ref = None
-        print(f"  Assembled {n} samples in {time.time()-t0:.0f}s")
-
-        # Only save single-file cache for small datasets (< 200K samples).
-        # Larger datasets OOM during pickle serialization; they rely on
-        # per-problem disk caches + fast re-assembly (~20 min).
         if n < 200000:
+            print(f"Assembling {n} samples into RAM...")
+            t0 = time.time()
+            self._inmemory = [None] * n
+            for idx in range(n):
+                self._inmemory[idx] = self._build_item(idx)
+                if (idx + 1) % 50000 == 0:
+                    elapsed = time.time() - t0
+                    rate = (idx + 1) / elapsed
+                    eta = (n - idx - 1) / rate
+                    print(f"  assembled {idx+1}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
+            print(f"  Assembled in {time.time()-t0:.0f}s")
             print(f"  Saving to {cache_path}...")
             tmp = cache_path + f".tmp.{os.getpid()}.{threading.get_ident()}"
             torch.save(self._inmemory, tmp)
             os.replace(tmp, cache_path)
+            print(f"  All {n} samples in RAM.")
         else:
-            print(f"  Skipping single-file save ({n} samples too large for pickle).")
-        print(f"  All {len(self._inmemory)} samples in RAM.")
+            print(f"Large dataset ({n} samples) — using on-the-fly graph.clone().")
+            print(f"  {len(self._graph_cache)} graphs in RAM + {n} pre-encoded targets.")
+            print(f"  __getitem__ will clone graphs per batch.")
 
     def __len__(self):
         return len(self.samples)
