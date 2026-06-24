@@ -64,7 +64,7 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.train_variant \
     --lr 1e-4 \
     --batch_size 64 \
     --amp \
-    --num_workers 4 \
+    --num_workers 8 \
     --save_every 1 \
     --named_embeddings \
     --save_dir "$SAVE_DIR" \
