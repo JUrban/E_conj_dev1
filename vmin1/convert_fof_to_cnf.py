@@ -28,7 +28,9 @@ with gzip.open(infile, 'rt') as fin, gzip.open(outfile, 'wt') as fout:
         new_line, nsubs = quant_re.subn('', line)
         if nsubs > 0:
             n_quant += 1
-            line = new_line
+            # Strip redundant inner parens left by quantifier scope:
+            # ,plain,( ( body ) )). -> ,plain,( body )).
+            line = re.sub(r'(,plain,\()\s*\((.+)\)\s*(\)\)\.\s*)$', r'\1\2\3', new_line)
         fout.write(line)
         n_out += 1
 
