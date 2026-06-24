@@ -29,23 +29,22 @@ def _mp_build_item(idx):
 
 
 def _mp_warm_one_problem(prob):
-    """Build graph + lemma cache for one problem in a worker process."""
+    """Build graph + lemma cache for one problem, save to disk only."""
     ds = _precompute_dataset_ref
-    graph = ds._get_problem_graph(prob)
-    ds._get_lemma_clause(prob, '')  # triggers full lemma cache build
-    lemma_dict = ds._lemma_cache.get(prob, {})
-    return prob, graph, lemma_dict
+    ds._get_problem_graph(prob)      # builds + saves to disk cache
+    ds._get_lemma_clause(prob, '')   # builds + saves to disk cache
+    return prob  # don't send tensors back — avoids shared memory exhaustion
 
 
 def _mp_size_one_problem(pname):
-    """Build graph, cache to disk, and return node count."""
+    """Build graph, cache to disk, and return node count only."""
     ds = _precompute_dataset_ref
     try:
         graph = ds._get_problem_graph(pname)
         total = sum(graph[nt].x.shape[0] for nt in graph.node_types)
-        return pname, total, graph
+        return pname, total  # don't send graph back
     except Exception:
-        return pname, 999999, None
+        return pname, 999999
 
 
 class ConjectureDataset(Dataset):
@@ -224,12 +223,9 @@ class ConjectureDataset(Dataset):
         t0 = time.time()
         done = 0
         with mp.Pool(n_workers) as pool:
-            for pname, total, graph in pool.imap_unordered(
+            for pname, total in pool.imap_unordered(
                     _mp_size_one_problem, unique_problems, chunksize=50):
                 sizes[pname] = total
-                # Cache graph in RAM and on disk
-                if graph is not None and pname not in self._graph_cache:
-                    self._graph_cache[pname] = graph
                 done += 1
                 if done % 2000 == 0:
                     elapsed = time.time() - t0
@@ -375,10 +371,8 @@ class ConjectureDataset(Dataset):
         t0 = time.time()
         done = 0
         with mp.Pool(n_workers) as pool:
-            for prob, graph, lemma_dict in pool.imap_unordered(
+            for prob in pool.imap_unordered(
                     _mp_warm_one_problem, problems, chunksize=50):
-                self._graph_cache[prob] = graph
-                self._lemma_cache[prob] = lemma_dict
                 done += 1
                 if done % 2000 == 0:
                     elapsed = time.time() - t0
@@ -405,33 +399,33 @@ class ConjectureDataset(Dataset):
         # Phase 1: warm all per-problem caches (serial, disk-cached)
         self._warm_caches()
 
-        # Phase 2: pre-encode targets (serial, needs graph+lemma caches)
+        # Phase 2: pre-encode targets (needs graph+lemma caches from disk)
+        # First load all graphs into RAM from disk cache
+        import time
+        problems = sorted(set(s['problem'] for s in self.samples))
+        print(f"Loading {len(problems)} graphs from disk cache...")
+        t0 = time.time()
+        for i, prob in enumerate(problems):
+            self._get_problem_graph(prob)
+            if (i + 1) % 5000 == 0:
+                print(f"  loaded {i+1}/{len(problems)}...")
+        print(f"  Loaded in {time.time()-t0:.0f}s")
+
         self.precompute_targets()
 
-        # Phase 3: assemble final samples using multiprocessing
-        import multiprocessing as mp
+        # Phase 3: assemble final samples (serial — graph.clone() is fast
+        # with pre-encoded targets, and avoids shared memory exhaustion)
         n = len(self.samples)
-        n_workers = min(mp.cpu_count() or 1, 32)
-        print(f"Assembling {n} samples ({n_workers} processes)...")
-
-        # Set module-level ref for worker processes (inherited via fork)
-        global _precompute_dataset_ref
-        _precompute_dataset_ref = self
-
-        import time
+        print(f"Assembling {n} samples...")
         t0 = time.time()
         self._inmemory = [None] * n
-        done = 0
-        with mp.Pool(n_workers) as pool:
-            for idx, item in pool.imap_unordered(
-                    _mp_build_item, range(n), chunksize=200):
-                self._inmemory[idx] = item
-                done += 1
-                if done % 10000 == 0:
-                    elapsed = time.time() - t0
-                    rate = done / elapsed
-                    eta = (n - done) / rate
-                    print(f"  assembled {done}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
+        for idx in range(n):
+            self._inmemory[idx] = self._build_item(idx)
+            if (idx + 1) % 50000 == 0:
+                elapsed = time.time() - t0
+                rate = (idx + 1) / elapsed
+                eta = (n - idx - 1) / rate
+                print(f"  assembled {idx+1}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
 
         _precompute_dataset_ref = None
         print(f"  Assembled {n} samples in {time.time()-t0:.0f}s")
