@@ -430,10 +430,16 @@ class ConjectureDataset(Dataset):
         _precompute_dataset_ref = None
         print(f"  Assembled {n} samples in {time.time()-t0:.0f}s")
 
-        print(f"  Saving to {cache_path}...")
-        tmp = cache_path + f".tmp.{os.getpid()}.{threading.get_ident()}"
-        torch.save(self._inmemory, tmp)
-        os.replace(tmp, cache_path)
+        # Only save single-file cache for small datasets (< 200K samples).
+        # Larger datasets OOM during pickle serialization; they rely on
+        # per-problem disk caches + fast re-assembly (~20 min).
+        if n < 200000:
+            print(f"  Saving to {cache_path}...")
+            tmp = cache_path + f".tmp.{os.getpid()}.{threading.get_ident()}"
+            torch.save(self._inmemory, tmp)
+            os.replace(tmp, cache_path)
+        else:
+            print(f"  Skipping single-file save ({n} samples too large for pickle).")
         print(f"  All {len(self._inmemory)} samples in RAM.")
 
     def __len__(self):
