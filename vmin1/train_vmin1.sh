@@ -37,6 +37,13 @@ done
 SAVE_DIR="checkpoints_vmin1_${VARIANT}_${HIDDEN}${INIT_TAG}"
 LOG="train_vmin1_${VARIANT}_${HIDDEN}${INIT_TAG}.log"
 
+# Check GPU is clean before starting
+GPU_MEM=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i "$GPU_ID" 2>/dev/null | head -1)
+if [ -n "$GPU_MEM" ] && [ "$GPU_MEM" -gt 1000 ]; then
+    echo "ERROR: GPU $GPU_ID has ${GPU_MEM}MiB used (leaked memory). Need a fresh node."
+    exit 1
+fi
+
 echo "=== vmin1 Combined Training ==="
 echo "GPU:        $GPU_ID"
 echo "Hidden:     $HIDDEN"
@@ -64,7 +71,7 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python3 -m conjecture_gen.train_variant \
     --lr 1e-4 \
     --batch_size 64 \
     --amp \
-    --num_workers 8 \
+    --num_workers 0 \
     --save_every 1 \
     --named_embeddings \
     --save_dir "$SAVE_DIR" \

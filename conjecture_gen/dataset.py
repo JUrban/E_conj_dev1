@@ -388,19 +388,10 @@ class ConjectureDataset(Dataset):
         First run builds all samples and saves as a single .pt file.
         Subsequent runs load the file directly.
         """
-        cache_path = os.path.join(self.cache_dir,
-                                   f'precomputed_{len(self.samples)}.pt')
-        if os.path.exists(cache_path):
-            print(f"Loading {len(self.samples)} precomputed samples from {cache_path}...")
-            self._inmemory = torch.load(cache_path, weights_only=False)
-            print(f"  Loaded {len(self._inmemory)} samples into RAM.")
-            return
-
-        # Phase 1: warm all per-problem caches (serial, disk-cached)
+        # Phase 1: warm all per-problem caches (parallel, disk-cached)
         self._warm_caches()
 
-        # Phase 2: pre-encode targets (needs graph+lemma caches from disk)
-        # First load all graphs into RAM from disk cache
+        # Phase 2: load graphs into RAM from disk cache
         import time
         problems = sorted(set(s['problem'] for s in self.samples))
         print(f"Loading {len(problems)} graphs from disk cache...")
@@ -411,34 +402,15 @@ class ConjectureDataset(Dataset):
                 print(f"  loaded {i+1}/{len(problems)}...")
         print(f"  Loaded in {time.time()-t0:.0f}s")
 
+        # Phase 3: pre-encode targets (lightweight — just action/argument tensors)
         self.precompute_targets()
 
-        # For small datasets, assemble all samples into RAM + save to disk.
-        # For large datasets (>200K), skip assembly — __getitem__ will
-        # do graph.clone() on the fly using the RAM graph cache + pre-encoded
-        # targets. This uses ~20GB (graphs) instead of ~100GB (all samples).
+        # Use on-the-fly graph.clone() in __getitem__. Graphs are in RAM
+        # (shared class-level cache), targets are pre-encoded. No need to
+        # assemble all samples — that would double memory usage.
         n = len(self.samples)
-        if n < 200000:
-            print(f"Assembling {n} samples into RAM...")
-            t0 = time.time()
-            self._inmemory = [None] * n
-            for idx in range(n):
-                self._inmemory[idx] = self._build_item(idx)
-                if (idx + 1) % 50000 == 0:
-                    elapsed = time.time() - t0
-                    rate = (idx + 1) / elapsed
-                    eta = (n - idx - 1) / rate
-                    print(f"  assembled {idx+1}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
-            print(f"  Assembled in {time.time()-t0:.0f}s")
-            print(f"  Saving to {cache_path}...")
-            tmp = cache_path + f".tmp.{os.getpid()}.{threading.get_ident()}"
-            torch.save(self._inmemory, tmp)
-            os.replace(tmp, cache_path)
-            print(f"  All {n} samples in RAM.")
-        else:
-            print(f"Large dataset ({n} samples) — using on-the-fly graph.clone().")
-            print(f"  {len(self._graph_cache)} graphs in RAM + {n} pre-encoded targets.")
-            print(f"  __getitem__ will clone graphs per batch.")
+        print(f"Ready: {len(self._graph_cache)} graphs in RAM + {n} pre-encoded targets.")
+        print(f"  __getitem__ will clone graphs per batch.")
 
     def __len__(self):
         return len(self.samples)
