@@ -19,6 +19,14 @@ from conjecture_gen.target_encoder import encode_conjecture
 
 CACHE_SCHEMA_VERSION = 5
 
+# Module-level ref for multiprocessing precompute (set before fork)
+_precompute_dataset_ref = None
+
+
+def _mp_build_item(idx):
+    """Build a single sample in a worker process."""
+    return idx, _precompute_dataset_ref._build_item(idx)
+
 
 class ConjectureDataset(Dataset):
     """Dataset of (problem_graph, target_sequence, quality_weight) triples.
@@ -315,11 +323,27 @@ class ConjectureDataset(Dataset):
         self._lemma_cache[problem_name] = lemma_dict
         return lemma_dict.get(cut_id)
 
+    def _warm_caches(self):
+        """Pre-build all graph and lemma caches (per-problem, serial)."""
+        problems = sorted(set(s['problem'] for s in self.samples))
+        print(f"Warming caches for {len(problems)} problems...")
+        import time
+        t0 = time.time()
+        for i, prob in enumerate(problems):
+            self._get_problem_graph(prob)
+            self._get_lemma_clause(prob, '')  # triggers lemma cache build
+            if (i + 1) % 2000 == 0:
+                elapsed = time.time() - t0
+                rate = (i + 1) / elapsed
+                eta = (len(problems) - i - 1) / rate
+                print(f"  cached {i+1}/{len(problems)} ({rate:.0f}/s, ETA {eta:.0f}s)")
+        print(f"  Warmed {len(problems)} problems in {time.time()-t0:.0f}s")
+
     def precompute(self, load_into_ram=True):
         """Precompute all samples into RAM for zero-overhead __getitem__.
 
-        First run builds all samples and saves as a single .pt file (~8GB).
-        Subsequent runs load the file directly (~1-2 min vs ~30 min build).
+        First run builds all samples and saves as a single .pt file.
+        Subsequent runs load the file directly.
         """
         cache_path = os.path.join(self.cache_dir,
                                    f'precomputed_{len(self.samples)}.pt')
@@ -329,24 +353,40 @@ class ConjectureDataset(Dataset):
             print(f"  Loaded {len(self._inmemory)} samples into RAM.")
             return
 
-        # Parallel precompute using threads (graph.clone releases GIL)
-        import concurrent.futures
-        n_workers = min(os.cpu_count() or 1, 8)
+        # Phase 1: warm all per-problem caches (serial, disk-cached)
+        self._warm_caches()
+
+        # Phase 2: pre-encode targets (serial, needs graph+lemma caches)
+        self.precompute_targets()
+
+        # Phase 3: assemble final samples using multiprocessing
+        import multiprocessing as mp
         n = len(self.samples)
-        print(f"Precomputing {n} samples ({n_workers} threads)...")
+        n_workers = min(mp.cpu_count() or 1, 32)
+        print(f"Assembling {n} samples ({n_workers} processes)...")
 
+        # Set module-level ref for worker processes (inherited via fork)
+        global _precompute_dataset_ref
+        _precompute_dataset_ref = self
+
+        import time
+        t0 = time.time()
         self._inmemory = [None] * n
-
-        def build_one(idx):
-            return idx, self._build_item(idx)
-
         done = 0
-        with concurrent.futures.ThreadPoolExecutor(max_workers=n_workers) as pool:
-            for idx, item in pool.map(build_one, range(n)):
+        with mp.Pool(n_workers) as pool:
+            for idx, item in pool.imap_unordered(
+                    _mp_build_item, range(n), chunksize=200):
                 self._inmemory[idx] = item
                 done += 1
-                if done % 5000 == 0:
-                    print(f"  precomputed {done}/{n}...")
+                if done % 10000 == 0:
+                    elapsed = time.time() - t0
+                    rate = done / elapsed
+                    eta = (n - done) / rate
+                    print(f"  assembled {done}/{n} ({rate:.0f}/s, ETA {eta:.0f}s)")
+
+        _precompute_dataset_ref = None
+        print(f"  Assembled {n} samples in {time.time()-t0:.0f}s")
+
         print(f"  Saving to {cache_path}...")
         tmp = cache_path + f".tmp.{os.getpid()}.{threading.get_ident()}"
         torch.save(self._inmemory, tmp)
