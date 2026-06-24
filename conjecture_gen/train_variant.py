@@ -355,6 +355,13 @@ def train(args):
             'args': vars(args), 'variant': args.variant,
         }, os.path.join(save_dir, 'last_model.pt'))
 
+        if args.save_every > 0 and epoch % args.save_every == 0:
+            torch.save({
+                'epoch': epoch, 'model_state_dict': model.state_dict(),
+                'val_loss': val_losses['total'],
+                'args': vars(args), 'variant': args.variant,
+            }, os.path.join(save_dir, f'model_epoch_{epoch:03d}.pt'))
+
         if val_losses['total'] < best_val_loss:
             best_val_loss = val_losses['total']
             torch.save({
@@ -421,6 +428,8 @@ def main():
     p.add_argument('--max_nodes', type=int, default=0)
     p.add_argument('--log_every', type=int, default=10)
     p.add_argument('--sample_every', type=int, default=1)
+    p.add_argument('--save_every', type=int, default=0,
+                   help='Save epoch-numbered checkpoint every N epochs (0 = off)')
     p.add_argument('--seed', type=int, default=42)
     args = p.parse_args()
 
