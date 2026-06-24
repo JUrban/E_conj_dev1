@@ -1,0 +1,208 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit, backgrounds, calc, decorations.pathreplacing, shapes.geometric}
+
+\definecolor{clausecol}{HTML}{4A90D9}
+\definecolor{litcol}{HTML}{7BC67E}
+\definecolor{symcol}{HTML}{E8913A}
+\definecolor{termcol}{HTML}{C084D9}
+\definecolor{varcol}{HTML}{D94A6B}
+\definecolor{decstep}{HTML}{F5E6CC}
+\definecolor{ptrcol}{HTML}{E84040}
+\definecolor{gnnbg}{HTML}{EEF3FA}
+\definecolor{decbg}{HTML}{FFF8EE}
+
+\begin{document}
+\begin{tikzpicture}[
+    >=Stealth,
+    node distance=0.4cm,
+    every node/.style={font=\small},
+    gnnnode/.style={draw, rounded corners=2pt, minimum height=0.55cm,
+                    minimum width=1.1cm, inner sep=2pt, font=\scriptsize\sffamily},
+    clause/.style={gnnnode, fill=clausecol!25, draw=clausecol!70},
+    lit/.style={gnnnode, fill=litcol!25, draw=litcol!70},
+    sym/.style={gnnnode, fill=symcol!25, draw=symcol!70, minimum width=0.8cm},
+    term/.style={gnnnode, fill=termcol!25, draw=termcol!70, minimum width=0.8cm},
+    var/.style={gnnnode, fill=varcol!25, draw=varcol!70, minimum width=0.6cm},
+    decbox/.style={draw, rounded corners=3pt, fill=decstep, minimum height=0.5cm,
+                   minimum width=1.2cm, inner sep=3pt, font=\scriptsize\sffamily},
+    arw/.style={->, thick, color=#1},
+    arw/.default={black!60},
+    bigblock/.style={draw, rounded corners=6pt, inner sep=8pt, thick},
+    lbl/.style={font=\scriptsize\sffamily, text=black!70},
+]
+
+% ===== TITLE =====
+\node[font=\large\bfseries\sffamily] at (5.5, 8.8) {Neural Conjecturing Architecture};
+
+% ===== INPUT CNF =====
+\node[font=\footnotesize\ttfamily, text width=5.5cm, anchor=north west] (inputcnf) at (-1.2, 8.2) {%
+\textbf{Input CNF problem:}\\[2pt]
+cnf(c1, axiom, (p(f(X),a) | \raisebox{0pt}{\texttildelow}q(X))).\\
+cnf(c2, axiom, (q(b))).
+};
+
+% ===== HETEROGENEOUS GRAPH =====
+% Clauses
+\node[clause] (c1) at (0.0, 5.6) {c1};
+\node[clause] (c2) at (3.0, 5.6) {c2};
+
+% Literals
+\node[lit] (l1) at (-0.8, 4.4) {+p(..)};
+\node[lit] (l2) at (1.2, 4.4) {$-$q(..)};
+\node[lit] (l3) at (3.0, 4.4) {+q(..)};
+
+% Terms
+\node[term] (t1) at (-1.6, 3.2) {f(X)};
+\node[term] (t2) at (0.0, 3.2) {a};
+\node[term] (t3) at (3.0, 3.2) {b};
+
+% Variable
+\node[var] (v1) at (-1.6, 2.2) {X};
+
+% Symbols
+\node[sym] (sp) at (-0.8, 1.2) {p};
+\node[sym] (sq) at (0.8, 1.2) {q};
+\node[sym] (sf) at (2.0, 1.2) {f};
+\node[sym] (sa) at (3.2, 1.2) {a};
+\node[sym] (sb) at (4.4, 1.2) {b};
+
+% Edges: clause -> literal
+\draw[arw=clausecol!70] (c1) -- (l1);
+\draw[arw=clausecol!70] (c1) -- (l2);
+\draw[arw=clausecol!70] (c2) -- (l3);
+
+% Edges: literal -> term/symbol
+\draw[arw=litcol!60] (l1) -- (t1);
+\draw[arw=litcol!60] (l1) -- (t2);
+\draw[arw=litcol!60] (l2) -- (v1);
+\draw[arw=litcol!60] (l3) -- (t3);
+
+% Edges: term -> symbol/var
+\draw[arw=termcol!60] (t1) -- (v1);
+\draw[arw=termcol!60] (t1) -- (sf);
+
+% Edges: literal -> predicate symbol
+\draw[arw=litcol!60, dashed] (l1) -- (sp);
+\draw[arw=litcol!60, dashed] (l2) -- (sq);
+\draw[arw=litcol!60, dashed] (l3) -- (sq);
+
+% Edges: term -> function/constant symbol
+\draw[arw=termcol!60, dashed] (t2) -- (sa);
+\draw[arw=termcol!60, dashed] (t3) -- (sb);
+
+% GNN background
+\begin{scope}[on background layer]
+    \node[bigblock, fill=gnnbg, draw=clausecol!40,
+          fit=(c1)(c2)(l1)(l2)(l3)(t1)(t2)(t3)(v1)(sp)(sq)(sf)(sa)(sb),
+          label={[lbl, anchor=north west]north west:Heterogeneous Graph}] (graphbox) {};
+\end{scope}
+
+% Legend
+\node[lbl, anchor=north west] at (-1.8, 1.0) {%
+    \begin{tikzpicture}[node distance=0.3cm, every node/.style={font=\tiny\sffamily}]
+        \node[fill=clausecol!25, draw=clausecol!70, rounded corners=1pt, minimum height=0.3cm, minimum width=0.5cm] (lc) {clause};
+        \node[fill=litcol!25, draw=litcol!70, rounded corners=1pt, minimum height=0.3cm, minimum width=0.5cm, right=0.15cm of lc] (ll) {literal};
+        \node[fill=symcol!25, draw=symcol!70, rounded corners=1pt, minimum height=0.3cm, minimum width=0.5cm, right=0.15cm of ll] (ls) {symbol};
+        \node[fill=termcol!25, draw=termcol!70, rounded corners=1pt, minimum height=0.3cm, minimum width=0.5cm, right=0.15cm of ls] (lt) {term};
+        \node[fill=varcol!25, draw=varcol!70, rounded corners=1pt, minimum height=0.3cm, minimum width=0.5cm, right=0.15cm of lt] (lv) {var};
+    \end{tikzpicture}
+};
+
+% ===== GNN ENCODER BLOCK =====
+\node[bigblock, fill=clausecol!8, draw=clausecol!50, minimum width=5.5cm, minimum height=0.8cm,
+      font=\small\sffamily\bfseries] (gnn) at (1.8, -0.2)
+      {GNN Encoder ($4\times$ message passing)};
+\node[lbl, anchor=north, text width=5.5cm, align=center] at (1.8, -0.7)
+      {GINEConv (positional edges) + SAGEConv (structural edges)};
+
+\draw[arw, thick, clausecol!70] (graphbox.south) -- (gnn.north);
+
+% ===== SYMBOL EMBEDDINGS =====
+\node[sym, minimum width=0.7cm] (e1) at (-0.4, -1.7) {$\mathbf{e}_p$};
+\node[sym, minimum width=0.7cm] (e2) at (0.7, -1.7) {$\mathbf{e}_q$};
+\node[sym, minimum width=0.7cm] (e3) at (1.8, -1.7) {$\mathbf{e}_f$};
+\node[sym, minimum width=0.7cm] (e4) at (2.9, -1.7) {$\mathbf{e}_a$};
+\node[sym, minimum width=0.7cm] (e5) at (4.0, -1.7) {$\mathbf{e}_b$};
+\node[lbl] at (1.8, -2.2) {Symbol embeddings (pointer targets)};
+
+\draw[arw, thick, symcol!70] (gnn.south) -- ++(0,-0.4) -| (e1.north);
+\draw[arw, thick, symcol!70] (gnn.south) -- ++(0,-0.4) -| (e2.north);
+\draw[arw, thick, symcol!70] (gnn.south) -- ++(0,-0.4) -| (e3.north);
+\draw[arw, thick, symcol!70] (gnn.south) -- ++(0,-0.4) -| (e4.north);
+\draw[arw, thick, symcol!70] (gnn.south) -- ++(0,-0.4) -| (e5.north);
+
+% ===== DECODER =====
+% Decoder steps
+\node[decbox] (d0) at (7.0, 5.6) {\textsc{Start}};
+\node[decbox] (d1) at (7.0, 4.6) {\textsc{NewLit+}};
+\node[decbox] (d2) at (7.0, 3.6) {\textsc{Pred} $\to$ \textbf{q}};
+\node[decbox] (d3) at (7.0, 2.6) {\textsc{ArgFunc} $\to$ \textbf{f}};
+\node[decbox] (d4) at (7.0, 1.6) {\textsc{ArgFunc} $\to$ \textbf{a}};
+\node[decbox] (d5) at (7.0, 0.6) {\textsc{EndArgs}};
+\node[decbox] (d6) at (7.0, -0.4) {\textsc{EndArgs}};
+\node[decbox] (d7) at (7.0, -1.4) {\textsc{EndClause}};
+
+% Self-attention arrows (causal)
+\draw[arw=black!30, bend left=40] (d0.east) to (d1.east);
+\draw[arw=black!30, bend left=40] (d1.east) to (d2.east);
+\draw[arw=black!30, bend left=40] (d2.east) to (d3.east);
+\draw[arw=black!30, bend left=40] (d3.east) to (d4.east);
+\draw[arw=black!30, bend left=40] (d4.east) to (d5.east);
+\draw[arw=black!30, bend left=40] (d5.east) to (d6.east);
+\draw[arw=black!30, bend left=40] (d6.east) to (d7.east);
+
+\node[lbl, rotate=90, anchor=south] at (8.8, 2.6) {causal self-attention};
+
+% Decoder block background
+\begin{scope}[on background layer]
+    \node[bigblock, fill=decbg, draw=symcol!40,
+          fit=(d0)(d1)(d2)(d3)(d4)(d5)(d6)(d7),
+          inner xsep=12pt, inner ysep=8pt,
+          label={[lbl, anchor=north west, font=\small\sffamily\bfseries]north west:Transformer Decoder}] (decbox_bg) {};
+\end{scope}
+
+% Cross-attention from decoder to symbol embeddings
+\draw[arw=ptrcol, thick, dashed] (d2.west) -- ++(-0.6,0) |- node[lbl, pos=0.25, above, text=ptrcol]{pointer} (e2.east);
+\draw[arw=ptrcol, thick, dashed] (d3.west) -- ++(-0.4,0) |- (e3.east);
+\draw[arw=ptrcol, thick, dashed] (d4.west) -- ++(-0.2,0) |- (e4.east);
+
+% Cross-attention label
+\node[lbl, text=ptrcol, anchor=south, rotate=30] at (4.8, 2.8) {cross-attention};
+
+% ===== OUTPUT =====
+\node[font=\footnotesize\ttfamily, text width=4.5cm, anchor=north west] (outputcnf) at (5.5, -2.5) {%
+\textbf{Generated lemma:}\\[2pt]
+cnf(lemma, plain, (q(f(a)))).
+};
+
+\draw[arw, thick] (d7.south) |- (outputcnf.west);
+
+% ===== ARITY CONSTRAINT NOTE =====
+\node[draw, rounded corners=3pt, fill=white, inner sep=4pt, font=\scriptsize\sffamily,
+      text width=3.2cm, anchor=north west] at (9.3, 5.0) {%
+\textbf{Arity constraints:}\\[2pt]
+After \textsc{Pred}$\to$q (arity 1):\\
+\quad push 1 arg remaining\\[1pt]
+After \textsc{ArgFunc}$\to$f (arity 1):\\
+\quad push 1 arg remaining\\[1pt]
+After \textsc{ArgFunc}$\to$a (arity 0):\\
+\quad auto \textsc{EndArgs}\\[1pt]
+Stack enforces valid syntax
+};
+
+% ===== ACTION TYPE LEGEND =====
+\node[draw, rounded corners=3pt, fill=white, inner sep=4pt, font=\scriptsize\sffamily,
+      text width=3.5cm, anchor=north west] at (9.3, 1.5) {%
+\textbf{Decoder actions:}\\[2pt]
+\textsc{NewLitPos/Neg} -- new literal\\
+\textsc{Pred} -- select predicate$^\star$\\
+\textsc{ArgFunc} -- select function$^\star$\\
+\textsc{ArgVar} -- select variable slot\\
+\textsc{EndArgs} -- close term\\
+\textsc{EndClause} -- finish\\[3pt]
+$^\star$pointer over symbol embeddings
+};
+
+\end{tikzpicture}
+\end{document}
