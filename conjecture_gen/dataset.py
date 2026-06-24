@@ -28,6 +28,15 @@ def _mp_build_item(idx):
     return idx, _precompute_dataset_ref._build_item(idx)
 
 
+def _mp_warm_one_problem(prob):
+    """Build graph + lemma cache for one problem in a worker process."""
+    ds = _precompute_dataset_ref
+    graph = ds._get_problem_graph(prob)
+    ds._get_lemma_clause(prob, '')  # triggers full lemma cache build
+    lemma_dict = ds._lemma_cache.get(prob, {})
+    return prob, graph, lemma_dict
+
+
 class ConjectureDataset(Dataset):
     """Dataset of (problem_graph, target_sequence, quality_weight) triples.
 
@@ -324,19 +333,32 @@ class ConjectureDataset(Dataset):
         return lemma_dict.get(cut_id)
 
     def _warm_caches(self):
-        """Pre-build all graph and lemma caches (per-problem, serial)."""
+        """Pre-build all graph and lemma caches (per-problem, parallel)."""
+        import multiprocessing as mp
+        import time
+
         problems = sorted(set(s['problem'] for s in self.samples))
         print(f"Warming caches for {len(problems)} problems...")
-        import time
+
+        # Set module-level ref for worker processes
+        global _precompute_dataset_ref
+        _precompute_dataset_ref = self
+
+        n_workers = min(mp.cpu_count() or 1, 32)
         t0 = time.time()
-        for i, prob in enumerate(problems):
-            self._get_problem_graph(prob)
-            self._get_lemma_clause(prob, '')  # triggers lemma cache build
-            if (i + 1) % 2000 == 0:
-                elapsed = time.time() - t0
-                rate = (i + 1) / elapsed
-                eta = (len(problems) - i - 1) / rate
-                print(f"  cached {i+1}/{len(problems)} ({rate:.0f}/s, ETA {eta:.0f}s)")
+        done = 0
+        with mp.Pool(n_workers) as pool:
+            for prob, graph, lemma_dict in pool.imap_unordered(
+                    _mp_warm_one_problem, problems, chunksize=50):
+                self._graph_cache[prob] = graph
+                self._lemma_cache[prob] = lemma_dict
+                done += 1
+                if done % 2000 == 0:
+                    elapsed = time.time() - t0
+                    rate = done / elapsed
+                    eta = (len(problems) - done) / rate
+                    print(f"  cached {done}/{len(problems)} ({rate:.0f}/s, ETA {eta:.0f}s)")
+        _precompute_dataset_ref = None
         print(f"  Warmed {len(problems)} problems in {time.time()-t0:.0f}s")
 
     def precompute(self, load_into_ram=True):
