@@ -331,22 +331,57 @@ class VAETransformerDecoder(nn.Module):
         done = [False] * batch_size
         lit_counts = [0] * batch_size
 
-        all_actions = torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)
-        all_args = torch.zeros((batch_size, 1), dtype=torch.long, device=device)
+        # KV cache: per layer, accumulated key/value for self-attention
+        num_layers = len(self.transformer.layers)
+        kv_cache = [{'self_k': None, 'self_v': None} for _ in range(num_layers)]
+
+        memory_key_padding_mask = ~mem_mask
+
+        cur_action = torch.full((batch_size,), END_CLAUSE, dtype=torch.long, device=device)
+        cur_arg = torch.zeros(batch_size, dtype=torch.long, device=device)
 
         for step in range(max_steps):
-            seq_len = all_actions.shape[1]
-            tok = self._build_input_embeds(all_actions, all_args, symbol_embeds)
-            pos = torch.arange(seq_len, device=device).unsqueeze(0).clamp(max=self.max_seq_len - 1)
-            tok = tok + self.pos_embed(pos)
+            # Build embedding for just the new token
+            tok = self._build_input_embeds(
+                cur_action.unsqueeze(1), cur_arg.unsqueeze(1), symbol_embeds,
+            )  # (B, 1, H)
+            pos_idx = min(step, self.max_seq_len - 1)
+            tok = tok + self.pos_embed.weight[pos_idx].unsqueeze(0).unsqueeze(0)
 
-            cmask = torch.triu(torch.ones(seq_len, seq_len, device=device, dtype=torch.bool), diagonal=1)
-            hidden = self.transformer(
-                tgt=tok, memory=memory,
-                tgt_mask=cmask, memory_key_padding_mask=~mem_mask,
-            )
+            # Run through decoder layers with cached KV
+            h = tok  # (B, 1, H)
+            for li, layer in enumerate(self.transformer.layers):
+                # === Self-attention with KV cache ===
+                sa = layer.self_attn
+                if kv_cache[li]['self_k'] is None:
+                    cached_k = h
+                    cached_v = h
+                else:
+                    cached_k = torch.cat([kv_cache[li]['self_k'], h], dim=1)
+                    cached_v = torch.cat([kv_cache[li]['self_v'], h], dim=1)
+                kv_cache[li]['self_k'] = cached_k
+                kv_cache[li]['self_v'] = cached_v
 
-            h_last = hidden[:, -1]
+                h_res = h
+                h2 = sa(h, cached_k, cached_v, need_weights=False)[0]
+                h = layer.norm1(h_res + layer.dropout1(h2))
+
+                # === Cross-attention ===
+                h_res = h
+                h2 = layer.multihead_attn(
+                    h, memory, memory,
+                    key_padding_mask=memory_key_padding_mask,
+                    need_weights=False,
+                )[0]
+                h = layer.norm2(h_res + layer.dropout2(h2))
+
+                # === FFN ===
+                h_res = h
+                h2 = layer.linear2(layer.dropout(layer.activation(layer.linear1(h))))
+                h = layer.norm3(h_res + layer.dropout3(h2))
+
+            h_last = h.squeeze(1)  # (B, H)
+
             action_logits = self.action_head(h_last)
 
             for i in range(batch_size):
@@ -358,7 +393,6 @@ class VAETransformerDecoder(nn.Module):
                     if not arity_con.stacks[i]:
                         action_logits[i, END_CLAUSE] += 5.0
                 arity_con.constrain_actions(i, action_logits[i])
-                # R02: pre-mask actions based on role availability
                 if not has_predicates:
                     action_logits[i, PRED] = float('-inf')
                 if not has_functions:
@@ -367,7 +401,7 @@ class VAETransformerDecoder(nn.Module):
             actions = sample_action_logits(action_logits, temperature=temperature, top_k=top_k, top_p=top_p)
             ptr_logits = self._pointer_scores(h_last, symbol_embeds, symbol_mask)
 
-            # --- Role masks: mask pointer logits by action role ---
+            # --- Role masks ---
             if pred_mask_t is not None and func_mask_t is not None:
                 for i in range(batch_size):
                     if done[i]:
@@ -379,7 +413,6 @@ class VAETransformerDecoder(nn.Module):
                         ptr_logits[i] = ptr_logits[i].masked_fill(~func_mask_t, float('-inf'))
 
             var_logits = self.var_head(h_last)
-            # R02: no fallback for pointer — SamplingError forces END_CLAUSE
             try:
                 ptr_sampled = sample_from_logits(ptr_logits, temperature=temperature, top_k=top_k, top_p=top_p)
             except SamplingError:
@@ -389,8 +422,8 @@ class VAETransformerDecoder(nn.Module):
                         done[i] = True
                 if all(done):
                     break
-                all_actions = torch.cat([all_actions, torch.full((batch_size, 1), END_CLAUSE, dtype=torch.long, device=device)], dim=1)
-                all_args = torch.cat([all_args, torch.zeros((batch_size, 1), dtype=torch.long, device=device)], dim=1)
+                cur_action = torch.full((batch_size,), END_CLAUSE, dtype=torch.long, device=device)
+                cur_arg = torch.zeros(batch_size, dtype=torch.long, device=device)
                 continue
             var_sampled = sample_from_logits(var_logits, temperature=temperature, top_k=top_k, top_p=top_p, fallback_idx=0)
 
@@ -415,8 +448,9 @@ class VAETransformerDecoder(nn.Module):
 
             if all(done):
                 break
-            all_actions = torch.cat([all_actions, actions.unsqueeze(1)], dim=1)
-            all_args = torch.cat([all_args, new_args.unsqueeze(1)], dim=1)
+
+            cur_action = actions
+            cur_arg = new_args
 
         return sequences
 
