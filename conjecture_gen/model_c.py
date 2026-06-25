@@ -142,7 +142,7 @@ class VAETransformerDecoder(nn.Module):
             sm = sorted_batch == i
             n = sm.sum().item()
             if n > 0:
-                padded[i, :n] = sorted_embeds[sm]
+                padded[i, :n] = sorted_embeds[sm].to(padded.dtype)
                 mask[i, :n] = True
         return padded, mask
 
